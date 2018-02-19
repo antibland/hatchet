@@ -9,14 +9,16 @@ let fakeServerData = {
       type: "Workplace",
       time_remaining: "30 seconds",
       antagonist: {
-        name: "YerWrongDude99",
-        avatar: "./avatars/redneck.jpeg",
-        text: "Why should I stop? This is why headphones were invented. You don't see me complaining about the confederate flag on your desk. You're a redneck and that doesn't bother me. Live and let live, you snob."
-      },
-      defender: {
+        votes: 2213,
         name: "Unbeatable113",
         avatar: "./avatars/angry-businessman.jpg",
         text: "Joe likes clipping his nails at his desk. It's fucking disgusting and I finally brought it up to him, 3 years on. He acted offended and said that he has no time to do it elsewhere—he's got three kids and a real battle-ax for a wife. The thing is, I don't care. There's a right and wrong way to act in the workplace. Clip those nails on your own time, brother!"
+      },
+      defender: {
+        votes: 3109,
+        name: "YerWrongDude99",
+        avatar: "./avatars/redneck.jpeg",
+        text: "Why should I stop? This is why headphones were invented. You don't see me complaining about the confederate flag on your desk. You're a redneck and that doesn't bother me. Live and let live, you snob."
       }
     },
     // {
@@ -85,9 +87,11 @@ class Fight extends Component {
         <div className="fight-arguments">
           <div className="antagonist-argument">
             <p className="fight-text">{(this.props.data.antagonist.text).substring(0, 100) + '…'}</p>
+            <p className="total-votes">Votes: {this.props.data.antagonist.votes}</p>
           </div>
           <div className="defender-argument">
             <p className="fight-text">{(this.props.data.defender.text).substring(0, 100) + '…'}</p>
+            <p className="total-votes">Votes: {this.props.data.defender.votes}</p>
           </div>
         </div>
         <a href="#" className="button">View full fight</a>
