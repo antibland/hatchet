@@ -3,18 +3,41 @@ import React, { Component } from 'react';
 class Create extends Component {
   constructor() {
     super();
-    this.state = { fight_type: 'individual' }
+    this.state = {
+      fight_type: 'individual',
+      character_count: 0,
+      is_valid: false
+    }
     this.handleChange = this.handleChange.bind(this);
+    this.handleTextareaChange = this.handleTextareaChange.bind(this);
   }
 
   handleChange(e) {
     this.setState({ fight_type: e.target.value });
   }
 
+  handleSubmit(e) {
+
+  }
+
+  handleTextareaChange(e) {
+    let count = this.state.character_count;
+    if (count >= 200 && count <= 1000) {
+      this.setState({ is_valid: true })
+    } else {
+      this.setState({ is_valid: false })
+    }
+    this.setState({ character_count : e.target.value.length });
+  }
+
   render() {
     let antagonist_avatar = './avatars/angry-businessman.jpg';
     let question_mark = './question_mark.png';
     let earth = './earth.png';
+    let count = this.state.character_count;
+    let count_text = count === 1 ? 'character' : 'characters';
+    let disabled = !this.state.is_valid ? {'disabled' : 'disabled'} : {};
+
     let styles = {
       antagonist: {
         avatar: {
@@ -60,7 +83,7 @@ class Create extends Component {
     return (
       <div>
         <h2 className="ribbon">
-          <strong class="ribbon-content">Create a fight</strong>
+          <strong className="ribbon-content">Create a fight</strong>
         </h2>
 
         <form onSubmit={this.handleSubmit} method="POST">
@@ -77,8 +100,8 @@ class Create extends Component {
             </div>
           </div>
 
-          <label for="type">Pick your target</label>
-          <div class="styled-select slate" onChange={this.handleChange}>
+          <label htmlFor="type">Pick your target</label>
+          <div className="styled-select slate" onChange={this.handleChange}>
             <select id="type" name="type">
               <option value="individual">Individual</option>
               <option value="world">The World</option>
@@ -88,13 +111,27 @@ class Create extends Component {
           {this.state.fight_type === 'individual' ?
             <input
               type="text"
+              aria-label="Enter username or email address"
               className="individual"
               placeholder="Enter username or email address" /> :
-            <span>Fight the world!</span>
-
+            ''
           }
+
+          <label htmlFor="beef">State your beef</label>
+          <textarea
+            onChange={this.handleTextareaChange}
+            onBlur={this.handleTextareaChange}
+            name=""
+            id="beef"
+            placeholder="Between 200 and 1000 characters">
+          </textarea>
+          <span className="character-count">
+            {count} {count_text}
+          </span>
+
           <button
             type="submit"
+            {...disabled}
             className="button"
             style={styles.submitButton}>Submit</button>
         </form>

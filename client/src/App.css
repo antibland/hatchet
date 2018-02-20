@@ -18,7 +18,9 @@ body {
   --brown: #722800;
 }
 
-h1, h2, h3, .total-votes, .button {
+h1, h2, h3, .total-votes, .button,
+label, input, textarea, ::placeholder, select,
+.character-count {
   font-family: 'Bitter', serif;
 }
 
@@ -175,7 +177,7 @@ label {
   font-weight: bold;
   letter-spacing: 1px;
   font-size: 1.5em;
-  margin-bottom: .5em;
+  margin: 1.5em 0 .5em;
 }
 
 .styled-select {
@@ -211,15 +213,23 @@ label {
   width: 268px;
 }
 
-input {
+input, textarea {
   width: 100%;
   padding: .7em .9em;
   font-size: .9em;
+  margin-bottom: .5em;
 }
 
-input::placeholder {
+::placeholder {
   color: black;
+  font-size: 1em;
 }
+
+[disabled] {
+  opacity: .5;
+}
+
+/* Ribbon */
 
 .ribbon {
   font-size: 16px !important;
