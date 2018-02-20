@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-// import Menu from './Menu.js'
+
+import Main from './Main';
+import Header from './Header.js';
 import './App.css';
 
 let fakeServerData = {
@@ -140,7 +142,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <FightsContainer fights={fakeServerData} />
+        <Header />
+        <Main />
+        {/* <FightsContainer fights={fakeServerData} /> */}
       </div>
     );
   }
