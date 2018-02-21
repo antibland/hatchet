@@ -233,6 +233,20 @@ input, textarea {
   box-shadow: none;
 }
 
+.required {
+  padding-left: 10px;
+  color: red;
+  font-weight: bold;
+  font-size: 30px;
+  position: relative;
+  top: 5px;
+}
+
+.required-field-wrapper {
+  display: flex;
+  align-items: center;
+}
+
 /* Ribbon */
 
 .ribbon {

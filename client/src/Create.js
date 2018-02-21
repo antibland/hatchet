@@ -125,12 +125,15 @@ class Create extends Component {
           </div>
 
           {this.state.target === 'individual' ?
-            <input
-              type="text"
-              aria-label="Enter username or email address"
-              className="individual"
-              required
-              placeholder="Enter username or email address" /> :
+            <div className="required-field-wrapper">
+              <input
+                type="text"
+                aria-label="Enter username or email address"
+                className="individual"
+                required
+                placeholder="Enter username or email address" />
+              <span className="required">*</span>
+            </div> :
             ''
           }
 
@@ -142,14 +145,17 @@ class Create extends Component {
           </div>
 
           <label htmlFor="beef">State your beef</label>
-          <textarea
-            required
-            onChange={this.handleTextareaChange}
-            onBlur={this.handleTextareaChange}
-            name=""
-            id="beef"
-            placeholder="Between 200 and 1000 characters">
-          </textarea>
+          <div className="required-field-wrapper">
+            <textarea
+              required
+              onChange={this.handleTextareaChange}
+              onBlur={this.handleTextareaChange}
+              name=""
+              id="beef"
+              placeholder="Between 200 and 1000 characters">
+            </textarea>
+            <span className="required">*</span>
+          </div>
           <span style={styles.characterCount} className="character-count">
             {count} {count_text}
           </span>
