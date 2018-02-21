@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 
 class Create extends Component {
+  static fight_types = [
+    'Roommate',
+    'Lover\'s Quarrel',
+    'Coworker',
+    'Family Member',
+    'Friend'
+  ];
+
   constructor() {
     super();
     this.state = {
-      fight_type: 'individual',
+      target: 'individual',
       character_count: 0,
       is_valid: false
     }
@@ -13,7 +21,7 @@ class Create extends Component {
   }
 
   handleChange(e) {
-    this.setState({ fight_type: e.target.value });
+    this.setState({ target: e.target.value });
   }
 
   handleSubmit(e) {
@@ -36,7 +44,11 @@ class Create extends Component {
     let earth = './earth.png';
     let count = this.state.character_count;
     let count_text = count === 1 ? 'character' : 'characters';
-    let disabled = !this.state.is_valid ? {'disabled' : 'disabled'} : {};
+    let fight_type = this.state.target === 'world' ?
+      <option value="philosophical">Philosophical</option> :
+      Create.fight_types.map(type => {
+        return <option value={type.toLowerCase()}>{type}</option>
+      });
 
     let styles = {
       antagonist: {
@@ -78,6 +90,10 @@ class Create extends Component {
       submitButton: {
         display: 'block',
         width: '100%'
+      },
+      characterCount: {
+        color: '#333',
+        fontFamily: "'Bitter', serif"
       }
     }
     return (
@@ -93,45 +109,54 @@ class Create extends Component {
             </div>
             <img src="./versus.png" alt="versus" style={styles.versus} />
             <div className="them">
-              {this.state.fight_type === 'individual' ?
+              {this.state.target === 'individual' ?
                 <div style={styles.question_mark}></div> :
                 <div style={styles.earth}></div>
               }
             </div>
           </div>
 
-          <label htmlFor="type">Pick your target</label>
-          <div className="styled-select slate" onChange={this.handleChange}>
-            <select id="type" name="type">
+          <label htmlFor="target">Pick your target</label>
+          <div className="styled-select slate">
+            <select id="target" name="target" onChange={this.handleChange}>
               <option value="individual">Individual</option>
               <option value="world">The World</option>
             </select>
           </div>
 
-          {this.state.fight_type === 'individual' ?
+          {this.state.target === 'individual' ?
             <input
               type="text"
               aria-label="Enter username or email address"
               className="individual"
+              required
               placeholder="Enter username or email address" /> :
             ''
           }
 
+          <label htmlFor="type">What type of fight?</label>
+          <div className="styled-select slate">
+            <select name="type" id="type">
+              {fight_type}
+            </select>
+          </div>
+
           <label htmlFor="beef">State your beef</label>
           <textarea
+            required
             onChange={this.handleTextareaChange}
             onBlur={this.handleTextareaChange}
             name=""
             id="beef"
             placeholder="Between 200 and 1000 characters">
           </textarea>
-          <span className="character-count">
+          <span style={styles.characterCount} className="character-count">
             {count} {count_text}
           </span>
 
           <button
             type="submit"
-            {...disabled}
+            disabled={!this.state.is_valid}
             className="button"
             style={styles.submitButton}>Submit</button>
         </form>

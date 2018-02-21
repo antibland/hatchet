@@ -19,8 +19,7 @@ body {
 }
 
 h1, h2, h3, .total-votes, .button,
-label, input, textarea, ::placeholder, select,
-.character-count {
+label, input, textarea, ::placeholder, select {
   font-family: 'Bitter', serif;
 }
 
@@ -166,6 +165,7 @@ form {
   padding: 3em;
   border-radius: 4px;
   box-shadow: rgba(0, 0, 0, 0.33) 7px 7px 40px 0;
+  margin-bottom: 4em;
 }
 
 label {
@@ -227,6 +227,10 @@ input, textarea {
 
 [disabled] {
   opacity: .5;
+}
+
+:invalid {
+  box-shadow: none;
 }
 
 /* Ribbon */
