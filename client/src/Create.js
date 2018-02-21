@@ -47,7 +47,7 @@ class Create extends Component {
     let fight_type = this.state.target === 'world' ?
       <option value="philosophical">Philosophical</option> :
       Create.fight_types.map(type => {
-        return <option value={type.toLowerCase()}>{type}</option>
+        return <option key={type} value={type.toLowerCase()}>{type}</option>
       });
 
     let styles = {
@@ -102,7 +102,7 @@ class Create extends Component {
           <strong className="ribbon-content">Create a fight</strong>
         </h2>
 
-        <form onSubmit={this.handleSubmit} method="POST">
+        <form onSubmit={this.handleSubmit} method="POST" action="/api/create/fight">
           <div className="slots" style={styles.slots}>
             <div className="you">
               <div style={styles.antagonist.avatar}></div>
@@ -150,7 +150,7 @@ class Create extends Component {
               required
               onChange={this.handleTextareaChange}
               onBlur={this.handleTextareaChange}
-              name=""
+              name="beef"
               id="beef"
               placeholder="Between 200 and 1000 characters">
             </textarea>

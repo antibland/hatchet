@@ -4,7 +4,6 @@ const mongoose = require('mongoose'),
 
 const fightSchema = new Schema({
   created_at: {type: Date, default: Date.now},
-  title: { type: String, required: true, unique: true },
   type: { type: String, required: true },
   antagonist: {
     username: String,
