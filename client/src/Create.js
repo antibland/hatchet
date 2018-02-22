@@ -85,7 +85,8 @@ class Create extends Component {
       },
       versus: {
         margin: '0 1em',
-        width: '100px'
+        width: '100px',
+        height: '100%'
       },
       submitButton: {
         display: 'block',
