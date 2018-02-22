@@ -1,27 +1,33 @@
 import React, { Component } from 'react';
 
 class Home extends Component {
+  constructor() {
+    super();
+    this.state = {
+      fights: []
+    }
+  }
   componentDidMount() {
-    var url = '/api/show/fights';
-    //var url = '/api/test';
+    let url = '/api/show/fights';
 
     fetch(url)
       .then(res => res.json())
-      .then(data => console.log(data));
-
-    // fetch(url)
-    // .then(function(response) {
-    //   console.log('success', response)
-    // })
-    // .catch(function(error) {
-    //   console.log('error', error)
-    // });
+      .then(data => this.setState({ fights: data }));
   }
 
   render() {
     return (
       <div>
-        <h1>Hey</h1>
+        <ul>
+          {this.state.fights.map(fight => {
+            return (
+              <li key={fight._id}>
+                <span className="created">{fight.created_at}</span>
+                <span className="text">{fight.antagonist.text}</span>
+              </li>
+            )
+          })}
+        </ul>
       </div>
     );
   }

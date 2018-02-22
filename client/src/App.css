@@ -27,6 +27,19 @@ h2 {
   color: var(--gold);
 }
 
+a.active {
+  color: white;
+}
+
+ul, li {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+}
+
 .App {
   text-align: center;
 }
