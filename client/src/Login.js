@@ -8,7 +8,7 @@ function validate(email, password) {
   };
 }
 
-class Join extends Component {
+class Login extends Component {
   constructor() {
     super();
     this.state = {
@@ -19,6 +19,7 @@ class Join extends Component {
         password: false,
       }
     }
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -27,9 +28,26 @@ class Join extends Component {
       e.preventDefault();
       return;
     }
-    const { email, password } = this.state;
-    alert(`Signed up with email: ${email} password: ${password}`);
+
     e.preventDefault();
+
+    fetch('/api/login', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: this.state.email,
+        password: this.state.password,
+      })
+    })
+      .then(res => res.json())
+      .then(data => console.log(data))
+
+    //const { email, password } = this.state;
+    //alert(`Signed up with email: ${email} password: ${password}`);
+    //e.preventDefault();
   }
 
   canBeSubmitted() {
@@ -73,10 +91,14 @@ class Join extends Component {
     return (
       <div>
         <h2 className="ribbon">
-          <strong className="ribbon-content">Join</strong>
+          <strong className="ribbon-content">Login</strong>
         </h2>
 
-        <form action="/api/join" method="POST" onChange={this.handleChange}>
+        <form
+          action="/api/login"
+          method="POST"
+          onSubmit={this.handleSubmit}
+          onChange={this.handleChange}>
           <label htmlFor="email">Email</label>
           <div className="required-field-wrapper">
             <input
@@ -86,7 +108,6 @@ class Join extends Component {
               name="email"
               id="email"
               value={this.state.email}
-              placeholder="winner@someplace.com"
               onBlur={this.handleBlur('email')}/>
             <span className="required">*</span>
           </div>
@@ -100,7 +121,6 @@ class Join extends Component {
               name="password"
               id="password"
               value={this.state.password}
-              placeholder="not_your_cats_name"
               onBlur={this.handleBlur('password')}/>
               <span className="required">*</span>
             </div>
@@ -115,4 +135,4 @@ class Join extends Component {
   }
 }
 
-export default Join;
+export default Login;

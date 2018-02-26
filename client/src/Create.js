@@ -12,7 +12,7 @@ class Create extends Component {
   constructor() {
     super();
     this.state = {
-      target: 'individual',
+      target: 'someone',
       character_count: 0,
       is_valid: false
     }
@@ -100,7 +100,7 @@ class Create extends Component {
     return (
       <div>
         <h2 className="ribbon">
-          <strong className="ribbon-content">Create a fight</strong>
+          <strong className="ribbon-content">Start a gripe</strong>
         </h2>
 
         <form onSubmit={this.handleSubmit} method="POST" action="/api/create/fight">
@@ -110,27 +110,27 @@ class Create extends Component {
             </div>
             <img src="./versus.png" alt="versus" style={styles.versus} />
             <div className="them">
-              {this.state.target === 'individual' ?
+              {this.state.target === 'someone' ?
                 <div style={styles.question_mark}></div> :
                 <div style={styles.earth}></div>
               }
             </div>
           </div>
 
-          <label htmlFor="target">Pick your target</label>
+          <label htmlFor="target">I have a gripe with...</label>
           <div className="styled-select slate">
             <select id="target" name="target" onChange={this.handleChange}>
-              <option value="individual">Individual</option>
-              <option value="world">The World</option>
+              <option value="someone">Someone</option>
+              <option value="world">Everyone</option>
             </select>
           </div>
 
-          {this.state.target === 'individual' ?
+          {this.state.target === 'someone' ?
             <div className="required-field-wrapper">
               <input
                 type="text"
                 aria-label="Enter username or email address"
-                className="individual"
+                className="someone"
                 required
                 placeholder="Enter username or email address" />
               <span className="required">*</span>
@@ -138,14 +138,14 @@ class Create extends Component {
             ''
           }
 
-          <label htmlFor="type">What type of fight?</label>
+          <label htmlFor="type">What type of gripe?</label>
           <div className="styled-select slate">
             <select name="type" id="type">
               {fight_type}
             </select>
           </div>
 
-          <label htmlFor="beef">State your beef</label>
+          <label htmlFor="beef">Why I'm right</label>
           <div className="required-field-wrapper">
             <textarea
               required
@@ -165,7 +165,7 @@ class Create extends Component {
             type="submit"
             disabled={!this.state.is_valid}
             className="button"
-            style={styles.submitButton}>Submit</button>
+            style={styles.submitButton}>Send</button>
         </form>
       </div>
     );
