@@ -3,17 +3,15 @@ const path = require('path');
 const mongoose = require('mongoose');
 const app = express();
 const bodyParser = require('body-parser');
+const cors = require('cors');
+
+//const MongoStore = require('connect-mongo')(session);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Models
-const Fight = require('./models/fight.js');
-const User = require('./models/user.js');
-
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, 'client/build')));
-
+const Fight = require('./models/fight');
 
 // connect to Mongo when the app initializes
 if (app.get('env') === 'development') {
@@ -22,13 +20,20 @@ if (app.get('env') === 'development') {
   // connect to production database
 }
 
+var db = mongoose.connection || null;
+
+//handle mongo error
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {
+  // we're connected!
+});
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'client/build')));
+
 // Put all API endpoints under '/api'
 app.get('/api/test', (req, res) => {
-  //console.log(req.body.name)
-  // console.log('hey')
-  // console.log(req.body.beef)
   const data = { name: 'Andy', state: 'Oregon'};
-
   res.json(data);
 });
 
@@ -57,35 +62,11 @@ app.post('/api/create/fight', (req, res) => {
   });
 });
 
-app.post('/api/create/user', (req, res) => {
-  // create a user a new user
-  let testUser = new User({
-    username: 'jmar777',
-    password: 'Password123'
-  });
+const userApi = require('./controllers/user.js');
 
-  // save user to database
-  testUser.save(function(err) {
-    if (err) throw err;
-
-    // fetch user and test password verification
-    User.findOne({ username: 'jmar777' }, function(err, user) {
-      if (err) throw err;
-
-      // test a matching password
-      user.comparePassword('Password123', function(err, isMatch) {
-        if (err) throw err;
-        console.log('Password123:', isMatch); // -> Password123: true
-      });
-
-      // test a failing password
-      user.comparePassword('123Password', function(err, isMatch) {
-        if (err) throw err;
-        console.log('123Password:', isMatch); // -> 123Password: false
-      });
-    });
-  });
-});
+app.post('/api/join', userApi.join);
+app.post('/api/login', cors(), userApi.login);
+app.get('/api/logout', userApi.logout);
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
