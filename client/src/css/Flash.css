@@ -1,6 +1,13 @@
-.flash.error {
-  background: hsla(0, 100%, 50%, .5);
+.flash {
   padding: 1em;
   border-radius: 4px;
   font-family: 'Bitter';
+}
+
+.flash.error {
+  background-color: hsla(0, 100%, 50%, .5);
+}
+
+.flash.success {
+  background-color: hsla(120, 100%, 25.1%, .5);
 }

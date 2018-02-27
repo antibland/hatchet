@@ -14,9 +14,15 @@ exports.join = (req, res, next) => {
     //use schema.create to insert data into the db
     User.create(userData, function (err, user) {
       if (err) {
-        return next(err)
+        res.status(401).json({
+          type: 'failure',
+          message: 'An account already exists with this email address.'
+        });
       } else {
-        return res.redirect('/profile');
+        res.status(401).json({
+          type: 'success',
+          message: 'We\'ve just emailed you a confirmation link. Make things real!'
+        });
       }
     });
   }
@@ -25,11 +31,13 @@ exports.join = (req, res, next) => {
 exports.login = (req, res, next) => {
   User.authenticate(req.body.email, req.body.password, (error, user) => {
     if (error || !user) {
-      let message = 'Your email or password is incorrect. It happens.';
-      res.status(401).json({ message });
+      res.status(401).json({
+        type: 'failure',
+        message: 'Your email or password is incorrect. It happens.'
+      });
     } else {
       return res.json({
-        message: 'success',
+        type: 'success',
         token: jwt.sign({
           email: user.email,
           _id: user._id

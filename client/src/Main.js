@@ -5,6 +5,7 @@ import Create from './Create';
 import Join from './Join';
 import Login from './Login';
 import Logout from './Logout';
+import ForgotPassword from './ForgotPassword';
 
 const Main = () => (
   <main>
@@ -14,6 +15,7 @@ const Main = () => (
       <Route exact path='/join' component={Join}/>
       <Route exact path='/login' component={Login}/>
       <Route exact path='/logout' component={Logout}/>
+      <Route exact path='/forgot_password' component={ForgotPassword}/>
     </Switch>
   </main>
 );

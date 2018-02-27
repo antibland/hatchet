@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { fakeAuth } from './Auth.js';
 import './css/Flash.css';
 
@@ -40,7 +41,7 @@ class Login extends Component {
       method: 'POST',
       headers: {
         Accept: 'application/json',
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         email: this.state.email,
@@ -48,9 +49,9 @@ class Login extends Component {
       })
     }).then(res => res.json())
       .then(data => {
-        if (data.message === 'success' && data.token.length) {
+        if (data.type === 'success' && data.token.length) {
           fakeAuth.authenticate(() => { this.props.history.push('/') });
-        } else {
+        } else if (data.type === 'failure') {
           this.setState({
             flash: {
               message: data.message,
@@ -86,6 +87,13 @@ class Login extends Component {
       submitButton: {
         display: 'block',
         width: '100%'
+      },
+      forgottenPassword: {
+        padding: '1em 0'
+      },
+      forgottenPasswordLink: {
+        color: 'blue',
+        textDecoration: 'none'
       }
     }
 
@@ -153,6 +161,11 @@ class Login extends Component {
             disabled={isDisabled}
             className="button"
             style={styles.submitButton}>Submit</button>
+            <div style={styles.forgottenPassword}>
+              <Link style={styles.forgottenPasswordLink} to={'/forgot_password'}>
+                I forgot my password
+              </Link>
+            </div>
         </form>
       </div>
     );

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './css/Flash.css';
 
 function validate(email, password) {
   // true means invalid, so our conditions got reversed
@@ -12,6 +13,10 @@ class Join extends Component {
   constructor() {
     super();
     this.state = {
+      flash: {
+        type: null,
+        message: null
+      },
       email: '',
       password: '',
       touched: {
@@ -20,6 +25,7 @@ class Join extends Component {
       }
     }
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit(e) {
@@ -27,9 +33,37 @@ class Join extends Component {
       e.preventDefault();
       return;
     }
-    const { email, password } = this.state;
-    alert(`Signed up with email: ${email} password: ${password}`);
+
     e.preventDefault();
+
+    fetch('/api/join', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: this.state.email,
+        password: this.state.password
+      })
+    }).then(res => res.json())
+      .then(data => {
+        if (data.type === 'success') {
+          this.setState({
+            flash: {
+              message: data.message,
+              type: 'success'
+            }
+          })
+        } else if (data.type === 'failure') {
+          this.setState({
+            flash: {
+              message: data.message,
+              type: 'error'
+            }
+          })
+        }
+      })
   }
 
   canBeSubmitted() {
@@ -70,13 +104,30 @@ class Join extends Component {
       return hasError ? shouldShow : false;
     };
 
+    let flashClasses = this.state.flash.type !== null
+      ? `flash ${this.state.flash.type}`
+      : '';
+
+    let flashMessage = this.state.flash.message !== null
+      ? <div className={flashClasses}>
+          { this.state.flash.message }
+        </div>
+      : '';
+
     return (
       <div>
         <h2 className="ribbon">
           <strong className="ribbon-content">Join</strong>
         </h2>
 
-        <form action="/api/join" method="POST" onChange={this.handleChange}>
+        <form
+          action="/api/join"
+          method="POST"
+          onSubmit={this.handleSubmit}
+          onChange={this.handleChange}>
+
+          { flashMessage }
+
           <label htmlFor="email">Email</label>
           <div className="required-field-wrapper">
             <input
