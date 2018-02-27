@@ -23,20 +23,18 @@ exports.join = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
-  console.log('exports.login', req.body.email, req.body.password)
   User.authenticate(req.body.email, req.body.password, (error, user) => {
     if (error || !user) {
-      let message = 'Wrong email or password.';
+      let message = 'Your email or password is incorrect. It happens.';
       res.status(401).json({ message });
     } else {
-      console.log('it all looks good')
       return res.json({
+        message: 'success',
         token: jwt.sign({
           email: user.email,
           _id: user._id
         }, 'RESTFULAPIs')
       });
-      //return res.redirect('/profile');
     }
   });
 };

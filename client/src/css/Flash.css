@@ -1,0 +1,6 @@
+.flash.error {
+  background: hsla(0, 100%, 50%, .5);
+  padding: 1em;
+  border-radius: 4px;
+  font-family: 'Bitter';
+}

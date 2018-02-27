@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { fakeAuth } from './Auth.js';
+import './css/Flash.css';
 
 function validate(email, password) {
   // true means invalid, so our conditions got reversed
@@ -7,11 +9,14 @@ function validate(email, password) {
     password: password.length === 0,
   };
 }
-
 class Login extends Component {
   constructor() {
     super();
     this.state = {
+      flash: {
+        type: null,
+        message: null
+      },
       email: '',
       password: '',
       touched: {
@@ -41,13 +46,19 @@ class Login extends Component {
         email: this.state.email,
         password: this.state.password,
       })
-    })
-      .then(res => res.json())
-      .then(data => console.log(data))
-
-    //const { email, password } = this.state;
-    //alert(`Signed up with email: ${email} password: ${password}`);
-    //e.preventDefault();
+    }).then(res => res.json())
+      .then(data => {
+        if (data.message === 'success' && data.token.length) {
+          fakeAuth.authenticate(() => { this.props.history.push('/') });
+        } else {
+          this.setState({
+            flash: {
+              message: data.message,
+              type: 'error'
+            }
+          })
+        }
+      })
   }
 
   canBeSubmitted() {
@@ -88,6 +99,16 @@ class Login extends Component {
       return hasError ? shouldShow : false;
     };
 
+    let flashClasses = this.state.flash.type !== null
+      ? `flash ${this.state.flash.type}`
+      : '';
+
+    let flashMessage = this.state.flash.message !== null
+      ? <div className={flashClasses}>
+          { this.state.flash.message }
+        </div>
+      : '';
+
     return (
       <div>
         <h2 className="ribbon">
@@ -99,6 +120,9 @@ class Login extends Component {
           method="POST"
           onSubmit={this.handleSubmit}
           onChange={this.handleChange}>
+
+          { flashMessage }
+
           <label htmlFor="email">Email</label>
           <div className="required-field-wrapper">
             <input

@@ -19,7 +19,8 @@ body {
 }
 
 h1, h2, h3, .total-votes, .button,
-label, input, textarea, ::placeholder, select {
+label, input, textarea, ::placeholder, select,
+.flash, .flash * {
   font-family: 'Bitter', serif;
 }
 
@@ -85,7 +86,6 @@ li {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
-
 
 .featured-fights-container {
   display: flex;
@@ -167,145 +167,3 @@ li {
   margin-top: 0.5em;
   text-shadow: 0 1px 0 white;
 }
-
-/* Forms */
-
-form {
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
-  background-color:white;
-  padding: 3em;
-  border-radius: 4px;
-  box-shadow: rgba(0, 0, 0, 0.33) 7px 7px 40px 0;
-  margin-bottom: 4em;
-}
-
-label {
-  display: block;
-  cursor: pointer;
-  text-transform: uppercase;
-  font-family: 'Bitter', serif;
-  color: var(--brown);
-  font-weight: bold;
-  letter-spacing: 1px;
-  font-size: 1.5em;
-  margin: 1.5em 0 .5em;
-}
-
-.styled-select {
-  background: url(/forms/select-arrow.png) no-repeat 96% 0;
-  height: 29px;
-  overflow: hidden;
-  width: 240px;
-  max-width: 100%;
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
-}
-
-.styled-select select {
-  background: transparent;
-  border: none;
-  font-size: 14px;
-  height: 29px;
-  padding: 5px;
-  width: 268px;
-}
-
-.styled-select.slate {
-  height: 34px;
-  width: 240px;
-  margin: 0 auto 1em;
-}
-
-.styled-select.slate select {
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-  font-size: 16px;
-  height: 34px;
-  width: 268px;
-}
-
-input, textarea {
-  width: 100%;
-  padding: .7em .9em;
-  font-size: .9em;
-  margin-bottom: .5em;
-}
-
-::placeholder {
-  color: black;
-  font-size: 1em;
-}
-
-[disabled] {
-  opacity: .5;
-}
-
-:invalid {
-  box-shadow: none;
-}
-
-.required {
-  padding-left: 10px;
-  color: red;
-  font-weight: bold;
-  font-size: 30px;
-  position: relative;
-  top: 5px;
-}
-
-.required-field-wrapper {
-  display: flex;
-  align-items: center;
-}
-
-/* Ribbon */
-
-.ribbon {
-  font-size: 16px !important;
-  /* This ribbon is based on a 16px font side and a 24px vertical rhythm. I've used em's to position each element for scalability. If you want to use a different font size you may have to play with the position of the ribbon elements */
-
-  width: 450px;
-  max-width: calc(100% - 5em);
-  position: relative;
-  background-color: rgb(189, 67, 0);
-  color: #fff;
-  text-align: center;
-  padding: 1em 2em; /* Adjust to suit */
-  margin: 2em auto 3em; /* Based on 24px vertical rhythm. 48px bottom margin - normally 24 but the ribbon 'graphics' take up 24px themselves so we double it. */
- }
- .ribbon:before, .ribbon:after {
-  content: "";
-  position: absolute;
-  display: block;
-  bottom: -1em;
-  border: 1.5em solid #9e3700;
-  z-index: -1;
- }
- .ribbon:before {
-  left: -2em;
-  border-right-width: 1.5em;
-  border-left-color: transparent;
- }
- .ribbon:after {
-  right: -2em;
-  border-left-width: 1.5em;
-  border-right-color: transparent;
- }
- .ribbon .ribbon-content:before, .ribbon .ribbon-content:after {
-  content: "";
-  position: absolute;
-  display: block;
-  border-style: solid;
-  border-color: var(--brown) transparent transparent transparent;
-  bottom: -1em;
- }
- .ribbon .ribbon-content:before {
-  left: 0;
-  border-width: 1em 0 0 1em;
- }
- .ribbon .ribbon-content:after {
-  right: 0;
-  border-width: 1em 1em 0 0;
- }

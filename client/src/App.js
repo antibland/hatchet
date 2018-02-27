@@ -4,22 +4,24 @@ import Main from './Main';
 import Header from './Header.js';
 import { fakeAuth } from './Auth.js';
 import './App.css';
-import { withRouter } from 'react-router-dom';
+import './css/Ribbon.css';
 
-const AuthButton = withRouter(({ history }) => (
-  fakeAuth.isAuthenticated === true
-   ? <p>
-      Welcome. <button onClick={() => {
-        fakeAuth.signout(() => history.push('/login'))
-      }}>Log out</button>
-    </p>
-  :  <div>
-      <p>You are not logged in</p>
-        <button onClick={() => {
-          fakeAuth.authenticate(() => history.push('/'))
-        }}>Log in</button>
-      </div>
-))
+//import { withRouter } from 'react-router-dom';
+
+// const AuthButton = withRouter(({ history }) => (
+//   fakeAuth.isAuthenticated === true
+//    ? <p>
+//       Welcome. <button onClick={() => {
+//         fakeAuth.signout(() => history.push('/login'))
+//       }}>Log out</button>
+//     </p>
+//   :  <div>
+//       <p>You are not logged in</p>
+//         <button onClick={() => {
+//           fakeAuth.authenticate(() => history.push('/'))
+//         }}>Log in</button>
+//       </div>
+// ))
 
 class App extends Component {
   render() {
@@ -27,7 +29,6 @@ class App extends Component {
 
     return (
       <div className="App">
-        <AuthButton />
         <Header />
         <Main />
         {/* <FightsContainer fights={fakeServerData} /> */}
