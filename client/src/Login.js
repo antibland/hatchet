@@ -162,7 +162,7 @@ class Login extends Component {
             className="button"
             style={styles.submitButton}>Submit</button>
             <div style={styles.forgottenPassword}>
-              <Link style={styles.forgottenPasswordLink} to={'/forgot_password'}>
+              <Link style={styles.forgottenPasswordLink} to={`/forgot_password?email=${this.state.email}`}>
                 I forgot my password
               </Link>
             </div>

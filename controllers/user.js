@@ -19,7 +19,7 @@ exports.join = (req, res, next) => {
           message: 'An account already exists with this email address.'
         });
       } else {
-        res.status(401).json({
+        res.json({
           type: 'success',
           message: 'We\'ve just emailed you a confirmation link. Make things real!'
         });
@@ -46,6 +46,29 @@ exports.login = (req, res, next) => {
     }
   });
 };
+
+exports.reset_password = (req, res, next) => {
+  User.findOne({ email: req.body.email })
+    .exec(function (err, user) {
+      if (err) {
+        res.status(401).json({
+          type: 'failure',
+          message: 'A system error occurred. We are looking into it.'
+        });
+      } else if (!user) {
+        res.status(401).json({
+          type: 'failure',
+          message: `There is no account associated with ${req.body.email}.`
+        });
+      } else {
+        // Generate password reset email and send email it
+        res.json({
+          type: 'success',
+          message: `A link to reset your password has been sent to ${req.body.email}.`
+        })
+      }
+    });
+}
 
 exports.logout = (req, res, next) => {
   res.end();

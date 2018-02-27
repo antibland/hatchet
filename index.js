@@ -66,6 +66,7 @@ const userApi = require('./controllers/user.js');
 
 app.post('/api/join', userApi.join);
 app.post('/api/login', cors(), userApi.login);
+app.post('/api/reset_password', userApi.reset_password);
 app.get('/api/logout', userApi.logout);
 
 // The "catchall" handler: for any request that doesn't

@@ -15,7 +15,7 @@ const Main = () => (
       <Route exact path='/join' component={Join}/>
       <Route exact path='/login' component={Login}/>
       <Route exact path='/logout' component={Logout}/>
-      <Route exact path='/forgot_password' component={ForgotPassword}/>
+      <Route path='/forgot_password' component={ForgotPassword}/>
     </Switch>
   </main>
 );

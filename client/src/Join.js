@@ -53,7 +53,9 @@ class Join extends Component {
             flash: {
               message: data.message,
               type: 'success'
-            }
+            },
+            email: '',
+            password: ''
           })
         } else if (data.type === 'failure') {
           this.setState({
