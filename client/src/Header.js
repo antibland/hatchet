@@ -2,20 +2,23 @@ import React from 'react';
 import { NavLink } from 'react-router-dom'
 import { fakeAuth } from './Auth.js';
 
+const Logo = () => (
+  <h1><NavLink exact to='/'>Big Idea, Inc.</NavLink></h1>
+);
+
 const Header = () => (
   <header>
-    <nav>
+    <Logo />
+    <nav role='main'>
       <ul>
-        <li><NavLink exact to='/'>Home</NavLink></li>
-
         { fakeAuth.isAuthenticated === true
           ? <React.Fragment>
-              <li><NavLink exact to='/create'>Start a gripe</NavLink></li>
-              <li><NavLink exact to='/logout'>Logout</NavLink></li>
+              <li><NavLink className="nav-link" exact to='/create'>Start a gripe</NavLink></li>
+              <li><NavLink className="nav-link" exact to='/logout'>Logout</NavLink></li>
             </React.Fragment>
           : <React.Fragment>
-              <li><NavLink exact to='/join'>Join</NavLink></li>
-              <li><NavLink exact to='/login'>Login</NavLink></li>
+              <li><NavLink className="nav-link" exact to='/join'>Join</NavLink></li>
+              <li><NavLink className="nav-link" exact to='/login'>Login</NavLink></li>
             </React.Fragment>
         }
       </ul>

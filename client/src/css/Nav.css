@@ -1,0 +1,20 @@
+header {
+  display: flex;
+  background-color: var(--brown);
+  padding: 1em 0;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1.5em;
+}
+
+header a {
+  color: white;
+}
+
+nav[role='main'] ul {
+  display: flex;
+}
+
+.nav-link {
+  padding-left: 1em;
+}

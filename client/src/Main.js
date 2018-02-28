@@ -6,6 +6,8 @@ import Join from './Join';
 import Login from './Login';
 import Logout from './Logout';
 import ForgotPassword from './ForgotPassword';
+import Terms from './Terms';
+import Privacy from './Privacy';
 
 const Main = () => (
   <main>
@@ -16,6 +18,8 @@ const Main = () => (
       <Route exact path='/login' component={Login}/>
       <Route exact path='/logout' component={Logout}/>
       <Route path='/forgot_password' component={ForgotPassword}/>
+      <Route exact path='/terms' component={Terms}/>
+      <Route exact path='/privacy' component={Privacy}/>
     </Switch>
   </main>
 );

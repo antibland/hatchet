@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import Loading from './Loading.js';
 class Home extends Component {
   constructor() {
     super();
@@ -19,14 +19,17 @@ class Home extends Component {
     return (
       <div>
         <ul>
-          {this.state.fights.map(fight => {
-            return (
-              <li key={fight._id}>
-                <span className="created">{fight.created_at}</span>
-                <span className="text">{fight.antagonist.text}</span>
-              </li>
-            )
-          })}
+          {this.state.fights.length
+            ? this.state.fights.map(fight => {
+              return (
+                <li key={fight._id}>
+                  <span className="created">{fight.created_at}</span>
+                  <span className="text">{fight.antagonist.text}</span>
+                </li>
+              )
+            })
+            : <Loading />
+          }
         </ul>
       </div>
     );

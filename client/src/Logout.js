@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { fakeAuth } from './Auth';
+import Loading from './Loading.js';
 
 class Logout extends Component {
 
@@ -12,9 +13,7 @@ class Logout extends Component {
 
   render() {
     return (
-      <h1 className="loading-text">
-        Logging out...
-      </h1>
+      <Loading text='Logging out...' />
     );
   }
 }

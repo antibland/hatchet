@@ -41,6 +41,25 @@ li {
   list-style: none;
 }
 
+main {
+  padding: 2em 1em 5em;
+}
+
+footer {
+  padding: 1em 2em;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #333;
+}
+
+footer a {
+  font-size: .8em;
+  text-decoration: none;
+  padding-left: 1.5em;
+}
+
 .App {
   text-align: center;
 }
