@@ -43,6 +43,7 @@ li {
 
 main {
   padding: 2em 1em 5em;
+  flex: 1;
 }
 
 footer {
@@ -62,6 +63,9 @@ footer a {
 
 .App {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .App-logo {
