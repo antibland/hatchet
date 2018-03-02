@@ -86,3 +86,26 @@ input, textarea {
   display: flex;
   align-items: center;
 }
+
+button.link-style {
+  appearance: none;
+  background: none;
+  border: none;
+  font-family: 'Bitter';
+  font-size: 16px;
+  color: blue;
+  text-align: center;
+  margin: 1em auto 0;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+.form-link {
+  color: blue;
+  text-decoration: none;
+  display: block;
+}
+
+.form-link:first-of-type {
+  margin-bottom: 1em;
+}

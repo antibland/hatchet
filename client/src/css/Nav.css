@@ -7,6 +7,10 @@ header {
   padding: 0 1.5em;
 }
 
+header h1 a {
+  font-size: 0.8em;
+}
+
 header a {
   color: white;
 }
@@ -16,5 +20,6 @@ nav[role='main'] ul {
 }
 
 .nav-link {
-  padding-left: 1em;
+  padding: 0 .5em;
+
 }
