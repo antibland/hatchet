@@ -78,7 +78,7 @@ class ForgotPassword extends Component {
   handleBlur = (field) => (e) => {
     this.setState({
       touched: { ...this.state.touched, [field]: true },
-    });
+    })
   }
 
   handleChange(e) {
@@ -94,7 +94,7 @@ class ForgotPassword extends Component {
         display: 'block',
         width: '100%'
       }
-    }
+    };
 
     const errors = validate(this.state.email);
     const isDisabled = Object.keys(errors).some(x => errors[x]);

@@ -23,7 +23,7 @@ class Join extends Component {
         email: false,
         password: false,
       }
-    }
+    };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -56,14 +56,14 @@ class Join extends Component {
             },
             email: '',
             password: ''
-          })
+          });
         } else if (data.type === 'failure') {
           this.setState({
             flash: {
               message: data.message,
               type: 'error'
             }
-          })
+          });
         }
       })
   }

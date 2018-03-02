@@ -8,23 +8,6 @@ import './css/Nav.css';
 import './css/Ribbon.css';
 import { Link } from 'react-router-dom';
 
-//import { withRouter } from 'react-router-dom';
-
-// const AuthButton = withRouter(({ history }) => (
-//   fakeAuth.isAuthenticated === true
-//    ? <p>
-//       Welcome. <button onClick={() => {
-//         fakeAuth.signout(() => history.push('/login'))
-//       }}>Log out</button>
-//     </p>
-//   :  <div>
-//       <p>You are not logged in</p>
-//         <button onClick={() => {
-//           fakeAuth.authenticate(() => history.push('/'))
-//         }}>Log in</button>
-//       </div>
-// ))
-
 const Footer = () => (
   <footer>
     <small>2018 &copy; Big Idea, Inc.</small>
