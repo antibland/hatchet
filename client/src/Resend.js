@@ -1,32 +1,34 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { fakeAuth } from './Auth.js';
-import './css/Flash.css';
 
-function validate(email, password) {
+function validate(email) {
   // true means invalid, so our conditions got reversed
   return {
-    email: email.length === 0,
-    password: password.length === 0,
+    email: email.length === 0
   };
 }
-class Login extends Component {
+class Resend extends Component {
+
   constructor() {
     super();
+
     this.state = {
       flash: {
         type: null,
         message: null
       },
       email: '',
-      password: '',
       touched: {
         email: false,
         password: false,
       }
-    };
-    this.handleSubmit = this.handleSubmit.bind(this);
+    }
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    let queryString = this.props.location.search.split('=')[1];
+    this.setState({ email: queryString });
   }
 
   handleSubmit(e) {
@@ -37,33 +39,38 @@ class Login extends Component {
 
     e.preventDefault();
 
-    fetch('/api/login', {
+    fetch('/api/resend', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        email: this.state.email,
-        password: this.state.password,
+        email: this.state.email
       })
     }).then(res => res.json())
       .then(data => {
-        if (data.type === 'success' && data.token.length) {
-          fakeAuth.authenticate(() => { this.props.history.push('/'); });
+        if (data.type === 'success') {
+          this.setState({
+            flash: {
+              message: data.message,
+              type: 'success'
+            },
+            email: ''
+          })
         } else if (data.type === 'failure') {
           this.setState({
             flash: {
               message: data.message,
               type: 'error'
             }
-          });
+          })
         }
       })
   }
 
   canBeSubmitted() {
-    const errors = validate(this.state.email, this.state.password);
+    const errors = validate(this.state.email);
     const isDisabled = Object.keys(errors).some(x => errors[x]);
     return !isDisabled;
   }
@@ -71,29 +78,25 @@ class Login extends Component {
   handleBlur = (field) => (e) => {
     this.setState({
       touched: { ...this.state.touched, [field]: true },
-    });
+    })
   }
 
   handleChange(e) {
     if (e.target.id === 'email') {
       this.setState({ email: e.target.value });
-    } else if (e.target.id === 'password') {
-      this.setState({ password: e.target.value });
     }
   }
 
   render() {
+
     let styles = {
       submitButton: {
         display: 'block',
         width: '100%'
-      },
-      forgottenPassword: {
-        padding: '1em 0'
       }
     };
 
-    const errors = validate(this.state.email, this.state.password);
+    const errors = validate(this.state.email);
     const isDisabled = Object.keys(errors).some(x => errors[x]);
 
     const shouldMarkError = (field) => {
@@ -116,11 +119,11 @@ class Login extends Component {
     return (
       <div>
         <h2 className="ribbon">
-          <strong className="ribbon-content">Login</strong>
+          <strong className="ribbon-content">Resend verification link</strong>
         </h2>
 
         <form
-          action="/api/login"
+          action="/api/resend"
           method="POST"
           onSubmit={this.handleSubmit}
           onChange={this.handleChange}>
@@ -136,39 +139,21 @@ class Login extends Component {
               name="email"
               id="email"
               value={this.state.email}
+              placeholder="winner@someplace.com"
               onBlur={this.handleBlur('email')}/>
             <span className="required">*</span>
           </div>
 
-          <label htmlFor="password">Password</label>
-          <div className="required-field-wrapper">
-            <input
-              className={shouldMarkError('password') ? "error" : ""}
-              required
-              type="password"
-              name="password"
-              id="password"
-              value={this.state.password}
-              onBlur={this.handleBlur('password')}/>
-              <span className="required">*</span>
-            </div>
           <button
             type="submit"
             disabled={isDisabled}
             className="button"
             style={styles.submitButton}>Submit</button>
-            <div style={styles.forgottenPassword}>
-              <Link className="form-link" to={`/forgot_password?email=${this.state.email}`}>
-                I forgot my password
-              </Link>
-              <Link className="form-link" to={`/resend?email=${this.state.email}`}>
-                Resend verification link
-              </Link>
-            </div>
+
         </form>
       </div>
     );
   }
 }
 
-export default Login;
+export default Resend;

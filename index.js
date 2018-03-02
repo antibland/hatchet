@@ -13,6 +13,11 @@ app.use(bodyParser.json());
 // Models
 const Fight = require('./models/fight');
 
+// dotenv
+if (app.get('env') === 'development') {
+  require('dotenv').config();
+}
+
 // connect to Mongo when the app initializes
 if (app.get('env') === 'development') {
   mongoose.connect('mongodb://localhost/jdi');
@@ -68,6 +73,9 @@ app.post('/api/join', userApi.join);
 app.post('/api/login', cors(), userApi.login);
 app.post('/api/reset_password', userApi.reset_password);
 app.get('/api/logout', userApi.logout);
+
+app.get('/api/confirmation/:token_id', userApi.confirmationPost);
+app.post('/api/resend', userApi.resendTokenPost);
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.

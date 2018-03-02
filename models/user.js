@@ -11,7 +11,21 @@ var UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-  }
+  },
+  isVerified: {
+    type: Boolean,
+    default: false
+  },
+  avatar: {
+    path: {
+      type: String,
+      trim: true
+    },
+    originalname: String
+  },
+  roles: [{ type: 'String' }],
+  username: String,
+  fullname: String
 });
 
 //authenticate input against database
@@ -25,6 +39,7 @@ UserSchema.statics.authenticate = function (email, password, callback) {
         err.status = 401;
         return callback(err);
       }
+
       bcrypt.compare(password, user.password, function (err, result) {
         if (result === true) {
           return callback(null, user);
@@ -38,6 +53,9 @@ UserSchema.statics.authenticate = function (email, password, callback) {
 //hashing a password before saving it to the database
 UserSchema.pre('save', function (next) {
   var user = this;
+
+  if (!user.isModified('password')) return next();
+
   bcrypt.hash(user.password, 10, function (err, hash) {
     if (err) {
       return next(err);
