@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import './css/Flash.css';
 
-function validate(email, password) {
+function validate(username, email, password) {
   // true means invalid, so our conditions got reversed
   return {
+    username: username.length === 0 || username.length < 4,
     email: email.length === 0,
-    password: password.length === 0,
+    password: password.length < 8
   };
 }
 
@@ -17,6 +18,7 @@ class Join extends Component {
         type: null,
         message: null
       },
+      username: '',
       email: '',
       password: '',
       touched: {
@@ -43,6 +45,7 @@ class Join extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
+        username: this.state.username,
         email: this.state.email,
         password: this.state.password
       })
@@ -54,6 +57,7 @@ class Join extends Component {
               message: data.message,
               type: 'success'
             },
+            username: '',
             email: '',
             password: ''
           });
@@ -69,7 +73,7 @@ class Join extends Component {
   }
 
   canBeSubmitted() {
-    const errors = validate(this.state.email, this.state.password);
+    const errors = validate(this.state.username, this.state.email, this.state.password);
     const isDisabled = Object.keys(errors).some(x => errors[x]);
     return !isDisabled;
   }
@@ -85,6 +89,8 @@ class Join extends Component {
       this.setState({ email: e.target.value });
     } else if (e.target.id === 'password') {
       this.setState({ password: e.target.value });
+    } else if (e.target.id === 'username') {
+      this.setState({ username: e.target.value });
     }
   }
 
@@ -96,7 +102,7 @@ class Join extends Component {
       }
     }
 
-    const errors = validate(this.state.email, this.state.password);
+    const errors = validate(this.state.username, this.state.email, this.state.password);
     const isDisabled = Object.keys(errors).some(x => errors[x]);
 
     const shouldMarkError = (field) => {
@@ -130,6 +136,22 @@ class Join extends Component {
 
           { flashMessage }
 
+          <label htmlFor="username">Username</label>
+          <div className="required-field-wrapper">
+            <input
+              className={shouldMarkError('username') ? "error" : ""}
+              required
+              type="text"
+              name="username"
+              id="username"
+              value={this.state.username}
+              placeholder="petty_warrior"
+              maxlength="28"
+              onBlur={this.handleBlur('username')}/>
+              <span className="required">*</span>
+              <span role="info">Letters, numbers, underscores and dots are okay.</span>
+          </div>
+
           <label htmlFor="email">Email</label>
           <div className="required-field-wrapper">
             <input
@@ -156,6 +178,7 @@ class Join extends Component {
               placeholder="not_your_cats_name"
               onBlur={this.handleBlur('password')}/>
               <span className="required">*</span>
+              <span role="info">At least 8 characters.</span>
             </div>
           <button
             type="submit"

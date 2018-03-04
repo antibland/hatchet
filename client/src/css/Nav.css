@@ -17,9 +17,22 @@ header a {
 
 nav[role='main'] ul {
   display: flex;
+  align-items: center;
 }
 
 .nav-link {
-  padding: 0 .5em;
+  padding: 1em .5em;
+  text-decoration: none;
 
+}
+.nav-link.avatar {
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-link.avatar svg {
+  width: 1.4em;
+  height: 1.4em;
+  fill: white;
+  margin-right: 0.5em;
 }

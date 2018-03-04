@@ -50,7 +50,10 @@ class Login extends Component {
     }).then(res => res.json())
       .then(data => {
         if (data.type === 'success' && data.token.length) {
-          fakeAuth.authenticate(() => { this.props.history.push('/'); });
+          fakeAuth.authenticate(() => {
+            fakeAuth.user.username = data.user.username;
+            this.props.history.push('/');
+          });
         } else if (data.type === 'failure') {
           this.setState({
             flash: {

@@ -1,4 +1,7 @@
 const fakeAuth = {
+  user: {
+    username: null
+  },
   isAuthenticated: false,
   authenticate(cb){
     this.isAuthenticated = true;

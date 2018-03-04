@@ -9,6 +9,7 @@ import ForgotPassword from './ForgotPassword';
 import Resend from './Resend';
 import Terms from './Terms';
 import Privacy from './Privacy';
+import Profile from './Profile';
 
 const Main = () => (
   <main>
@@ -18,6 +19,7 @@ const Main = () => (
       <Route exact path='/join' component={Join}/>
       <Route exact path='/login' component={Login}/>
       <Route exact path='/logout' component={Logout}/>
+      <Route exact path='/profile' component={Profile}/>
       <Route path='/forgot_password' component={ForgotPassword}/>
       <Route path='/resend' component={Resend}/>
       <Route exact path='/terms' component={Terms}/>

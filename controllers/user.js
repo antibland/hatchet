@@ -44,9 +44,18 @@ const sendEmail = (opts) => {
 }
 
 exports.join = (req, res, next) => {
-  if (req.body.email && req.body.password) {
+  if (req.body.username && req.body.email && req.body.password) {
+
+    const regex = /^[a-zA-Z0-9_.-]*$/g;
+    if (!regex.test(req.body.username)) {
+      return res.status(401).json({
+        type: 'failure',
+        message: 'Sorry, but this username contains invalid characters.'
+      });
+    }
 
     var userData = {
+      username: req.body.username,
       email: req.body.email,
       password: req.body.password
     }
@@ -56,7 +65,7 @@ exports.join = (req, res, next) => {
       if (err) {
         res.status(401).json({
           type: 'failure',
-          message: 'An account already exists with this email address.'
+          message: 'The username or email address is not unique.'
         });
       } else {
 
@@ -90,12 +99,15 @@ exports.login = (req, res, next) => {
         });
       }
 
+      const token = jwt.sign({
+        email: user.email,
+        _id: user._id
+      }, 'RESTFULAPIs');
+
       return res.json({
         type: 'success',
-        token: jwt.sign({
-          email: user.email,
-          _id: user._id
-        }, 'RESTFULAPIs')
+        token,
+        user: { username: user.username }
       });
     }
   });

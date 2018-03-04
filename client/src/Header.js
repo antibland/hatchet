@@ -14,6 +14,15 @@ const Header = () => (
         { fakeAuth.isAuthenticated === true
           ? <React.Fragment>
               <li><NavLink className="nav-link" exact to='/create'>Start a gripe</NavLink></li>
+              <li><NavLink className="nav-link avatar" exact to='/profile'>
+                <svg aria-hidden="true" class="message-sent">
+                  <use xlinkHref="./symbols/svg-defs.svg#user-icon" />
+                </svg>
+                <span className="username">
+                  {fakeAuth.user.username}
+                </span>
+              </NavLink>
+              </li>
               <li><NavLink className="nav-link" exact to='/logout'>Logout</NavLink></li>
             </React.Fragment>
           : <React.Fragment>

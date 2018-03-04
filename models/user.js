@@ -12,6 +12,11 @@ var UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  username: {
+    type: String,
+    required: true,
+    unique: true
+  },
   isVerified: {
     type: Boolean,
     default: false
@@ -24,8 +29,10 @@ var UserSchema = new mongoose.Schema({
     originalname: String
   },
   roles: [{ type: 'String' }],
-  username: String,
-  fullname: String
+  fights: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Fight'
+  }]
 });
 
 //authenticate input against database
