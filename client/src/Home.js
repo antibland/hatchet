@@ -8,7 +8,7 @@ class Home extends Component {
     }
   }
   componentDidMount() {
-    let url = '/api/show/fights';
+    let url = '/api/fights';
 
     fetch(url)
       .then(res => res.json())

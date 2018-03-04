@@ -10,9 +10,6 @@ const cors = require('cors');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// Models
-const Fight = require('./models/fight');
-
 // dotenv
 if (app.get('env') === 'development') {
   require('dotenv').config();
@@ -42,38 +39,15 @@ app.get('/api/test', (req, res) => {
   res.json(data);
 });
 
-app.get('/api/show/fights', (req, res) => {
-  Fight.find({}, (err, fights) => {
-    if (err) throw err;
-    res.json(fights);
-  });
-});
-
-app.post('/api/create/fight', (req, res) => {
-  let f = new Fight({
-    type: req.body.type,
-    antagonist: {
-      username: 'admin',
-      email: 'jackhammer@ee.com',
-      text: req.body.beef
-    }
-  });
-
-  f.save(err => {
-    if (err) throw err;
-    const data = {type: 'success', message: 'it worked'};
-
-    res.redirect('back');
-  });
-});
+const fightApi = require('./controllers/fight.js');
+app.get('/api/fights', fightApi.getFights);
+app.post('/api/fight', fightApi.newFight);
 
 const userApi = require('./controllers/user.js');
-
 app.post('/api/join', userApi.join);
 app.post('/api/login', cors(), userApi.login);
 app.post('/api/reset_password', userApi.reset_password);
 app.get('/api/logout', userApi.logout);
-
 app.get('/api/confirmation/:token_id', userApi.confirmationPost);
 app.post('/api/resend', userApi.resendTokenPost);
 
