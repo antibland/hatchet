@@ -122,6 +122,8 @@ class Join extends Component {
         </div>
       : '';
 
+      let role = "role";
+
     return (
       <div>
         <h2 className="ribbon">
@@ -146,10 +148,10 @@ class Join extends Component {
               id="username"
               value={this.state.username}
               placeholder="petty_warrior"
-              maxlength="28"
+              maxLength="28"
               onBlur={this.handleBlur('username')}/>
               <span className="required">*</span>
-              <span role="info">Letters, numbers, underscores and dots are okay.</span>
+              <span role={role}>Letters, numbers, underscores and dots are okay.</span>
           </div>
 
           <label htmlFor="email">Email</label>
@@ -178,7 +180,7 @@ class Join extends Component {
               placeholder="not_your_cats_name"
               onBlur={this.handleBlur('password')}/>
               <span className="required">*</span>
-              <span role="info">At least 8 characters.</span>
+              <span role={role}>At least 8 characters.</span>
             </div>
           <button
             type="submit"
