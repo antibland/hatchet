@@ -122,7 +122,7 @@ class Join extends Component {
         </div>
       : '';
 
-      let role = "role";
+      let role = "note";
 
     return (
       <div>

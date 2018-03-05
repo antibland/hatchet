@@ -112,7 +112,7 @@ button.link-style {
   margin-bottom: 1em;
 }
 
-[role='info'] {
+[role='note'] {
   color: gray;
   font-style: italic;
   width: 100%;
