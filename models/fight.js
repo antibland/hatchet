@@ -5,6 +5,7 @@ const mongoose = require('mongoose'),
 const fightSchema = new Schema({
   created_at: {type: Date, default: Date.now},
   type: { type: String, required: true },
+  title: { type: String, required: true },
   votes: {
     for: { type: Number, default: 0 },
     against: { type: Number, default: 0 }

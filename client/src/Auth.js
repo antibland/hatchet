@@ -2,14 +2,15 @@
 // user: {
 //   username: 'pretty_god',
 //   userid: '5a9b907a018612b2615949c8'
-// }
+// },
+// isAuthenticated: true,
 
 const fakeAuth = {
   user: {
-    username: null,
-    userid: null
+    username: 'pretty_god',
+    userid: '5a9b907a018612b2615949c8'
   },
-  isAuthenticated: false,
+  isAuthenticated: true,
   authenticate(cb){
     this.isAuthenticated = true;
     localStorage.setItem('loggedIn', true);

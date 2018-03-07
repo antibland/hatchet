@@ -101,6 +101,7 @@ class Create extends Component {
     }
 
     let formAction = `/api/${fakeAuth.user.userid}/fight`;
+    let role = "note";
     return (
       <div>
         <h2 className="ribbon">
@@ -142,11 +143,26 @@ class Create extends Component {
             ''
           }
 
-          <label htmlFor="type">What type of gripe?</label>
+          <label htmlFor="type">What type?</label>
           <div className="styled-select slate">
             <select name="type" id="type">
               {fight_type}
             </select>
+          </div>
+
+          <label htmlFor="title">Title it</label>
+          <div className="required-field-wrapper">
+          <input
+                type="text"
+                onChange={this.handleTextareaChange}
+                onBlur={this.handleTextareaChange}
+                name="title"
+                id="title"
+                maxLength="100"
+                required
+                placeholder="Is it okay that... Should I allow my mother to..." />
+                <span className="required">*</span>
+                <span role={role}>A good title is neutral and fair. Don't use the title to state your argument—that's what the next part is for. Consider titles starting with: <em>Is it okay that...</em> or <em>Is my boyfriend being overly jealous when he....</em> Get the idea?</span>
           </div>
 
           <label htmlFor="beef">Why I'm right</label>

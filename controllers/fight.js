@@ -37,6 +37,7 @@ exports.newFight = async (req, res) => {
 
   let fight = await new Fight({
     type: req.body.type,
+    title: req.body.title,
     antagonist: user,
     text: {
       for: req.body.beef
@@ -50,7 +51,6 @@ exports.newFight = async (req, res) => {
   await user.fights.push(fight);
   await user.save(err => {
     if (err) throw err;
-    const data = {type: 'success', message: 'it worked'};
     res.redirect('back');
   });
 }
