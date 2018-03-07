@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './css/Form.css';
+import { fakeAuth } from './Auth.js';
 
 class Create extends Component {
   static fight_types = [
@@ -98,13 +99,15 @@ class Create extends Component {
         fontFamily: "'Bitter', serif"
       }
     }
+
+    let formAction = `/api/${fakeAuth.user.userid}/fight`;
     return (
       <div>
         <h2 className="ribbon">
           <strong className="ribbon-content">Start a gripe</strong>
         </h2>
 
-        <form onSubmit={this.handleSubmit} method="POST" action="/api/create/fight">
+        <form onSubmit={this.handleSubmit} method="POST" action={formAction}>
           <div className="slots" style={styles.slots}>
             <div className="you">
               <div style={styles.antagonist.avatar}></div>

@@ -52,6 +52,7 @@ class Login extends Component {
         if (data.type === 'success' && data.token.length) {
           fakeAuth.authenticate(() => {
             fakeAuth.user.username = data.user.username;
+            fakeAuth.user.userid = data.user.userid;
             this.props.history.push('/');
           });
         } else if (data.type === 'failure') {

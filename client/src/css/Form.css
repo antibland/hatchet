@@ -60,6 +60,10 @@ input, textarea {
   flex: 1;
 }
 
+textarea {
+  font-size: 15px;
+}
+
 ::placeholder {
   color: black;
   font-size: 1em;

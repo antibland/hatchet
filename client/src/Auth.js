@@ -1,6 +1,13 @@
+// Use locally for persistent login
+// user: {
+//   username: 'pretty_god',
+//   userid: '5a9b907a018612b2615949c8'
+// }
+
 const fakeAuth = {
   user: {
-    username: null
+    username: null,
+    userid: null
   },
   isAuthenticated: false,
   authenticate(cb){

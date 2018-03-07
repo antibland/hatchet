@@ -24,7 +24,7 @@ class Home extends Component {
               return (
                 <li key={fight._id}>
                   <span className="created">{fight.created_at}</span>
-                  <span className="text">{fight.antagonist.text}</span>
+                  <span className="text">{fight.text.for}</span>
                 </li>
               )
             })

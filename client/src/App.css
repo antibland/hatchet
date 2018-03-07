@@ -16,11 +16,10 @@ body {
 :root {
   --gold: #FBCB23;
   --brown: #722800;
+  --box-shadow: rgba(0, 0, 0, 0.33) 7px 7px 40px 0;
 }
 
-h1, h2, h3, .total-votes, .button,
-label, input, textarea, ::placeholder, select,
-.flash, .flash * {
+body {
   font-family: 'Bitter', serif;
 }
 

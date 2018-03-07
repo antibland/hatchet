@@ -107,7 +107,10 @@ exports.login = (req, res, next) => {
       return res.json({
         type: 'success',
         token,
-        user: { username: user.username }
+        user: {
+          userid: user._id,
+          username: user.username
+        }
       });
     }
   });

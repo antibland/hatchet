@@ -1,0 +1,43 @@
+.fightList {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.fightList li > *:not(.button) {
+  display: block;
+}
+
+.fightList .text {
+  font-size: 1.3em;
+  font-style: italic;
+}
+
+.fightList .button {
+  font-size: 1em;
+}
+
+.fightList li {
+  margin-bottom: 2em;
+  line-height: 1.7;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 1em 1.75em;
+  border-radius: 4px;
+  box-shadow: var(--box-shadow);
+}
+
+.system-message {
+  background-color: var(--brown);
+  padding: 1em;
+  width: 50%;
+  margin: 0.5em auto 0;
+  border-radius: 4px;
+  color: white;
+}
+
+.system-tip {
+  width: 1.2em;
+  height: 1.2em;
+  margin-right: 0.3em;
+  display: inline-block;
+  fill: currentColor;
+}

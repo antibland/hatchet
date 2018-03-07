@@ -41,7 +41,9 @@ app.get('/api/test', (req, res) => {
 
 const fightApi = require('./controllers/fight.js');
 app.get('/api/fights', fightApi.getFights);
-app.post('/api/fight', fightApi.newFight);
+app.get('/api/fights/:fightId', fightApi.getFight);
+app.post('/api/:userId/fight', fightApi.newFight);
+app.get('/api/:userId/fights', fightApi.getUserFights);
 
 const userApi = require('./controllers/user.js');
 app.post('/api/join', userApi.join);

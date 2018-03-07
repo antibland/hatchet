@@ -5,18 +5,23 @@ const mongoose = require('mongoose'),
 const fightSchema = new Schema({
   created_at: {type: Date, default: Date.now},
   type: { type: String, required: true },
+  votes: {
+    for: { type: Number, default: 0 },
+    against: { type: Number, default: 0 }
+  },
+  text: {
+    for: String,
+    against: String
+  },
   antagonist: {
-    username: String,
-    email: {type: String, required: true},
-    text: String,
-    votes: {type: Number, default: 0}
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   },
   defender: {
-    username: String,
-    email: String,
-    text: String,
-    votes: {type: Number, default: 0}
-  }
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  isLive: { type: Boolean, default: false }
 });
 
 const Fight = mongoose.model('Fight', fightSchema);
