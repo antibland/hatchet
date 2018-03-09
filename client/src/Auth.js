@@ -1,14 +1,14 @@
 // Use locally for persistent login
 // user: {
-//   username: 'pretty_god',
-//   userid: '5a9b907a018612b2615949c8'
+//   username: 'petty_god',
+//   userid: '5aa0d3e9aa20e725d53d4542'
 // },
 // isAuthenticated: true,
 
 const fakeAuth = {
   user: {
-    username: 'pretty_god',
-    userid: '5a9b907a018612b2615949c8'
+    username: 'petty_god',
+    userid: '5aa0d3e9aa20e725d53d4542'
   },
   isAuthenticated: true,
   authenticate(cb){

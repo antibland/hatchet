@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const multer = require('multer');
 
 //const MongoStore = require('connect-mongo')(session);
 
@@ -33,11 +34,20 @@ db.once('open', function () {
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-// Put all API endpoints under '/api'
-app.get('/api/test', (req, res) => {
-  const data = { name: 'Andy', state: 'Oregon'};
-  res.json(data);
-});
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+  cb(null, 'client/public/avatars/')
+  },
+  filename: function(req, file, cb) {
+    let extension = file.originalname.split('.')[1];
+    let fname = `${req.params.userId}.${extension}`;
+  cb(null, fname);
+  }
+ });
+
+ const upload = multer({
+  storage: storage
+ });
 
 const fightApi = require('./controllers/fight.js');
 app.get('/api/fights', fightApi.getFights);
@@ -52,11 +62,13 @@ app.post('/api/reset_password', userApi.reset_password);
 app.get('/api/logout', userApi.logout);
 app.get('/api/confirmation/:token_id', userApi.confirmationPost);
 app.post('/api/resend', userApi.resendTokenPost);
+app.get('/api/:userId/avatar', userApi.getAvatar);
+app.post('/api/:userId/avatar', upload.single('avatar'), userApi.setAvatar);
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname+'/client/build/index.html'));
+  res.sendFile(path.join(__dirname+'/client/public/index.html'));
 });
 
 const port = process.env.PORT || 5000;

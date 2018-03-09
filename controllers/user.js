@@ -189,3 +189,77 @@ exports.resendTokenPost = function (req, res, next) {
       });
   });
 };
+
+exports.getAvatar = async (req, res) => {
+  const { userId } = req.params;
+
+  User.findOne({ _id: userId }, (err, user) => {
+    if (err) {
+      return res.status(500).json({
+        type: 'failure',
+        message: 'We know you have an avatar but could not retrieve it. Please try again.'
+      });
+    }
+
+    if (!user.avatar || !user.avatar.path) {
+      return res.status(200).json({
+        type: 'success',
+        avatar: null
+      });
+    } else {
+      return res.status(200).json({
+        type: 'success',
+        avatar: `./avatars/${userId}.${user.avatar.ext}`
+      });
+    }
+  });
+}
+
+exports.setAvatar = async (req, res) => {
+  const { userId } = req.params;
+
+  const getImages = (callback, limit) => {
+    //Image.find(callback).limit(limit);
+  };
+
+  const getImageById = (id, callback) => {
+    //Image.findById(id, callback);
+  };
+
+  const addImage = async (image, callback) => {
+
+    await User.findOne({ _id: userId }, (err, user) => {
+      if (user) {
+        if (!user.avatar) {
+          user.avatar = {};
+        }
+
+        user.avatar.path = image.path;
+        user.avatar.originalname = image.originalname;
+        user.avatar.ext = image.originalname.split('.').pop();
+
+        user.save(err => {
+          if (err) {
+            return res.status(500).json({
+              type: 'failure',
+              message: 'The bad news is the image didn\'t save. The good news is...um...'
+            });
+          }
+          res.status(200).json({
+            type: 'success',
+            message: 'Woo-hoo! Nice new look.'
+          });
+        });
+      }
+    });
+  };
+
+  var path = req.file.path;
+  var imageName = req.file.originalname;
+
+  var imagepath = {};
+  imagepath.path = path;
+  imagepath.originalname = imageName;
+
+  await addImage(imagepath);
+};

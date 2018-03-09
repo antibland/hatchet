@@ -26,7 +26,8 @@ var UserSchema = new mongoose.Schema({
       type: String,
       trim: true
     },
-    originalname: String
+    originalname: String,
+    ext: String
   },
   roles: [{ type: 'String' }],
   fights: [{

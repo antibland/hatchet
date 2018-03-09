@@ -6,6 +6,192 @@ import Moment from 'react-moment';
 import './css/Flash.css';
 import './css/ProfileFightList.css';
 import './css/Accordion.css';
+import './css/ImagePreview.css';
+
+const FancyFileInput = (props) => (
+  <div>
+    <input
+      className="inputfile inputfile-1"
+      type="file"
+      onChange={props.updatePreviewImage}
+      name="avatar"
+      id="avatar" />
+    <label htmlFor="avatar">
+    <svg aria-hidden="true" className="upload-icon">
+      <use xlinkHref="./symbols/svg-defs.svg#upload-icon" />
+    </svg>
+    <span>Choose a file&hellip;</span>
+    </label>
+  </div>
+)
+class Avatar extends Component {
+  constructor() {
+    super();
+    this.state = {
+      file: '',
+      imagePreviewUrl: '',
+      flash: {
+        type: null,
+        message: null
+      },
+      currentAvatarUrl: null
+    };
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  setAvatar() {
+    fetch(`/api/${fakeAuth.user.userid}/avatar`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.type === 'success' && data.avatar !== null) {
+          this.setState({ currentAvatarUrl: data.avatar })
+        }
+      });
+  }
+
+  componentDidMount() {
+    this.setAvatar();
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+
+    const url = `/api/${fakeAuth.user.userid}/avatar`;
+
+    let formData = new FormData();
+    let { file } = this.state;
+
+    formData.append('avatar', file);
+
+    fetch(url, {
+      method: 'POST',
+      body: formData
+    }).then(res => res.json())
+      .then(data => {
+        if (data.type === 'success') {
+          this.setState({
+            flash: {
+              message: data.message,
+              type: 'success'
+            }
+          });
+          this.setAvatar();
+        } else if (data.type === 'failure') {
+          this.setState({
+            flash: {
+              message: data.message,
+              type: 'error'
+            }
+          });
+        }
+      });
+  }
+
+  handleChange(e) {
+    e.preventDefault();
+    let reader = new FileReader();
+    let file = e.target.files[0];
+
+    reader.onloadend = () => {
+      this.setState({
+        file,
+        imagePreviewUrl: reader.result
+      });
+    };
+
+    reader.readAsDataURL(file);
+  }
+
+  render() {
+    const form_action = `/api/${fakeAuth.user.userid}/avatar`;
+
+    let { imagePreviewUrl, currentAvatarUrl } = this.state;
+    let imagePreview = null;
+
+    let question_mark = './question_mark.png';
+
+    let styles = {
+      avatar: {
+        backgroundSize: 'cover',
+        width: '100px',
+        height: '100px',
+        borderRadius: '50%',
+        display: 'inline-block',
+        backgroundImage: `url(${imagePreviewUrl})`,
+        marginBottom: '0.5em'
+      },
+      question_mark: {
+        backgroundSize: '100% 100%',
+        width: '120px',
+        height: '120px',
+        borderRadius: '50%',
+        display: 'inline-block',
+        backgroundImage: `url(${question_mark})`
+      },
+      current_avatar: {
+        backgroundSize: 'cover',
+        width: '100px',
+        height: '100px',
+        borderRadius: '50%',
+        display: 'inline-block',
+        backgroundImage: `url(${currentAvatarUrl})`
+      },
+      previewContainer: {
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'column'
+      }
+    };
+
+    if (imagePreviewUrl) {
+      imagePreview = (
+        <div style={styles.previewContainer}>
+          <div style={styles.avatar}></div>
+          <button className="submitButton" type="submit">
+            Replace it!
+          </button>
+        </div>
+      );
+    } else {
+      imagePreview = '';
+    }
+
+    let currentAvatar = currentAvatarUrl
+      ? <div style={styles.current_avatar}></div>
+      : <div style={styles.question_mark}></div>
+
+    let flashClasses = this.state.flash.type !== null
+      ? `flash ${this.state.flash.type}`
+      : '';
+
+    let flashMessage = this.state.flash.message !== null
+      ? <div className={flashClasses}>
+          { this.state.flash.message }
+        </div>
+      : '';
+
+    return (
+      <div className="previewComponent">
+        <form
+          method="POST"
+          encType="multipart/form-data"
+          action={ form_action }
+          onSubmit={this.handleSubmit}>
+
+          { flashMessage }
+
+          { currentAvatar }
+
+          <FancyFileInput updatePreviewImage={this.handleChange} />
+
+          { imagePreview }
+        </form>
+      </div>
+    )
+  }
+}
 
 class Profile extends Component {
   constructor() {
@@ -26,7 +212,6 @@ class Profile extends Component {
           loading: false
         });
       });
-
   }
 
   render() {
@@ -52,7 +237,12 @@ class Profile extends Component {
         { this.state.loading === true
           ? <Loading />
           : <div>
-              <h1>{ fight_len } { fight_noun } found</h1>
+              <h1 className="profileH1">Hey, {fakeAuth.user.username}!</h1>
+              <Avatar />
+              { fight_len
+                ? <h2 className="profileH2">{ fight_len } { fight_noun } found</h2>
+                : ''
+              }
               <div className="fightlist tablist">
               { this.state.fights.length
                 ? this.state.fights.map((fight, index) => {
