@@ -63,7 +63,7 @@ class Login extends Component {
             }
           });
         }
-      })
+      });
   }
 
   canBeSubmitted() {
