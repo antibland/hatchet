@@ -42,7 +42,7 @@ input[type="checkbox"] {
 
 /* :checked */
 input:checked ~ .tab-content {
-  max-height: 30em;
+  max-height: 40em;
 }
 /* Icon */
 .tab-label::after {

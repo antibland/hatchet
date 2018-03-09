@@ -53,13 +53,14 @@
 
 .inputfile-1 + label {
   color: #f1e5e6;
-  background-color: #d3394c;
+  background-color: var(--brown);
+  transition: 0.3s color;
 }
 
 .inputfile-1:focus + label,
 .inputfile-1.has-focus + label,
 .inputfile-1 + label:hover {
-  background-color: #722040;
+  color: white;
 }
 
 .previewText {
