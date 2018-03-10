@@ -7,10 +7,10 @@
 
 const fakeAuth = {
   user: {
-    username: 'petty_god',
-    userid: '5aa0d3e9aa20e725d53d4542'
+    username: null,
+    userid: null
   },
-  isAuthenticated: true,
+  isAuthenticated: false,
   authenticate(cb){
     this.isAuthenticated = true;
     localStorage.setItem('loggedIn', true);
