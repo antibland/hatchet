@@ -20,7 +20,8 @@ if (app.get('env') === 'development') {
 if (app.get('env') === 'development') {
   mongoose.connect('mongodb://localhost/jdi');
 } else if (app.get('env') === 'production')  {
-  // connect to production database
+  mongoose.connect('mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASS + '@ds263408.mlab.com:63408/hatchet',
+  { useMongoClient: true })
 }
 
 var db = mongoose.connection || null;

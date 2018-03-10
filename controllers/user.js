@@ -102,7 +102,7 @@ exports.login = (req, res, next) => {
       const token = jwt.sign({
         email: user.email,
         _id: user._id
-      }, 'RESTFULAPIs');
+      }, process.env.JWT_SECRET);
 
       return res.json({
         type: 'success',
