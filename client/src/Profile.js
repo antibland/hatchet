@@ -46,7 +46,10 @@ class Avatar extends Component {
       .then(res => res.json())
       .then(data => {
         if (data.type === 'success' && data.avatar !== null) {
-          this.setState({ currentAvatarUrl: data.avatar })
+          this.setState({
+            currentAvatarUrl: data.avatar,
+            imagePreviewUrl: ''
+          });
         }
       });
   }
@@ -163,7 +166,7 @@ class Avatar extends Component {
       : <div style={styles.question_mark}></div>
 
     let flashClasses = this.state.flash.type !== null
-      ? `flash ${this.state.flash.type}`
+      ? `flash ${this.state.flash.type} bottom-margin`
       : '';
 
     let flashMessage = this.state.flash.message !== null

@@ -15,7 +15,7 @@ const Header = () => (
           ? <React.Fragment>
               <li><NavLink className="nav-link" exact to='/create'>Start a gripe</NavLink></li>
               <li><NavLink className="nav-link avatar" exact to='/profile'>
-                <svg aria-hidden="true" className="message-sent">
+                <svg aria-hidden="true" className="user-icon">
                   <use xlinkHref="./symbols/svg-defs.svg#user-icon" />
                 </svg>
                 <span className="username">

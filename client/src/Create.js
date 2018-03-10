@@ -11,15 +11,24 @@ class Create extends Component {
     'Friend'
   ];
 
+  static timeout = null;
+  static timeoutInterval = 2000;
+
   constructor() {
     super();
     this.state = {
       target: 'someone',
       character_count: 0,
-      is_valid: false
-    }
+      is_valid: false,
+      currentAvatarUrl: null,
+      opponentIsValidUser: null,
+      someone: ''
+    };
     this.handleChange = this.handleChange.bind(this);
     this.handleTextareaChange = this.handleTextareaChange.bind(this);
+    this.checkForUser = this.checkForUser.bind(this);
+    this.handleKeyUp = this.handleKeyUp.bind(this);
+    this.handleInput = this.handleInput.bind(this);
   }
 
   handleChange(e) {
@@ -28,6 +37,43 @@ class Create extends Component {
 
   handleSubmit(e) {
 
+  }
+
+  handleInput(e) {
+    this.setState({
+      opponentIsValidUser: null,
+      someone: e.target.value
+    });
+    clearTimeout(Create.timeout);
+  }
+
+  handleKeyUp(e) {
+    clearTimeout(Create.timeout);
+    Create.timeout = setTimeout(this.checkForUser, Create.timeoutInterval);
+  }
+
+  checkForUser() {
+    if (this.state.someone.length) {
+      fetch(`/api/${this.state.someone}`)
+        .then(res => res.json())
+        .then(data => {
+          this.setState({ opponentIsValidUser: data.type })
+        })
+    }
+  }
+
+  setAvatar() {
+    fetch(`/api/${fakeAuth.user.userid}/avatar`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.type === 'success' && data.avatar !== null) {
+          this.setState({ currentAvatarUrl: data.avatar })
+        }
+      });
+  }
+
+  componentDidMount() {
+    this.setAvatar();
   }
 
   handleTextareaChange(e) {
@@ -41,7 +87,7 @@ class Create extends Component {
   }
 
   render() {
-    let antagonist_avatar = './avatars/angry-businessman.jpg';
+    let antagonist_avatar = this.state.currentAvatarUrl;
     let question_mark = './question_mark.png';
     let earth = './earth.png';
     let count = this.state.character_count;
@@ -55,18 +101,18 @@ class Create extends Component {
     let styles = {
       antagonist: {
         avatar: {
-          backgroundSize: '100% 100%',
-          width: '120px',
-          height: '120px',
+          backgroundSize: 'cover',
+          width: '100px',
+          height: '100px',
           borderRadius: '50%',
           display: 'inline-block',
           backgroundImage: `url(${antagonist_avatar})`
         }
       },
       question_mark: {
-        backgroundSize: '100% 100%',
-        width: '120px',
-        height: '120px',
+        backgroundSize: 'cover',
+        width: '100px',
+        height: '100px',
         borderRadius: '50%',
         display: 'inline-block',
         backgroundImage: `url(${question_mark})`
@@ -102,6 +148,28 @@ class Create extends Component {
 
     let formAction = `/api/${fakeAuth.user.userid}/fight`;
     let role = "note";
+
+    let { someone, opponentIsValidUser } = this.state;
+    let me =fakeAuth.user.username;
+
+    let opponentIsValidUserResult =
+      opponentIsValidUser === false
+        ? (<div className="lookupResult">
+            We could not locate <strong>{someone}</strong>
+          </div>)
+        : opponentIsValidUser === true && someone === me
+          ? (<div className="lookupResult">
+              You have an axe to grind with yourself? No.
+            </div>)
+          : opponentIsValidUser === true && someone !== me
+            ? (<div className="lookupResult">
+                <svg aria-hidden="true" className="checkmark-icon">
+                  <use xlinkHref="./symbols/svg-defs.svg#checkmark-icon" />
+                </svg>
+                Current opponent: <strong>{someone}</strong>
+              </div>)
+            : '';
+
     return (
       <div>
         <h2 className="ribbon">
@@ -137,8 +205,11 @@ class Create extends Component {
                 aria-label="Enter username or email address"
                 className="someone"
                 required
+                onInput={this.handleInput}
+                onKeyUp={this.handleKeyUp}
                 placeholder="Enter username or email address" />
               <span className="required">*</span>
+              {opponentIsValidUserResult}
             </div> :
             ''
           }

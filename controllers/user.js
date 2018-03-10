@@ -58,7 +58,7 @@ exports.join = (req, res, next) => {
       username: req.body.username,
       email: req.body.email,
       password: req.body.password
-    }
+    };
 
     //use schema.create to insert data into the db
     User.create(userData, function (err, user) {
@@ -262,4 +262,24 @@ exports.setAvatar = async (req, res) => {
   imagepath.originalname = imageName;
 
   await addImage(imagepath);
+};
+
+exports.getUser = async (req, res) => {
+  await User.findOne({ username: req.params.userId })
+    .exec(function (err, user) {
+      if (err) {
+        res.status(401).json({
+          type: 'failure'
+        });
+      } else if (!user) {
+        res.status(401).json({
+          type: false
+        });
+      } else {
+        res.status(200).json({
+          type: true,
+          user
+        })
+      }
+    });
 };
