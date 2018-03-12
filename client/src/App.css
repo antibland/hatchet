@@ -110,10 +110,11 @@ footer a {
 }
 
 .featured-fights-container {
-  display: flex;
+  /* display: flex;
   min-height: 100vh;
   justify-content: center;
   align-items: center;
+  background-color: white; */
 }
 
 .fight-header {
@@ -123,6 +124,7 @@ footer a {
   background-position: 50% 50%;
   background-size: 20%;
   justify-content: space-between;
+  background-color: transparent;
 }
 
 .fight-header > * {
@@ -137,16 +139,19 @@ footer a {
   overflow: hidden;
   text-shadow: 2px 2px 0 var(--brown);
   letter-spacing: 1px;
+  white-space: nowrap;
 }
 
 .featured-fights-container > * {
-  flex: 1;
+  /* flex: 1;
   box-shadow: rgba(0, 0, 0, 0.33) 7px 7px 40px 0;
   padding: 4em 5em 5em;
   background: white;
   border-radius: 50%;
-  max-width: 600px;
-  animation: bounce-in 1.5s forwards;
+  max-width: 700px;
+  animation: bounce-in 1.5s forwards; */
+  background-color: white;
+  padding: 2em;
 }
 
 .fight-arguments {

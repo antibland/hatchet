@@ -73,7 +73,7 @@ class Fight extends Component {
     };
 
     return (
-      <div>
+      <div className="featured-fights-container">
       { this.state.fight
         ? <div>
             <header className="fight-header">
