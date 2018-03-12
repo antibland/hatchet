@@ -254,12 +254,12 @@ exports.setAvatar = async (req, res) => {
     });
   };
 
-  var path = req.file.path;
-  var imageName = req.file.originalname;
+  let imagepath = {};
 
-  var imagepath = {};
-  imagepath.path = path;
-  imagepath.originalname = imageName;
+  imagepath.mimetype = req.file.mimetype;
+  imagepath.size = req.file.size;
+  imagepath.path = req.file.path;
+  imagepath.originalname = req.file.originalname;
 
   await addImage(imagepath);
 };
