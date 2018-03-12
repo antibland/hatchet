@@ -1,0 +1,70 @@
+.featured-fights-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  max-width: 800px;
+  margin: 0 auto;
+  box-shadow: rgba(0, 0, 0, 0.33) 7px 7px 40px 0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.featured-fights-container > .versus {
+  flex-shrink: 1;
+  padding: 0;
+  max-width: 150px;
+}
+
+.featured-fights-container h2 {
+  margin: 0;
+  padding: 0.3em 0 1em;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-shadow: 2px 2px 0 var(--brown);
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+.featured-fights-container > * {
+  /* flex: 1;
+  box-shadow: rgba(0, 0, 0, 0.33) 7px 7px 40px 0;
+  padding: 4em 5em 5em;
+  background: white;
+  border-radius: 50%;
+  max-width: 700px;
+  animation: bounce-in 1.5s forwards; */
+  flex: 1;
+  background-color: white;
+  padding: 2em;
+}
+
+.fight-arguments {
+  display: flex;
+}
+
+.fight-arguments > * {
+  flex: 1;
+}
+
+.fight-text {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.antagonist-argument .fight-text {
+  padding-right: 2em;
+}
+
+.defender-argument .fight-text {
+  padding-left: 2em;
+}
+
+.total-votes {
+  background-color: var(--brown);
+  color: var(--gold);
+  padding: 0.75em 1.25em;
+  display: inline-block;
+  margin-top: 0.5em;
+  text-shadow: 0 1px 0 white;
+}

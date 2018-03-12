@@ -109,72 +109,6 @@ footer a {
   to { transform: rotate(360deg); }
 }
 
-.featured-fights-container {
-  /* display: flex;
-  min-height: 100vh;
-  justify-content: center;
-  align-items: center;
-  background-color: white; */
-}
-
-.fight-header {
-  display: flex;
-  background-image: url('/versus.png');
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-  background-size: 20%;
-  justify-content: space-between;
-  background-color: transparent;
-}
-
-.fight-header > * {
-  flex: 1;
-  max-width: 40%;
-}
-
-.fight-header h2 {
-  margin: 0;
-  padding: 0.3em 0 1em;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  text-shadow: 2px 2px 0 var(--brown);
-  letter-spacing: 1px;
-  white-space: nowrap;
-}
-
-.featured-fights-container > * {
-  /* flex: 1;
-  box-shadow: rgba(0, 0, 0, 0.33) 7px 7px 40px 0;
-  padding: 4em 5em 5em;
-  background: white;
-  border-radius: 50%;
-  max-width: 700px;
-  animation: bounce-in 1.5s forwards; */
-  background-color: white;
-  padding: 2em;
-}
-
-.fight-arguments {
-  display: flex;
-}
-
-.fight-arguments > * {
-  flex: 1;
-}
-
-.fight-text {
-  margin: 0;
-  line-height: 1.5;
-}
-
-.antagonist-argument .fight-text {
-  padding-right: 2em;
-}
-
-.defender-argument .fight-text {
-  padding-left: 2em;
-}
-
 .button {
   background: #FF31CB;
   padding: 0.75em 1.25em;
@@ -186,14 +120,6 @@ footer a {
   font-size: 1.3em;
 }
 
-.total-votes {
-  background-color: var(--brown);
-  color: var(--gold);
-  padding: 0.75em 1.25em;
-  display: inline-block;
-  margin-top: 0.5em;
-  text-shadow: 0 1px 0 white;
-}
 
 .bottom-margin {
   margin-bottom: 1em;

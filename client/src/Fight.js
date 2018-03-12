@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Loading from './Loading';
+import './css/Fight.css';
 
 function extractRootPath(str) {
   return str.substr(str.lastIndexOf('/')+1);
@@ -46,59 +47,26 @@ class Fight extends Component {
   }
 
   render() {
-    console.log(this.state.fight)
-    let antagonist_avatar = 'this.state.fight.antagonist.avatar';
-    let defender_avatar = 'this.state.fight.antagonist.avatar';
-    let styles = {
-      antagonist: {
-        avatar: {
-          backgroundSize: '100% 100%',
-          width: '100px',
-          height: '100px',
-          borderRadius: '50%',
-          display: 'inline-block',
-          backgroundImage: `url(${antagonist_avatar})`
-        }
-      },
-      defender: {
-        avatar: {
-          backgroundSize: '100% 100%',
-          width: '100px',
-          height: '100px',
-          borderRadius: '50%',
-          display: 'inline-block',
-          backgroundImage: `url(${defender_avatar})`
-        }
-      }
-    };
-
     return (
-      <div className="featured-fights-container">
+      <div>
       { this.state.fight
-        ? <div>
-            <header className="fight-header">
-              <div className="user1">
-                <UserAvatar
-                  imgpath={this.state.fight.antagonist.avatar.path}
-                  username={this.state.fight.antagonist.username}
-                />
-              </div>
-              <div className="user2">
+        ? <div className="featured-fights-container">
+            <div className="user1">
               <UserAvatar
-                  imgpath={this.state.fight.antagonist.avatar.path}
-                  username='Other person'
-                />
-              </div>
-            </header>
-            <div className="fight-arguments">
-              <div className="antagonist-argument">
-                <p className="fight-text">{(this.state.fight.text.for).substring(0, 100) + '…'}</p>
-                <p className="total-votes">Votes: {this.state.fight.votes.for}</p>
-              </div>
-              <div className="defender-argument">
-                <p className="fight-text">Argument against...</p>
-                <p className="total-votes">Votes: {this.state.fight.votes.against}</p>
-              </div>
+                imgpath={this.state.fight.antagonist.avatar.path}
+                username={this.state.fight.antagonist.username}
+              />
+              <p className="fight-text">{this.state.fight.text.for}</p>
+              <p className="total-votes">Votes: {this.state.fight.votes.for}</p>
+            </div>
+            <img className="versus" src="/versus.png" alt="versus graphic"/>
+            <div className="user2">
+            <UserAvatar
+                imgpath={this.state.fight.antagonist.avatar.path}
+                username='Other person'
+              />
+              <p className="fight-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil, iusto quod provident quisquam asperiores ea pariatur animi doloremque, itaque, totam quaerat illo at modi! Voluptatibus possimus repellat dolorum culpa quo.</p>
+              <p className="total-votes">Votes: {this.state.fight.votes.against}</p>
             </div>
           </div>
         : <Loading />
