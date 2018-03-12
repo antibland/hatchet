@@ -195,7 +195,6 @@ class Avatar extends Component {
     )
   }
 }
-
 class Profile extends Component {
   constructor() {
     super();
@@ -264,12 +263,15 @@ class Profile extends Component {
                             <span className="text">{fight.text.for}</span>
                             { fight.isLive
                               ? <Link className="button" to={'api/fights/' + fight._id}>View the fight</Link>
-                              : <p className="system-message">
-                                <svg aria-hidden="true" className="system-tip">
-                                  <use xlinkHref="./symbols/svg-defs.svg#system-tip" />
-                                </svg>
-                                  We are still waiting to hear from that coward to respond. Remain patient.
-                                </p>
+                              : <div>
+                                  <p className="system-message">
+                                  <svg aria-hidden="true" className="system-tip">
+                                    <use xlinkHref="./symbols/svg-defs.svg#system-tip" />
+                                  </svg>
+                                    We are still waiting to hear from that coward to respond. Remain patient.
+                                  </p>
+                                  <Link className="button" to={'/fight/' + fight._id}>View fight</Link>
+                                </div>
                             }
                           </div>
                         </div>

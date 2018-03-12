@@ -10,14 +10,21 @@ exports.getFights = async (req, res) => {
 
 exports.getFight = async (req, res) => {
   let { fightId } = req.params;
-  await Fight.find(fightId);
+  let fight = null;
 
-  if (fight) {
-    res.status(200).json({
-      type: 'success',
-      fight
+  fight = await Fight.findById(fightId).populate('antagonist');
+
+  if (!fight) {
+    return res.status(500).json({
+      type: 'failure',
+      message: 'You came here for a fight and got an error. WTF? Please try again.'
     });
   }
+
+  return res.status(200).json({
+    type: 'success',
+    fight
+  });
 }
 
 exports.getUserFights = async (req, res) => {
