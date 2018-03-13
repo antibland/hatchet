@@ -33,7 +33,8 @@ var UserSchema = new mongoose.Schema({
   fights: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Fight'
-  }]
+  }],
+  sessionToken: String
 });
 
 //authenticate input against database

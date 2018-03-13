@@ -60,7 +60,7 @@ const userApi = require('./controllers/user.js');
 app.post('/api/join', userApi.join);
 app.post('/api/login', cors(), userApi.login);
 app.post('/api/reset_password', userApi.reset_password);
-app.get('/api/logout', userApi.logout);
+app.get('/api/:userId/logout', userApi.logout);
 app.get('/api/confirmation/:token_id', userApi.confirmationPost);
 app.post('/api/resend', userApi.resendTokenPost);
 app.get('/api/:userId/avatar', userApi.getAvatar);

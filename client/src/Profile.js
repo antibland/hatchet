@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { fakeAuth } from './Auth.js';
+import { auth } from './Auth.js';
 import { Link } from 'react-router-dom';
 import Loading from './Loading.js';
 import Moment from 'react-moment';
@@ -42,7 +42,7 @@ class Avatar extends Component {
   }
 
   setAvatar() {
-    fetch(`/api/${fakeAuth.user.userid}/avatar`)
+    fetch(`/api/${auth.user.userid}/avatar`)
       .then(res => res.json())
       .then(data => {
         if (data.type === 'success' && data.avatar !== null) {
@@ -61,7 +61,7 @@ class Avatar extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    const url = `/api/${fakeAuth.user.userid}/avatar`;
+    const url = `/api/${auth.user.userid}/avatar`;
 
     let formData = new FormData();
     let { file } = this.state;
@@ -108,7 +108,7 @@ class Avatar extends Component {
   }
 
   render() {
-    const form_action = `/api/${fakeAuth.user.userid}/avatar`;
+    const form_action = `/api/${auth.user.userid}/avatar`;
 
     let { imagePreviewUrl, currentAvatarUrl } = this.state;
     let imagePreview = null;
@@ -204,7 +204,7 @@ class Profile extends Component {
     }
   }
   componentDidMount() {
-    let url = `/api/${fakeAuth.user.userid}/fights`;
+    let url = `/api/${auth.user.userid}/fights`;
 
     fetch(url)
       .then(res => res.json())
@@ -239,7 +239,7 @@ class Profile extends Component {
         { this.state.loading === true
           ? <Loading />
           : <div>
-              <h1 className="profileH1">Hey, {fakeAuth.user.username}!</h1>
+              <h1 className="profileH1">Hey, {auth.user.username}!</h1>
               <Avatar />
               { fight_len
                 ? <h2 className="profileH2">{ fight_len } { fight_noun } found</h2>

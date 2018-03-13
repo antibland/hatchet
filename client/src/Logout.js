@@ -1,14 +1,20 @@
 import React, { Component } from 'react';
-import { fakeAuth } from './Auth';
+import { auth } from './Auth';
 import Loading from './Loading.js';
 
 class Logout extends Component {
 
-  componentDidMount(){
-    fetch('/api/logout')
-      .then(() => {
-        fakeAuth.signout(() => { this.props.history.push('/') })
-      })
+  componentDidMount() {
+    let userId = auth.user.userid;
+    let url = `/api/${userId}/logout`;
+
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        auth.signout(() => {
+          this.props.history.push('/');
+        });
+      });
   }
 
   render() {

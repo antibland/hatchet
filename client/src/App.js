@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Main from './Main';
 import Header from './Header.js';
-import { fakeAuth } from './Auth.js';
+import { auth } from './Auth.js';
 import './App.css';
 import './css/Nav.css';
 import './css/Ribbon.css';
@@ -20,11 +20,11 @@ const Footer = () => (
 
 class App extends Component {
   render() {
-    console.log(fakeAuth.isAuthenticated)
+    let isAuthenticated = auth.hasValidToken();
 
     return (
       <div className="App">
-        <Header />
+        <Header isAuthenticated={isAuthenticated} />
         <Main />
         <Footer />
         {/* <FightsContainer fights={fakeServerData} /> */}

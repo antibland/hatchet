@@ -84,35 +84,45 @@ exports.join = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
-  User.authenticate(req.body.email, req.body.password, (error, user) => {
+  User.authenticate(req.body.email, req.body.password, async (error, user) => {
     if (error || !user) {
       return res.status(401).json({
         type: 'failure',
         message: 'Your email or password is incorrect. It happens.'
       });
-    } else {
+    }
 
-      if (!user.isVerified) {
-        return res.status(401).json({
-          type: 'failure',
-          message: 'Almost there. Please check your email and verify your account.'
-        });
-      }
-
-      const token = jwt.sign({
-        email: user.email,
-        _id: user._id
-      }, process.env.JWT_SECRET);
-
-      return res.json({
-        type: 'success',
-        token,
-        user: {
-          userid: user._id,
-          username: user.username
-        }
+    if (!user.isVerified) {
+      return res.status(401).json({
+        type: 'failure',
+        message: 'Almost there. Please check your email and verify your account.'
       });
     }
+
+    const token = jwt.sign({
+      email: user.email,
+      _id: user._id
+    }, process.env.JWT_SECRET);
+
+    user.sessionToken = token;
+    await user.save(err => {
+      if (err) {
+        return res.status(500).send({
+          type: 'failure',
+          message: err.message
+        });
+      }
+    });
+
+    return res.status(200).json({
+      type: 'success',
+      token,
+      user: {
+        userid: user._id,
+        username: user.username
+      }
+    });
+
   });
 };
 
@@ -139,8 +149,25 @@ exports.reset_password = (req, res, next) => {
     });
 }
 
-exports.logout = (req, res, next) => {
-  res.end();
+exports.logout = async (req, res, next) => {
+  let { userId } = req.params;
+  let user = await User.findById(userId);
+  user.sessionToken = undefined;
+
+  await user.save(err => {
+    if (err) {
+      throw err;
+      return res.status(500).send({
+        type: 'failure',
+        message: err.message
+      });
+    }
+  })
+
+  return res.status(200).json({
+    type: 'failure',
+    message: `${userId} logged out successfully`
+  })
 }
 
 exports.confirmationPost = function (req, res, next) {

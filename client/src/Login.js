@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { fakeAuth } from './Auth.js';
+import { auth } from './Auth.js';
 import './css/Flash.css';
 
 function validate(email, password) {
@@ -50,9 +50,14 @@ class Login extends Component {
     }).then(res => res.json())
       .then(data => {
         if (data.type === 'success' && data.token.length) {
-          fakeAuth.authenticate(() => {
-            fakeAuth.user.username = data.user.username;
-            fakeAuth.user.userid = data.user.userid;
+          auth.authenticate(() => {
+            auth.user = {
+              username: data.user.username,
+              userid: data.user.userid,
+              token: data.token
+            };
+            localStorage.setObject('user', auth.user);
+            auth.isAuthenticated = auth.hasValidToken();
             this.props.history.push('/');
           });
         } else if (data.type === 'failure') {

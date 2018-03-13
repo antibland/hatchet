@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './css/Form.css';
-import { fakeAuth } from './Auth.js';
+import { auth } from './Auth.js';
 
 class Create extends Component {
   static fight_types = [
@@ -63,7 +63,7 @@ class Create extends Component {
   }
 
   setAvatar() {
-    fetch(`/api/${fakeAuth.user.userid}/avatar`)
+    fetch(`/api/${auth.user.userid}/avatar`)
       .then(res => res.json())
       .then(data => {
         if (data.type === 'success' && data.avatar !== null) {
@@ -146,11 +146,11 @@ class Create extends Component {
       }
     }
 
-    let formAction = `/api/${fakeAuth.user.userid}/fight`;
+    let formAction = `/api/${auth.user.userid}/fight`;
     let role = "note";
 
     let { someone, opponentIsValidUser } = this.state;
-    let me =fakeAuth.user.username;
+    let me =auth.user.username;
 
     let opponentIsValidUserResult =
       opponentIsValidUser === false

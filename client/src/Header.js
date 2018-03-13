@@ -1,17 +1,17 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom'
-import { fakeAuth } from './Auth.js';
+import { auth } from './Auth.js';
 
 const Logo = () => (
   <h1><NavLink exact to='/'>Big Idea, Inc.</NavLink></h1>
 );
 
-const Header = () => (
+const Header = (props) => (
   <header>
     <Logo />
     <nav role='main'>
       <ul>
-        { fakeAuth.isAuthenticated === true
+        { props.isAuthenticated
           ? <React.Fragment>
               <li><NavLink className="nav-link" exact to='/create'>Start a gripe</NavLink></li>
               <li><NavLink className="nav-link avatar" exact to='/profile'>
@@ -19,7 +19,7 @@ const Header = () => (
                   <use xlinkHref="./symbols/svg-defs.svg#user-icon" />
                 </svg>
                 <span className="username">
-                  {fakeAuth.user.username}
+                  {auth.user.username}
                 </span>
               </NavLink>
               </li>
