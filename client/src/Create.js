@@ -204,6 +204,9 @@ class Create extends Component {
                 type="text"
                 aria-label="Enter username or email address"
                 className="someone"
+                name="opponent"
+                id="opponent"
+                value={this.state.someone}
                 required
                 onInput={this.handleInput}
                 onKeyUp={this.handleKeyUp}

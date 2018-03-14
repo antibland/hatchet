@@ -10,8 +10,6 @@ function UserAvatar({
   imgpath,
   username
 }) {
-  let rootPath = '/avatars/' + extractRootPath(imgpath);
-
   return (
     <div className="user-avatar">
       <div style={{
@@ -20,7 +18,7 @@ function UserAvatar({
         height: '100px',
         borderRadius: '50%',
         display: 'inline-block',
-        backgroundImage: `url(${rootPath})` }}>
+        backgroundImage: `url(${imgpath})` }}>
       </div>
       <h2>
         {username}
@@ -42,18 +40,23 @@ class Fight extends Component {
     fetch(`/api/${fightId}/fight`)
       .then(res => res.json())
       .then(data => {
+        console.log(data.fight)
         this.setState({ fight: data.fight })
       });
   }
 
   render() {
+    let imgpath = (this.state.fight.antagonist && this.state.fight.antagonist.avatar)
+      ? '/avatars/' + extractRootPath(this.state.fight.antagonist.avatar.path)
+      : '/question_mark.png';
+
     return (
       <div>
       { this.state.fight
         ? <div className="featured-fights-container">
             <div className="user1">
               <UserAvatar
-                imgpath={this.state.fight.antagonist.avatar.path}
+                imgpath={imgpath}
                 username={this.state.fight.antagonist.username}
               />
               <p className="fight-text">{this.state.fight.text.for}</p>
@@ -62,7 +65,7 @@ class Fight extends Component {
             <img className="versus" src="/versus.png" alt="versus graphic"/>
             <div className="user2">
             <UserAvatar
-                imgpath={this.state.fight.antagonist.avatar.path}
+                imgpath={imgpath}
                 username='Other person'
               />
               <p className="fight-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil, iusto quod provident quisquam asperiores ea pariatur animi doloremque, itaque, totam quaerat illo at modi! Voluptatibus possimus repellat dolorum culpa quo.</p>
