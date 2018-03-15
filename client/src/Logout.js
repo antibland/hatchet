@@ -19,7 +19,7 @@ class Logout extends Component {
 
   render() {
     return (
-      <Loading text='Logging out...' />
+      <Loading text='Logging out…' />
     );
   }
 }

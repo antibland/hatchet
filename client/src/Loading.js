@@ -7,7 +7,7 @@ const Loading = (props) => (
 )
 
 Loading.defaultProps = {
-  text: 'Loading...'
+  text: 'Loading…'
 };
 
 export default Loading;

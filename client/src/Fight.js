@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import Loading from './Loading';
 import './css/Fight.css';
-
-function extractRootPath(str) {
-  return str.substr(str.lastIndexOf('/')+1);
-}
+import { default as utilities } from './shared/utilities';
 
 function UserAvatar({
   imgpath,
@@ -46,9 +43,22 @@ class Fight extends Component {
   }
 
   render() {
-    let imgpath = (this.state.fight.antagonist && this.state.fight.antagonist.avatar)
-      ? '/avatars/' + extractRootPath(this.state.fight.antagonist.avatar.path)
-      : '/question_mark.png';
+    let antagonist = {},
+        defender = {};
+
+    antagonist.imgpath = (this.state.fight.antagonist && this.state.fight.antagonist.avatar)
+    ? '/avatars/' + utilities.extractRootPath(this.state.fight.antagonist.avatar.path)
+    : '/question_mark.png';
+
+    if (this.state.fight.type === 'philosophical') {
+      defender.imgpath = '/earth.png';
+      defender.username = 'The Internet';
+      defender.fightText = `Is ${this.state.fight.antagonist.username} right? What do you think? Have a good, hard look and vote.`
+    } else {
+      defender.imgpath = '/question_mark.png'; // <-- Make this real
+      defender.username = 'Another user';
+      defender.fightText = 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis fugiat in impedit maxime blanditiis nam assumenda. Dicta quo sequi dolorum similique. Libero repudiandae esse voluptate impedit delectus enim, nostrum quos?'
+    }
 
     return (
       <div>
@@ -56,7 +66,7 @@ class Fight extends Component {
         ? <div className="featured-fights-container">
             <div className="user1">
               <UserAvatar
-                imgpath={imgpath}
+                imgpath={antagonist.imgpath}
                 username={this.state.fight.antagonist.username}
               />
               <p className="fight-text">{this.state.fight.text.for}</p>
@@ -64,11 +74,11 @@ class Fight extends Component {
             </div>
             <img className="versus" src="/versus.png" alt="versus graphic"/>
             <div className="user2">
-            <UserAvatar
-                imgpath={imgpath}
-                username='Other person'
+              <UserAvatar
+                imgpath={defender.imgpath}
+                username={defender.username}
               />
-              <p className="fight-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil, iusto quod provident quisquam asperiores ea pariatur animi doloremque, itaque, totam quaerat illo at modi! Voluptatibus possimus repellat dolorum culpa quo.</p>
+              <p className="fight-text">{defender.fightText}</p>
               <p className="total-votes">Votes: {this.state.fight.votes.against}</p>
             </div>
           </div>

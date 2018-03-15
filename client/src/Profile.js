@@ -262,7 +262,7 @@ class Profile extends Component {
                             <span className="type"><strong>Type: </strong>A {fight.type} fight.</span>
                             <span className="text">{fight.text.for}</span>
                             { fight.isLive
-                              ? <Link className="button" to={'api/fights/' + fight._id}>View the fight</Link>
+                              ? <Link className="button" to={'/fight/' + fight._id}>View the fight</Link>
                               : <div>
                                   <p className="system-message">
                                   <svg aria-hidden="true" className="system-tip">

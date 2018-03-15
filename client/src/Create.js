@@ -1,6 +1,16 @@
 import React, { Component } from 'react';
 import './css/Form.css';
 import { auth } from './Auth.js';
+import Avatar from './shared/components/Avatar';
+import { default as utilities } from './shared/utilities';
+
+function OpponentAvatar(props) {
+  if (props.url.length) {
+    return <Avatar imgpath={props.url} />;
+  } else {
+    return <Avatar />;
+  }
+}
 
 class Create extends Component {
   static fight_types = [
@@ -21,6 +31,7 @@ class Create extends Component {
       character_count: 0,
       is_valid: false,
       currentAvatarUrl: null,
+      opponentAvatarUrl: '',
       opponentIsValidUser: null,
       someone: ''
     };
@@ -42,7 +53,8 @@ class Create extends Component {
   handleInput(e) {
     this.setState({
       opponentIsValidUser: null,
-      someone: e.target.value
+      someone: e.target.value,
+      opponentAvatarUrl: ''
     });
     clearTimeout(Create.timeout);
   }
@@ -53,11 +65,18 @@ class Create extends Component {
   }
 
   checkForUser() {
-    if (this.state.someone.length) {
+    let { someone } = this.state;
+
+    if (someone.length && someone !== auth.user.username) {
       fetch(`/api/${this.state.someone}`)
         .then(res => res.json())
         .then(data => {
-          this.setState({ opponentIsValidUser: data.type })
+          if (data.user && data.user.avatar) {
+            this.setState({
+              opponentAvatarUrl: '/avatars/' + utilities.extractRootPath(data.user.avatar.path)
+            });
+          }
+          this.setState({ opponentIsValidUser: data.type });
         })
     }
   }
@@ -88,9 +107,9 @@ class Create extends Component {
 
   render() {
     let antagonist_avatar = this.state.currentAvatarUrl;
-    let question_mark = './question_mark.png';
     let earth = './earth.png';
     let count = this.state.character_count;
+
     let count_text = count === 1 ? 'character' : 'characters';
     let fight_type = this.state.target === 'world' ?
       <option value="philosophical">Philosophical</option> :
@@ -99,32 +118,6 @@ class Create extends Component {
       });
 
     let styles = {
-      antagonist: {
-        avatar: {
-          backgroundSize: 'cover',
-          width: '100px',
-          height: '100px',
-          borderRadius: '50%',
-          display: 'inline-block',
-          backgroundImage: `url(${antagonist_avatar})`
-        }
-      },
-      question_mark: {
-        backgroundSize: 'cover',
-        width: '100px',
-        height: '100px',
-        borderRadius: '50%',
-        display: 'inline-block',
-        backgroundImage: `url(${question_mark})`
-      },
-      earth: {
-        backgroundSize: '100% 100%',
-        width: '120px',
-        height: '120px',
-        borderRadius: '50%',
-        display: 'inline-block',
-        backgroundImage: `url(${earth})`
-      },
       slots: {
         display: 'flex',
         justifyContent: 'center',
@@ -149,8 +142,8 @@ class Create extends Component {
     let formAction = `/api/${auth.user.userid}/fight`;
     let role = "note";
 
-    let { someone, opponentIsValidUser } = this.state;
-    let me =auth.user.username;
+    let { someone, opponentIsValidUser, opponentAvatarUrl } = this.state;
+    let me = auth.user.username;
 
     let opponentIsValidUserResult =
       opponentIsValidUser === false
@@ -159,7 +152,7 @@ class Create extends Component {
           </div>)
         : opponentIsValidUser === true && someone === me
           ? (<div className="lookupResult">
-              You have an axe to grind with yourself? No.
+              You have an axe to grind with yourself? Save it for therapy.
             </div>)
           : opponentIsValidUser === true && someone !== me
             ? (<div className="lookupResult">
@@ -173,24 +166,24 @@ class Create extends Component {
     return (
       <div>
         <h2 className="ribbon">
-          <strong className="ribbon-content">Start a gripe</strong>
+          <strong className="ribbon-content">Start a Hatchet</strong>
         </h2>
 
         <form onSubmit={this.handleSubmit} method="POST" action={formAction}>
           <div className="slots" style={styles.slots}>
             <div className="you">
-              <div style={styles.antagonist.avatar}></div>
+              <Avatar imgpath={antagonist_avatar} />
             </div>
             <img src="./versus.png" alt="versus" style={styles.versus} />
             <div className="them">
-              {this.state.target === 'someone' ?
-                <div style={styles.question_mark}></div> :
-                <div style={styles.earth}></div>
+              {this.state.target === 'someone'
+                ? <OpponentAvatar url={opponentAvatarUrl} />
+                : <Avatar imgpath={earth} />
               }
             </div>
           </div>
 
-          <label htmlFor="target">I have a gripe with...</label>
+          <label htmlFor="target">Choose your opponent</label>
           <div className="styled-select slate">
             <select id="target" name="target" onChange={this.handleChange}>
               <option value="someone">Someone</option>
@@ -198,23 +191,23 @@ class Create extends Component {
             </select>
           </div>
 
-          {this.state.target === 'someone' ?
-            <div className="required-field-wrapper">
+          {this.state.target === 'someone'
+          ? <div className="required-field-wrapper">
               <input
                 type="text"
                 aria-label="Enter username or email address"
                 className="someone"
                 name="opponent"
                 id="opponent"
-                value={this.state.someone}
+                defaultValue={this.state.someone}
                 required
                 onInput={this.handleInput}
                 onKeyUp={this.handleKeyUp}
                 placeholder="Enter username or email address" />
               <span className="required">*</span>
               {opponentIsValidUserResult}
-            </div> :
-            ''
+            </div>
+            : ''
           }
 
           <label htmlFor="type">What type?</label>
@@ -234,9 +227,9 @@ class Create extends Component {
             id="title"
             maxLength="100"
             required
-            placeholder="Is it okay that... Should I allow my mother to..." />
+            placeholder="Is it okay that… Should I allow my mother to…" />
             <span className="required">*</span>
-            <span role={role}>A good title is neutral and fair. Don't use the title to state your argument—that's what the next part is for. Consider titles starting with: <em>Is it okay that...</em> or <em>Is my boyfriend being overly jealous when he....</em> Get the idea?</span>
+            <span role={role}>A good title is neutral and fair. Don't use the title to state your argument—that's what the next part is for. Consider titles starting with: <em>Is it okay that…</em> or <em>Is my boyfriend being overly jealous?</em> Get the idea?</span>
           </div>
 
           <label htmlFor="beef">Why I'm right</label>

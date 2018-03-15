@@ -269,7 +269,7 @@ exports.setAvatar = async (req, res) => {
           if (err) {
             return res.status(500).json({
               type: 'failure',
-              message: 'The bad news is the image didn\'t save. The good news is...um...'
+              message: 'The bad news is the image didn\'t save. The good news is… um…'
             });
           }
           res.status(200).json({
