@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Loading from './Loading';
 import './css/Fight.css';
-import { default as utilities } from './shared/utilities';
+import utilities from './shared/utilities';
 
 function UserAvatar({
   imgpath,

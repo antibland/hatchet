@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './css/Form.css';
 import { auth } from './Auth.js';
 import Avatar from './shared/components/Avatar';
-import { default as utilities } from './shared/utilities';
+import utilities from './shared/utilities';
 
 function OpponentAvatar(props) {
   if (props.url.length) {
