@@ -114,12 +114,18 @@ exports.login = (req, res, next) => {
       }
     });
 
+    let avatar = '';
+    if (user.avatar) {
+      avatar = user.avatar.path
+    }
+
     return res.status(200).json({
       type: 'success',
       token,
       user: {
         userid: user._id,
-        username: user.username
+        username: user.username,
+        avatar
       }
     });
 

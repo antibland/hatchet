@@ -18,7 +18,8 @@ const auth = {
   user: {
     username: null,
     userid: null,
-    token: null
+    token: null,
+    avatar: null
   },
   isAuthenticated: false,
   hasValidToken() {
