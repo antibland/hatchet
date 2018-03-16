@@ -172,7 +172,10 @@ class Create extends Component {
         <form onSubmit={this.handleSubmit} method="POST" action={formAction}>
           <div className="slots" style={styles.slots}>
             <div className="you">
-              <Avatar imgpath={antagonist_avatar} />
+              { antagonist_avatar === null || antagonist_avatar === ''
+                ? <Avatar imgpath='/user.png' width='94px' height='94px' />
+                : <Avatar imgpath={antagonist_avatar} />
+              }
             </div>
             <img src="./versus.png" alt="versus" style={styles.versus} />
             <div className="them">

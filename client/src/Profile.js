@@ -3,6 +3,7 @@ import { auth } from './Auth.js';
 import { Link } from 'react-router-dom';
 import Loading from './Loading.js';
 import Moment from 'react-moment';
+import Avatar from './shared/components/Avatar';
 import './css/Flash.css';
 import './css/ProfileFightList.css';
 import './css/Accordion.css';
@@ -24,7 +25,7 @@ const FancyFileInput = (props) => (
     </label>
   </div>
 )
-class Avatar extends Component {
+class AvatarContainer extends Component {
   constructor() {
     super();
     this.state = {
@@ -113,34 +114,9 @@ class Avatar extends Component {
     let { imagePreviewUrl, currentAvatarUrl } = this.state;
     let imagePreview = null;
 
-    let question_mark = './question_mark.png';
+    let defaultUser = '/user.png';
 
     let styles = {
-      avatar: {
-        backgroundSize: 'cover',
-        width: '100px',
-        height: '100px',
-        borderRadius: '50%',
-        display: 'inline-block',
-        backgroundImage: `url(${imagePreviewUrl})`,
-        marginBottom: '0.5em'
-      },
-      question_mark: {
-        backgroundSize: '100% 100%',
-        width: '120px',
-        height: '120px',
-        borderRadius: '50%',
-        display: 'inline-block',
-        backgroundImage: `url(${question_mark})`
-      },
-      current_avatar: {
-        backgroundSize: 'cover',
-        width: '100px',
-        height: '100px',
-        borderRadius: '50%',
-        display: 'inline-block',
-        backgroundImage: `url(${currentAvatarUrl})`
-      },
       previewContainer: {
         display: 'flex',
         alignItems: 'center',
@@ -151,7 +127,8 @@ class Avatar extends Component {
     if (imagePreviewUrl) {
       imagePreview = (
         <div style={styles.previewContainer}>
-          <div style={styles.avatar}></div>
+          <Avatar imgpath={imagePreviewUrl} width='120px' height='120px' />
+
           <button className="submitButton" type="submit">
             Replace it!
           </button>
@@ -162,8 +139,8 @@ class Avatar extends Component {
     }
 
     let currentAvatar = currentAvatarUrl
-      ? <div style={styles.current_avatar}></div>
-      : <div style={styles.question_mark}></div>
+      ? <Avatar imgpath={currentAvatarUrl} width='120px' height='120px' />
+      : <Avatar imgpath={defaultUser} width='120px' height='120px' />
 
     let flashClasses = this.state.flash.type !== null
       ? `flash ${this.state.flash.type} bottom-margin`
@@ -225,22 +202,13 @@ class Profile extends Component {
       fight_noun = 'fights';
     }
 
-    // function truncate(str) {
-    //   const len = 75;
-    //   return (str.length > len) ? str.substr(0, len-1) + '…' : str;
-    // }
-
-    // const superscript = (d) => {
-    //   return d.replace( /(\d)(st|nd|rd|th)/g, '$1<sup>$2</sup>' );
-    // }
-
     return (
       <div>
         { this.state.loading === true
           ? <Loading />
           : <div>
               <h1 className="profileH1">Hey, {auth.user.username}!</h1>
-              <Avatar />
+              <AvatarContainer />
               { fight_len
                 ? <h2 className="profileH2">{ fight_len } { fight_noun } found</h2>
                 : ''
