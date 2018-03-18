@@ -124,8 +124,8 @@ exports.login = (req, res, next) => {
     let avatar = '';
     if (env === 'development' && user.avatar && user.avatar.path) {
       avatar = user.avatar.path
-    } else if (env === 'production' && user.aws_location) {
-      avatar = user.aws_location;
+    } else if (env === 'production' && user.avatar && user.avatar.aws_location) {
+      avatar = user.avatar.aws_location;
     }
 
     return res.status(200).json({
