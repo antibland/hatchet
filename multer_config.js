@@ -11,7 +11,7 @@ module.exports = (app) => {
       upload: multer({
         storage: multer.diskStorage({
           destination: function(req, file, cb) {
-            cb(null, 'client/public/avatars/')
+            cb(null, 'client/public/avatars/');
           },
           filename: function(req, file, cb) {
             let extension = file.originalname.split('.')[1];
