@@ -32,7 +32,7 @@ module.exports = (app) => {
           },
           key: function (req, file, cb) {
             var newFileName = Date.now() + "-" + file.originalname;
-            var path = `avatars/${req.params.userId}/${newFileName}`;
+            var path = `${req.params.userId}/${newFileName}`;
             cb(null, path);
           }
         })
