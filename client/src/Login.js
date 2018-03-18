@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { auth } from './Auth.js';
 import './css/Flash.css';
-import utilities from './shared/utilities';
 
 function validate(email, password) {
   // true means invalid, so our conditions got reversed
@@ -28,10 +27,6 @@ class Login extends Component {
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-  }
-
-  extractAvatar(path) {
-    return '/avatars/' + utilities.extractRootPath(path);
   }
 
   handleSubmit(e) {
@@ -61,8 +56,6 @@ class Login extends Component {
               userid: data.user.userid,
               token: data.token,
               avatar: data.user.avatar
-                        ? this.extractAvatar(data.user.avatar)
-                        : ''
             };
             localStorage.setObject('user', auth.user);
             auth.isAuthenticated = auth.hasValidToken();

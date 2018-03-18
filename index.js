@@ -50,6 +50,7 @@ app.get('/api/:userId/logout', userApi.logout);
 app.get('/api/confirmation/:token_id', userApi.confirmationPost);
 app.post('/api/resend', userApi.resendTokenPost);
 app.get('/api/:userId/avatar', userApi.getAvatar);
+app.get('/api/:userName/avatar/username', userApi.getAvatarByUserName);
 app.get('/api/:userId', userApi.getUser);
 app.post('/api/:userId/avatar', upload.single('avatar'), userApi.setAvatar);
 

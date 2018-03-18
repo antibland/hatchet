@@ -16,7 +16,9 @@ const Header = (props) => (
           ? <React.Fragment>
               <li><NavLink className="nav-link" exact to='/create'>Start a Hatchet</NavLink></li>
               <li><NavLink className="nav-link avatar" exact to='/profile'>
-                { auth.user.avatar !== null && auth.user.avatar !== ''
+                { auth.user.avatar !== null &&
+                  auth.user.avatar !== '' &&
+                  typeof auth.user.avatar !== 'undefined'
                   ? <Avatar
                       imgpath={auth.user.avatar}
                       width='40px'

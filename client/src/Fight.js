@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Loading from './Loading';
 import './css/Fight.css';
-import utilities from './shared/utilities';
 
 function UserAvatar({
   imgpath,
@@ -37,7 +36,6 @@ class Fight extends Component {
     fetch(`/api/${fightId}/fight`)
       .then(res => res.json())
       .then(data => {
-        console.log(data.fight)
         this.setState({ fight: data.fight })
       });
   }
@@ -47,7 +45,7 @@ class Fight extends Component {
         defender = {};
 
     antagonist.imgpath = (this.state.fight.antagonist && this.state.fight.antagonist.avatar)
-    ? '/avatars/' + utilities.extractRootPath(this.state.fight.antagonist.avatar.path)
+    ? this.state.fight.antagonist.avatar.path
     : '/question_mark.png';
 
     if (this.state.fight.type === 'philosophical') {

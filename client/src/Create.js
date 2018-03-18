@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './css/Form.css';
 import { auth } from './Auth.js';
 import Avatar from './shared/components/Avatar';
-import utilities from './shared/utilities';
 
 function OpponentAvatar(props) {
   if (props.url.length) {
@@ -68,12 +67,13 @@ class Create extends Component {
     let { someone } = this.state;
 
     if (someone.length && someone !== auth.user.username) {
-      fetch(`/api/${this.state.someone}`)
+      // /api/:userName/avatar/username
+      fetch(`/api/${this.state.someone}/avatar/username`)
         .then(res => res.json())
         .then(data => {
-          if (data.user && data.user.avatar) {
+          if (data.type === true && data.avatar) {
             this.setState({
-              opponentAvatarUrl: '/avatars/' + utilities.extractRootPath(data.user.avatar.path)
+              opponentAvatarUrl: data.avatar
             });
           }
           this.setState({ opponentIsValidUser: data.type });

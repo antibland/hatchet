@@ -9,7 +9,13 @@ const env = process.env.NODE_ENV || 'development';
 
 // helper function
 
-const sendEmail = (opts) => {
+const getAvatarPath = path => {
+  if (path) {
+    return '/avatars/' + path.substr(path.lastIndexOf('/')+1);
+  }
+};
+
+const sendEmail = opts => {
   const req = opts.req;
   const res = opts.res;
   const token = opts.token;
@@ -116,8 +122,10 @@ exports.login = (req, res, next) => {
     });
 
     let avatar = '';
-    if (user.avatar) {
+    if (env === 'development' && user.avatar && user.avatar.path) {
       avatar = user.avatar.path
+    } else if (env === 'production' && user.aws_location) {
+      avatar = user.aws_location;
     }
 
     return res.status(200).json({
@@ -177,20 +185,20 @@ exports.logout = async (req, res, next) => {
   })
 }
 
-exports.confirmationPost = function (req, res, next) {
+exports.confirmationPost = async (req, res, next) => {
 
   // Find a matching token
-  Token.findOne({ token: req.params.token_id }, function (err, token) {
+  await Token.findOne({ token: req.params.token_id }, (err, token) => {
     if (!token) return res.status(400).send({ type: 'not-verified', msg: 'We were unable to find a valid token. Your token my have expired.' });
 
     // If we found a token, find a matching user
-    User.findOne({ _id: token._userId }, function (err, user) {
+    User.findOne({ _id: token._userId }, async (err, user) => {
         if (!user) return res.status(400).send({ msg: 'We were unable to find a user for this token.' });
         if (user.isVerified) return res.status(400).send({ type: 'already-verified', msg: 'This user has already been verified.' });
 
         // Verify and save the user
         user.isVerified = true;
-        user.save(function (err) {
+        await user.save(err => {
           if (err) { return res.status(500).send({ msg: err.message }); }
           let data = {
             type: 'success',
@@ -224,14 +232,67 @@ exports.resendTokenPost = function (req, res, next) {
   });
 };
 
+exports.getAvatarByUserName = async (req, res, next) => {
+  const userName = req.params.userName;
+
+  await User.findOne({ username: userName }, (err, user) => {
+    if (err) {
+      return res.status(500).json({
+        type: 'failure',
+        message: 'Something terrible happened. Try again.'
+      });
+    }
+
+    if (!user) {
+      return res.status(401).json({
+        type: false,
+        avatar: null
+      });
+    }
+
+    if (env === 'development') {
+      if (!user.avatar || !user.avatar.path) {
+        return res.status(200).json({
+          type: false,
+          avatar: null
+        });
+      } else {
+        return res.status(200).json({
+          type: true,
+          avatar: user.avatar.path
+        });
+      }
+    } else {
+      if (!user.avatar || !user.avatar.aws_location) {
+        return res.status(200).json({
+          type: false,
+          avatar: null
+        });
+      } else {
+        return res.status(200).json({
+          type: true,
+          avatar: user.avatar.aws_location
+        });
+      }
+    }
+  });
+};
+
 exports.getAvatar = async (req, res) => {
   const { userId } = req.params;
 
-  User.findOne({ _id: userId }, (err, user) => {
+  await User.findOne({ _id: userId }, (err, user) => {
     if (err) {
       return res.status(500).json({
         type: 'failure',
         message: 'We know you have an avatar but could not retrieve it. Please try again.'
+      });
+    }
+
+    if (!user) {
+      return res.status(401).json({
+        type: false,
+        avatar: null
       });
     }
 
@@ -244,7 +305,7 @@ exports.getAvatar = async (req, res) => {
       } else {
         return res.status(200).json({
           type: 'success',
-          avatar: `./avatars/${userId}.${user.avatar.ext}`
+          avatar: user.avatar.path
         });
       }
     } else {
@@ -262,7 +323,7 @@ exports.getAvatar = async (req, res) => {
     }
 
   });
-}
+};
 
 exports.setAvatar = async (req, res) => {
   const { userId } = req.params;
@@ -273,9 +334,7 @@ exports.setAvatar = async (req, res) => {
       if (user) {
         if (env === 'development') {
           if (!user.avatar) { user.avatar = {}; }
-          user.avatar.path = req.file.path;
-          user.avatar.originalname = req.file.originalname;
-          user.avatar.ext = req.file.originalname.split('.').pop();
+          user.avatar.path = getAvatarPath(req.file.path);
         } else {
           user.avatar.aws_location = req.file.location;
         }
