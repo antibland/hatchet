@@ -120,9 +120,16 @@ footer a {
   font-size: 1.3em;
 }
 
-
 .bottom-margin {
   margin-bottom: 1em;
+}
+
+.inlineErrorList li:not(:only-child) {
+  margin-bottom: .8em;
+}
+
+.inlineErrorList li:last-child {
+  margin-bottom: 0;
 }
 
 .homeList {

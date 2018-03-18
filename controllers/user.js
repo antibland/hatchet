@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
+const env = process.env.NODE_ENV || 'development';
 
 // helper function
 
@@ -234,42 +235,50 @@ exports.getAvatar = async (req, res) => {
       });
     }
 
-    if (!user.avatar || !user.avatar.path) {
-      return res.status(200).json({
-        type: 'success',
-        avatar: null
-      });
+    if (env === 'development') {
+      if (!user.avatar || !user.avatar.path) {
+        return res.status(200).json({
+          type: 'success',
+          avatar: null
+        });
+      } else {
+        return res.status(200).json({
+          type: 'success',
+          avatar: `./avatars/${userId}.${user.avatar.ext}`
+        });
+      }
     } else {
-      return res.status(200).json({
-        type: 'success',
-        avatar: `./avatars/${userId}.${user.avatar.ext}`
-      });
+      if (!user.avatar || !user.avatar.aws_location) {
+        return res.status(200).json({
+          type: 'success',
+          avatar: null
+        });
+      } else {
+        return res.status(200).json({
+          type: 'success',
+          avatar: user.avatar.aws_location
+        });
+      }
     }
+
   });
 }
 
 exports.setAvatar = async (req, res) => {
   const { userId } = req.params;
 
-  const getImages = (callback, limit) => {
-    //Image.find(callback).limit(limit);
-  };
-
-  const getImageById = (id, callback) => {
-    //Image.findById(id, callback);
-  };
-
-  const addImage = async (image, callback) => {
+  const addImage = async (callback) => {
 
     await User.findOne({ _id: userId }, (err, user) => {
       if (user) {
-        if (!user.avatar) {
-          user.avatar = {};
+        if (env === 'development') {
+          if (!user.avatar) { user.avatar = {}; }
+          user.avatar.path = req.file.path;
+          user.avatar.originalname = req.file.originalname;
+          user.avatar.ext = req.file.originalname.split('.').pop();
+        } else {
+          user.avatar.aws_location = req.file.location;
         }
-
-        user.avatar.path = image.path;
-        user.avatar.originalname = image.originalname;
-        user.avatar.ext = image.originalname.split('.').pop();
 
         user.save(err => {
           if (err) {
@@ -287,14 +296,7 @@ exports.setAvatar = async (req, res) => {
     });
   };
 
-  let imagepath = {};
-
-  imagepath.mimetype = req.file.mimetype;
-  imagepath.size = req.file.size;
-  imagepath.path = req.file.path;
-  imagepath.originalname = req.file.originalname;
-
-  await addImage(imagepath);
+  await addImage();
 };
 
 exports.getUser = async (req, res) => {

@@ -31,6 +31,7 @@ class AvatarContainer extends Component {
     this.state = {
       file: '',
       imagePreviewUrl: '',
+      errors: [],
       flash: {
         type: null,
         message: null
@@ -97,21 +98,46 @@ class AvatarContainer extends Component {
     e.preventDefault();
     let reader = new FileReader();
     let file = e.target.files[0];
+    const fileType = file.type;
+    const allowedFileTypes = ['jpg', 'jpeg', 'png', 'gif'];
+    const maxFileSize = 130000; // 130KB
+    let ext = fileType.substr(fileType.lastIndexOf('/')+1);
+    let message = '';
+    this.setState({ errors: []});
+    let errors = [];
 
-    reader.onloadend = () => {
+    if (!allowedFileTypes.includes(ext)) {
+      message = `👽 ${ext} is an alien file extension. Stick with 'jpg', 'png', or 'gif'`;
+      errors.push(message);
+    }
+
+    if (file.size > maxFileSize) {
+      message = '🐳 We don\'t mean to fat-shame your file size, but it\'s too big. 130KB is the max.';
+      errors.push(message);
+    }
+
+    if (errors.length) {
       this.setState({
-        file,
-        imagePreviewUrl: reader.result
+        errors: errors,
+        imagePreviewUrl: ''
       });
-    };
+    } else {
+      reader.onloadend = () => {
+        this.setState({
+          file,
+          imagePreviewUrl: reader.result,
+          errors: []
+        });
+      };
 
-    reader.readAsDataURL(file);
+      reader.readAsDataURL(file);
+    }
   }
 
   render() {
     const form_action = `/api/${auth.user.userid}/avatar`;
 
-    let { imagePreviewUrl, currentAvatarUrl } = this.state;
+    let { imagePreviewUrl, currentAvatarUrl, errors } = this.state;
     let imagePreview = null;
 
     let defaultUser = '/user.png';
@@ -137,6 +163,12 @@ class AvatarContainer extends Component {
     } else {
       imagePreview = '';
     }
+
+    let imagePreviewErrors = errors.length
+      ? errors.map((error, index) => {
+          return <li key={index}>{ error }</li>
+        })
+      : '';
 
     let currentAvatar = currentAvatarUrl
       ? <Avatar imgpath={currentAvatarUrl} width='120px' height='120px' />
@@ -167,6 +199,9 @@ class AvatarContainer extends Component {
           <FancyFileInput updatePreviewImage={this.handleChange} />
 
           { imagePreview }
+          <ul className="inlineErrorList">
+            { imagePreviewErrors }
+          </ul>
         </form>
       </div>
     )

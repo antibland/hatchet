@@ -4,22 +4,21 @@ const mongoose = require('mongoose');
 const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const multer = require('multer');
-
+const env = process.env.NODE_ENV || 'development';
 //const MongoStore = require('connect-mongo')(session);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // dotenv
-if (app.get('env') === 'development') {
+if (env === 'development') {
   require('dotenv').config();
 }
 
 // connect to Mongo when the app initializes
-if (app.get('env') === 'development') {
+if (env === 'development') {
   mongoose.connect('mongodb://localhost/jdi');
-} else if (app.get('env') === 'production')  {
+} else if (env === 'production')  {
   mongoose.connect('mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASS + '@ds263408.mlab.com:63408/hatchet',
   { useMongoClient: true })
 }
@@ -35,20 +34,7 @@ db.once('open', function () {
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-  cb(null, 'client/public/avatars/')
-  },
-  filename: function(req, file, cb) {
-    let extension = file.originalname.split('.')[1];
-    let fname = `${req.params.userId}.${extension}`;
-  cb(null, fname);
-  }
- });
-
- const upload = multer({
-  storage: storage
- });
+const upload = require('./multer_config')(app);
 
 const fightApi = require('./controllers/fight.js');
 app.get('/api/fights', fightApi.getFights);

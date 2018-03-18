@@ -26,6 +26,10 @@ var UserSchema = new mongoose.Schema({
       type: String,
       trim: true
     },
+    aws_location: {
+      type: String,
+      trim: true
+    },
     originalname: String,
     ext: String
   },
