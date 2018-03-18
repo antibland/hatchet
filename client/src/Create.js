@@ -71,12 +71,10 @@ class Create extends Component {
       fetch(`/api/${this.state.someone}/avatar/username`)
         .then(res => res.json())
         .then(data => {
-          if (data.type === true && data.avatar) {
-            this.setState({
-              opponentAvatarUrl: data.avatar
-            });
-          }
-          this.setState({ opponentIsValidUser: data.type });
+          this.setState({
+            opponentAvatarUrl: data.avatar,
+            opponentIsValidUser: data.isValidUser
+          });
         })
     }
   }

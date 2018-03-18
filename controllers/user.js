@@ -238,6 +238,8 @@ exports.getAvatarByUserName = async (req, res, next) => {
   await User.findOne({ username: userName }, (err, user) => {
     if (err) {
       return res.status(500).json({
+        isValidUser: false,
+        avatar: '',
         type: 'failure',
         message: 'Something terrible happened. Try again.'
       });
@@ -245,33 +247,33 @@ exports.getAvatarByUserName = async (req, res, next) => {
 
     if (!user) {
       return res.status(401).json({
-        type: false,
-        avatar: null
+        isValidUser: false,
+        avatar: ''
       });
     }
 
     if (env === 'development') {
       if (!user.avatar || !user.avatar.path) {
         return res.status(200).json({
-          type: false,
-          avatar: null
+          isValidUser: true,
+          avatar: ''
         });
       } else {
         return res.status(200).json({
-          type: true,
-          avatar: user.avatar.path
+          isValidUser: true,
+          avatar: user.avatar.path ? user.avatar.path : ''
         });
       }
     } else {
       if (!user.avatar || !user.avatar.aws_location) {
         return res.status(200).json({
-          type: false,
-          avatar: null
+          isValidUser: true,
+          avatar: ''
         });
       } else {
         return res.status(200).json({
-          type: true,
-          avatar: user.avatar.aws_location
+          isValidUser: true,
+          avatar: user.avatar.aws_location ? user.avatar.aws_location : ''
         });
       }
     }
