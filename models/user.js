@@ -29,9 +29,7 @@ var UserSchema = new mongoose.Schema({
     aws_location: {
       type: String,
       trim: true
-    },
-    originalname: String,
-    ext: String
+    }
   },
   roles: [{ type: 'String' }],
   fights: [{
