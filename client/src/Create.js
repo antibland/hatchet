@@ -167,7 +167,7 @@ class Create extends Component {
           <strong className="ribbon-content">Start a Hatchet</strong>
         </h2>
 
-        <form onSubmit={this.handleSubmit} method="POST" action={formAction}>
+        <form className="box-shadow" onSubmit={this.handleSubmit} method="POST" action={formAction}>
           <div className="slots" style={styles.slots}>
             <div className="you">
               { antagonist_avatar === null || antagonist_avatar === ''

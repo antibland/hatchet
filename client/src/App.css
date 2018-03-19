@@ -164,3 +164,7 @@ footer a {
 .homeList span {
   display: inline-block;
 }
+
+.box-shadow {
+  box-shadow: var(--box-shadow);
+}
