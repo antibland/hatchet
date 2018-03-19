@@ -29,8 +29,8 @@ exports.getFight = async (req, res) => {
       fight.antagonist.avatar.aws_location) {
     avatar = fight.antagonist.avatar.aws_location;
   } else if (env === 'development' &&
-             fight.antagonist.avatar &&
-             fight.antagonist.avatar.path) {
+            fight.antagonist.avatar &&
+            fight.antagonist.avatar.path) {
     avatar = fight.antagonist.avatar.path;
   }
 
@@ -76,7 +76,7 @@ exports.newFight = async (req, res) => {
                   : { username: oppenentRef };
 
     await User.findOne(findBy)
-      .exec(function (err, user) {
+      .exec((err, user) => {
         if (err) {
           return res.status(401).json({
             type: 'failure',

@@ -69,21 +69,26 @@ exports.join = (req, res, next) => {
 
     //use schema.create to insert data into the db
     User.create(userData, async (err, user) => {
-      if (err) {
-        res.status(401).json({
+      if (err || !user) {
+        return res.status(401).json({
           type: 'failure',
           message: 'The username or email address is not unique.'
         });
       } else {
+        let tokenData = {
+          _userId: user._id,
+          token: crypto.randomBytes(16).toString('hex')
+        };
 
         // Create a verification token for this user
-        var token = await new Token({ _userId: user._id, token: crypto.randomBytes(16).toString('hex') });
+        let token = Token.create(tokenData, (err, token) => {
+          // Save the verification token
+          token.save(saveErr => {
+            if (saveErr) { return res.status(500).send({ msg: saveErr.message }); }
 
-        // Save the verification token
-        await token.save(err => {
-          if (err) { return res.status(500).send({ msg: err.message }); }
-
-          sendEmail({ req, res, token, user });
+            // Send verification email
+            sendEmail({ req, res, token, user });
+          });
         });
       }
     });
@@ -143,20 +148,20 @@ exports.login = (req, res, next) => {
 
 exports.reset_password = (req, res, next) => {
   User.findOne({ email: req.body.email })
-    .exec(function (err, user) {
+    .exec((err, user) => {
       if (err) {
-        res.status(401).json({
+        return res.status(401).json({
           type: 'failure',
           message: 'A system error occurred. We are looking into it.'
         });
       } else if (!user) {
-        res.status(401).json({
+        return res.status(401).json({
           type: 'failure',
           message: `There is no account associated with ${req.body.email}.`
         });
       } else {
         // Generate password reset email and send email it
-        res.json({
+        return res.status(200).json({
           type: 'success',
           message: `A link to reset your password has been sent to ${req.body.email}.`
         })
@@ -211,8 +216,8 @@ exports.confirmationPost = async (req, res, next) => {
   });
 };
 
-exports.resendTokenPost = function (req, res, next) {
-  User.findOne({ email: req.body.email }, function (err, user) {
+exports.resendTokenPost = (req, res, next) => {
+  User.findOne({ email: req.body.email }, (err, user) => {
       if (!user) return res.status(400).send({
         type: 'failure',
         message: 'We were unable to find a user with that email.'
@@ -226,7 +231,7 @@ exports.resendTokenPost = function (req, res, next) {
       var token = new Token({ _userId: user._id, token: crypto.randomBytes(16).toString('hex') });
 
       // Save the token
-      token.save(function (err) {
+      token.save(err => {
         sendEmail({ req, res, token, user });
       });
   });
@@ -362,7 +367,7 @@ exports.setAvatar = async (req, res) => {
 
 exports.getUser = async (req, res) => {
   await User.findOne({ username: req.params.userId })
-    .exec(function (err, user) {
+    .exec((err, user) => {
       if (err) {
         res.status(401).json({
           type: 'failure'
