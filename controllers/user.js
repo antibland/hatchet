@@ -7,7 +7,7 @@ const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const env = process.env.NODE_ENV || 'development';
 
-// helper function
+// Helper functions
 
 const getAvatarPath = path => {
   if (path) {
@@ -68,7 +68,7 @@ exports.join = (req, res, next) => {
     };
 
     //use schema.create to insert data into the db
-    User.create(userData, function (err, user) {
+    User.create(userData, async (err, user) => {
       if (err) {
         res.status(401).json({
           type: 'failure',
@@ -77,10 +77,10 @@ exports.join = (req, res, next) => {
       } else {
 
         // Create a verification token for this user
-        var token = new Token({ _userId: user._id, token: crypto.randomBytes(16).toString('hex') });
+        var token = await new Token({ _userId: user._id, token: crypto.randomBytes(16).toString('hex') });
 
         // Save the verification token
-        token.save(function (err) {
+        await token.save(err => {
           if (err) { return res.status(500).send({ msg: err.message }); }
 
           sendEmail({ req, res, token, user });
