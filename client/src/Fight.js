@@ -27,16 +27,21 @@ class Fight extends Component {
   constructor() {
     super();
     this.state = {
-      fight: ''
+      fight: '',
+      avatarPath: ''
     };
   }
 
   componentDidMount() {
     let fightId = this.props.match.params.fightId;
+    // /api/:fightId/fight => getFight
     fetch(`/api/${fightId}/fight`)
       .then(res => res.json())
       .then(data => {
-        this.setState({ fight: data.fight })
+        this.setState({
+          fight: data.fight,
+          avatarPath: data.avatar
+        })
       });
   }
 
@@ -44,9 +49,9 @@ class Fight extends Component {
     let antagonist = {},
         defender = {};
 
-    antagonist.imgpath = (this.state.fight.antagonist && this.state.fight.antagonist.avatar)
-    ? this.state.fight.antagonist.avatar.path
-    : '/question_mark.png';
+    antagonist.imgpath = this.state.avatarPath === ''
+      ? '/question_mark.png'
+      : this.state.avatarPath;
 
     if (this.state.fight.type === 'philosophical') {
       defender.imgpath = '/earth.png';

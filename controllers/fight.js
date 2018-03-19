@@ -1,6 +1,7 @@
 const Fight = require('../models/fight');
 const User = require('../models/user');
 const validator = require("email-validator");
+const env = process.env.NODE_ENV || 'development';
 
 exports.getFights = async (req, res) => {
   await Fight.find({}, (err, fights) => {
@@ -22,9 +23,21 @@ exports.getFight = async (req, res) => {
     });
   }
 
+  let avatar = '';
+  if (env === 'production' &&
+      fight.antagonist.avatar &&
+      fight.antagonist.avatar.aws_location) {
+    avatar = fight.antagonist.avatar.aws_location;
+  } else if (env === 'development' &&
+             fight.antagonist.avatar &&
+             fight.antagonist.avatar.path) {
+    avatar = fight.antagonist.avatar.path;
+  }
+
   return res.status(200).json({
     type: 'success',
-    fight
+    fight,
+    avatar
   });
 }
 
