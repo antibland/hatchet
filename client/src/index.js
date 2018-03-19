@@ -4,9 +4,9 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import './css/Icons.css';
 import App from './App';
-//import registerServiceWorker from './registerServiceWorker';
-import { unregister } from './registerServiceWorker';
-unregister();
+import registerServiceWorker from './registerServiceWorker';
+// import { unregister } from './registerServiceWorker';
+// unregister();
 
 ReactDOM.render((
   <BrowserRouter>
@@ -14,4 +14,4 @@ ReactDOM.render((
   </BrowserRouter>
 ), document.getElementById('root'));
 
-//registerServiceWorker();
+registerServiceWorker();
