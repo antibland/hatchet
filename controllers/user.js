@@ -146,7 +146,7 @@ exports.login = (req, res, next) => {
   });
 };
 
-exports.reset_password = (req, res, next) => {
+exports.resetPassword = (req, res, next) => {
   User.findOne({ email: req.body.email })
     .exec((err, user) => {
       if (err) {

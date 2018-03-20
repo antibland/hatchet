@@ -39,7 +39,7 @@ class ForgotPassword extends Component {
 
     e.preventDefault();
 
-    fetch('/api/reset_password', {
+    fetch('/api/resetPassword', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -123,7 +123,7 @@ class ForgotPassword extends Component {
         </h2>
 
         <form
-          action="/api/reset_password"
+          action="/api/resetPassword"
           method="POST"
           onSubmit={this.handleSubmit}
           onChange={this.handleChange}>

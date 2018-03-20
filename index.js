@@ -45,7 +45,7 @@ app.get('/api/:userId/fights', fightApi.getUserFights);
 const userApi = require('./controllers/user.js');
 app.post('/api/join', userApi.join);
 app.post('/api/login', cors(), userApi.login);
-app.post('/api/reset_password', userApi.reset_password);
+app.post('/api/resetPassword', userApi.resetPassword);
 app.get('/api/:userId/logout', userApi.logout);
 app.get('/api/confirmation/:token_id', userApi.confirmationPost);
 app.post('/api/resend', userApi.resendTokenPost);
