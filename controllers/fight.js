@@ -14,7 +14,9 @@ exports.getFight = async (req, res) => {
   let { fightId } = req.params;
 
   let fight = await Fight.findById(fightId)
-    .populate({ path: 'antagonist', select: 'username avatar' });
+    .populate({
+      path: 'antagonist defender', select: 'username avatar'
+    });
 
   if (!fight) {
     return res.status(500).json({
@@ -97,18 +99,18 @@ exports.newFight = async (req, res) => {
       // Case: User not found via email lookup. Send an invite
       if (validator.validate(oppenentRef)) {
         console.log(`We just sent a site invitation to ${oppenentRef}...`);
-        res.status(400).json({
-          type: 'failure',
-          message: `We just sent a site invitation to ${oppenentRef}...`
-        });
+        // res.status(400).json({
+        //   type: 'failure',
+        //   message: `We just sent a site invitation to ${oppenentRef}...`
+        // });
         res.redirect('back');
       } else {
         // Case: User not found via username lookup. Give up
         console.log(`Sorry, we have no record of ${oppenentRef}`);
-        res.status(400).json({
-          type: 'failure',
-          message: `Sorry, we have no record of ${oppenentRef}`
-        });
+        // res.status(400).json({
+        //   type: 'failure',
+        //   message: `Sorry, we have no record of ${oppenentRef}`
+        // });
         res.redirect('back');
       }
     } else {
