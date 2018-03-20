@@ -28,7 +28,20 @@ class Fight extends Component {
     super();
     this.state = {
       fight: '',
-      avatarPath: ''
+      fight_type: '',
+      votes: {
+        for: 0,
+        against: 0
+      },
+      antagonist: {
+        avatarPath: '',
+        username: '',
+        argument: ''
+      },
+      defender: {
+        avatarPath: '',
+        username: ''
+      }
     };
   }
 
@@ -39,11 +52,33 @@ class Fight extends Component {
       .then(res => res.json())
       .then(data => {
         this.setState({
-          fight: data.fight,
-          avatarPath: data.avatar
-        })
+          fight_type: data.fight.type,
+          votes: {
+            for: data.fight.votes.for,
+            against: data.fight.votes.against,
+          },
+          antagonist: {
+            avatarPath: data.fight.antagonist.avatar.path,
+            username: data.fight.antagonist.username,
+            argument: data.fight.text.for
+          }
+        });
+
+        data.fight.type !== 'philosophical'
+          ? this.setState({
+              defender: {
+                avatarPath: data.fight.defender.avatar.path,
+                username: data.fight.defender.username
+              }
+            })
+          : this.setState({
+              defender: {
+                avatarPath: '',
+                username: ''
+              }
+            })
       });
-  }
+  };
 
   render() {
     let antagonist = {},
@@ -51,29 +86,29 @@ class Fight extends Component {
 
     antagonist.imgpath = this.state.avatarPath === ''
       ? '/question_mark.png'
-      : this.state.avatarPath;
+      : this.state.antagonist.avatarPath;
 
-    if (this.state.fight.type === 'philosophical') {
+    if (this.state.fight_type === 'philosophical') {
       defender.imgpath = '/earth.png';
       defender.username = 'The Internet';
-      defender.fightText = `Is ${this.state.fight.antagonist.username} right? What do you think? Have a good, hard look and vote.`
+      defender.argument = `Is ${this.state.antagonist.username} right? What do you think? Have a good, hard look and vote.`
     } else {
-      defender.imgpath = '/question_mark.png'; // <-- Make this real
-      defender.username = 'Another user';
-      defender.fightText = 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis fugiat in impedit maxime blanditiis nam assumenda. Dicta quo sequi dolorum similique. Libero repudiandae esse voluptate impedit delectus enim, nostrum quos?'
+      defender.imgpath = this.state.defender.avatarPath; // <-- Make this real
+      defender.username = this.state.defender.username;
+      defender.argument = 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis fugiat in impedit maxime blanditiis nam assumenda. Dicta quo sequi dolorum similique. Libero repudiandae esse voluptate impedit delectus enim, nostrum quos?'
     }
 
     return (
       <div>
-      { this.state.fight
+      { this.state.fight_type
         ? <div className="featured-fights-container">
             <div className="user1">
               <UserAvatar
                 imgpath={antagonist.imgpath}
-                username={this.state.fight.antagonist.username}
+                username={this.state.antagonist.username}
               />
-              <p className="fight-text">{this.state.fight.text.for}</p>
-              <p className="total-votes">Votes: {this.state.fight.votes.for}</p>
+              <p className="fight-text">{this.state.antagonist.argument}</p>
+              <p className="total-votes">Votes: {this.state.votes.for}</p>
             </div>
             <img className="versus" src="/versus.png" alt="versus graphic"/>
             <div className="user2">
@@ -81,8 +116,8 @@ class Fight extends Component {
                 imgpath={defender.imgpath}
                 username={defender.username}
               />
-              <p className="fight-text">{defender.fightText}</p>
-              <p className="total-votes">Votes: {this.state.fight.votes.against}</p>
+              <p className="fight-text">{defender.argument}</p>
+              <p className="total-votes">Votes: {this.state.votes.against}</p>
             </div>
           </div>
         : <Loading />

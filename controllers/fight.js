@@ -25,21 +25,9 @@ exports.getFight = async (req, res) => {
     });
   }
 
-  let avatar = '';
-  if (env === 'production' &&
-      fight.antagonist.avatar &&
-      fight.antagonist.avatar.aws_location) {
-    avatar = fight.antagonist.avatar.aws_location;
-  } else if (env === 'development' &&
-            fight.antagonist.avatar &&
-            fight.antagonist.avatar.path) {
-    avatar = fight.antagonist.avatar.path;
-  }
-
   return res.status(200).json({
     type: 'success',
-    fight,
-    avatar
+    fight
   });
 }
 
