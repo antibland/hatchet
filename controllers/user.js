@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const env = process.env.NODE_ENV || 'development';
+const validator = require("email-validator");
 
 // Helper functions
 
@@ -384,3 +385,20 @@ exports.getUser = async (req, res) => {
       }
     });
 };
+
+exports.isUser = async (req, res) => {
+  let ref = req.params.userReference;
+
+  let findBy = validator.validate(ref)
+                ? { email: ref }
+                : { username: ref };
+
+  let user = await User.findOne(findBy);
+
+  let username = user !== null ? user.username : null;
+
+  res.status(200).json({
+    isUser: (user !== null),
+    username
+  });
+}

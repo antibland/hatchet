@@ -66,16 +66,29 @@ class Create extends Component {
   checkForUser() {
     let { someone } = this.state;
 
+    // user can be an email or username — figure this out server-side
     if (someone.length && someone !== auth.user.username) {
-      // /api/:userName/avatar/username
-      fetch(`/api/${this.state.someone}/avatar/username`)
+      fetch(`/api/${someone}/isUser`)
         .then(res => res.json())
         .then(data => {
-          this.setState({
-            opponentAvatarUrl: data.avatar,
-            opponentIsValidUser: data.isValidUser
-          });
+
+          data.isUser // fetch avatar from returned username
+            ? fetch(`/api/${data.username}/avatar/username`)
+                .then(res => res.json())
+                .then(data => {
+                  this.setState({
+                    opponentAvatarUrl: data.avatar,
+                    opponentIsValidUser: true
+                  });
+                })
+            : this.setState({
+              opponentAvatarUrl: '',
+              opponentIsValidUser: false
+            });
         })
+        .catch(err => {
+          console.log('Request failed', err)
+        });
     }
   }
 
