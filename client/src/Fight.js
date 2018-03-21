@@ -58,7 +58,9 @@ class Fight extends Component {
             against: data.fight.votes.against,
           },
           antagonist: {
-            avatarPath: data.fight.antagonist.avatar.path,
+            avatarPath: data.fight.antagonist.avatar
+              ? data.fight.antagonist.avatar.path
+              : '',
             username: data.fight.antagonist.username,
             argument: data.fight.text.for
           }
@@ -67,7 +69,9 @@ class Fight extends Component {
         data.fight.type !== 'philosophical'
           ? this.setState({
               defender: {
-                avatarPath: data.fight.defender.avatar.path,
+                avatarPath: data.fight.defender.avatar
+                  ? data.fight.defender.avatar.path
+                  : '',
                 username: data.fight.defender.username
               }
             })
@@ -82,10 +86,11 @@ class Fight extends Component {
 
   render() {
     let antagonist = {},
-        defender = {};
+        defender = {},
+        defaultUserImg = '/user.png';
 
-    antagonist.imgpath = this.state.avatarPath === ''
-      ? '/question_mark.png'
+    antagonist.imgpath = this.state.antagonist.avatarPath === ''
+      ? defaultUserImg
       : this.state.antagonist.avatarPath;
 
     if (this.state.fight_type === 'philosophical') {
@@ -93,7 +98,9 @@ class Fight extends Component {
       defender.username = 'The Internet';
       defender.argument = `Is ${this.state.antagonist.username} right? What do you think? Have a good, hard look and vote.`
     } else {
-      defender.imgpath = this.state.defender.avatarPath; // <-- Make this real
+      defender.imgpath = this.state.defender.avatarPath === ''
+        ? defaultUserImg
+        : this.state.defender.avatarPath;
       defender.username = this.state.defender.username;
       defender.argument = 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis fugiat in impedit maxime blanditiis nam assumenda. Dicta quo sequi dolorum similique. Libero repudiandae esse voluptate impedit delectus enim, nostrum quos?'
     }
