@@ -127,12 +127,7 @@ exports.login = (req, res, next) => {
       }
     });
 
-    let avatar = '';
-    if (env === 'development' && user.avatar && user.avatar.path) {
-      avatar = user.avatar.path
-    } else if (env === 'production' && user.avatar && user.avatar.aws_location) {
-      avatar = user.avatar.aws_location;
-    }
+    let avatar = user.avatar.path;
 
     return res.status(200).json({
       type: 'success',
@@ -258,30 +253,16 @@ exports.getAvatarByUserName = async (req, res, next) => {
       });
     }
 
-    if (env === 'development') {
-      if (!user.avatar || !user.avatar.path) {
-        return res.status(200).json({
-          isValidUser: true,
-          avatar: ''
-        });
-      } else {
-        return res.status(200).json({
-          isValidUser: true,
-          avatar: user.avatar.path ? user.avatar.path : ''
-        });
-      }
+    if (!user.avatar || !user.avatar.path) {
+      return res.status(200).json({
+        isValidUser: true,
+        avatar: ''
+      });
     } else {
-      if (!user.avatar || !user.avatar.aws_location) {
-        return res.status(200).json({
-          isValidUser: true,
-          avatar: ''
-        });
-      } else {
-        return res.status(200).json({
-          isValidUser: true,
-          avatar: user.avatar.aws_location ? user.avatar.aws_location : ''
-        });
-      }
+      return res.status(200).json({
+        isValidUser: true,
+        avatar: user.avatar.path ? user.avatar.path : ''
+      });
     }
   });
 };
@@ -304,32 +285,17 @@ exports.getAvatar = async (req, res) => {
       });
     }
 
-    if (env === 'development') {
-      if (!user.avatar || !user.avatar.path) {
-        return res.status(200).json({
-          type: 'success',
-          avatar: null
-        });
-      } else {
-        return res.status(200).json({
-          type: 'success',
-          avatar: user.avatar.path
-        });
-      }
+    if (!user.avatar || !user.avatar.path) {
+      return res.status(200).json({
+        type: 'success',
+        avatar: null
+      });
     } else {
-      if (!user.avatar || !user.avatar.aws_location) {
-        return res.status(200).json({
-          type: 'success',
-          avatar: null
-        });
-      } else {
-        return res.status(200).json({
-          type: 'success',
-          avatar: user.avatar.aws_location
-        });
-      }
+      return res.status(200).json({
+        type: 'success',
+        avatar: user.avatar.path
+      });
     }
-
   });
 };
 
@@ -344,7 +310,7 @@ exports.setAvatar = async (req, res) => {
           if (!user.avatar) { user.avatar = {}; }
           user.avatar.path = getAvatarPath(req.file.path);
         } else {
-          user.avatar.aws_location = req.file.location;
+          user.avatar.path = req.file.location;
         }
 
         user.save(err => {

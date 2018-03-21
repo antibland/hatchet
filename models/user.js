@@ -25,10 +25,6 @@ var UserSchema = new mongoose.Schema({
     path: {
       type: String,
       trim: true
-    },
-    aws_location: {
-      type: String,
-      trim: true
     }
   },
   roles: [{ type: 'String' }],

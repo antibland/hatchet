@@ -216,6 +216,7 @@ class Profile extends Component {
     }
   }
   componentDidMount() {
+    // /api/:userId/fights => getUserFights
     let url = `/api/${auth.user.userid}/fights`;
 
     fetch(url)
