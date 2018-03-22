@@ -1,30 +1,16 @@
 import React, { Component } from 'react';
+
 import { auth } from './Auth.js';
 import { Link } from 'react-router-dom';
 import Loading from './Loading.js';
-import Moment from 'react-moment';
 import Avatar from './shared/components/Avatar';
+import FightsAccordion from './shared/components/FightsAccordion';
+import FancyFileInput from './shared/components/FancyFileInput';
 import './css/Flash.css';
 import './css/ProfileFightList.css';
 import './css/Accordion.css';
 import './css/ImagePreview.css';
 
-const FancyFileInput = (props) => (
-  <div>
-    <input
-      className="inputfile inputfile-1"
-      type="file"
-      onChange={props.updatePreviewImage}
-      name="avatar"
-      id="avatar" />
-    <label htmlFor="avatar">
-    <svg aria-hidden="true" className="upload-icon">
-      <use xlinkHref="./symbols/svg-defs.svg#upload-icon" />
-    </svg>
-    <span>Choose a file&hellip;</span>
-    </label>
-  </div>
-)
 class AvatarContainer extends Component {
   constructor() {
     super();
@@ -212,6 +198,7 @@ class Profile extends Component {
     super();
     this.state = {
       fights: [],
+      pendingInvites: [],
       loading: true
     }
   }
@@ -224,19 +211,23 @@ class Profile extends Component {
       .then(data => {
         this.setState({
           fights: data.fights,
+          pendingInvites: data.pendingInvites,
           loading: false
         });
       });
   }
 
   render() {
-    let fight_noun = '';
-    let fight_len = this.state.fights.length;
-    if (fight_len === 1) {
-      fight_noun = 'fight';
-    } else if (fight_len > 1) {
-      fight_noun = 'fights';
-    }
+    let pluralHelper = (len) => {
+      return len === 1 ? 'fight' : 'fights';
+    };
+    let { fights, pendingInvites } = this.state;
+
+    let fight_len = fights.length;
+    let fight_noun = pluralHelper(fight_len);
+
+    let pending_len = pendingInvites.length;
+    let pending_noun = pluralHelper(pending_len);
 
     return (
       <div>
@@ -245,47 +236,30 @@ class Profile extends Component {
           : <div>
               <h1 className="profileH1">Hey, {auth.user.username}!</h1>
               <AvatarContainer />
-              { fight_len
-                ? <h2 className="profileH2">{ fight_len } { fight_noun } found</h2>
+
+              { pending_len
+                ? <h2 className="profileH2">
+                    You've been invited to { pending_len } { pending_noun }.
+                  </h2>
                 : ''
               }
-              <div className="fightlist tablist">
-              { this.state.fights.length
-                ? this.state.fights.map((fight, index) => {
-                  return (
-                    <div className="tab" key={fight._id}>
-                      <input id={"tab-" + index} type="checkbox" name="tabs" />
-                      <label className="tab-label" htmlFor={"tab-" + index}>{fight.title}</label>
-                      <div className="tab-content">
-                        <div className="tab-content-inner">
-                          <div className="meta">
-                            <span className="created">
-                              <strong>Created: </strong>
-                              <Moment fromNow format='MMMM Do YYYY'>{fight.created_at}</Moment>
-                            </span>
-                            <span className="type"><strong>Type: </strong>A {fight.type} fight.</span>
-                            <span className="text">{fight.text.for}</span>
-                            { fight.isLive
-                              ? <Link className="button" to={'/fight/' + fight._id}>View the fight</Link>
-                              : <div>
-                                  <p className="system-message">
-                                  <svg aria-hidden="true" className="system-tip">
-                                    <use xlinkHref="./symbols/svg-defs.svg#system-tip" />
-                                  </svg>
-                                    We are still waiting to hear from that coward to respond. Remain patient.
-                                  </p>
-                                  <Link className="button" to={'/fight/' + fight._id}>View fight</Link>
-                                </div>
-                            }
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )
-                })
-                : <p>You have no fights just yet. <Link to='/create'>Start one</Link></p>
+              <FightsAccordion
+                obj={pendingInvites}
+                indexModifier='pending_invites'
+                action='accept invite' />
+
+              { fight_len
+                ? <h2 className="profileH2">You have started { fight_len } { fight_noun }.</h2>
+                : ''
               }
-              </div>
+              <FightsAccordion
+                obj={fights}
+                indexModifier='fights_started'
+                emptyResponse= {
+                  <p>You have no active fights right now. <Link to='/create'>Start one</Link></p>
+                }
+              />
+
             </div>
         }
       </div>

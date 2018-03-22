@@ -118,6 +118,7 @@ footer a {
   display: inline-block;
   margin-top: 1em;
   font-size: 1.3em;
+  cursor: pointer;
 }
 
 .bottom-margin {

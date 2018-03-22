@@ -3,12 +3,33 @@ const User = require('../models/user');
 const validator = require("email-validator");
 const env = process.env.NODE_ENV || 'development';
 
+exports.setLive = async (req, res) => {
+  let { fightId } = req.params;
+
+  let fight = await Fight.findById(fightId);
+  fight.isLive = true;
+
+  await fight.save(err => {
+    if (err) {
+      return res.status(500).json({
+        type: 'failure',
+        message: 'An error occurred. Please try again.'
+      });
+    }
+  });
+
+  return res.status(200).json({
+    type: 'success',
+    message: 'The fight is live'
+  });
+};
+
 exports.getFights = async (req, res) => {
   await Fight.find({}, (err, fights) => {
     if (err) throw err;
     res.status(200).json(fights);
-  })
-}
+  });
+};
 
 exports.getFight = async (req, res) => {
   let { fightId } = req.params;
@@ -34,11 +55,16 @@ exports.getFight = async (req, res) => {
 exports.getUserFights = async (req, res) => {
   let { userId } = req.params;
   let user = await User.findById(userId).populate('fights');
+  let pendingInvites = await Fight.find({
+    defender: userId,
+    isLive: false
+  });
 
   if (user) {
     res.status(200).json({
       type: 'success',
-      fights: user.fights
+      fights: user.fights,
+      pendingInvites
     });
   }
 }

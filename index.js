@@ -40,6 +40,7 @@ const fightApi = require('./controllers/fight.js');
 app.get('/api/fights', fightApi.getFights);
 app.get('/api/:fightId/fight', fightApi.getFight);
 app.post('/api/:userId/fight', fightApi.newFight);
+app.get('/api/:fightId/fight/setLive', fightApi.setLive);
 app.get('/api/:userId/fights', fightApi.getUserFights);
 
 const userApi = require('./controllers/user.js');
