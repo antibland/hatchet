@@ -1,6 +1,6 @@
 header {
   display: flex;
-  background-color: var(--brown);
+  background-color: var(--teal);
   padding: 1em 0;
   justify-content: space-between;
   align-items: center;

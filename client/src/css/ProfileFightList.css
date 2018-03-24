@@ -49,9 +49,10 @@
 }
 
 .profileH1 {
-  text-shadow: 1px 1px rgba(255, 255, 255, 1);
+  text-shadow: 1px 2px 2px rgb(248, 192, 45);
   font-size: 2.7em;
   margin-top: 0;
+  color: var(--gold);
 }
 
 .profileH2 {

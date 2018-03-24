@@ -21,7 +21,7 @@ input[type="checkbox"] {
   display: block;
   font-weight: bold;
   line-height: 2;
-  background-color: var(--brown);
+  background-color: var(--teal);
   color: white;
   text-overflow: ellipsis;
   overflow: hidden;
