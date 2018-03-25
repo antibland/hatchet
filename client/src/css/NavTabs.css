@@ -8,6 +8,15 @@
   border: 1px solid var(--dark-blue);
   border-radius: 8px 8px 0 0;
   margin: 0 0.5em;
+  border-bottom: none;
+}
+
+.navTabs li:first-child {
+  margin-left: 0;
+}
+
+.navTabs li:last-child {
+  margin-right: 0;
 }
 
 .navTabsItem {
