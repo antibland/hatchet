@@ -249,7 +249,7 @@ class Profile extends Component {
                 action='accept invite' />
 
               { fight_len
-                ? <h2 className="profileH2">You have started { fight_len } { fight_noun }.</h2>
+                ? <h2 className="profileH2">You've started { fight_len } { fight_noun }.</h2>
                 : ''
               }
               <FightsAccordion

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Main from './Main';
 import Header from './Header.js';
+import BottomMenu from './BottomMenu.js';
 import { auth } from './Auth.js';
 import './App.css';
 import './css/Nav.css';
@@ -10,7 +11,7 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => (
   <footer>
-    <small>2018 &copy; Big Idea, Inc.</small>
+    <small>{new Date().getFullYear()} &copy; Bury The Hatchet</small>
     <nav>
       <Link to='/terms'>Terms of Service</Link>
       <Link to='/privacy'>Privacy Policy</Link>
@@ -26,6 +27,10 @@ class App extends Component {
       <div className="App">
         <Header isAuthenticated={isAuthenticated} />
         <Main />
+        { isAuthenticated
+          ? <BottomMenu />
+          : ''
+        }
         <Footer />
         {/* <FightsContainer fights={fakeServerData} /> */}
       </div>

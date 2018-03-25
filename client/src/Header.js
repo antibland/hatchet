@@ -1,17 +1,25 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom'
+import React, { Component } from 'react';
+import { NavLink, Link } from 'react-router-dom';
 import { auth } from './Auth.js';
 import Avatar from './shared/components/Avatar';
+import commonData from './shared/commonData';
+import MainTabs from './MainTabs';
+import './css/NavTabs.css';
 
 const Logo = () => (
-  <h1><NavLink exact to='/'>Big Idea, Inc.</NavLink></h1>
+  <h1><NavLink exact to='/'>Bury The Hatchet</NavLink></h1>
 );
 
-const Header = (props) => (
+const Header = props => (
   <header>
     <Logo />
     <nav role='main'>
-      <ul>
+      <MainTabs data={
+        props.isAuthenticated
+          ? commonData.mainTabs
+          : commonData.restrictedTabs
+      } {...props} />
+      {/* <ul>
         { props.isAuthenticated
           ? <React.Fragment>
               <li><NavLink className="nav-link" exact to='/create'>Start a Hatchet</NavLink></li>
@@ -41,7 +49,7 @@ const Header = (props) => (
               <li><NavLink className="nav-link" exact to='/login'>Login</NavLink></li>
             </React.Fragment>
         }
-      </ul>
+      </ul> */}
     </nav>
   </header>
 )

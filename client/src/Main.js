@@ -11,6 +11,9 @@ import Terms from './Terms';
 import Privacy from './Privacy';
 import Profile from './Profile';
 import Fight from './Fight';
+import Categories from './Categories';
+import Category from './Category';
+import MyHatchets from './MyHatchets';
 
 const Main = () => (
   <main>
@@ -21,6 +24,9 @@ const Main = () => (
       <Route exact path='/login' component={Login}/>
       <Route exact path='/logout' component={Logout}/>
       <Route exact path='/profile' component={Profile}/>
+      <Route exact path='/categories' component={Categories}/>
+      <Route path='/categories/:category' component={Category}/>
+      <Route exact path='/my-hatchets' component={MyHatchets}/>
       <Route exact path='/fight/:fightId' component={Fight} />
       <Route path='/forgot_password' component={ForgotPassword}/>
       <Route path='/resend' component={Resend}/>

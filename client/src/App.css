@@ -42,23 +42,24 @@ li {
 }
 
 main {
-  padding: 2em 1em 5em;
+  padding: 1.5em 0;
   flex: 1;
 }
 
 footer {
   padding: 1em 2em;
-  background-color: white;
+  background-color: var(--dark-blue);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #333;
+  color: var(--teal);
 }
 
 footer a {
   font-size: .8em;
   text-decoration: none;
   padding-left: 1.5em;
+  color: currentColor;
 }
 
 .App {
@@ -120,6 +121,7 @@ footer a {
   margin-top: 1em;
   font-size: 1.3em;
   cursor: pointer;
+  border-radius: 8px;
 }
 
 .bottom-margin {
@@ -136,19 +138,30 @@ footer a {
 
 .homeList {
   margin: 0 auto;
-  max-width: 600px;
-  padding: 2em;
+  padding: 0;
+  max-width: 100%;
 }
 
 .homeList .text {
   color: #333;
 }
 
+.homeList .link {
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  margin: 7px 0;
+}
+
+.homeList .button img {
+  margin-right: .5em;
+}
+
 .homeList .title {
-  font-size: 1.5em;
-  font-weight: bold;
-  display: block;
-  margin-bottom: .5em;
+  flex: 1;
+  font-size: .8em;
+  color: white;
 }
 
 .homeList .created {
@@ -156,11 +169,10 @@ footer a {
 }
 
 .homeList li {
-  margin-bottom: 3em;
-  padding: 2em;
-  border-radius: 4px;
-  background-color: white;
-  box-shadow: var(--box-shadow);
+  text-align: left;
+  width: 100%;
+  border-bottom: 1px solid rgba(57, 160, 207, .5);
+  padding: 0 1.5em;
 }
 
 .homeList span {

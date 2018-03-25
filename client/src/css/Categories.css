@@ -1,0 +1,30 @@
+.categories span {
+  color: white;
+  text-transform: uppercase;
+}
+
+.categories li {
+  padding: 2em 0;
+}
+
+.categories .firstWord {
+  color: var(--gold);
+  display: block;
+}
+
+.threeByThree {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.threeByThree > * {
+  width: calc(100% / 3);
+}
+
+@media screen and (max-width: 600px) {
+  .threeByThree > * {
+    width: calc(100% / 2);
+  }
+}

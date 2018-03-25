@@ -1,0 +1,9 @@
+.bottomMenu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bottomMenu * {
+  color: var(--teal);
+}

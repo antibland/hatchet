@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Loading = (props) => (
-  <h1 className="loading-text">
+  <h1 style={{ color: 'white' }} className="loading-text">
     {props.text}
   </h1>
 )

@@ -29,15 +29,10 @@ class Home extends Component {
       this.state.fights.map(fight => {
         return (
           <li key={fight._id}>
-            <span className="title">{fight.title}</span>
-            <span className="created">
-              <strong>Created </strong>
-              <Moment fromNow format='MMMM Do YYYY'>{fight.created_at}</Moment>
-            </span>
-            <span className="text">{
-              utilities.truncate(fight.text.for, 150)
-            }</span>
-            <Link className="button" to={'/fight/' + fight._id}>View fight</Link>
+            <Link className="button link" to={'/fight/' + fight._id}>
+              <img alt='placeholder' src='https://via.placeholder.com/45x45' />
+              <span className="title">{fight.title}</span>
+            </Link>
           </li>
         )
       })

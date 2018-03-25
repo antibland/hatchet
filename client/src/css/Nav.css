@@ -2,22 +2,20 @@ header {
   display: flex;
   background-color: var(--teal);
   padding: 1em 0;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  flex-direction: column;
   padding: 0 1.5em;
 }
 
 header h1 a {
-  font-size: 0.8em;
+  font-size: 1em;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  text-decoration: none;
 }
 
 header a {
   color: white;
-}
-
-nav[role='main'] ul {
-  display: flex;
-  align-items: center;
 }
 
 .nav-link {
