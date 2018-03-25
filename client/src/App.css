@@ -182,3 +182,7 @@ footer a {
 .box-shadow {
   box-shadow: var(--box-shadow);
 }
+
+.noResults {
+  color: white;
+}
