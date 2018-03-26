@@ -16,6 +16,8 @@
 .fightlist .text {
   font-size: 1.3em;
   font-style: italic;
+  max-height: 13em;
+  overflow: auto;
 }
 
 .fightlist .button {
