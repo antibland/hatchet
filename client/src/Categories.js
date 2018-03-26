@@ -23,7 +23,7 @@ const Categories = () => (
         })
       }
     </ul>
-    <Link className='button' to='/create'>Start Fight</Link>
+    <Link className='button startFight' to='/create'>Start Fight</Link>
   </div>
 );
 

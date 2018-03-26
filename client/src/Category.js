@@ -15,7 +15,7 @@ class Category extends Component {
     return (
       <div>
         <div style={{ color: 'white' }}>{pathname}</div>
-        <Link className='button' to='/create'>Start Fight</Link>
+        <Link className='button startFight' to='/create'>Start Fight</Link>
       </div>
     );
   }

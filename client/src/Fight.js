@@ -28,6 +28,7 @@ class Fight extends Component {
     super();
     this.state = {
       fight: '',
+      fight_title: '',
       fight_type: '',
       votes: {
         for: 0,
@@ -52,6 +53,7 @@ class Fight extends Component {
       .then(res => res.json())
       .then(data => {
         this.setState({
+          fight_title: data.fight.title,
           fight_type: data.fight.type,
           votes: {
             for: data.fight.votes.for,
@@ -107,26 +109,29 @@ class Fight extends Component {
 
     return (
       <div>
-      { this.state.fight_type
-        ? <div className="featured-fights-container">
-            <div className="user1">
-              <UserAvatar
-                imgpath={antagonist.imgpath}
-                username={this.state.antagonist.username}
-              />
-              <p className="fight-text">{this.state.antagonist.argument}</p>
-              <p className="total-votes">Votes: {this.state.votes.for}</p>
+      { this.state.fight_title
+        ? <React.Fragment>
+            <h2>{this.state.fight_title}</h2>
+            <div className="featured-fights-container">
+              <div className="user1">
+                <UserAvatar
+                  imgpath={antagonist.imgpath}
+                  username={this.state.antagonist.username}
+                />
+                <p className="fight-text">{this.state.antagonist.argument}</p>
+                <p className="total-votes">Votes: {this.state.votes.for}</p>
+              </div>
+              <img className="versus" src="/versus.small.png" alt="versus graphic"/>
+              <div className="user2">
+                <UserAvatar
+                  imgpath={defender.imgpath}
+                  username={defender.username}
+                />
+                <p className="fight-text">{defender.argument}</p>
+                <p className="total-votes">Votes: {this.state.votes.against}</p>
+              </div>
             </div>
-            <img className="versus" src="/versus.png" alt="versus graphic"/>
-            <div className="user2">
-              <UserAvatar
-                imgpath={defender.imgpath}
-                username={defender.username}
-              />
-              <p className="fight-text">{defender.argument}</p>
-              <p className="total-votes">Votes: {this.state.votes.against}</p>
-            </div>
-          </div>
+            </React.Fragment>
         : <Loading />
       }
       </div>

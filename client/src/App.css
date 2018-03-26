@@ -7,6 +7,7 @@
   --box-shadow: rgba(0, 0, 0, 0.33) 7px 7px 40px 0;
 
   --gold: rgb(248, 192, 45);
+  --bright-gold: rgb(255,	230,	51);
   --teal: rgb(57, 160, 207);
   --dark-blue: rgb(15, 48, 80);
   --button-text: rgba(27, 61, 71);
@@ -122,6 +123,21 @@ footer a {
   font-size: 1.3em;
   cursor: pointer;
   border-radius: 8px;
+  position: relative;
+}
+
+.button.startFight {
+  background: linear-gradient(
+    -35deg, var(--gold),
+    var(--gold) 30%, var(--gold) 30%,
+    var(--bright-gold) 30%, var(--bright-gold) 33%,
+    var(--gold) 33%, var(--gold) 35%,
+    var(--bright-gold) 35%, var(--bright-gold) 65%,
+    var(--gold) 65%, var(--gold) 67%,
+    var(--bright-gold) 67%, var(--bright-gold) 70%,
+    var(--gold) 70%
+  );
+  padding: 0.6em 1.3em;
 }
 
 .bottom-margin {
