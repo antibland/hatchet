@@ -3,6 +3,7 @@ import Loading from './Loading.js';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import utilities from './shared/utilities';
+import { auth } from './Auth';
 class Home extends Component {
   constructor() {
     super();
@@ -48,10 +49,13 @@ class Home extends Component {
               : this.state.fights.length === 0
                 ? <li className="noResults">
                   <p>It's lonely here. Not a hatchet in sight.
-                    <Link
-                      style={{ color: 'white', marginLeft: '10px' }}
-                      to='/create'>Start one
-                    </Link>
+                    { auth.hasValidToken()
+                        ? <Link
+                            style={{ color: 'white', marginLeft: '5px' }}
+                            to='/create'>Start one
+                          </Link>
+                        : ''
+                    }
                   </p>
                 </li>
                 : <Hatchets />
