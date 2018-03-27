@@ -46,7 +46,14 @@ class Home extends Component {
           { this.state.loading === true
               ? <Loading />
               : this.state.fights.length === 0
-                ? <li>{emptyMessage}</li>
+                ? <li className="noResults">
+                  <p>It's lonely here. Not a hatchet in sight.
+                    <Link
+                      style={{ color: 'white', marginLeft: '10px' }}
+                      to='/create'>Start one
+                    </Link>
+                  </p>
+                </li>
                 : <Hatchets />
           }
         </ul>
