@@ -72,7 +72,6 @@ exports.getUserFights = async (req, res) => {
 exports.newFight = async (req, res) => {
   let user = await User.findById(req.params.userId);
   let opponent = null;
-  let target = req.body.target;
 
   // default fight options
   let fightOptions = {
@@ -97,41 +96,36 @@ exports.newFight = async (req, res) => {
     });
   };
 
-  if (target === 'world') {
-    fightOptions.isLive = true;
-    create();
-  } else if (target === 'someone') {
-    let oppenentRef = req.body.opponent;
-    let findBy = validator.validate(oppenentRef)
-                  ? { email: oppenentRef }
-                  : { username: oppenentRef };
 
-    opponent = await User.findOne(findBy);
-    //console.log('opponent', opponent);
+  let oppenentRef = req.body.opponent;
+  let findBy = validator.validate(oppenentRef)
+                ? { email: oppenentRef }
+                : { username: oppenentRef };
 
-    if (!opponent || opponent === null) {
-      // Case: User not found via email lookup. Send an invite
-      if (validator.validate(oppenentRef)) {
-        console.log(`We just sent a site invitation to ${oppenentRef}...`);
-        // res.status(400).json({
-        //   type: 'failure',
-        //   message: `We just sent a site invitation to ${oppenentRef}...`
-        // });
-        res.redirect('back');
-      } else {
-        // Case: User not found via username lookup. Give up
-        console.log(`Sorry, we have no record of ${oppenentRef}`);
-        // res.status(400).json({
-        //   type: 'failure',
-        //   message: `Sorry, we have no record of ${oppenentRef}`
-        // });
-        res.redirect('back');
-      }
+  opponent = await User.findOne(findBy);
+  //console.log('opponent', opponent);
+
+  if (!opponent || opponent === null) {
+    // Case: User not found via email lookup. Send an invite
+    if (validator.validate(oppenentRef)) {
+      console.log(`We just sent a site invitation to ${oppenentRef}...`);
+      // res.status(400).json({
+      //   type: 'failure',
+      //   message: `We just sent a site invitation to ${oppenentRef}...`
+      // });
+      res.redirect('back');
     } else {
-      // Opponent exists, so continue
-      fightOptions.defender = opponent;
-      create();
+      // Case: User not found via username lookup. Give up
+      console.log(`Sorry, we have no record of ${oppenentRef}`);
+      // res.status(400).json({
+      //   type: 'failure',
+      //   message: `Sorry, we have no record of ${oppenentRef}`
+      // });
+      res.redirect('back');
     }
+  } else {
+    // Opponent exists, so continue
+    fightOptions.defender = opponent;
+    create();
   }
-
 }

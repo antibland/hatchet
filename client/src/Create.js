@@ -14,7 +14,7 @@ function OpponentAvatar(props) {
 
 class Create extends Component {
   static timeout = null;
-  static timeoutInterval = 2000;
+  static timeoutInterval = 1200;
 
   constructor() {
     super();
@@ -111,14 +111,12 @@ class Create extends Component {
 
   render() {
     let antagonist_avatar = this.state.currentAvatarUrl;
-    let earth = './earth.png';
     let count = this.state.character_count;
 
     let count_text = count === 1 ? 'character' : 'characters';
-    let fight_type = this.state.target === 'world' ?
-      <option value="philosophical">Philosophical</option> :
+    let fight_type_options =
       commonData.categories.map(type => {
-        return <option key={type} value={type.toLowerCase()}>{type}</option>
+        return <option key={type} value={type}>{type}</option>
       });
 
     let styles = {
@@ -169,9 +167,7 @@ class Create extends Component {
 
     return (
       <div>
-        <h2 className="ribbon">
-          <strong className="ribbon-content">Start a Hatchet</strong>
-        </h2>
+        <h2>Start a Hatchet</h2>
 
         <form className="box-shadow" onSubmit={this.handleSubmit} method="POST" action={formAction}>
           <div className="slots" style={styles.slots}>
@@ -183,44 +179,31 @@ class Create extends Component {
             </div>
             <img src="./versus.png" alt="versus" style={styles.versus} />
             <div className="them">
-              {this.state.target === 'someone'
-                ? <OpponentAvatar url={opponentAvatarUrl} />
-                : <Avatar imgpath={earth} />
-              }
+              <OpponentAvatar url={opponentAvatarUrl} />
             </div>
           </div>
 
-          <label htmlFor="target">Choose your opponent</label>
-          <div className="styled-select slate">
-            <select id="target" name="target" onChange={this.handleChange}>
-              <option value="someone">Someone</option>
-              <option value="world">Everyone</option>
-            </select>
+          <label htmlFor="opponent">Choose your opponent</label>
+          <div className="required-field-wrapper">
+            <input
+              type="text"
+              aria-label="Enter username or email address"
+              className="someone"
+              name="opponent"
+              id="opponent"
+              defaultValue={this.state.someone}
+              required
+              onInput={this.handleInput}
+              onKeyUp={this.handleKeyUp}
+              placeholder="Enter username or email address" />
+            <span className="required">*</span>
+            {opponentIsValidUserResult}
           </div>
-
-          {this.state.target === 'someone'
-          ? <div className="required-field-wrapper">
-              <input
-                type="text"
-                aria-label="Enter username or email address"
-                className="someone"
-                name="opponent"
-                id="opponent"
-                defaultValue={this.state.someone}
-                required
-                onInput={this.handleInput}
-                onKeyUp={this.handleKeyUp}
-                placeholder="Enter username or email address" />
-              <span className="required">*</span>
-              {opponentIsValidUserResult}
-            </div>
-            : ''
-          }
 
           <label htmlFor="type">What type?</label>
           <div className="styled-select slate">
             <select name="type" id="type">
-              {fight_type}
+              { fight_type_options }
             </select>
           </div>
 
