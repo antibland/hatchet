@@ -1,5 +1,12 @@
 const commonData = {
-  categories: ['Lover\'s Quarrel', 'Workplace Squabble', 'Friend Fight', 'Roommate Rumble', 'Family Feud', 'World War'],
+  categories: [
+    'Lover\'s Quarrel',
+    'Workplace Squabble',
+    'Friend Fight',
+    'Roommate Rumble',
+    'Family Feud',
+    'World War'
+  ],
   mainTabs: [
     { id: 1, url: '/', name: 'Popular' },
     { id: 2, url: '/categories', name: 'Categories' },

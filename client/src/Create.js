@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './css/Form.css';
 import { auth } from './Auth.js';
 import Avatar from './shared/components/Avatar';
+import commonData from './shared/commonData';
 
 function OpponentAvatar(props) {
   if (props.url.length) {
@@ -12,14 +13,6 @@ function OpponentAvatar(props) {
 }
 
 class Create extends Component {
-  static fight_types = [
-    'Roommate',
-    'Lover\'s Quarrel',
-    'Coworker',
-    'Family Member',
-    'Friend'
-  ];
-
   static timeout = null;
   static timeoutInterval = 2000;
 
@@ -124,7 +117,7 @@ class Create extends Component {
     let count_text = count === 1 ? 'character' : 'characters';
     let fight_type = this.state.target === 'world' ?
       <option value="philosophical">Philosophical</option> :
-      Create.fight_types.map(type => {
+      commonData.categories.map(type => {
         return <option key={type} value={type.toLowerCase()}>{type}</option>
       });
 
