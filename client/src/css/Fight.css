@@ -27,13 +27,6 @@
 }
 
 .featured-fights-container > * {
-  /* flex: 1;
-  box-shadow: rgba(0, 0, 0, 0.33) 7px 7px 40px 0;
-  padding: 4em 5em 5em;
-  background: white;
-  border-radius: 50%;
-  max-width: 700px;
-  animation: bounce-in 1.5s forwards; */
   flex: 1;
   padding: 2em;
 }
