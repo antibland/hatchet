@@ -1,6 +1,6 @@
 import React from 'react';
 
-const FancyFileInput = (props) => (
+const FancyFileInput = props => (
   <div>
     <input
       className="inputfile inputfile-1"
