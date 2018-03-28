@@ -15,7 +15,7 @@ function getImg(word) {
       img = <img
               className='categoriesImg'
               src={`${prefix}lover.png`}
-              srcSet={`${prefix}lover.png 1x ${prefix}lover@2x.png 2x`}
+              srcSet={`${prefix}lover.png 1x, ${prefix}lover@2x.png 2x`}
               alt="Lover's Quarrel"
             />
       break;
@@ -23,7 +23,7 @@ function getImg(word) {
       img = <img
                className='categoriesImg'
               src={`${prefix}coworker.png`}
-              srcSet={`${prefix}coworker.png 1x ${prefix}coworker@2x.png 2x`}
+              srcSet={`${prefix}coworker.png 1x, ${prefix}coworker@2x.png 2x`}
               alt="Workplace Squabble"
             />
       break;
@@ -31,7 +31,7 @@ function getImg(word) {
       img = <img
               className='categoriesImg'
               src={`${prefix}friend.png`}
-              srcSet={`${prefix}friend.png 1x ${prefix}friend@2x.png 2x`}
+              srcSet={`${prefix}friend.png 1x, ${prefix}friend@2x.png 2x`}
               alt="Friend Fight"
             />
       break;
@@ -39,7 +39,7 @@ function getImg(word) {
       img = <img
               className='categoriesImg'
               src={`${prefix}roommate.png`}
-              srcSet={`${prefix}roommate.png 1x ${prefix}roommate@2x.png 2x`}
+              srcSet={`${prefix}roommate.png 1x, ${prefix}roommate@2x.png 2x`}
               alt="Roommate Rumble"
             />
       break;
@@ -47,7 +47,7 @@ function getImg(word) {
       img = <img
               className='categoriesImg'
               src={`${prefix}family.png`}
-              srcSet={`${prefix}family.png 1x ${prefix}family@2x.png 2x`}
+              srcSet={`${prefix}family.png 1x, ${prefix}family@2x.png 2x`}
               alt="Family Feud"
             />
       break;
