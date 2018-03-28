@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import utilities from './shared/utilities';
 import { auth } from './Auth';
+import ButtonLink from './shared/components/ButtonLink';
 class Home extends Component {
   constructor() {
     super();
@@ -50,11 +51,16 @@ class Home extends Component {
                 ? <li className="noResults">
                   <p>It's lonely here. Not a hatchet in sight.
                     { auth.hasValidToken()
-                        ? <Link
-                            style={{ color: 'white', marginLeft: '5px' }}
-                            to='/create'>Start one
-                          </Link>
-                        : ''
+                        ? <ButtonLink
+                            to='/create'
+                            classList='inlineLink'>
+                            Start Fight
+                          </ButtonLink>
+                        : <ButtonLink
+                            to='/join'
+                            classList='inlineLink'>
+                            Join Us
+                          </ButtonLink>
                     }
                   </p>
                 </li>

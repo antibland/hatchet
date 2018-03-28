@@ -126,7 +126,7 @@ footer a {
   position: relative;
 }
 
-.button.startFight {
+.button.primary {
   background: linear-gradient(
     -35deg, var(--gold),
     var(--gold) 30%, var(--gold) 30%,
@@ -201,4 +201,9 @@ footer a {
 
 .noResults {
   color: white;
+}
+
+.inlineLink {
+  color: white;
+  margin-left: 5px;
 }

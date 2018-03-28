@@ -2,6 +2,8 @@ import React from 'react';
 import commonData from './shared/commonData';
 import { Link } from 'react-router-dom';
 import './css/Categories.css';
+import ButtonLink from './shared/components/ButtonLink';
+import { auth } from './Auth.js';
 
 const Categories = () => (
   <div>
@@ -23,7 +25,18 @@ const Categories = () => (
         })
       }
     </ul>
-    <Link className='button startFight' to='/create'>Start Fight</Link>
+    { auth.hasValidToken()
+        ? <ButtonLink
+            to='/create'
+            classList='button primary'>
+            Start Fight
+          </ButtonLink>
+        : <ButtonLink
+            to='/join'
+            classList='button primary'>
+            Join Us
+          </ButtonLink>
+    }
   </div>
 );
 
