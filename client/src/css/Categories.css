@@ -7,6 +7,10 @@
   padding: 2em 0;
 }
 
+.categoriesImg {
+  max-width: 150px;
+}
+
 .categories .firstWord {
   color: var(--gold);
   display: block;
