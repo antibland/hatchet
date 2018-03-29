@@ -51,7 +51,7 @@ const sendEmail = opts => {
   });
 }
 
-exports.join = (req, res, next) => {
+exports.join = async (req, res, next) => {
   if (req.body.username && req.body.email && req.body.password) {
 
     const regex = /^[a-zA-Z0-9_.-]*$/g;
@@ -62,37 +62,36 @@ exports.join = (req, res, next) => {
       });
     }
 
-    var userData = {
+    let userData = {
       username: req.body.username,
       email: req.body.email,
       password: req.body.password
     };
 
-    //use schema.create to insert data into the db
-    User.create(userData, async (err, user) => {
-      if (err || !user) {
-        return res.status(401).json({
-          type: 'failure',
-          message: 'The username or email address is not unique.'
-        });
-      } else {
-        let tokenData = {
-          _userId: user._id,
-          token: crypto.randomBytes(16).toString('hex')
-        };
+    let user = null;
 
-        // Create a verification token for this user
-        let token = Token.create(tokenData, (err, token) => {
-          // Save the verification token
-          token.save(saveErr => {
-            if (saveErr) { return res.status(500).send({ msg: saveErr.message }); }
+    try {
+      user = await User.create(userData);
+    } catch(err) {
+      return res.status(401).json({
+        type: 'failure',
+        message: 'The username or email address is not unique.'
+      });
+    }
 
-            // Send verification email
-            sendEmail({ req, res, token, user });
-          });
-        });
-      }
+    // Create a verification token for this user
+    await Token.create({
+      _userId: user._id,
+      token: crypto.randomBytes(16).toString('hex')}, (err, token) => {
+      // Save the verification token
+      token.save(saveErr => {
+        if (saveErr) { return res.status(500).send({ msg: saveErr.message }); }
+
+        // Send verification email
+        sendEmail({ req, res, token, user });
+      });
     });
+
   }
 };
 
