@@ -27,12 +27,15 @@ class Home extends Component {
   }
 
   render() {
+
     let Hatchets = () => (
       this.state.fights.map(fight => {
+        let firstWord = fight.type.split(' ')[0].replace('\'', '');
+        let categoryImg = utilities.getCategoryImage(firstWord);
         return (
           <li key={fight._id}>
             <Link className="button link" to={'/fight/' + fight._id}>
-              <img alt='placeholder' src='https://via.placeholder.com/45x45' />
+              { categoryImg }
               <span className="title">{fight.title}</span>
             </Link>
           </li>

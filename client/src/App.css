@@ -191,6 +191,10 @@ footer a {
   padding: 0 1.5em;
 }
 
+.homeList .categoriesImg {
+  max-width: 60px;
+}
+
 .homeList span {
   display: inline-block;
 }
