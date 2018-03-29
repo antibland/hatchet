@@ -256,7 +256,7 @@ class Profile extends Component {
                 obj={fights}
                 indexModifier='fights_started'
                 emptyResponse= {
-                  <p className="noResults">You have no active fights right now. <Link to='/create'>Start one</Link></p>
+                  <p className="noResults">You have no active fights right now. <Link className='inlineLink' to='/create'>Start one</Link></p>
                 }
               />
 
