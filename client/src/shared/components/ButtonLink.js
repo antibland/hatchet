@@ -7,7 +7,7 @@ const ButtonLink = props => (
     className={props.widgetType === 'button' ? 'button.primary' : '' }
     style={props.styles}
     className={props.classList}
-    to='/join'>{ props.children }
+    to={props.to}>{ props.children }
   </Link>
 );
 
