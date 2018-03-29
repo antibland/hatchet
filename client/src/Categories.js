@@ -58,6 +58,13 @@ function getImg(word) {
               alt="World War"
             />
       break;
+    default:
+      img = <img
+              className='categoriesImg'
+              src={`${prefix}everyone.png`}
+              alt="World War"
+            />
+      break;
   }
   return img;
 }
