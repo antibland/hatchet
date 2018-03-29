@@ -40,8 +40,6 @@ class Home extends Component {
       })
     );
 
-    let emptyMessage = 'It\'s lonely here. Not a hatchet in sight.'
-
     return (
       <div>
         <ul className="homeList">
