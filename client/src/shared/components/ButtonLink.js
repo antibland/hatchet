@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 const ButtonLink = props => (
   <Link
-    className={props.widgetType === 'button' ? 'button.primary' : '' }
     style={props.styles}
     className={props.classList}
     to={props.to}>{ props.children }
