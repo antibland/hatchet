@@ -129,3 +129,30 @@ exports.newFight = async (req, res) => {
     create();
   }
 }
+
+exports.getFightsByCategory = async (req, res) => {
+  let category = req.params.category;
+  let fightTypes = Fight.schema.path('type').enumValues;
+  let query = null;
+
+  fightTypes.map( (type, index) => {
+    let t = type.toLowerCase().replace(' ', '_').replace('\'', '');
+    if (t === category) {
+      query = type;
+    }
+  });
+
+  if (query === null) {
+    return res.status(500).json({
+      type: 'failure',
+      message: `${category} is not a valid category.`
+    });
+  }
+
+  await Fight.find({"type":query}, (err, fights) => {
+    return res.status(200).json({
+      type: 'success',
+      fights
+    });
+  });
+};
