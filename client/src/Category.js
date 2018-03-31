@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
 import { auth } from './Auth.js';
-import ButtonLink from './shared/components/ButtonLink';
+import JoinOrStartButton from './shared/components/JoinOrStartButton';
+import HatchetList from './shared/components/HatchetList';
+import Loading from './Loading.js';
 
 class Category extends Component {
+  constructor() {
+    super();
+    this.state = {
+      fights: [],
+      loading: true,
+      message: ''
+    };
+  }
+
   componentDidMount() {
     // /api/fights/categories/:category' => fightApi.getFightsByCategory
     const {pathname} = this.props.location;
@@ -11,25 +21,30 @@ class Category extends Component {
     fetch(`/api/fights${pathname}`)
       .then(res => res.json())
       .then(data => {
-        console.log(data);
+        this.setState({
+          fights: data.fights,
+          loading: false,
+          message: data.message
+        });
       });
   }
 
   render() {
     return (
       <div>
-        { auth.hasValidToken()
-            ? <ButtonLink
-                to='/create'
-                classList='button primary'>
-                Start Fight
-              </ButtonLink>
-            : <ButtonLink
-                to='/join'
-                classList='button primary'>
-                Join Us
-              </ButtonLink>
-        }
+        <ul className="homeList">
+          { this.state.loading === true
+              ? <Loading />
+              : this.state.fights.length === 0
+                ? <li className="noResults center">
+                  <p>{ this.state.message }</p>
+                </li>
+                : <HatchetList fights={this.state.fights} />
+          }
+        </ul>
+        <p>
+          <JoinOrStartButton loggedIn={auth.hasValidToken()} />
+        </p>
       </div>
     );
   }

@@ -145,14 +145,18 @@ exports.getFightsByCategory = async (req, res) => {
   if (query === null) {
     return res.status(500).json({
       type: 'failure',
+      fights: [],
       message: `${category} is not a valid category.`
     });
   }
 
   await Fight.find({"type":query}, (err, fights) => {
-    return res.status(200).json({
+    let returnOptions = {
       type: 'success',
-      fights
-    });
+      fights,
+      message: fights.length === 0 ? `No results right now in ${query}` : ''
+    };
+
+    return res.status(200).json(returnOptions);
   });
 };

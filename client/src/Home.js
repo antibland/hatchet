@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import Loading from './Loading.js';
-import { Link } from 'react-router-dom';
-import Moment from 'react-moment';
-import utilities from './shared/utilities';
 import { auth } from './Auth';
-import ButtonLink from './shared/components/ButtonLink';
+import HatchetList from './shared/components/HatchetList';
+import JoinOrStartButton from './shared/components/JoinOrStartButton';
 class Home extends Component {
   constructor() {
     super();
@@ -27,22 +25,6 @@ class Home extends Component {
   }
 
   render() {
-
-    let Hatchets = () => (
-      this.state.fights.map(fight => {
-        let firstWord = fight.type.split(' ')[0].replace('\'', '');
-        let categoryImg = utilities.getCategoryImage(firstWord);
-        return (
-          <li key={fight._id}>
-            <Link className="button link" to={'/fight/' + fight._id}>
-              { categoryImg }
-              <span className="title">{fight.title}</span>
-            </Link>
-          </li>
-        )
-      })
-    );
-
     return (
       <div>
         <ul className="homeList">
@@ -50,24 +32,14 @@ class Home extends Component {
               ? <Loading />
               : this.state.fights.length === 0
                 ? <li className="noResults">
-                  <p>It's lonely here. Not a hatchet in sight.
-                    { auth.hasValidToken()
-                        ? <ButtonLink
-                            to='/create'
-                            classList='inlineLink'>
-                            Start Fight
-                          </ButtonLink>
-                        : <ButtonLink
-                            to='/join'
-                            classList='inlineLink'>
-                            Join Us
-                          </ButtonLink>
-                    }
-                  </p>
-                </li>
-                : <Hatchets />
+                    <p>It's lonely here. Not a hatchet in sight.</p>
+                  </li>
+                : <HatchetList fights={this.state.fights} />
           }
         </ul>
+        <p>
+          <JoinOrStartButton loggedIn={auth.hasValidToken()} />
+        </p>
       </div>
     );
   }
