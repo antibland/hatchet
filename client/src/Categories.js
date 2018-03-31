@@ -5,6 +5,7 @@ import './css/Categories.css';
 import ButtonLink from './shared/components/ButtonLink';
 import { auth } from './Auth.js';
 import utilities from './shared/utilities';
+import JoinOrStartButton from './shared/components/JoinOrStartButton';
 
 const Categories = () => (
   <div>
@@ -26,18 +27,9 @@ const Categories = () => (
         })
       }
     </ul>
-    { auth.hasValidToken()
-        ? <ButtonLink
-            to='/create'
-            classList='button primary'>
-            Start Fight
-          </ButtonLink>
-        : <ButtonLink
-            to='/join'
-            classList='button primary'>
-            Join Us
-          </ButtonLink>
-    }
+    <p>
+      <JoinOrStartButton loggedIn={auth.hasValidToken()} />
+    </p>
   </div>
 );
 
