@@ -9,7 +9,7 @@ class Home extends Component {
     this.state = {
       fights: [],
       loading: true
-    }
+    };
   }
   componentDidMount() {
     let url = '/api/fights';
