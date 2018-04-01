@@ -7,7 +7,6 @@ import { auth } from './Auth.js';
 import './App.css';
 import './css/Nav.css';
 import './css/Ribbon.css';
-import { Link } from 'react-router-dom';
 
 const Footer = () => (
   <footer>
