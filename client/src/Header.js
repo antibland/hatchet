@@ -7,7 +7,17 @@ import MainTabs from './MainTabs';
 import './css/NavTabs.css';
 
 const Logo = () => (
-  <h1><NavLink exact to='/'>Bury The Hatchet</NavLink></h1>
+  <h1 aria-labelledby='logoText'>
+    <NavLink exact to='/'>
+      <img
+        className='logo'
+        src='/logo.png'
+        srcSet='/logo.png 1x, /logo@2x.png 2x, /logo@3x.png 3x'
+        alt='Bury The Hatchet logo'
+      />
+    </NavLink>
+    <span className='a11yText' id='logoText'>Bury The Hatchet</span>
+  </h1>
 );
 
 const Header = props => (
