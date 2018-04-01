@@ -52,6 +52,15 @@ const IconWatching = () => (
   </React.Fragment>
 );
 
+const IconDivider = () => (
+  <img
+    className='iconDivider'
+    aria-hidden='true'
+    src='/icons/icon-watching.png'
+    srcSet='/icons/icon-divider.png 1x, /icons/icon-divider@2x.png 2x'
+    alt='Icon divider' />
+);
+
 const links = {
   profile: auth.hasValidToken() === true
     ? '/profile'
@@ -79,6 +88,9 @@ const BottomMenu = () => (
         <NavLink className="nav-link" exact to={links.medals}>
           <IconMedals />
         </NavLink>
+      </li>
+      <li className="divider">
+        <IconDivider />
       </li>
       <li>
         <NavLink className="nav-link" exact to={links.startFight}>
