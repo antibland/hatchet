@@ -31,7 +31,7 @@ class Home extends Component {
           { this.state.loading === true
               ? <Loading />
               : this.state.fights.length === 0
-                ? <li className="noResults">
+                ? <li className="noResults center">
                     <p>It's lonely here. Not a hatchet in sight.</p>
                   </li>
                 : <HatchetList fights={this.state.fights} />
