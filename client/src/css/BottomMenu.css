@@ -2,7 +2,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
   align-items: flex-end;
 }
 
@@ -12,7 +11,7 @@
 
 .bottomMenu li {
   margin: 0 1em;
-  flex: 1;
+  width: 20%;
 }
 
 .bottomMenuContainer {
@@ -25,6 +24,7 @@
 
 .bottomMenu .icon {
   height: 35px;
+  max-width: 100%;
 }
 
 .bottomMenu .nav-link span {
@@ -36,10 +36,7 @@
   white-space: nowrap;
 }
 
-.bottomMenu .nav-link.active span {
-  color: white;
-}
-
+.bottomMenu .nav-link.active span,
 .bottomMenu .nav-link:focus span,
 .bottomMenu .nav-link:hover span {
   color: white;
@@ -49,26 +46,26 @@
   width: 120px;
 }
 
-@media screen and (max-width: 650px) {
-  .bottomMenu .divider {
-    width: 0;
-    flex: none;
-    margin: 0;
+@media screen and (max-width: 600px) {
+  .bottomMenu .icon {
+    height: 30px;
   }
 
   .bottomMenu .iconDivider {
-    display: none;
+    width: 90px;
+  }
+
+  .bottomMenu li {
+    margin: 0 0.7em;
   }
 }
 
-@media screen and (max-width: 600px) {
-  .bottomMenu li {
-    width: 50%;
-    flex: none;
-    margin: 1em 0;
+@media screen and (max-width: 400px) {
+  .bottomMenu .divider {
+    display: none;
   }
 
-  .bottomMenu .icon {
-    height: 40px;
+  .bottomMenu li {
+    width: 25%;
   }
 }
