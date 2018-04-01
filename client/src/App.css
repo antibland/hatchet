@@ -23,6 +23,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   font-family: 'Bitter', serif;
+  overflow-x: hidden;
 }
 
 h2 {
@@ -70,11 +71,6 @@ footer a {
   min-height: 100vh;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
 .App-header {
   display: flex;
   padding: 20px;
@@ -110,6 +106,17 @@ footer a {
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+.logo {
+  max-width: 100%;
+  width: 450px;
+}
+
+.a11yText {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
 }
 
 .button {
