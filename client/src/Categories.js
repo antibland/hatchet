@@ -2,7 +2,6 @@ import React from 'react';
 import commonData from './shared/commonData';
 import { Link } from 'react-router-dom';
 import './css/Categories.css';
-import ButtonLink from './shared/components/ButtonLink';
 import { auth } from './Auth.js';
 import utilities from './shared/utilities';
 import JoinOrStartButton from './shared/components/JoinOrStartButton';

@@ -1,7 +1,5 @@
-import React, { Component } from 'react';
-import { NavLink, Link } from 'react-router-dom';
-import { auth } from './Auth.js';
-import Avatar from './shared/components/Avatar';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 import commonData from './shared/commonData';
 import MainTabs from './MainTabs';
 import './css/NavTabs.css';
