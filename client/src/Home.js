@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Loading from './Loading.js';
 import { auth } from './Auth';
 import HatchetList from './shared/components/HatchetList';
-import JoinOrStartButton from './shared/components/JoinOrStartButton';
+import ButtonLink  from './shared/components/ButtonLink';
 class Home extends Component {
   constructor() {
     super();
@@ -38,7 +38,13 @@ class Home extends Component {
           }
         </ul>
         <p>
-          <JoinOrStartButton loggedIn={auth.hasValidToken()} />
+          { auth.hasValidToken()
+            ? ''
+            : <ButtonLink
+                to='/join'
+                classList='button primary'>Join Us
+              </ButtonLink>
+          }
         </p>
       </div>
     );
