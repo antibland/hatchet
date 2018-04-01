@@ -41,3 +41,17 @@
   color: white;
   outline: none;
 }
+
+@media screen and (max-width: 500px) {
+  .navTabs li {
+    margin: 0 0.2em;
+  }
+
+  .navTabsItem {
+    padding: 0.2em 0.6em;
+  }
+
+  main {
+    padding-bottom: 0;
+  }
+}
