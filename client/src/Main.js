@@ -14,6 +14,9 @@ import Fight from './Fight';
 import Categories from './Categories';
 import Category from './Category';
 import MyHatchets from './MyHatchets';
+import Watching from './Watching';
+import Medals from './Medals';
+
 
 const Main = () => (
   <main>
@@ -28,10 +31,12 @@ const Main = () => (
       <Route path='/categories/:category' component={Category}/>
       <Route exact path='/my-hatchets' component={MyHatchets}/>
       <Route exact path='/fight/:fightId' component={Fight} />
+      <Route exact path='/medals' component={Medals}/>
+      <Route exact path='/watching' component={Watching}/>
       <Route path='/forgot_password' component={ForgotPassword}/>
       <Route path='/resend' component={Resend}/>
-      <Route exact path='/terms' component={Terms}/>
-      <Route exact path='/privacy' component={Privacy}/>
+      {/* <Route exact path='/terms' component={Terms}/>
+      <Route exact path='/privacy' component={Privacy}/> */}
     </Switch>
   </main>
 );

@@ -21,8 +21,8 @@ header a {
 .nav-link {
   padding: 1em .5em;
   text-decoration: none;
-
 }
+
 .nav-link.avatar {
   display: inline-flex;
   align-items: center;

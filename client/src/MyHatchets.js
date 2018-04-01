@@ -1,7 +1,9 @@
 import React from 'react';
 
 const MyHatchets = () => (
-  <div>My Hatchets!</div>
+  <div className='whiteText'>
+    My Hatchets!
+  </div>
 );
 
 export default MyHatchets;

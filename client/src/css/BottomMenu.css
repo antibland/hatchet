@@ -2,8 +2,53 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .bottomMenu * {
   color: var(--teal);
+}
+
+.bottomMenu li {
+  margin: 0 1em;
+}
+
+.bottomMenuContainer {
+  width: 100%;
+}
+
+.bottomMenu .nav-link {
+  padding: 0;
+}
+
+.bottomMenu .icon {
+  height: 35px;
+}
+
+.bottomMenu .nav-link span {
+  display: block;
+  text-transform: uppercase;
+  font-size: .8em;
+  letter-spacing: 1px;
+  transition: 0.5s color;
+}
+
+.bottomMenu .nav-link.active span {
+  color: white;
+}
+
+.bottomMenu .nav-link:focus span,
+.bottomMenu .nav-link:hover span {
+  color: white;
+}
+
+@media screen and (max-width: 400px) {
+  .bottomMenu li {
+    width: 50%;
+    margin: 1em 0;
+  }
+
+  .bottomMenu .icon {
+    height: 40px;
+  }
 }

@@ -215,3 +215,7 @@ footer a {
 .center {
   text-align: center !important;
 }
+
+.whiteText {
+  color: white;
+}

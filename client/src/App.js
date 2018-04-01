@@ -11,11 +11,7 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => (
   <footer>
-    <small>{new Date().getFullYear()} &copy; Bury The Hatchet</small>
-    <nav>
-      <Link to='/terms'>Terms of Service</Link>
-      <Link to='/privacy'>Privacy Policy</Link>
-    </nav>
+    <BottomMenu />
   </footer>
 )
 
@@ -27,12 +23,7 @@ class App extends Component {
       <div className="App">
         <Header isAuthenticated={isAuthenticated} />
         <Main />
-        { isAuthenticated
-          ? <BottomMenu />
-          : ''
-        }
         <Footer />
-        {/* <FightsContainer fights={fakeServerData} /> */}
       </div>
     );
   }
