@@ -60,31 +60,16 @@ const IconDivider = () => (
     alt='Icon divider' />
 );
 
-const links = {
-  profile: auth.hasValidToken() === true
-    ? '/profile'
-    : '/join',
-  medals: auth.hasValidToken() === true
-    ? '/medals'
-    : '/join',
-  startFight: auth.hasValidToken() === true
-    ? '/create'
-    : '/join',
-  watching: auth.hasValidToken() === true
-    ? '/watching'
-    : '/join'
-}
-
 const BottomMenu = () => (
   <nav className="bottomMenuContainer">
     <ul className="bottomMenu">
       <li>
-        <NavLink className="nav-link" exact to={links.profile}>
+        <NavLink className="nav-link" exact to={auth.hasValidToken() ? '/profile' : 'join'}>
           <IconProfile />
         </NavLink>
       </li>
       <li>
-        <NavLink className="nav-link" exact to={links.medals}>
+        <NavLink className="nav-link" exact to={auth.hasValidToken() ? '/medals' : 'join'}>
           <IconMedals />
         </NavLink>
       </li>
@@ -92,12 +77,12 @@ const BottomMenu = () => (
         <IconDivider />
       </li>
       <li>
-        <NavLink className="nav-link" exact to={links.startFight}>
+        <NavLink className="nav-link" exact to={auth.hasValidToken() ? '/create' : 'join'}>
           <IconStartFight />
         </NavLink>
       </li>
       <li>
-        <NavLink className="nav-link" exact to={links.watching}>
+        <NavLink className="nav-link" exact to={auth.hasValidToken() ? '/watching' : 'join'}>
           <IconWatching />
         </NavLink>
       </li>
