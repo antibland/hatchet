@@ -121,6 +121,10 @@ footer a {
   opacity: 0;
 }
 
+button {
+  cursor: pointer;
+}
+
 .button {
   background-color: var(--gold);
   color: var(--button-text);
@@ -231,6 +235,14 @@ footer a {
 
 .contentPadding {
   padding: var(--content-padding);
+}
+
+.removeDefaultButtonStyles {
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
 }
 
 @media screen and (max-width: 500px) {

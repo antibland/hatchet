@@ -366,4 +366,39 @@ exports.isUser = async (req, res) => {
     isUser: (user !== null),
     username
   });
-}
+};
+
+exports.isUserWatchingFight = async (req, res) => {
+  let fightId = req.params.userId;
+  let user = await User.findById(req.params.userId);
+
+  return res.status(200).json({
+    isWatching: user.watching.includes(fightId)
+  });
+};
+
+exports.setWatch = async (req, res) => {
+  let fightId = req.params.userId;
+  let user = await User.findById(req.params.userId);
+  let isWatching = false;
+
+  if (watches.includes(fightId)) { // remove it from array
+    user.watching.splice(watches.indexOf(fightId), 1);
+  } else { // add it to array
+    user.watching.push(fightId)
+    isWatching = true;
+  }
+
+  user.save(err => {
+    if (err) {
+      return res.status(500).json({
+        type: 'failure',
+        message: 'Update failed. And it\'s our fault. Sorry about that.'
+      });
+    } else {
+      return res.status(200).json({
+        isWatching
+      });
+    }
+  });
+};

@@ -48,14 +48,17 @@ const userApi = require('./controllers/user.js');
 app.post('/api/join', userApi.join);
 app.post('/api/login', cors(), userApi.login);
 app.post('/api/resetPassword', userApi.resetPassword);
+app.post('/api/resend', userApi.resendTokenPost);
+app.post('/api/:userId/avatar', upload.single('avatar'), userApi.setAvatar);
+app.patch('/api/:userId/:fightId/setWatch', userApi.setWatch);
 app.get('/api/:userId/logout', userApi.logout);
 app.get('/api/confirmation/:token_id', userApi.confirmationPost);
-app.post('/api/resend', userApi.resendTokenPost);
 app.get('/api/:userId/avatar', userApi.getAvatar);
 app.get('/api/:userName/avatar/username', userApi.getAvatarByUserName);
 app.get('/api/:userId', userApi.getUser);
 app.get('/api/:userReference/isUser', userApi.isUser);
-app.post('/api/:userId/avatar', upload.single('avatar'), userApi.setAvatar);
+app.get('/api/:userId/:fightId/isUserWatchingFight', userApi.isUserWatchingFight);
+
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.

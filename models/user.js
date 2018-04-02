@@ -32,6 +32,7 @@ var UserSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Fight'
   }],
+  watching: [String],
   sessionToken: String
 });
 

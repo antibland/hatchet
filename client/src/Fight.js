@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Loading from './Loading';
+import WatchingWidget from './WatchingWidget';
+import { auth } from './Auth';
 import './css/Fight.css';
+import './css/Watching.css';
 
 function UserAvatar({
   imgpath,
@@ -99,6 +102,13 @@ class Fight extends Component {
 
     return (
       <div className='contentPadding'>
+        { auth.hasValidToken()
+          ? <WatchingWidget
+              userId={auth.user.userid}
+              fightId={this.props.location.pathname.split('/').pop()}
+            />
+          : ''
+        }
       { this.state.fight_title
         ? <React.Fragment>
             <h2>{this.state.fight_title}</h2>

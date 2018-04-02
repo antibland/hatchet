@@ -1,0 +1,36 @@
+.watchingEye {
+  color: white;
+  width: 4em;
+  height: 4em;
+  display: block;
+  margin-left: auto !important;
+  position: relative;
+  top: -1em;
+}
+
+.watchingEye > * {
+  pointer-events: none;
+}
+
+.watchingEye svg {
+  transition: 0.5s fill;
+  fill: currentColor;
+  width: 100%;
+  height: 100%;
+}
+
+.watchingEyeText {
+  color: var(--teal);
+  text-transform: uppercase;
+  white-space: nowrap;
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@media screen and (max-width: 500px) {
+  .watchingEye {
+    right: 2em;
+  }
+}
