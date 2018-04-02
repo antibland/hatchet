@@ -11,6 +11,8 @@
   --teal: rgb(57, 160, 207);
   --dark-blue: rgb(15, 48, 80);
   --button-text: rgba(27, 61, 71);
+  --content-padding: 0 3em;
+  --content-padding-mobile: 0 1.5em;
 }
 
 body {
@@ -225,4 +227,14 @@ footer a {
 
 .whiteText {
   color: white;
+}
+
+.contentPadding {
+  padding: var(--content-padding);
+}
+
+@media screen and (max-width: 500px) {
+  .contentPadding {
+    padding: var(--content-padding-mobile);
+  }
 }

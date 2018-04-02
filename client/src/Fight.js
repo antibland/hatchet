@@ -65,24 +65,14 @@ class Fight extends Component {
               : '',
             username: data.fight.antagonist.username,
             argument: data.fight.text.for
+          },
+          defender: {
+            avatarPath: data.fight.defender.avatar
+              ? data.fight.defender.avatar.path
+              : '',
+            username: data.fight.defender.username
           }
         });
-
-        data.fight.type !== 'philosophical'
-          ? this.setState({
-              defender: {
-                avatarPath: data.fight.defender.avatar
-                  ? data.fight.defender.avatar.path
-                  : '',
-                username: data.fight.defender.username
-              }
-            })
-          : this.setState({
-              defender: {
-                avatarPath: '',
-                username: ''
-              }
-            })
       });
   };
 
@@ -108,7 +98,7 @@ class Fight extends Component {
     }
 
     return (
-      <div>
+      <div className='contentPadding'>
       { this.state.fight_title
         ? <React.Fragment>
             <h2>{this.state.fight_title}</h2>
