@@ -369,7 +369,7 @@ exports.isUser = async (req, res) => {
 };
 
 exports.isUserWatchingFight = async (req, res) => {
-  let fightId = req.params.userId;
+  let fightId = req.params.fightId;
   let user = await User.findById(req.params.userId);
 
   return res.status(200).json({
@@ -378,8 +378,9 @@ exports.isUserWatchingFight = async (req, res) => {
 };
 
 exports.setWatch = async (req, res) => {
-  let fightId = req.params.userId;
+  let fightId = req.params.fightId;
   let user = await User.findById(req.params.userId);
+  let watches = user.watching;
   let isWatching = false;
 
   if (watches.includes(fightId)) { // remove it from array

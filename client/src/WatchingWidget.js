@@ -16,10 +16,20 @@ class WatchingWidget extends Component {
   }
 
   handleClick() {
-    // const { userId, fightId } = this.state;
+    const { userId, fightId } = this.state;
     //'/api/:userId/:fightId/setWatch' => userApi.setWatch
-    //fetch(`/api/${userId}/${fightId}/setWatch`)
-    // FINISH FUNCTION
+    fetch(`/api/${userId}/${fightId}/setWatch`, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'PATCH'
+    }).then(res => res.json())
+      .then(data => {
+        this.setState({
+          watchingText: data.isWatching === true ? 'Watching' : 'Not watching'
+        });
+      });
   }
 
   componentDidMount() {
