@@ -50,7 +50,26 @@ exports.getFight = async (req, res) => {
     type: 'success',
     fight
   });
-}
+};
+
+exports.getWatchedFights = async(req, res) => {
+  let user = await User.findById(req.params.userId);
+
+  await Fight.find({
+    '_id': { $in: user.watching }
+  }, (err, fights) => {
+    if (err) {
+      return res.status(500).json({
+        type: 'failure',
+        message: 'An error occurred. Please try again.'
+      });
+    } else {
+      return res.status(200).json({
+        fights
+      });
+    }
+  })
+};
 
 exports.getUserFights = async (req, res) => {
   let { userId } = req.params;
