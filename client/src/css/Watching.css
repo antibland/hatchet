@@ -1,7 +1,7 @@
 .watchingEye {
   color: white;
-  width: 4em;
-  height: 4em;
+  width: 2.5em;
+  height: 2.5em;
   display: block;
   margin-left: auto !important;
   position: relative;
@@ -24,7 +24,7 @@
   text-transform: uppercase;
   white-space: nowrap;
   position: absolute;
-  bottom: -10px;
+  bottom: -12px;
   left: 50%;
   transform: translateX(-50%);
 }
