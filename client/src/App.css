@@ -220,6 +220,10 @@ button {
   color: white;
 }
 
+.noResults p {
+  margin-top: 0;
+}
+
 .inlineLink {
   color: white;
   margin-left: 5px;

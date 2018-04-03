@@ -8,7 +8,8 @@
 }
 
 .categoriesImg {
-  max-width: 150px;
+  width: 150px;
+  max-width: 100%;
 }
 
 .categories .firstWord {
@@ -28,7 +29,7 @@
 }
 
 @media screen and (max-width: 600px) {
-  .threeByThree > * {
-    width: calc(100% / 2);
+  .threeByThree li {
+    padding: 1em;
   }
 }

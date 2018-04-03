@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Medals = () => (
-  <div className='whiteText'>
+  <div className='whiteText contentPadding'>
     You vain bastard! Here are your precious medals.
   </div>
 );
