@@ -86,6 +86,16 @@ footer a {
   font-size: large;
 }
 
+@keyframes upAndDown {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(.75em);
+  }
+}
+
 @keyframes bounce-in {
   0% {
     opacity: 0;

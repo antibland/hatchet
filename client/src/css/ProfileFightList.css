@@ -1,6 +1,7 @@
 .fightlist {
   max-width: 600px;
   margin: 0 auto;
+  margin-bottom: 2em !important;
 }
 
 .fightlist .meta {
@@ -77,4 +78,12 @@
   height: 90px;
   flex-shrink: 1;
   flex-grow: 0;
+}
+
+.horizontalBox .antagonist {
+  animation: upAndDown 1s ease infinite alternate;
+}
+
+.horizontalBox .defender {
+  animation: upAndDown 1s ease infinite alternate 0.2s;
 }
