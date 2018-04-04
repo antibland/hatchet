@@ -7,7 +7,7 @@
   margin-bottom: 0.5em;
 }
 
-.fightlist .meta > span {
+.fightlist .meta span {
   display: block;
   color: black;
   padding: 0.5em 0 1em;
@@ -60,4 +60,21 @@
 .profileH2 {
   text-shadow: 1px 1px rgba(0, 0, 0, 1);
   color: white;
+}
+
+.horizontalBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.horizontalBox > * {
+  flex: 1;
+}
+
+.horizontalBox > img {
+  width: 90px;
+  height: 90px;
+  flex-shrink: 1;
+  flex-grow: 0;
 }

@@ -21,12 +21,12 @@ class Watching extends Component {
   render() {
     return (
       <div>
-        <ul className="homeList">
+        <ul className="fightList">
           { this.state.loading === true
               ? <Loading />
               : this.state.fights.length === 0
                 ? <li className="noResults center">
-                    <p>You're not watching any fights. Maybe you should.</p>
+                    <p>You're not watching any fights. And that's a little anti-social.</p>
                   </li>
                 : <HatchetList fights={this.state.fights} />
           }

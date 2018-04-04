@@ -73,20 +73,34 @@ exports.getWatchedFights = async(req, res) => {
 
 exports.getUserFights = async (req, res) => {
   let { userId } = req.params;
-  let user = await User.findById(userId).populate('fights');
-  let pendingInvites = await Fight.find({
+  let user = await User.findById(userId);
+  let populateOptions = {
+    path: 'antagonist defender',
+    select: 'username avatar'
+  };
+
+  let active = await Fight.find({
+    $or: [
+      { $and: [{antagonist: user}, {isLive: true}] },
+      { $and: [{defender: user}, {isLive: true}] }
+    ]
+  });
+  let waitingOnYou = await Fight.find({
     defender: userId,
     isLive: false
-  });
+  }).populate(populateOptions);
+  let waitingOnThem = await Fight.find({
+    antagonist: userId,
+    isLive: false
+  }).populate(populateOptions);
 
-  if (user) {
-    res.status(200).json({
-      type: 'success',
-      fights: user.fights,
-      pendingInvites
-    });
-  }
-}
+  return res.status(200).json({
+    type: 'success',
+    active,
+    waitingOnYou,
+    waitingOnThem
+  });
+};
 
 exports.newFight = async (req, res) => {
   let user = await User.findById(req.params.userId);

@@ -32,7 +32,7 @@ class Category extends Component {
   render() {
     return (
       <div>
-        <ul className="homeList">
+        <ul className="fightList">
           { this.state.loading === true
               ? <Loading />
               : this.state.fights.length === 0

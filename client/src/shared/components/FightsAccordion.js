@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 import AcceptInvite from './AcceptInvite';
+import Avatar from './Avatar';
 
 const FightsAccordion = props => (
   <div className="fightlist tablist">
@@ -19,7 +20,24 @@ const FightsAccordion = props => (
                   <strong>Created: </strong>
                   <Moment fromNow format='MMMM Do YYYY'>{fight.created_at}</Moment>
                 </span>
-                <span className="type"><strong>Type: </strong>A {fight.type} fight.</span>
+                <div className="horizontalBox">
+                  <span className="antagonist">
+                    { fight.antagonist.avatar
+                      ? <Avatar imgpath={fight.antagonist.avatar.path} />
+                      : <Avatar />
+                    }
+                    {fight.antagonist.username}
+                  </span>
+                  <img src="/versus.small.png" alt="versus icon" />
+                  <span className="defender">
+                    { fight.defender.avatar
+                      ? <Avatar imgpath={fight.defender.avatar.path} />
+                      : <Avatar />
+                    }
+                    {fight.defender.username}
+                  </span>
+                </div>
+                <span className="type">A {fight.type}.</span>
                 <span className="text">{fight.text.for}</span>
                 { fight.isLive
                   ? <Link className="button" to={'/fight/' + fight._id}>View the fight</Link>
@@ -50,12 +68,6 @@ FightsAccordion.propTypes = {
 const FightAction = props => (
   props.action === 'link to fight'
     ? <div>
-        <p className="system-message">
-          <svg aria-hidden="true" className="system-tip">
-            <use xlinkHref="./symbols/svg-defs.svg#system-tip" />
-          </svg>
-          We are still waiting to hear from that coward to respond. Remain patient.
-        </p>
         <Link className="button" to={'/fight/' + props.fightId}>View fight</Link>
       </div>
     : <div>

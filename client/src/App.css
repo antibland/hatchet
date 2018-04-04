@@ -5,7 +5,6 @@
 :root {
   --brown: #722800;
   --box-shadow: rgba(0, 0, 0, 0.33) 7px 7px 40px 0;
-
   --gold: rgb(248, 192, 45);
   --bright-gold: rgb(255,	230,	51);
   --teal: rgb(57, 160, 207);
@@ -165,17 +164,17 @@ button {
   margin-bottom: 0;
 }
 
-.homeList {
+.fightList {
   margin: 0 auto;
   padding: 0;
   max-width: 100%;
 }
 
-.homeList .text {
+.fightList .text {
   color: #333;
 }
 
-.homeList .link {
+.fightList .link {
   background-color: transparent;
   display: flex;
   align-items: center;
@@ -183,32 +182,32 @@ button {
   margin: 7px 0;
 }
 
-.homeList .button img {
+.fightList .button img {
   margin-right: .5em;
 }
 
-.homeList .title {
+.fightList .title {
   flex: 1;
   font-size: .8em;
   color: white;
 }
 
-.homeList .created {
+.fightList .created {
   margin-bottom: 0.25em;
 }
 
-.homeList li {
+.fightList li {
   text-align: left;
   width: 100%;
   border-bottom: 1px solid rgba(57, 160, 207, .5);
   padding: 0 1.5em;
 }
 
-.homeList .categoriesImg {
+.fightList .categoriesImg {
   max-width: 60px;
 }
 
-.homeList span {
+.fightList span {
   display: inline-block;
 }
 
