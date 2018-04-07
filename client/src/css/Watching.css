@@ -5,7 +5,7 @@
   display: block;
   margin-left: auto !important;
   position: relative;
-  top: -1em;
+  top: -.5em;
 }
 
 .watchingEye > * {

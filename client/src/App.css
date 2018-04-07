@@ -45,7 +45,7 @@ li {
 }
 
 main {
-  padding: 1.5em 0;
+  padding: 1em 0;
   flex: 1;
 }
 
@@ -180,6 +180,10 @@ button {
   max-width: 100%;
 }
 
+.fightList li:first-of-type .link {
+  margin-top: 0;
+}
+
 .fightList .text {
   color: #333;
 }
@@ -227,6 +231,7 @@ button {
 
 .noResults {
   color: white;
+  padding-top: .5em;
 }
 
 .noResults p {
