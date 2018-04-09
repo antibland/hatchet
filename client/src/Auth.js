@@ -42,6 +42,6 @@ const auth = {
     this.hasValidToken();
     setTimeout(cb, 100);
   }
-}
+};
 
 export { auth };

@@ -69,7 +69,7 @@ class Join extends Component {
             }
           });
         }
-      })
+      });
   }
 
   canBeSubmitted() {
@@ -100,7 +100,7 @@ class Join extends Component {
         display: 'block',
         width: '100%'
       }
-    }
+    };
 
     const errors = validate(this.state.username, this.state.email, this.state.password);
     const isDisabled = Object.keys(errors).some(x => errors[x]);
