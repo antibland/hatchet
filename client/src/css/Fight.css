@@ -66,4 +66,14 @@
     flex-direction: column;
     max-width: 600px;
   }
+
+  .featured-fights-container > * {
+    padding-left: 0;
+    padding-right: 0;
+    padding: 3em 0;
+  }
+
+  .total-votes {
+    margin-bottom: 0;
+  }
 }
