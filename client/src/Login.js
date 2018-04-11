@@ -138,6 +138,7 @@ class Login extends Component {
               type="email"
               name="email"
               id="email"
+              data-lpignore="true"
               placeholder="email"
               value={this.state.email}
               onBlur={this.handleBlur('email')}/>
@@ -151,6 +152,7 @@ class Login extends Component {
               type="password"
               name="password"
               id="password"
+              data-lpignore="true"
               placeholder="password"
               value={this.state.password}
               onBlur={this.handleBlur('password')}/>

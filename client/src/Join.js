@@ -152,6 +152,7 @@ class Join extends Component {
               type="email"
               name="email"
               id="email"
+              data-lpignore="true"
               value={this.state.email}
               aria-label="email address"
               placeholder="email address"
@@ -165,6 +166,7 @@ class Join extends Component {
               type="password"
               name="password"
               id="password"
+              data-lpignore="true"
               value={this.state.password}
               placeholder="password"
               aria-label="password"
