@@ -58,6 +58,13 @@ footer {
   color: var(--teal);
 }
 
+footer.loggedOut {
+  padding: 1em 0 0;
+  width: 700px;
+  margin: 0 auto;
+  max-width: 100%;
+}
+
 footer a {
   font-size: .8em;
   text-decoration: none;

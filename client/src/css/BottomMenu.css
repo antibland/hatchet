@@ -14,6 +14,29 @@
   width: 20%;
 }
 
+.bottomMenu.loggedOut li {
+  margin: 0;
+  width: 50%;
+  display: flex;
+}
+
+.bottomMenu.loggedOut .nav-link {
+  text-transform: uppercase;
+  flex: 1;
+  padding: 0.5em 1.1em;
+  font-size: 1.1em;
+}
+
+.bottomMenu.loggedOut .signUp {
+  background-color: white;
+  color: var(--dark-blue);
+}
+
+.bottomMenu.loggedOut .logIn {
+  background-color: var(--dark-blue);
+  color: white;
+}
+
 .bottomMenuContainer {
   width: 100%;
 }

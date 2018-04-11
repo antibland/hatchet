@@ -60,33 +60,39 @@ const IconDivider = () => (
     alt='Icon divider' />
 );
 
+const BottomMenuItem = props => (
+  <li>
+    <NavLink className="nav-link" exact to={props.to}>
+      {props.children}
+    </NavLink>
+  </li>
+);
+
 const BottomMenu = () => (
   <nav className="bottomMenuContainer">
-    <ul className="bottomMenu">
-      <li>
-        <NavLink className="nav-link" exact to={auth.hasValidToken() ? '/profile' : 'join'}>
-          <IconProfile />
-        </NavLink>
-      </li>
-      <li>
-        <NavLink className="nav-link" exact to={auth.hasValidToken() ? '/medals' : 'join'}>
-          <IconMedals />
-        </NavLink>
-      </li>
-      <li className="divider">
-        <IconDivider />
-      </li>
-      <li>
-        <NavLink className="nav-link" exact to={auth.hasValidToken() ? '/create' : 'join'}>
-          <IconStartFight />
-        </NavLink>
-      </li>
-      <li>
-        <NavLink className="nav-link" exact to={auth.hasValidToken() ? '/watching' : 'join'}>
-          <IconWatching />
-        </NavLink>
-      </li>
-    </ul>
+    {auth.hasValidToken()
+      ? <ul className="bottomMenu">
+          <BottomMenuItem to='/profile'><IconProfile /></BottomMenuItem>
+          <BottomMenuItem to='/medals'><IconMedals /></BottomMenuItem>
+          <li className="divider">
+            <IconDivider />
+          </li>
+          <BottomMenuItem to='/create'><IconStartFight /></BottomMenuItem>
+          <BottomMenuItem to='/watching'><IconWatching /></BottomMenuItem>
+        </ul>
+      : <ul className="bottomMenu loggedOut">
+          <li>
+            <NavLink className='nav-link signUp' exact to='/join'>
+              Sign Up
+            </NavLink>
+          </li>
+          <li>
+            <NavLink className='nav-link logIn' exact to='/login'>
+              Log In
+            </NavLink>
+          </li>
+        </ul>
+    }
   </nav>
 );
 

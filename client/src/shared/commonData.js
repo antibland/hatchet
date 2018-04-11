@@ -14,9 +14,7 @@ const commonData = {
   ],
   restrictedTabs: [
     { id: 1, url: '/', name: 'Popular' },
-    { id: 2, url: '/categories', name: 'Categories' },
-    { id: 3, url: '/join', name: 'Join' },
-    { id: 4, url: '/login', name: 'Login' }
+    { id: 2, url: '/categories', name: 'Categories' }
   ]
 }
 

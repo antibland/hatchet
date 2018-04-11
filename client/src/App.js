@@ -8,8 +8,8 @@ import './App.css';
 import './css/Nav.css';
 import './css/Ribbon.css';
 
-const Footer = () => (
-  <footer>
+const Footer = props => (
+  <footer className={props.isAuthenticated === false ? 'loggedOut' : ''}>
     <BottomMenu />
   </footer>
 )
@@ -22,7 +22,7 @@ class App extends Component {
       <div className="App">
         <Header isAuthenticated={isAuthenticated} />
         <Main />
-        <Footer />
+        <Footer isAuthenticated={isAuthenticated} />
       </div>
     );
   }
