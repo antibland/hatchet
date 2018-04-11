@@ -145,6 +145,27 @@ input:focus + [role=note] {
   max-height: 5em;
 }
 
+#email,
+#password,
+#username {
+  background-repeat: no-repeat;
+  background-position: 100% 50%;
+  background-size: 10%;
+  padding-right: 34px;
+}
+
+#email {
+  background-image: url('/svg/icon-signup-email.svg');
+}
+
+#password {
+  background-image: url('/svg/icon-signup-password.svg');
+}
+
+#username {
+  background-image: url('/svg/icon-signup-user.svg');
+}
+
 @media screen and (max-width: 800px) {
   form {
     padding-left: 2em;
