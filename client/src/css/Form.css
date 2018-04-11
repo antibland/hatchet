@@ -1,6 +1,6 @@
 form {
-  width: 100%;
-  max-width: 400px;
+  width: 400px;
+  max-width: 100%;
   margin: 0 auto;
   padding: 1em 3em;
 }
@@ -143,4 +143,11 @@ input:focus + [role=note] {
   transform: translateY(5px);
   opacity: 1;
   max-height: 5em;
+}
+
+@media screen and (max-width: 800px) {
+  form {
+    padding-left: 2em;
+    padding-right: 2em;
+  }
 }
