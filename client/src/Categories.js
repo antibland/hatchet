@@ -2,9 +2,7 @@ import React from 'react';
 import commonData from './shared/commonData';
 import { Link } from 'react-router-dom';
 import './css/Categories.css';
-import { auth } from './Auth.js';
 import utilities from './shared/utilities';
-import JoinOrStartButton from './shared/components/JoinOrStartButton';
 
 const Categories = () => (
   <div>
@@ -26,9 +24,6 @@ const Categories = () => (
         })
       }
     </ul>
-    <p>
-      <JoinOrStartButton loggedIn={auth.hasValidToken()} />
-    </p>
   </div>
 );
 

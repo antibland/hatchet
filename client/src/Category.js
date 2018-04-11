@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { auth } from './Auth.js';
-import JoinOrStartButton from './shared/components/JoinOrStartButton';
 import HatchetList from './shared/components/HatchetList';
 import Loading from './Loading.js';
 
@@ -42,9 +40,6 @@ class Category extends Component {
                 : <HatchetList fights={this.state.fights} />
           }
         </ul>
-        <p>
-          <JoinOrStartButton loggedIn={auth.hasValidToken()} />
-        </p>
       </div>
     );
   }
