@@ -33,3 +33,9 @@
     padding: 1em;
   }
 }
+
+@media screen and (max-width: 450px) {
+  .threeByThree li {
+    width: calc(100% / 2);
+  }
+}
