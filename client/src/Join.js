@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './css/Flash.css';
 
 function validate(username, email, password) {
@@ -168,7 +169,12 @@ class Join extends Component {
               aria-label="password"
               onBlur={this.handleBlur('password')}/>
               <span role={role}>At least 8 characters.</span>
-            </div>
+          </div>
+
+          <p className='joinTerms'>
+            By creating an account, you agree to our <Link to='/terms'>Terms & Conditions</Link>
+          </p>
+
           <button
             type="submit"
             disabled={isDisabled}

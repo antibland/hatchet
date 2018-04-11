@@ -16,6 +16,7 @@ import Category from './Category';
 import MyHatchets from './MyHatchets';
 import Watching from './Watching';
 import Medals from './Medals';
+import Terms from './Terms';
 
 
 const Main = () => (
@@ -35,7 +36,8 @@ const Main = () => (
       <Route exact path='/watching' component={Watching}/>
       <Route path='/forgot_password' component={ForgotPassword}/>
       <Route path='/resend' component={Resend}/>
-      {/* <Route exact path='/terms' component={Terms}/>
+      <Route exact path='/terms' component={Terms}/>
+      {/*
       <Route exact path='/privacy' component={Privacy}/> */}
     </Switch>
   </main>
