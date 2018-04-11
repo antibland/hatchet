@@ -136,6 +136,7 @@ class Join extends Component {
               type="text"
               name="username"
               id="username"
+              data-lpignore="true"
               value={this.state.username}
               placeholder="choose a username"
               aria-label="choose a username"
