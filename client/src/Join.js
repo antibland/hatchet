@@ -95,13 +95,6 @@ class Join extends Component {
   }
 
   render() {
-    let styles = {
-      submitButton: {
-        display: 'block',
-        width: '100%'
-      }
-    };
-
     const errors = validate(this.state.username, this.state.email, this.state.password);
     const isDisabled = Object.keys(errors).some(x => errors[x]);
 
@@ -126,10 +119,7 @@ class Join extends Component {
 
     return (
       <div>
-        <h2 className="ribbon">
-          <strong className="ribbon-content">Join</strong>
-        </h2>
-
+        <h2>Join</h2>
         <form
           action="/api/join"
           method="POST"
@@ -138,7 +128,6 @@ class Join extends Component {
 
           { flashMessage }
 
-          <label htmlFor="username">Username</label>
           <div className="required-field-wrapper">
             <input
               className={shouldMarkError('username') ? "error" : ""}
@@ -147,14 +136,13 @@ class Join extends Component {
               name="username"
               id="username"
               value={this.state.username}
-              placeholder="petty_warrior"
+              placeholder="choose a username"
+              aria-label="choose a username"
               maxLength="28"
               onBlur={this.handleBlur('username')}/>
-              <span className="required">*</span>
               <span role={role}>Letters, numbers, underscores and dots are okay.</span>
           </div>
 
-          <label htmlFor="email">Email</label>
           <div className="required-field-wrapper">
             <input
               className={shouldMarkError('email') ? "error" : ""}
@@ -163,12 +151,11 @@ class Join extends Component {
               name="email"
               id="email"
               value={this.state.email}
-              placeholder="winner@someplace.com"
+              aria-label="email address"
+              placeholder="email address"
               onBlur={this.handleBlur('email')}/>
-            <span className="required">*</span>
           </div>
 
-          <label htmlFor="password">Password</label>
           <div className="required-field-wrapper">
             <input
               className={shouldMarkError('password') ? "error" : ""}
@@ -177,16 +164,15 @@ class Join extends Component {
               name="password"
               id="password"
               value={this.state.password}
-              placeholder="not_your_cats_name"
+              placeholder="password"
+              aria-label="password"
               onBlur={this.handleBlur('password')}/>
-              <span className="required">*</span>
               <span role={role}>At least 8 characters.</span>
             </div>
           <button
             type="submit"
             disabled={isDisabled}
-            className="button"
-            style={styles.submitButton}>Submit</button>
+            className="button primary">Create Account</button>
         </form>
       </div>
     );

@@ -118,10 +118,7 @@ class Resend extends Component {
 
     return (
       <div>
-        <h2 className="ribbon">
-          <strong className="ribbon-content">Resend verification link</strong>
-        </h2>
-
+        <h2>Resend Verification Link</h2>
         <form
           action="/api/resend"
           method="POST"
@@ -130,7 +127,6 @@ class Resend extends Component {
 
           { flashMessage }
 
-          <label htmlFor="email">Email</label>
           <div className="required-field-wrapper">
             <input
               className={shouldMarkError('email') ? "error" : ""}
@@ -138,16 +134,16 @@ class Resend extends Component {
               type="email"
               name="email"
               id="email"
+              placeholder="account email address"
+              aria-label="account email address"
               value={this.state.email}
-              placeholder="winner@someplace.com"
               onBlur={this.handleBlur('email')}/>
-            <span className="required">*</span>
           </div>
 
           <button
             type="submit"
             disabled={isDisabled}
-            className="button"
+            className="button primary"
             style={styles.submitButton}>Submit</button>
 
         </form>

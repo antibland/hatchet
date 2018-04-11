@@ -94,10 +94,6 @@ class Login extends Component {
 
   render() {
     let styles = {
-      submitButton: {
-        display: 'block',
-        width: '100%'
-      },
       forgottenPassword: {
         padding: '1em 0'
       }
@@ -125,10 +121,7 @@ class Login extends Component {
 
     return (
       <div>
-        <h2 className="ribbon">
-          <strong className="ribbon-content">Login</strong>
-        </h2>
-
+        <h2>Log In</h2>
         <form
           action="/api/login"
           method="POST"
@@ -137,36 +130,35 @@ class Login extends Component {
 
           { flashMessage }
 
-          <label htmlFor="email">Email</label>
           <div className="required-field-wrapper">
             <input
               className={shouldMarkError('email') ? "error" : ""}
               required
+              aria-label="email"
               type="email"
               name="email"
               id="email"
+              placeholder="email"
               value={this.state.email}
               onBlur={this.handleBlur('email')}/>
-            <span className="required">*</span>
           </div>
 
-          <label htmlFor="password">Password</label>
           <div className="required-field-wrapper">
             <input
               className={shouldMarkError('password') ? "error" : ""}
               required
+              aria-label="password"
               type="password"
               name="password"
               id="password"
+              placeholder="password"
               value={this.state.password}
               onBlur={this.handleBlur('password')}/>
-              <span className="required">*</span>
             </div>
           <button
             type="submit"
             disabled={isDisabled}
-            className="button"
-            style={styles.submitButton}>Submit</button>
+            className="button primary">Log In</button>
             <div style={styles.forgottenPassword}>
               <Link className="form-link" to={`/forgot_password?email=${this.state.email}`}>
                 I forgot my password
