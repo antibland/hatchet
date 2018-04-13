@@ -1,7 +1,14 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { auth } from './Auth.js';
+import { withRouter } from 'react-router';
 import './css/BottomMenu.css';
+
+const closeSplash = withRouter(e => {
+  e.preventDefault();
+  localStorage.setItem('showSplash', false);
+  this.props.history.push(e.target.href);
+});
 
 const IconProfile = () => (
   <React.Fragment>
@@ -52,12 +59,14 @@ const IconWatching = () => (
 );
 
 const IconDivider = () => (
-  <img
-    className='iconDivider'
-    aria-hidden='true'
-    src='/icons/icon-watching.png'
-    srcSet='/icons/icon-divider.png 1x, /icons/icon-divider@2x.png 2x'
-    alt='Icon divider' />
+  <li className="divider">
+    <img
+      className='iconDivider'
+      aria-hidden='true'
+      src='/icons/icon-watching.png'
+      srcSet='/icons/icon-divider.png 1x, /icons/icon-divider@2x.png 2x'
+      alt='Icon divider' />
+  </li>
 );
 
 const BottomMenuItem = props => (
@@ -74,20 +83,18 @@ const BottomMenu = () => (
       ? <ul className="bottomMenu">
           <BottomMenuItem to='/profile'><IconProfile /></BottomMenuItem>
           <BottomMenuItem to='/medals'><IconMedals /></BottomMenuItem>
-          <li className="divider">
-            <IconDivider />
-          </li>
+          <IconDivider />
           <BottomMenuItem to='/create'><IconStartFight /></BottomMenuItem>
           <BottomMenuItem to='/watching'><IconWatching /></BottomMenuItem>
         </ul>
       : <ul className="bottomMenu loggedOut">
           <li>
-            <NavLink className='nav-link signUp' exact to='/join'>
+            <NavLink onClick={closeSplash} className='nav-link signUp' exact to='/join'>
               Sign Up
             </NavLink>
           </li>
           <li>
-            <NavLink className='nav-link logIn' exact to='/login'>
+            <NavLink onClick={closeSplash} className='nav-link logIn' exact to='/login'>
               Log In
             </NavLink>
           </li>

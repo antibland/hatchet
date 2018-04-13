@@ -1,0 +1,25 @@
+.modal {
+  background-color: var(--teal);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.modal.splash {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal.splash > * {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal.splash footer {
+  flex-grow: 0;
+  padding-top: 0;
+}
