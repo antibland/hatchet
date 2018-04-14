@@ -1,14 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { auth } from './Auth.js';
-import { withRouter } from 'react-router';
+import { PropTypes } from 'prop-types';
 import './css/BottomMenu.css';
-
-const closeSplash = withRouter(e => {
-  e.preventDefault();
-  localStorage.setItem('showSplash', false);
-  this.props.history.push(e.target.href);
-});
 
 const IconProfile = () => (
   <React.Fragment>
@@ -77,30 +71,54 @@ const BottomMenuItem = props => (
   </li>
 );
 
-const BottomMenu = () => (
-  <nav className="bottomMenuContainer">
-    {auth.hasValidToken()
-      ? <ul className="bottomMenu">
-          <BottomMenuItem to='/profile'><IconProfile /></BottomMenuItem>
-          <BottomMenuItem to='/medals'><IconMedals /></BottomMenuItem>
-          <IconDivider />
-          <BottomMenuItem to='/create'><IconStartFight /></BottomMenuItem>
-          <BottomMenuItem to='/watching'><IconWatching /></BottomMenuItem>
-        </ul>
-      : <ul className="bottomMenu loggedOut">
-          <li>
-            <NavLink onClick={closeSplash} className='nav-link signUp' exact to='/join'>
-              Sign Up
-            </NavLink>
-          </li>
-          <li>
-            <NavLink onClick={closeSplash} className='nav-link logIn' exact to='/login'>
-              Log In
-            </NavLink>
-          </li>
-        </ul>
-    }
-  </nav>
-);
+class BottomMenu extends Component {
+
+  closeSplash(e, history) {
+    e.preventDefault();
+    localStorage.setItem('showSplash', 'hide');
+    let href = e.target.href;
+    history.push(
+      href.substr(href.lastIndexOf('/'))
+    );
+  }
+
+  static propTypes = {
+    history: PropTypes.object.isRequired
+  }
+
+  render() {
+    const { history } = this.props;
+
+    return (
+      <nav className="bottomMenuContainer">
+      {auth.hasValidToken()
+        ? <ul className="bottomMenu">
+            <BottomMenuItem to='/profile'><IconProfile /></BottomMenuItem>
+            <BottomMenuItem to='/medals'><IconMedals /></BottomMenuItem>
+            <IconDivider />
+            <BottomMenuItem to='/create'><IconStartFight /></BottomMenuItem>
+            <BottomMenuItem to='/watching'><IconWatching /></BottomMenuItem>
+          </ul>
+        : <ul className="bottomMenu loggedOut">
+            <li>
+              <NavLink onClick={(e) => {
+                this.closeSplash(e, history)
+              }} className='nav-link signUp' exact to='/join'>
+                Sign Up
+              </NavLink>
+            </li>
+            <li>
+              <NavLink onClick={(e) => {
+                this.closeSplash(e, history)
+              }} className='nav-link logIn' exact to='/login'>
+                Log In
+              </NavLink>
+            </li>
+          </ul>
+      }
+    </nav>
+    )
+  }
+}
 
 export default BottomMenu;
