@@ -13,10 +13,14 @@
 }
 
 .modal.splash > * {
-  flex: 1;
   display: flex;
-  justify-content: center;
+}
+
+.modal.splash .logoContainer {
   align-items: center;
+  flex: 1.2;
+  padding: 0 1em;
+  justify-content: center;
 }
 
 .modal.splash footer {
