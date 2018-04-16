@@ -4,7 +4,6 @@
 
 :root {
   --brown: #722800;
-  --box-shadow: rgba(0, 0, 0, 0.33) 7px 7px 40px 0;
   --gold: rgb(248, 192, 45);
   --bright-gold: rgb(255,	230,	51);
   --teal: rgb(57, 160, 207);
@@ -155,6 +154,12 @@ button {
   cursor: pointer;
   border-radius: 8px;
   position: relative;
+  border: none;
+}
+
+.button.full-width {
+  display: block;
+  width: 100%;
 }
 
 .button.primary {
@@ -237,10 +242,6 @@ button {
 
 .fightList span {
   display: inline-block;
-}
-
-.box-shadow {
-  box-shadow: var(--box-shadow);
 }
 
 .noResults {

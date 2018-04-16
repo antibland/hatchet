@@ -1,23 +1,18 @@
-import React from 'react';
+import React from 'react'
 
-function Avatar({
-  imgpath,
-  backgroundSize,
-  width,
-  height,
-  styles
-}) {
+const Avatar = props => {
   return (
     <div className="avatar">
       <div style={{
-        backgroundSize: backgroundSize,
-        width: width,
-        height: height,
+        backgroundSize: props.backgroundSize,
+        width: props.width,
+        height: props.height,
         borderRadius: '50%',
         display: 'inline-block',
-        backgroundImage: `url(${imgpath})`,
-        ...styles }}>
+        backgroundImage: `url(${props.imgpath})`,
+        ...props.styles }}>
       </div>
+      {props.children}
     </div>
   )
 };

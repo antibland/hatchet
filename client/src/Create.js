@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
 import './css/Form.css';
+import './css/Create.css';
 import { auth } from './Auth.js';
-import Avatar from './shared/components/Avatar';
 import commonData from './shared/commonData';
-
-function OpponentAvatar(props) {
-  if (props.url.length) {
-    return <Avatar imgpath={props.url} />;
-  } else {
-    return <Avatar />;
-  }
-}
-
+import CheckMarkIcon from './Create/CheckMarkIcon';
+import VersusImg from './Create/VersusImg';
+import SlotsYou from './Create/SlotsYou';
+import SlotsThem from './Create/SlotsThem';
 class Create extends Component {
   static timeout = null;
   static timeoutInterval = 1200;
@@ -20,8 +15,8 @@ class Create extends Component {
     super();
     this.state = {
       target: 'someone',
-      character_count: 0,
-      is_valid: false,
+      count: 0,
+      isValid: false,
       currentAvatarUrl: null,
       opponentAvatarUrl: '',
       opponentIsValidUser: null,
@@ -57,7 +52,7 @@ class Create extends Component {
   }
 
   checkForUser() {
-    let { someone } = this.state;
+    const { someone } = this.state;
 
     // user can be an email or username — figure this out server-side
     if (someone.length && someone !== auth.user.username) {
@@ -100,67 +95,47 @@ class Create extends Component {
   }
 
   handleTextareaChange(e) {
-    let count = this.state.character_count;
+    let count = this.state.count;
     if (count >= 200 && count <= 1000) {
-      this.setState({ is_valid: true })
+      this.setState({ isValid: true })
     } else {
-      this.setState({ is_valid: false })
+      this.setState({ isValid: false })
     }
-    this.setState({ character_count : e.target.value.length });
+    this.setState({ count : e.target.value.length });
   }
 
   render() {
-    let antagonist_avatar = this.state.currentAvatarUrl;
-    let count = this.state.character_count;
+    const {
+      someone,
+      opponentIsValidUser,
+      opponentAvatarUrl,
+      count,
+      currentAvatarUrl
+    } = this.state;
 
-    let count_text = count === 1 ? 'character' : 'characters';
-    let fight_type_options =
+    const you = auth.user.username;
+
+    const countText = count === 1 ? 'character' : 'characters';
+    const fightTypeOptions =
       commonData.categories.map(type => {
         return <option key={type} value={type}>{type}</option>
       });
 
-    let styles = {
-      slots: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignContent: 'center',
-        marginBottom: '2em'
-      },
-      versus: {
-        margin: '0 1em',
-        width: '100px',
-        height: '100%'
-      },
-      submitButton: {
-        display: 'block',
-        width: '100%'
-      },
-      characterCount: {
-        color: '#333',
-        fontFamily: "'Bitter', serif"
-      }
-    }
+    const formAction = `/api/${auth.user.userid}/fight`;
+    const role = "note";
 
-    let formAction = `/api/${auth.user.userid}/fight`;
-    let role = "note";
-
-    let { someone, opponentIsValidUser, opponentAvatarUrl } = this.state;
-    let me = auth.user.username;
-
-    let opponentIsValidUserResult =
+    const opponentIsValidUserResult =
       opponentIsValidUser === false
         ? (<div className="lookupResult">
             We could not locate <strong>{someone}</strong>
           </div>)
-        : opponentIsValidUser === true && someone === me
+        : opponentIsValidUser === true && someone === you
           ? (<div className="lookupResult">
               You have an axe to grind with yourself? Save it for therapy.
             </div>)
-          : opponentIsValidUser === true && someone !== me
+          : opponentIsValidUser === true && someone !== you
             ? (<div className="lookupResult">
-                <svg aria-hidden="true" className="checkmark-icon">
-                  <use xlinkHref="./symbols/svg-defs.svg#checkmark-icon" />
-                </svg>
+                <CheckMarkIcon />
                 Current opponent: <strong>{someone}</strong>
               </div>)
             : '';
@@ -169,18 +144,20 @@ class Create extends Component {
       <div>
         <h2>Start a Hatchet</h2>
 
-        <form className="box-shadow" onSubmit={this.handleSubmit} method="POST" action={formAction}>
-          <div className="slots" style={styles.slots}>
-            <div className="you">
-              { antagonist_avatar === null || antagonist_avatar === ''
-                ? <Avatar imgpath='/user.png' width='94px' height='94px' />
-                : <Avatar imgpath={antagonist_avatar} />
-              }
-            </div>
-            <img src="./versus.png" alt="versus" style={styles.versus} />
-            <div className="them">
-              <OpponentAvatar url={opponentAvatarUrl} />
-            </div>
+        <form
+          onSubmit={this.handleSubmit}
+          method="POST"
+          action={formAction}>
+          <div className="slots">
+            <SlotsYou
+              you={you}
+              currentAvatarUrl={currentAvatarUrl}
+            />
+            <VersusImg />
+            <SlotsThem
+              them={someone}
+              opponentAvatarUrl={opponentAvatarUrl}
+            />
           </div>
 
           <label htmlFor="opponent">Choose your opponent</label>
@@ -203,7 +180,7 @@ class Create extends Component {
           <label htmlFor="type">What type?</label>
           <div className="styled-select slate">
             <select name="type" id="type">
-              { fight_type_options }
+              { fightTypeOptions }
             </select>
           </div>
 
@@ -234,15 +211,14 @@ class Create extends Component {
             </textarea>
             <span className="required">*</span>
           </div>
-          <span style={styles.characterCount} className="character-count">
-            {count} {count_text}
+          <span className="characterCount">
+            {count} {countText}
           </span>
 
           <button
             type="submit"
-            disabled={!this.state.is_valid}
-            className="button"
-            style={styles.submitButton}>Send</button>
+            disabled={!this.state.isValid}
+            className="button full-width">Send</button>
         </form>
       </div>
     );
