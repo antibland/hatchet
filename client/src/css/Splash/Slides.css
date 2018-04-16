@@ -1,7 +1,12 @@
 .swiper-container {
-  width: 290px;
+  width: calc(290px + 3em);
   flex: 1.5;
   max-width: calc(100% - 4em);
+}
+
+.swiper-slide {
+  width: 100% !important;
+  padding: 0 3em;
 }
 
 .swiper-pagination {
@@ -20,10 +25,6 @@
 
 .swiper-pagination-bullet-active {
   background-color: white;
-}
-
-.swiper-slide {
-  width: 100% !important;
 }
 
 .sliderNav a:active,
@@ -63,4 +64,14 @@
 .swiper-container .text {
   color: white;
   line-height: 1.5;
+}
+
+@media screen and (max-width: 380px) {
+  .swiper-container {
+    width: 290px;
+  }
+
+  .swiper-slide {
+    padding: 0;
+  }
 }
