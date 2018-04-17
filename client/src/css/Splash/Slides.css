@@ -1,5 +1,5 @@
 .swiper-container {
-  width: calc(290px + 3em);
+  width: calc(340px + 3em);
   flex: 1.5;
   max-width: calc(100% - 4em);
 }
@@ -68,7 +68,7 @@
 
 @media screen and (max-width: 380px) {
   .swiper-container {
-    width: 290px;
+    width: 340px;
   }
 
   .swiper-slide {
