@@ -1,8 +1,14 @@
+.stepContainer {
+  width: 500px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
 .slots {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 2em;
+  margin-bottom: 4em;
 }
 
 .slots > * {
@@ -19,11 +25,21 @@
   height: 100%;
 }
 
-.avatar .username {
+.slots .avatar {
+  display: inline-flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.slots .username {
   color: white;
   text-transform: uppercase;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   letter-spacing: 1px;
+  transform: translateX(-50%);
+  left: 50%;
+  position: absolute;
+  bottom: -1.5em;
 }
 
 .characterCount {
@@ -33,5 +49,11 @@
 
 .lookupResult {
   color: white;
-  padding-top: 5px;
+  padding: 7px 12px;
+}
+
+input.featured {
+  width: calc(100% - 1.5em);
+  padding: 1.1em 1.3em;
+  font-size: 1em;
 }
