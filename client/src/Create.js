@@ -5,29 +5,27 @@ import Step3 from './Create/Step3';
 import './css/Form.css';
 import './css/Create.css';
 
+const PreviousButton = props => (
+  <button
+    type="submit"
+    onClick={props.onClick}
+    style={{ display: 'block', margin: '2em auto' }}
+    className="button">Back
+  </button>
+)
 class Wizard extends Component {
   constructor() {
     super();
     this.state = {
-      currentStep: 1,
-      data: {
-        step1: {
-          opponent: null
-        },
-        step2: {
-          type: null
-        }
-      }
+      currentStep: 1
     };
 
     this._prev = this._prev.bind(this);
     this._next = this._next.bind(this);
   }
 
-  _next(data) {
-    if (!data) { return; }
+  _next() {
     let currentStep = this.state.currentStep;
-    const newState = Object.assign({}, this.state);
 
     if (currentStep >= 2) {
       currentStep = 3;
@@ -35,11 +33,9 @@ class Wizard extends Component {
       currentStep += 1;
     }
 
-    if (data.step === 1) {
-      newState.data.step1.opponent = data.opponent;
-      newState.currentStep = currentStep;
-    }
-    this.setState(newState);
+    this.setState({
+      currentStep: currentStep
+    });
   }
 
   _prev() {
@@ -57,14 +53,19 @@ class Wizard extends Component {
 
   render() {
     let { currentStep } = this.state;
+    let activeStep = `activeStep-${currentStep}`
     return (
-      <div>
+      <div className={activeStep}>
         <Step1 currentStep={currentStep} afterValid={this._next} />
         <Step2 currentStep={currentStep} afterValid={this._next} />
         <Step3 currentStep={currentStep} afterValid={this._next} />
+        { currentStep > 1
+          ? <PreviousButton onClick={this._prev}  />
+          : ''
+        }
       </div>
     );
- }
+  }
 }
 
 // class Create extends Component {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Categories from '../Categories';
 
 class Step2 extends Component {
   render() {
@@ -7,7 +8,10 @@ class Step2 extends Component {
     }
 
     return (
-      <h2>Step 2</h2>
+      <div className="stepContainer">
+        <h2>Pick a Category</h2>
+        <Categories />
+      </div>
     )
   }
 }
