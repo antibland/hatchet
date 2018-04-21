@@ -4,7 +4,9 @@ class Step3 extends Component {
   render() {
     return (
       <div className="stepContainer">
-        <h2>Step 3</h2>
+        <div className="inner">
+          <h2>Step 3</h2>
+        </div>
       </div>
     )
   }

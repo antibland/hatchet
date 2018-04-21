@@ -6,12 +6,13 @@ import './css/Form.css';
 import './css/Create.css';
 
 const PreviousButton = props => (
-  <button
-    type="submit"
-    onClick={props.onClick}
-    style={{ display: 'block', margin: '2em auto' }}
-    className="button">Back
-  </button>
+  <div className="previousButtonWrap">
+    <button
+      type="submit"
+      onClick={props.onClick}
+      className="button">Back
+    </button>
+  </div>
 )
 class Wizard extends Component {
   constructor() {
@@ -53,17 +54,19 @@ class Wizard extends Component {
 
   render() {
     let { currentStep } = this.state;
-    let activeStep = `activeStep-${currentStep}`
+    let activeStep = `activeStep-${currentStep} stepsContainer`
     return (
+      <React.Fragment>
       <div className={activeStep}>
         <Step1 currentStep={currentStep} afterValid={this._next} />
         <Step2 currentStep={currentStep} afterValid={this._next} />
         <Step3 currentStep={currentStep} afterValid={this._next} />
-        { currentStep > 1
-          ? <PreviousButton onClick={this._prev}  />
-          : ''
-        }
       </div>
+      { currentStep > 1
+        ? <PreviousButton onClick={this._prev}  />
+        : ''
+      }
+      </React.Fragment>
     );
   }
 }

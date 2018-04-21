@@ -127,39 +127,41 @@ class Step1 extends Component {
 
     return (
       <div className="stepContainer">
-        <h2>Choose an Opponent</h2>
-        <div className="slots">
-          <SlotsYou
-            you={you}
-            currentAvatarUrl={currentAvatarUrl}
-          />
-          <VersusImg />
-          <SlotsThem
-            them={someone}
-            opponentAvatarUrl={opponentAvatarUrl}
-          />
+        <div className="inner">
+          <h2>Choose an Opponent</h2>
+          <div className="slots">
+            <SlotsYou
+              you={you}
+              currentAvatarUrl={currentAvatarUrl}
+            />
+            <VersusImg />
+            <SlotsThem
+              them={someone}
+              opponentAvatarUrl={opponentAvatarUrl}
+            />
+          </div>
+
+          <input
+            className="featured"
+            type="text"
+            aria-label="Enter username or email address"
+            name="opponent"
+            id="opponent"
+            required
+            onInput={this.handleInput}
+            onKeyUp={this.handleKeyUp}
+            placeholder="Enter username or email address" />
+
+          {opponentIsValidUserResult}
+
+          <button
+            type="submit"
+            onClick={this.props.afterValid}
+            style={{ display: 'block', margin: '2em auto 0'}}
+            disabled={!isValid}
+            className="button">Continue
+          </button>
         </div>
-
-        <input
-          className="featured"
-          type="text"
-          aria-label="Enter username or email address"
-          name="opponent"
-          id="opponent"
-          required
-          onInput={this.handleInput}
-          onKeyUp={this.handleKeyUp}
-          placeholder="Enter username or email address" />
-
-        {opponentIsValidUserResult}
-
-        <button
-          type="submit"
-          onClick={this.props.afterValid}
-          style={{ display: 'block', margin: '2em auto'}}
-          disabled={!isValid}
-          className="button">Continue
-        </button>
       </div>
     )
   }

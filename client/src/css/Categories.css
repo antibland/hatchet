@@ -12,10 +12,11 @@
   max-width: 100%;
 }
 
-.categories button {
+.stepContainer .categories button {
   border: none;
   background-color: transparent;
   transition: 0.2s transform, 0.2s opacity;
+  font-size: 0.75em;
 }
 
 .categories button:hover,
