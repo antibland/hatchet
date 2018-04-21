@@ -12,6 +12,22 @@
   max-width: 100%;
 }
 
+.categories button {
+  border: none;
+  background-color: transparent;
+  transition: 0.2s transform, 0.2s opacity;
+}
+
+.categories button:hover,
+.categories button.active {
+  opacity: 1 !important;
+  transform: scale(1.1, 1.1);
+}
+
+.categories button.inactive {
+  opacity: .5;
+}
+
 .categories .firstWord {
   color: var(--gold);
   display: block;
