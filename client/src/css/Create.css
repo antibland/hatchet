@@ -8,7 +8,15 @@
   display: none;
 }
 
-[class*=activeStep-] .stepContainer {
+.activeStep-1 .stepContainer:nth-child(1) {
+  display: block;
+}
+
+.activeStep-2 .stepContainer:nth-child(2) {
+  display: block;
+}
+
+.activeStep-3 .stepContainer:nth-child(3) {
   display: block;
 }
 

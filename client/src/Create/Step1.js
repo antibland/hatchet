@@ -92,10 +92,6 @@ class Step1 extends Component {
   }
 
   render() {
-    if (this.props.currentStep !== 1) {
-      return null;
-    }
-
     const you = auth.user.username;
 
     const {

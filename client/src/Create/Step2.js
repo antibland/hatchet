@@ -15,10 +15,6 @@ class Step2 extends Component {
   }
 
   render() {
-    if (this.props.currentStep !== 2) {
-      return null;
-    }
-
     const { isValid } = this.state;
 
     return (
