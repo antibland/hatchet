@@ -47,6 +47,21 @@
   transform: translateX(-200vw);
 }
 
+.activeStep-1 .stepContainer:nth-child(2),
+.activeStep-1 .stepContainer:nth-child(3) {
+  height: 0;
+}
+
+.activeStep-2 .stepContainer:nth-child(1),
+.activeStep-2 .stepContainer:nth-child(3) {
+  height: 0;
+}
+
+.activeStep-3 .stepContainer:nth-child(1),
+.activeStep-3 .stepContainer:nth-child(2) {
+  height: 0;
+}
+
 .slots {
   display: flex;
   justify-content: center;
