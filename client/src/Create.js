@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import Step1 from './Create/Step1';
 import Step2 from './Create/Step2';
 import Step3 from './Create/Step3';
-import './css/Form.css';
 import './css/Create.css';
+import './css/Form.css';
 
 const PreviousButton = props => (
   <div className="previousButtonWrap">

@@ -25,6 +25,11 @@
   transform: scale(1.1, 1.1);
 }
 
+.categories button.active,
+.categories button:active {
+  outline: none;
+}
+
 .categories button.inactive {
   opacity: .5;
 }

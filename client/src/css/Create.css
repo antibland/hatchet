@@ -32,7 +32,7 @@
 
 .previousButtonWrap button {
   border-radius: 0 8px 8px 0;
-  margin: 45px auto 0px;
+  margin: 45px auto 0;
 }
 
 .activeStep-1 {
@@ -80,9 +80,10 @@
 }
 
 .slots .versus {
-  margin: 0 1.3em;
-  max-width: 60px;
-  height: 100%;
+  width: 70px;
+  height: 70px;
+  flex-shrink: 1;
+  flex-grow: 0;
 }
 
 .slots .avatar {
