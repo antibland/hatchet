@@ -148,6 +148,10 @@ class Step1 extends Component {
             name="opponent"
             id="opponent"
             required
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck="false"
             onInput={this.handleInput}
             onKeyUp={this.handleKeyUp}
             placeholder="Enter username or email address" />

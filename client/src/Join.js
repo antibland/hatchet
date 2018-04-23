@@ -133,6 +133,10 @@ class Join extends Component {
             <input
               className={shouldMarkError('username') ? "error" : ""}
               required
+              autoComplete="off"
+              autoCorrect="off"
+              autoCapitalize="off"
+              spellCheck="false"
               type="text"
               name="username"
               id="username"
