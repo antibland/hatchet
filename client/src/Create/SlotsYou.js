@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 const SlotsYou = props => {
   return (
     <div className="you">
-      { props.currentAvatarUrl === null || props.currentAvatarUrl === ''
+      { props.avatar === null || props.avatar === ''
         ? <Avatar imgpath='/user.png' width='94px' height='94px' />
-        : <Avatar imgpath={props.currentAvatarUrl}>
+        : <Avatar imgpath={props.avatar}>
             <span className="username">{props.you}</span>
           </Avatar>
       }
@@ -16,7 +16,7 @@ const SlotsYou = props => {
 };
 
 SlotsYou.defaultProps = {
-  currentAvatarUrl: '',
+  avatar: '',
 };
 
 SlotsYou.propTypes = {

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { auth } from '../Auth.js';
-import LookupResult from './LookupResult';
 import utilities from '../shared/utilities';
-import VersusImg from './VersusImg';
-import SlotsYou from './SlotsYou';
-import SlotsThem from './SlotsThem';
 import CheckMarkIcon from './CheckMarkIcon';
+import LookupResult from './LookupResult';
+import SlotsThem from './SlotsThem';
+import SlotsYou from './SlotsYou';
+import VersusImg from './VersusImg';
 
 class Step1 extends Component {
   static timeout = null;
@@ -17,7 +17,6 @@ class Step1 extends Component {
       opponent: '',
       someone: '',
       isValid: false,
-      currentAvatarUrl: null,
       opponentAvatarUrl: '',
       opponentIsValidUser: null
     };
@@ -77,20 +76,6 @@ class Step1 extends Component {
     }
   }
 
-  setAvatar() {
-    fetch(`/api/${auth.user.userid}/avatar`)
-      .then(res => res.json())
-      .then(data => {
-        if (data.type === 'success' && data.avatar !== null) {
-          this.setState({ currentAvatarUrl: data.avatar })
-        }
-      });
-  }
-
-  componentDidMount() {
-    this.setAvatar();
-  }
-
   render() {
     const you = auth.user.username;
 
@@ -98,7 +83,6 @@ class Step1 extends Component {
       someone,
       opponentIsValidUser,
       opponentAvatarUrl,
-      currentAvatarUrl,
       isValid
     } = this.state;
 
@@ -132,7 +116,7 @@ class Step1 extends Component {
           <div className="slots">
             <SlotsYou
               you={you}
-              currentAvatarUrl={currentAvatarUrl}
+              avatar={auth.user.avatar}
             />
             <VersusImg />
             <SlotsThem
