@@ -119,6 +119,25 @@ input.featured {
   font-size: 1em;
 }
 
+.charsRemaining {
+  font-size: 0.9em;
+  position: relative;
+  padding: 5px 6px;
+  top: -26px;
+  right: 0;
+  display: inline-block;
+  float: right;
+  color: black;
+}
+
+.charsRemaining.error {
+  color: red;
+}
+
+.DraftEditor-editorContainer > div {
+  padding-right: 32px !important;
+}
+
 @media screen and (max-width: 500px) {
   .previousButtonWrap {
     position: relative;

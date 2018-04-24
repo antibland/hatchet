@@ -10,6 +10,7 @@
     "react-id-swiper": "^1.6.2",
     "react-moment": "^0.7.0",
     "react-router-dom": "^4.2.2",
+    "react-rte": "^0.16.1",
     "react-scripts": "1.1.1"
   },
   "scripts": {
