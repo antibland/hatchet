@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import HatchetList from './shared/components/HatchetList';
-import FightsAccordion from './shared/components/FightsAccordion';
-import Loading from './Loading';
 import { auth } from './Auth';
+import Loading from './Loading';
+import FightsAccordion from './shared/components/FightsAccordion';
+import HatchetList from './shared/components/HatchetList';
 class MyHatchets extends Component {
   constructor() {
     super();

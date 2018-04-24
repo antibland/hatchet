@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import commonData from './shared/commonData';
 import MainTabs from './MainTabs';
+import commonData from './shared/commonData';
 import './css/NavTabs.css';
 
 const Logo = () => (

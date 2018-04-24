@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import commonData from './shared/commonData';
 import { Link } from 'react-router-dom';
 import './css/Categories.css';
+import commonData from './shared/commonData';
 import utilities from './shared/utilities';
 
 class Categories extends Component {

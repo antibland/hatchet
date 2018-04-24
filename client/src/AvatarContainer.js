@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Avatar from './shared/components/Avatar';
 import { auth } from './Auth.js';
+import Avatar from './shared/components/Avatar';
 import FancyFileInput from './shared/components/FancyFileInput';
 
 class AvatarContainer extends Component {

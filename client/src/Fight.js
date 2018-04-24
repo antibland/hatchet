@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import { auth } from './Auth';
 import Loading from './Loading';
 import WatchingWidget from './WatchingWidget';
-import { auth } from './Auth';
 import './css/Fight.css';
 import './css/Watching.css';
 

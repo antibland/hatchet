@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import Main from './Main';
-import Header from './Header';
-import Footer from './Footer';
-import Splash from './Splash';
 import { auth } from './Auth.js';
+import Footer from './Footer';
+import Header from './Header';
+import Main from './Main';
+import Splash from './Splash';
 import './App.css';
 import './css/Nav.css';
 import './css/Ribbon.css';

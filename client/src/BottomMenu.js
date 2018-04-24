@@ -1,7 +1,7 @@
+import { PropTypes } from 'prop-types';
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { auth } from './Auth.js';
-import { PropTypes } from 'prop-types';
 import './css/BottomMenu.css';
 
 const IconProfile = () => (
