@@ -8,9 +8,9 @@
   --bright-gold: rgb(255,	230,	51);
   --teal: rgb(57, 160, 207);
   --dark-blue: rgb(15, 48, 80);
-  --button-text: rgba(27, 61, 71);
   --content-padding: 0 3em;
   --content-padding-mobile: 0 1.5em;
+  --alt-button-color: rgb(66, 158, 202);
 }
 
 body {
@@ -146,17 +146,21 @@ button {
 
 .button {
   background-color: var(--gold);
-  color: var(--button-text);
-  padding: 0.75em 1.25em;
+  color: var(--dark-blue);
+  padding: 0.6em 1.2em;
   text-transform: uppercase;
   text-decoration: none;
   display: inline-block;
   margin-top: 0.7em;
-  font-size: 1.3em;
+  font-size: 1.15em;
   cursor: pointer;
   border-radius: 8px;
   position: relative;
   border: none;
+}
+
+.button.alt-color {
+  background-color: var(--alt-button-color);
 }
 
 .button.full-width {
@@ -175,7 +179,6 @@ button {
     var(--bright-gold) 67%, var(--bright-gold) 70%,
     var(--gold) 70%
   );
-  padding: 0.5em 1.1em;
   border: none;
   width: auto;
   max-width: 280px;

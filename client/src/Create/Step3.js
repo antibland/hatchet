@@ -49,7 +49,7 @@ class Step3 extends Component {
             onClick={this.props.afterValid}
             style={{ display: 'block', margin: '2em auto 0'}}
             disabled={count <= 0 || !isValid}
-            className="button">Complete
+            className="button primary">Complete
           </button>
 
         </div>

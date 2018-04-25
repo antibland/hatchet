@@ -145,6 +145,12 @@ input:focus + [role=note] {
   max-height: 5em;
 }
 
+input.featured {
+  width: calc(100% - 1.5em);
+  padding: 1.1em 1.3em;
+  font-size: 1em;
+}
+
 .joinTerms {
   color: white;
   font-size: 70%;
@@ -181,5 +187,9 @@ input:focus + [role=note] {
   form {
     padding-left: 2em;
     padding-right: 2em;
+  }
+
+  input.featured {
+    padding: .9em 1.1em;
   }
 }
