@@ -126,6 +126,9 @@
   display: inline-block;
   float: right;
   color: black;
+  width: 100%;
+  text-align: right;
+  border-top: 1px solid var(--gold);
 }
 
 .charsRemaining.error {
