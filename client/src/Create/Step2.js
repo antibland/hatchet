@@ -5,26 +5,33 @@ class Step2 extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isValid: false
+      isValid: false,
+      type: ''
     };
-    this.setValidTrue = this.setValidTrue.bind(this);
+    this.handleButtonClick = this.handleButtonClick.bind(this);
   }
 
-  setValidTrue() {
-    this.setState({ isValid: true })
+  handleButtonClick(type) {
+    this.setState({
+      isValid: true,
+      type
+    })
   }
 
   render() {
-    const { isValid } = this.state;
+    const { isValid, type } = this.state;
 
     return (
       <div className="stepContainer">
         <div className="inner">
           <h2>Pick a Category</h2>
-          <Categories mode='button' onClick={this.setValidTrue} />
+          <Categories mode='button' onClick={this.handleButtonClick} />
           <button
             type="submit"
-            onClick={this.props.afterValid}
+            onClick={(event) => this.props.afterValid(
+              event,
+              [`type:${type}`]
+            )}
             style={{ display: 'block', margin: '2em auto 0'}}
             disabled={!isValid}
             className="button">Continue

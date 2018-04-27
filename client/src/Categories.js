@@ -15,6 +15,7 @@ class Categories extends Component {
   }
 
   handleClick(e) {
+    e.preventDefault();
     this.setState({
       firstButtonClick: false,
       activeButton: e.currentTarget.dataset.id
@@ -38,7 +39,7 @@ class Categories extends Component {
                     ? <button
                         data-id={`button-${index}`}
                         onClick={(e) => {
-                          this.props.onClick();
+                          this.props.onClick(e.currentTarget.firstChild.alt);
                           this.handleClick(e);
                         }}
                         className={
