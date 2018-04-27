@@ -94,8 +94,6 @@ class Wizard extends Component {
       newState.fight[key] = val;
       this.setState(newState);
     });
-
-    console.log(this.state)
   }
 
   render() {
