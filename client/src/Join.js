@@ -116,7 +116,7 @@ class Join extends Component {
         </div>
       : '';
 
-      let role = "note";
+    let role = "note";
 
     return (
       <div>
@@ -146,7 +146,7 @@ class Join extends Component {
               aria-label="choose a username"
               maxLength="28"
               onBlur={this.handleBlur('username')}/>
-              <span role={role}>Letters, numbers, underscores and dots are okay.</span>
+            <span role={role}>Letters, numbers, underscores and dots are okay.</span>
           </div>
 
           <div className="required-field-wrapper">
@@ -175,7 +175,7 @@ class Join extends Component {
               placeholder="password"
               aria-label="password"
               onBlur={this.handleBlur('password')}/>
-              <span role={role}>At least 8 characters.</span>
+            <span role={role}>At least 8 characters.</span>
           </div>
 
           <p className='joinTerms'>
