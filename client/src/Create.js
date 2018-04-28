@@ -33,9 +33,9 @@ class Wizard extends Component {
     this._gatherData = this._gatherData.bind(this);
   }
 
-  _submitForm(e) {
+  _submitForm() {
     const { type, title, beef, opponent } = this.state.fight;
-    e.preventDefault();
+    console.log('submit form');
     // '/api/:userId/fight' => fightApi.newFight
     // fetch(`/api/${auth.user.userid}/fight`, {
     //   method: 'POST',
@@ -52,7 +52,7 @@ class Wizard extends Component {
     // })
   }
 
-  _next(e, data) {
+  _next(e, data, completed=false) {
     e.preventDefault();
     let currentStep = this.state.currentStep;
 
@@ -67,9 +67,7 @@ class Wizard extends Component {
     });
 
     setTimeout(() => {
-      if (data) {
-        this._gatherData(data);
-      }
+      this._gatherData(data, completed);
     }, 300)
   }
 
@@ -87,13 +85,16 @@ class Wizard extends Component {
     });
   }
 
-  _gatherData(data) {
-    data.forEach(element => {
-      let [key, val]= element.split(':');
+  _gatherData(data, completed) {
+    Object.keys(data).forEach(key => {
       let newState = Object.assign({}, this.state);
-      newState.fight[key] = val;
+      newState.fight[key] = data[key];
       this.setState(newState);
     });
+
+    if (completed === true) {
+      this._submitForm();
+    }
   }
 
   render() {
@@ -105,7 +106,7 @@ class Wizard extends Component {
         <div className={activeStep}>
           <Step1 sendData={this._getData} currentStep={currentStep} afterValid={this._next} />
           <Step2 sendData={this._getData} currentStep={currentStep} afterValid={this._next} />
-          <Step3 sendData={this._getData} currentStep={currentStep} afterValid={this._submitForm} />
+          <Step3 sendData={this._getData} currentStep={currentStep} afterValid={this._next} />
         </div>
         { currentStep > 1
           ? <PreviousButton onClick={this._prev}  />

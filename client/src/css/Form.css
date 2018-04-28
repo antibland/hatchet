@@ -127,6 +127,8 @@ button.link-style {
 }
 
 [role=note] {
+  display: block;
+  text-align-last: left;
   color: white;
   font-style: italic;
   width: 100%;

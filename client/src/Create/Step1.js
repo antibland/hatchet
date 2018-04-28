@@ -146,7 +146,7 @@ class Step1 extends Component {
             type="submit"
             onClick={(event) => this.props.afterValid(
               event,
-              [`opponent:${someone}`]
+              { opponent:someone }
             )}
             style={{ display: 'block', margin: '2em auto 0'}}
             disabled={!isValid}

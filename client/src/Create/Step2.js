@@ -30,7 +30,7 @@ class Step2 extends Component {
             type="submit"
             onClick={(event) => this.props.afterValid(
               event,
-              [`type:${type}`]
+              { type:type }
             )}
             style={{ display: 'block', margin: '2em auto 0'}}
             disabled={!isValid}
