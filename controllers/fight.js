@@ -125,7 +125,9 @@ exports.newFight = async (req, res) => {
 
     await user.save(err => {
       if (err) throw err;
-      res.redirect('back');
+      return res.status(200).json({
+        type: 'success'
+      });
     });
   };
 

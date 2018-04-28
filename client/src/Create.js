@@ -20,12 +20,7 @@ class Wizard extends Component {
     super();
     this.state = {
       currentStep: 1,
-      fight: {
-        type: '',
-        title: '',
-        beef: '',
-        opponent: ''
-      }
+      fight: {}
     };
 
     this._prev = this._prev.bind(this);
@@ -35,21 +30,26 @@ class Wizard extends Component {
 
   _submitForm() {
     const { type, title, beef, opponent } = this.state.fight;
-    console.log('submit form');
+    console.log('submit form', this.state);
     // '/api/:userId/fight' => fightApi.newFight
-    // fetch(`/api/${auth.user.userid}/fight`, {
-    //   method: 'POST',
-    //   header: {
-    //     Accept: 'application/json',
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({
-    //     type,
-    //     title,
-    //     beef,
-    //     opponent
-    //   })
-    // })
+    fetch(`/api/${auth.user.userid}/fight`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        type,
+        title,
+        beef,
+        opponent
+      })
+    }).then(res => res.json())
+      .then(data => {
+        if (data.type === 'success') {
+          // Do cool stuff
+        }
+      });
   }
 
   _next(e, data, completed=false) {
@@ -109,7 +109,7 @@ class Wizard extends Component {
           <Step3 sendData={this._getData} currentStep={currentStep} afterValid={this._next} />
         </div>
         { currentStep > 1
-          ? <PreviousButton onClick={this._prev}  />
+          ? <PreviousButton onClick={this._prev} />
           : ''
         }
       </form>
