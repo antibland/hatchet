@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { auth } from './Auth';
+import Modal from './shared/components/Modal';
 import Step1 from './Create/Step1';
 import Step2 from './Create/Step2';
 import Step3 from './Create/Step3';
@@ -20,17 +21,20 @@ class Wizard extends Component {
     super();
     this.state = {
       currentStep: 1,
+      isModalOpen: false,
       fight: {}
     };
 
     this._prev = this._prev.bind(this);
     this._next = this._next.bind(this);
     this._gatherData = this._gatherData.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   _submitForm() {
     const { type, title, beef, opponent } = this.state.fight;
-    console.log('submit form', this.state);
+
     // '/api/:userId/fight' => fightApi.newFight
     fetch(`/api/${auth.user.userid}/fight`, {
       method: 'POST',
@@ -47,7 +51,7 @@ class Wizard extends Component {
     }).then(res => res.json())
       .then(data => {
         if (data.type === 'success') {
-          // Do cool stuff
+          this.setState({ isModalOpen: true })
         }
       });
   }
@@ -97,22 +101,37 @@ class Wizard extends Component {
     }
   }
 
+  closeModal() {
+    this.setState({ isModalOpen: false })
+    this.props.history.push('/');
+  }
+
+  openModal() {
+    this.setState({ isModalOpen: true })
+  }
+
   render() {
-    let { currentStep } = this.state;
+    let { currentStep, isModalOpen } = this.state;
     let activeStep = `activeStep-${currentStep} stepsContainer`;
     let formAction = `/api/${auth.user.userid}/fight`;
     return (
-      <form action={formAction} method="post" className="stepsForm">
-        <div className={activeStep}>
-          <Step1 sendData={this._getData} currentStep={currentStep} afterValid={this._next} />
-          <Step2 sendData={this._getData} currentStep={currentStep} afterValid={this._next} />
-          <Step3 sendData={this._getData} currentStep={currentStep} afterValid={this._next} />
-        </div>
-        { currentStep > 1
-          ? <PreviousButton onClick={this._prev} />
-          : ''
-        }
-      </form>
+      <React.Fragment>
+        <form action={formAction} method="post" className="stepsForm">
+          <div className={activeStep}>
+            <Step1 sendData={this._getData} currentStep={currentStep} afterValid={this._next} />
+            <Step2 sendData={this._getData} currentStep={currentStep} afterValid={this._next} />
+            <Step3 sendData={this._getData} currentStep={currentStep} afterValid={this._next} />
+          </div>
+          { currentStep > 1
+            ? <PreviousButton onClick={this._prev} />
+            : ''
+          }
+        </form>
+        <Modal isOpen={isModalOpen} closeModal={this.closeModal}>
+          <p>The fight was created. Everything worked. Now it's up to them. May your hatchet be
+            swiftly buried.</p>
+        </Modal>
+      </React.Fragment>
     );
   }
 }
