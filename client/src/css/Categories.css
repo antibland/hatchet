@@ -38,26 +38,3 @@
   color: var(--gold);
   display: block;
 }
-
-.threeByThree {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.threeByThree > * {
-  width: calc(100% / 3);
-}
-
-@media screen and (max-width: 600px) {
-  .threeByThree li {
-    padding: 1em;
-  }
-}
-
-@media screen and (max-width: 450px) {
-  .threeByThree li {
-    width: calc(100% / 2);
-  }
-}

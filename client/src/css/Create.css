@@ -2,7 +2,8 @@
   display: block;
   width: 100vw;
   margin: 0;
-  padding: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .stepsContainer {
@@ -90,19 +91,6 @@
   align-self: flex-start;
 }
 
-.slots .versus {
-  width: 70px;
-  height: 70px;
-  flex-shrink: 1;
-  flex-grow: 0;
-}
-
-.slots .avatar {
-  display: inline-flex;
-  flex-direction: column;
-  position: relative;
-}
-
 .slots .username {
   color: white;
   text-transform: uppercase;
@@ -162,15 +150,5 @@
 
   .previousButtonWrap button {
     border-radius: 8px;
-  }
-
-  .slots .avatar > div {
-    width: 70px !important;
-    height: 70px !important;
-  }
-
-  .slots .versus {
-    height: 50px !important;
-    width: 50px !important;
   }
 }

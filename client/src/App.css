@@ -44,9 +44,13 @@ li {
 }
 
 main {
-  padding: 1em 0;
   flex: 1;
   position: relative;
+}
+
+main > * {
+  padding-top: 1em;
+  padding-bottom: 1em;
 }
 
 footer {

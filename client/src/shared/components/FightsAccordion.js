@@ -4,6 +4,7 @@ import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 import AcceptInvite from './AcceptInvite';
 import Avatar from './Avatar';
+import VersusImg from './VersusImg';
 
 const FightsAccordion = props => (
   <div className="fightlist tablist">
@@ -28,7 +29,7 @@ const FightsAccordion = props => (
                     }
                     {fight.antagonist.username}
                   </span>
-                  <img src="/versus.small.png" alt="versus icon" />
+                  <VersusImg />
                   <span className="defender">
                     { fight.defender.avatar
                       ? <Avatar imgpath={fight.defender.avatar.path} />

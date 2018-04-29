@@ -1,0 +1,26 @@
+.slots .versus {
+  width: 70px;
+  height: 70px;
+  flex-shrink: 1;
+  flex-grow: 0;
+}
+
+.slots .avatar {
+  display: inline-flex;
+  flex-direction: column;
+  position: relative;
+}
+
+@media screen and (max-width: 500px) {
+  .tablist .avatar > div,
+  .slots .avatar > div {
+    width: 70px !important;
+    height: 70px !important;
+  }
+
+  .tablist .versus,
+  .slots .versus {
+    height: 50px !important;
+    width: 50px !important;
+  }
+}

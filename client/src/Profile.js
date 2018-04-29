@@ -10,7 +10,6 @@ import './css/ProfileFightList.css';
 import './css/Accordion.css';
 import './css/ImagePreview.css';
 
-
 class Profile extends Component {
   constructor() {
     super();
@@ -77,8 +76,14 @@ class Profile extends Component {
           : <div>
               <h1 className="profileH1">Hey, {auth.user.username}!</h1>
               <AvatarContainer />
-              { _waitingOnYou }
-              { _waitingOnThem }
+              <div className="twoByTwo">
+                <div className="block">
+                  { _waitingOnYou }
+                </div>
+                <div className="block">
+                  { _waitingOnThem }
+                </div>
+              </div>
               { _active }
             </div>
         }

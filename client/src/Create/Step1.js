@@ -5,7 +5,7 @@ import CheckMarkIcon from './CheckMarkIcon';
 import LookupResult from './LookupResult';
 import SlotsThem from './SlotsThem';
 import SlotsYou from './SlotsYou';
-import VersusImg from './VersusImg';
+import VersusImg from '../shared/components/VersusImg';
 
 class Step1 extends Component {
   static timeout = null;
