@@ -14,6 +14,7 @@
   flex-shrink: 1;
   padding: 0;
   max-width: 90px;
+  align-self: center;
 }
 
 .featured-fights-container h2 {
@@ -29,6 +30,7 @@
 .featured-fights-container > * {
   flex: 1;
   padding: 2em;
+  align-self: flex-start;
 }
 
 .fight-arguments {
