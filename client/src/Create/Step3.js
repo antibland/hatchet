@@ -54,9 +54,9 @@ class Step3 extends Component {
 
   render() {
     const role="note";
-    const { count, isValid, beef, title } = this.state;
+    const { count, isValid, beef, title, isBeefValid } = this.state;
     const countRemaining = 1000 - count;
-    const error = isValid === false ? 'error' : '';
+    const error = isBeefValid === false ? 'error' : '';
     const classes = `charsRemaining ${error}`;
 
     return (
