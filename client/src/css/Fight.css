@@ -73,6 +73,7 @@
     padding-left: 0;
     padding-right: 0;
     padding: 3em 0;
+    align-self: center;
   }
 
   .total-votes {
