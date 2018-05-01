@@ -3,6 +3,16 @@ const User = require('../models/user');
 const validator = require("email-validator");
 const env = process.env.NODE_ENV || 'development';
 
+const utils = {
+  removeItemFromArray: (array, element) => {
+    const index = array.indexOf(element);
+
+    if (index !== -1) {
+      array.splice(index, 1);
+    }
+  }
+}
+
 exports.setLive = async (req, res) => {
   let { fightId } = req.params;
 
@@ -99,6 +109,35 @@ exports.getUserFights = async (req, res) => {
     active,
     waitingOnYou,
     waitingOnThem
+  });
+};
+
+exports.deleteFight = async(req, res) => {
+  let fightId = req.params.fightId;
+  let user = await User.findById(req.params.userId);
+
+  // Delete the fight
+  let fight = await Fight.findByIdAndRemove(fightId, err => {
+    if (err) {
+      return res.status(500).json({
+        type: 'failure'
+      });
+    }
+
+    utils.removeItemFromArray(user.fights, fightId);
+  });
+
+  // Remove the fight reference from user array
+  await user.save(err => {
+    if (err) {
+      return res.status(500).json({
+        type: 'failure'
+      });
+    }
+
+    return res.status(200).json({
+      type: 'success'
+    });
   });
 };
 

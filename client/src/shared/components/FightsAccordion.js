@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import AcceptInvite from './AcceptInvite';
 import Avatar from './Avatar';
 import VersusImg from './VersusImg';
+import DeleteFight from '../../DeleteFight';
 
 const FightsAccordion = props => (
   <div className="fightlist tablist">
@@ -68,8 +69,9 @@ FightsAccordion.propTypes = {
 // The fight is not live yet. Inform the user what happens next
 const FightAction = props => (
   props.action === 'link to fight'
-    ? <div>
+    ? <div className="buttonWrap">
         <Link className="button" to={'/fight/' + props.fightId}>View fight</Link>
+        <DeleteFight fightId={props.fightId} />
       </div>
     : <div>
         <AcceptInvite fightId={props.fightId} />

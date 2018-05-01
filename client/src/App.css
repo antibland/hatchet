@@ -161,6 +161,7 @@ button {
   border-radius: 8px;
   position: relative;
   border: none;
+  line-height: 1;
 }
 
 .button.alt-color {

@@ -25,6 +25,11 @@
   font-size: 1em;
 }
 
+.fightlist .buttonWrap {
+  display: flex;
+  justify-content: space-around;
+}
+
 .fightlist li {
   margin-bottom: 2em;
   line-height: 1.7;
@@ -84,4 +89,10 @@
 
 .horizontalBox .defender {
   animation: upAndDown 1s ease infinite alternate 0.2s;
+}
+
+@media screen and (max-width: 380px) {
+  .fightlist .buttonWrap {
+    flex-direction: column;
+  }
 }
