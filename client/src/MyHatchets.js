@@ -67,8 +67,14 @@ class MyHatchets extends Component {
         { this.state.loading === true
           ? <Loading />
           : <div>
-              { _waitingOnYou }
-              { _waitingOnThem }
+              <div className="twoByTwo">
+                <div className="block">
+                  { _waitingOnYou }
+                </div>
+                <div className="block">
+                  { _waitingOnThem }
+                </div>
+              </div>
               { _active }
             </div>
         }
