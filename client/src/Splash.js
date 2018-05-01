@@ -9,7 +9,7 @@ class Splash extends Component {
     return(
       <div className='splash modal'>
         <div className='logoContainer'>
-          <Logo />
+          <Logo direction="vertical" />
         </div>
         <IntroSlides />
         <Footer isAuthenticated={false} />

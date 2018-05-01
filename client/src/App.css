@@ -136,6 +136,10 @@ footer a {
   width: 450px;
 }
 
+.logo.vertical {
+  max-width: 220px;
+}
+
 .a11yText {
   position: absolute;
   visibility: hidden;
@@ -291,5 +295,9 @@ button {
 @media screen and (max-width: 500px) {
   .contentPadding {
     padding: var(--content-padding-mobile);
+  }
+
+  .logo.vertical {
+    max-width: 130px;
   }
 }

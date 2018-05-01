@@ -10,7 +10,7 @@
 }
 
 .swiper-pagination {
-  top: 11.8em;
+  top: 10.8em;
 }
 
 .swiper-pagination-bullet {
@@ -57,13 +57,14 @@
   text-transform: uppercase;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   letter-spacing: 1px;
-  font-size: 1.3em;
+  font-size: 1.2em;
   margin-bottom: 5px;
 }
 
 .swiper-container .text {
   color: white;
   line-height: 1.5;
+  font-size: 0.9em;
 }
 
 @media screen and (max-width: 380px) {

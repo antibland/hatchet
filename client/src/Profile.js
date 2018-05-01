@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import { auth } from './Auth.js';
 import Loading from './Loading.js';
 import FightsAccordion from './shared/components/FightsAccordion';
