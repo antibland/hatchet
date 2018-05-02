@@ -35,25 +35,25 @@ class MyHatchets extends Component {
     let { waitingOnYou, waitingOnThem, active } = this.state;
 
     let _waitingOnYou = waitingOnYou.length
-      ? <React.Fragment>
+      ? <div className="block">
           <h2>Waiting On You</h2>
           <FightsAccordion
             indexModifier='waitingOnYou'
             obj={waitingOnYou}
             action='accept invite' />
-        </React.Fragment>
+        </div>
       : '';
 
     let _waitingOnThem = waitingOnThem.length
-      ? <React.Fragment>
+      ? <div className="block">
           <h2>Waiting On Them</h2>
           <FightsAccordion
             indexModifier='waitingOnThem'
             obj={waitingOnThem} />
-        </React.Fragment>
+        </div>
       : ''
 
-   let _active = active.length
+    let _active = active.length
       ? <React.Fragment>
           <h2>Active Fights</h2>
           <ul className="fightList">
@@ -68,12 +68,8 @@ class MyHatchets extends Component {
           ? <Loading />
           : <div>
               <div className="twoByTwo">
-                <div className="block">
-                  { _waitingOnYou }
-                </div>
-                <div className="block">
-                  { _waitingOnThem }
-                </div>
+                { _waitingOnYou }
+                { _waitingOnThem }
               </div>
               { _active }
             </div>
