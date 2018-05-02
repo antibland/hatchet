@@ -24,7 +24,7 @@
   text-transform: uppercase;
   flex: 1;
   padding: .5em 1.1em .4em;
-  font-size: 1.1em;
+  font-size: 1.05em;
 }
 
 .bottomMenu.loggedOut .signUp {
