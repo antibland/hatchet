@@ -52,17 +52,6 @@ const IconWatching = () => (
   </React.Fragment>
 );
 
-const IconDivider = () => (
-  <li className="divider">
-    <img
-      className='iconDivider'
-      aria-hidden='true'
-      src='/icons/icon-watching.png'
-      srcSet='/icons/icon-divider.png 1x, /icons/icon-divider@2x.png 2x'
-      alt='Icon divider' />
-  </li>
-);
-
 const BottomMenuItem = props => (
   <li>
     <NavLink className="nav-link" exact to={props.to}>
@@ -95,7 +84,6 @@ class BottomMenu extends Component {
         ? <ul className="bottomMenu">
             <BottomMenuItem to='/profile'><IconProfile /></BottomMenuItem>
             <BottomMenuItem to='/medals'><IconMedals /></BottomMenuItem>
-            <IconDivider />
             <BottomMenuItem to='/create'><IconStartFight /></BottomMenuItem>
             <BottomMenuItem to='/watching'><IconWatching /></BottomMenuItem>
           </ul>
