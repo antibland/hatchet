@@ -177,6 +177,10 @@ button {
   width: 100%;
 }
 
+.fullWidth {
+  width: 100%;
+}
+
 .button.primary {
   background: linear-gradient(
     -35deg, var(--gold),

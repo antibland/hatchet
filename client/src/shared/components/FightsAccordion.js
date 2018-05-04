@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
-import AcceptInvite from './AcceptInvite';
+//import AcceptInvite from './AcceptInvite';
 import Avatar from './Avatar';
 import VersusImg from './VersusImg';
 import DeleteFight from '../../DeleteFight';
@@ -74,7 +74,8 @@ const FightAction = props => (
         <DeleteFight fightId={props.fightId} />
       </div>
     : <div>
-        <AcceptInvite fightId={props.fightId} />
+      <Link className="button" to={'/fight/' + props.fightId}>Take action</Link>
+        {/* <AcceptInvite fightId={props.fightId} /> */}
       </div>
 );
 

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import TextareaWithCountdown from '../shared/components/TextareaWithCountdown';
 class Step3 extends Component {
   constructor() {
     super();
@@ -25,39 +25,27 @@ class Step3 extends Component {
 
   handleTitleInput(e) {
     let count = e.target.value.length;
-    this.setState({ title: e.target.value })
 
-    if (count > 0) {
-      this.setState({ isTitleValid: true })
-    } else {
-      this.setState({ isTitleValid: false })
-    }
+    this.setState({
+      title: e.target.value,
+      isTitleValid: (count > 0) ? true : false
+    });
 
     this.setOverallValidity();
   }
 
-  handleTextareaChange(e) {
-    let count = e.target.value.length;
+  handleTextareaChange(fieldValidity, fieldVal) {
     this.setState({
-      count,
-      beef: e.target.value
-    });
-
-    if (count >= 0 && count <= 1000) {
-      this.setState({ isBeefValid: true });
-    } else {
-      this.setState({ isBeefValid: false });
-    }
+      isBeefValid: fieldValidity,
+      beef: fieldVal
+    })
 
     this.setOverallValidity();
   }
 
   render() {
     const role="note";
-    const { count, isValid, beef, title, isBeefValid } = this.state;
-    const countRemaining = 1000 - count;
-    const error = isBeefValid === false ? 'error' : '';
-    const classes = `charsRemaining ${error}`;
+    const { isValid, beef, title } = this.state;
 
     return (
       <div className="stepContainer">
@@ -68,9 +56,9 @@ class Step3 extends Component {
               required
               id="title"
               name="title"
-              valuee={this.state.title}
+              value={this.state.title}
               maxLength="75"
-              style={{ width: '100%' }}
+              className="fullWidth"
               aria-label="Create title."
               onInput={this.handleTitleInput}
               type="text"/>
@@ -79,15 +67,14 @@ class Step3 extends Component {
 
           <h2>What happened?</h2>
           <div className="fieldWrap">
-            <textarea
-              required
+            <TextareaWithCountdown
+              countLimit={1000}
               onInput={this.handleTextareaChange}
-              name="beef"
-              id="beef"
-              aria-label="What happened?"
-              placeholder="Your argument goes here">
-            </textarea>
-            <div className={classes}>{ countRemaining }</div>
+              ariaLabel="What happened"
+              placeholder="Your argument goes here"
+              fieldName="beef"
+              fieldId="beef"
+            />
           </div>
 
           <button
@@ -98,7 +85,7 @@ class Step3 extends Component {
               true
             )}
             style={{ display: 'block', margin: '2em auto 0'}}
-            disabled={count <= 0 || !isValid}
+            disabled={!isValid}
             className="button primary">Complete
           </button>
 
