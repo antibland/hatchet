@@ -15,8 +15,11 @@ const utils = {
 
 exports.setLive = async (req, res) => {
   let { fightId } = req.params;
+  let { textAgainst } = req.body;
 
   let fight = await Fight.findById(fightId);
+
+  fight.text.against = textAgainst;
   fight.isLive = true;
 
   await fight.save(err => {

@@ -46,6 +46,10 @@
   line-height: 1.5;
 }
 
+.blurred {
+  filter: blur(3px);
+}
+
 .antagonist-argument .fight-text {
   padding-right: 2em;
 }

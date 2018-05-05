@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { auth } from './Auth';
 import Loading from './Loading';
 import WatchingWidget from './WatchingWidget';
+import StartHatchet from './shared/components/StartHatchet';
+import TextareaWithCountdown from './shared/components/TextareaWithCountdown';
 import './css/Fight.css';
 import './css/Watching.css';
-import TextareaWithCountdown from './shared/components/TextareaWithCountdown';
 
 function UserAvatar({
   imgpath,
@@ -33,6 +34,7 @@ class Fight extends Component {
     this.state = {
       isValid: false,
       isLive: false,
+      textAgainst: '',
       fight: '',
       fight_title: '',
       fight_type: '',
@@ -54,14 +56,15 @@ class Fight extends Component {
     this.handleTextareaChange = this.handleTextareaChange.bind(this);
   }
 
-  handleTextareaChange(fieldValidity) {
+  handleTextareaChange(fieldValidity, val) {
     this.setState({
-      isValid: fieldValidity
+      isValid: fieldValidity,
+      textAgainst: val
     });
   }
 
   componentDidMount() {
-    let fightId = this.props.match.params.fightId;
+    const fightId = this.props.match.params.fightId;
     // /api/:fightId/fight => getFight
     fetch(`/api/${fightId}/fight`)
       .then(res => res.json())
@@ -85,7 +88,8 @@ class Fight extends Component {
             avatarPath: data.fight.defender.avatar
               ? data.fight.defender.avatar.path
               : '',
-            username: data.fight.defender.username
+            username: data.fight.defender.username,
+            argument: data.fight.text.against
           }
         });
       });
@@ -96,27 +100,15 @@ class Fight extends Component {
         defender = {},
         defaultUserImg = '/user.png';
 
-    antagonist.imgpath = this.state.antagonist.avatarPath === ''
-      ? defaultUserImg
-      : this.state.antagonist.avatarPath;
-
-    if (this.state.fight_type === 'philosophical') {
-      defender.imgpath = '/earth.png';
-      defender.username = 'The Internet';
-      defender.argument = `Is ${this.state.antagonist.username} right? What do you think? Have a good, hard look and vote.`
-    } else {
-      defender.imgpath = this.state.defender.avatarPath === ''
-        ? defaultUserImg
-        : this.state.defender.avatarPath;
-      defender.username = this.state.defender.username;
-      defender.argument = 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis fugiat in impedit maxime blanditiis nam assumenda. Dicta quo sequi dolorum similique. Libero repudiandae esse voluptate impedit delectus enim, nostrum quos?'
-    }
+    const placeholderText = 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis fugiat in impedit maxime blanditiis nam assumenda. Dicta quo sequi dolorum similique. Libero repudiandae esse voluptate impedit delectus enim, nostrum quos?';
 
     const userCanDefend = (
       auth.user.username === this.state.defender.username && this.state.isLive === false
     );
 
-    const { isLive, isValid } = this.state;
+    const fightId = this.props.match.params.fightId;
+
+    const { isLive, isValid, textAgainst } = this.state;
 
     const votesFor = isLive
                       ? <p className="total-votes">Votes: {this.state.votes.for}</p>
@@ -124,6 +116,19 @@ class Fight extends Component {
     const votesAgainst = isLive
                           ?  <p className="total-votes">Votes: {this.state.votes.against}</p>
                           : '';
+
+    antagonist.imgpath = this.state.antagonist.avatarPath === ''
+      ? defaultUserImg
+      : this.state.antagonist.avatarPath;
+
+    defender.imgpath = this.state.defender.avatarPath === ''
+      ? defaultUserImg
+      : this.state.defender.avatarPath;
+    defender.username = this.state.defender.username;
+
+    defender.argument = isLive
+                          ? <p className="fight-text">{this.state.defender.argument}</p>
+                          : <p className='fight-text blurred'>{placeholderText}</p>
 
     return (
       <div>
@@ -166,16 +171,13 @@ class Fight extends Component {
                             fieldId="beef"
                           />
                         </div>
-
-                        <button
-                          type="submit"
-                          onClick={(event) => alert('submit')}
-                          style={{ display: 'block', margin: '1em auto 0'}}
-                          disabled={!isValid}
-                          className="button primary">Complete
-                        </button>
+                        <StartHatchet
+                          fightId={fightId}
+                          isDisabled={isValid}
+                          textAgainst={textAgainst}
+                        />
                       </React.Fragment>
-                    : <p className="fight-text">{defender.argument}</p>
+                    : defender.argument
                   }
                   { votesAgainst }
                 </div>
