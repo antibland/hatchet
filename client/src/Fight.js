@@ -4,6 +4,7 @@ import Loading from './Loading';
 import WatchingWidget from './WatchingWidget';
 import StartHatchet from './shared/components/StartHatchet';
 import TextareaWithCountdown from './shared/components/TextareaWithCountdown';
+import Vote from './Vote';
 import './css/Fight.css';
 import './css/Watching.css';
 
@@ -54,6 +55,14 @@ class Fight extends Component {
     };
 
     this.handleTextareaChange = this.handleTextareaChange.bind(this);
+    this.afterVote = this.afterVote.bind(this);
+  }
+
+  afterVote(votes) {
+    let newState = Object.assign({}, this.state);
+    newState.votes.for = votes.for;
+    newState.votes.against = votes.against;
+    this.setState(newState);
   }
 
   handleTextareaChange(fieldValidity, val) {
@@ -120,6 +129,7 @@ class Fight extends Component {
     antagonist.imgpath = this.state.antagonist.avatarPath === ''
       ? defaultUserImg
       : this.state.antagonist.avatarPath;
+    antagonist.username = this.state.antagonist.username;
 
     defender.imgpath = this.state.defender.avatarPath === ''
       ? defaultUserImg
@@ -151,7 +161,12 @@ class Fight extends Component {
                   />
                   <p className="fight-text">{this.state.antagonist.argument}</p>
                   { votesFor }
-
+                  <Vote
+                    fightId={fightId}
+                    side='for'
+                    username={antagonist.username}
+                    afterVote={this.afterVote}
+                  />
                 </div>
                 <img className="versus" src="/versus.small.png" alt="versus graphic"/>
                 <div className="user2 fullWidth">
@@ -180,6 +195,12 @@ class Fight extends Component {
                     : defender.argument
                   }
                   { votesAgainst }
+                  <Vote
+                    fightId={fightId}
+                    side='against'
+                    username={defender.username}
+                    afterVote={this.afterVote}
+                  />
                 </div>
               </div>
               </React.Fragment>

@@ -37,11 +37,12 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 const upload = require('./multer_config')(app);
 
 const fightApi = require('./controllers/fight.js');
+app.post('/api/:userId/fight', fightApi.newFight);
+app.post('/api/:fightId/fight/setLive', fightApi.setLive);
+app.post('/api/:fightId/vote', fightApi.vote);
+app.delete('/api/:userId/:fightId', fightApi.deleteFight);
 app.get('/api/fights', fightApi.getFights);
 app.get('/api/:fightId/fight', fightApi.getFight);
-app.post('/api/:userId/fight', fightApi.newFight);
-app.delete('/api/:userId/:fightId', fightApi.deleteFight);
-app.post('/api/:fightId/fight/setLive', fightApi.setLive);
 app.get('/api/:userId/fights', fightApi.getUserFights);
 app.get('/api/:userId/getWatchedFights', fightApi.getWatchedFights);
 app.get('/api/fights/categories/:category', fightApi.getFightsByCategory);

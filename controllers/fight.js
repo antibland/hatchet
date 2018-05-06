@@ -44,6 +44,35 @@ exports.getFights = async (req, res) => {
   });
 };
 
+exports.vote = async (req, res) => {
+  const { fightId } = req.params;
+  const { side } = req.body;
+
+  const dynamicVoteQuery = {
+    $inc: {[side === 'for' ? 'votes.for' : 'votes.against']: 1}
+  };
+
+  await Fight.findOneAndUpdate(
+    {_id: fightId},
+    dynamicVoteQuery,
+    {
+      new: true
+    }, (err, doc) => {
+      if (err) {
+        return res.status(500).json({
+          type: 'failure',
+          message: 'The vote was not tallied.'
+        });
+      }
+
+      return res.status(200).json({
+        type: 'success',
+        votes: doc.votes
+      });
+    }
+  );
+};
+
 exports.getFight = async (req, res) => {
   let { fightId } = req.params;
 
