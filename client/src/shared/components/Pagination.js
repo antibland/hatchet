@@ -13,7 +13,6 @@ class Pagination extends React.Component {
   }
 
   componentDidMount() {
-    console.log('componentDidMount')
     this.setState({ itemsPerPage: this.props.itemsPerPage });
   }
 
