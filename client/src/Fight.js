@@ -135,7 +135,9 @@ class Fight extends Component {
     );
 
     const userCanVote = (
-      auth.hasValidToken() && !(username === defender.username || username === antagonist.username)
+      auth.hasValidToken() &&
+      this.state.isLive === true &&
+      !(username === defender.username || username === antagonist.username)
     );
 
     const VotesCount = props => {
