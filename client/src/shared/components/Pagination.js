@@ -17,7 +17,7 @@ class Pagination extends React.Component {
   }
 
   handleClick(event) {
-    this.setState({ currentPage: Number(event.target.id) } );
+    this.setState({ currentPage: Number(event.target.id) });
   }
 
   render() {
@@ -52,14 +52,14 @@ class Pagination extends React.Component {
 
 
     return (
-      <div>
+      <React.Fragment>
         <ul className='fightList'>
           {renderItems}
         </ul>
         <ul className='pageNumbers'>
           {renderPageNumbers}
         </ul>
-      </div>
+      </React.Fragment>
     );
   }
 }

@@ -46,6 +46,8 @@ li {
 main {
   flex: 1;
   position: relative;
+  display: flex;
+  justify-content: center;
 }
 
 main > * {
@@ -215,6 +217,8 @@ button {
   margin: 0 auto;
   padding: 0;
   max-width: 100%;
+  width: 100%;
+  flex-grow: 1;
 }
 
 .fightList li:first-of-type .link {

@@ -25,7 +25,7 @@ class Home extends Component {
 
   render() {
     return (
-      <div>
+      <div className='paginationContainer'>
         { this.state.loading === true
             ? <Loading />
             : this.state.fights.length === 0
