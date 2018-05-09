@@ -1,0 +1,27 @@
+.pageNumbers {
+  display: flex;
+  justify-content: center;
+  padding: 1em 0;
+}
+
+.pageNumberButton {
+  appearance: none;
+  border: none;
+  color: white;
+  background-color: var(--teal);
+  border-radius: 50%;
+  width: 2.2em;
+  height: 2.2em;
+  font-size: 0.8em;
+  margin: 0 .5em;
+  border: none;
+  transition: 0.3s background-color, 0.3s color;
+  outline: none;
+}
+
+.pageNumberButton:focus,
+.pageNumberButton:hover,
+.pageNumberButton.active {
+  color: var(--teal);
+  background-color: white;
+}

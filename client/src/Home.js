@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Loading from './Loading.js';
-import HatchetList from './shared/components/HatchetList';
+import Pagination from './shared/components/Pagination';
+
 class Home extends Component {
   constructor() {
     super();
@@ -25,16 +26,14 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <ul className="fightList">
-          { this.state.loading === true
-              ? <Loading />
-              : this.state.fights.length === 0
-                ? <li className="noResults center">
-                    <p>It's lonely here. Not a hatchet in sight.</p>
-                  </li>
-                : <HatchetList fights={this.state.fights} />
-          }
-        </ul>
+        { this.state.loading === true
+            ? <Loading />
+            : this.state.fights.length === 0
+              ? <ul><li className='noResults center'>
+                  <p>It's lonely here. Not a hatchet in sight.</p>
+                </li></ul>
+              : <Pagination items={this.state.fights} />
+        }
       </div>
     );
   }
