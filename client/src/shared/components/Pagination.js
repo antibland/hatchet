@@ -70,7 +70,7 @@ Pagination.propTypes = {
 };
 
 Pagination.defaultProps = {
-  itemsPerPage: 6
+  itemsPerPage: 5
 };
 
 export default Pagination;
