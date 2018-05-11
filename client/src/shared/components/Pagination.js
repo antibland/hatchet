@@ -4,12 +4,15 @@ import PropTypes from 'prop-types';
 import '../../css/Pagination.css';
 
 class Pagination extends React.Component {
+  static numbersCutoff = 5;
   constructor() {
     super();
     this.state = {
       currentPage: 1
     };
     this.handleClick = this.handleClick.bind(this);
+    this.nextPage = this.nextPage.bind(this);
+    this.previousPage = this.previousPage.bind(this);
   }
 
   componentDidMount() {
@@ -20,16 +23,38 @@ class Pagination extends React.Component {
     this.setState({ currentPage: Number(event.target.id) });
   }
 
+  nextPage(event) {
+    event.preventDefault();
+    this.setState({ currentPage: this.state.currentPage + 1 });
+  }
+
+  previousPage(event) {
+    event.preventDefault();
+    this.setState({ currentPage: this.state.currentPage - 1 });
+  }
+
   render() {
     const { currentPage, itemsPerPage } = this.state;
-    const items = this.props.items;
 
+    const items = this.props.items;
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
 
     const pageNumbers = [];
-    for (let i = 1; i <= Math.ceil(items.length / itemsPerPage); i++) {
+    const lastPage = Math.ceil(items.length / itemsPerPage);
+    let numbersStart = 1;
+    let numbersEnd = lastPage < Pagination.numbersCutoff
+          ? lastPage
+          : Pagination.numbersCutoff;
+
+    if (currentPage > Pagination.numbersCutoff) {
+      let difference = currentPage - Pagination.numbersCutoff;
+      numbersStart += difference;
+      numbersEnd += difference;
+    }
+
+    for (let i = numbersStart; i <= numbersEnd; i++) {
       pageNumbers.push(i);
     }
 
@@ -37,9 +62,33 @@ class Pagination extends React.Component {
       <HatchetList fights={currentItems} />
     );
 
+    const Previous = () => (
+      <li className='pageNumberNav buttonPrevious'>
+        <button
+          onClick={this.previousPage}
+          disabled={currentPage === 1}>
+          <svg aria-hidden="true" className="chevron-left">
+            <use xlinkHref="./symbols/svg-defs.svg#chevron-left" />
+          </svg>Prev
+        </button>
+      </li>
+    );
+
+    const Next = () => (
+      <li className='pageNumberNav buttonNext'>
+        <button
+          onClick={this.nextPage}
+          disabled={currentPage === lastPage}>Next
+          <svg aria-hidden="true" className="chevron-right">
+            <use xlinkHref="./symbols/svg-defs.svg#chevron-right" />
+          </svg>
+        </button>
+      </li>
+    );
+
     const renderPageNumbers = pageNumbers.map(number => {
       return (
-        <li key={'page' + (number)}>
+        <li key={'page' + (number)} className='pageNumberListItem'>
           <button
             className={'pageNumberButton' + (number === currentPage ? ' active' : '')}
             id={number}
@@ -57,7 +106,9 @@ class Pagination extends React.Component {
           {renderItems}
         </ul>
         <ul className='pageNumbers'>
+          <Previous />
           {renderPageNumbers}
+          <Next />
         </ul>
       </React.Fragment>
     );
