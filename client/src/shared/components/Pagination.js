@@ -1,7 +1,7 @@
-import React from 'react';
-import HatchetList from './HatchetList';
 import PropTypes from 'prop-types';
+import React from 'react';
 import '../../css/Pagination.css';
+import HatchetList from './HatchetList';
 
 class Pagination extends React.Component {
   static numbersCutoff = 5;

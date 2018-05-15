@@ -4,6 +4,7 @@
   flex-direction: column;
   width: 100vw;
   padding-top: 1.5em;
+  flex-grow: 1;
 }
 
 .pageNumbers {
