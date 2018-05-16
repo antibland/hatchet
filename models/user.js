@@ -27,6 +27,7 @@ var UserSchema = new mongoose.Schema({
       trim: true
     }
   },
+  votes: {type: Array, default: []},
   roles: [{ type: 'String' }],
   fights: [{
     type: mongoose.Schema.Types.ObjectId,
