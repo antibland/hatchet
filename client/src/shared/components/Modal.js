@@ -7,11 +7,11 @@ class Modal extends React.Component {
     if (this.props.isOpen === false ) return null;
     return (
       <div className="modal">
-      <div className="content">
-        {this.props.children}
-        <button onClick={this.props.closeModal} className="button primary">Ok</button>
+        <div className="content">
+          {this.props.children}
+          <button onClick={this.props.closeModal} className="button primary">Ok</button>
+        </div>
       </div>
-    </div>
     );
   }
 }
