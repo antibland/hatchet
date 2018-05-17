@@ -12,6 +12,7 @@
     "crypto": "^1.0.1",
     "dotenv": "^5.0.1",
     "email-validator": "^2.0.0",
+    "eslint": "^4.19.1",
     "express": "^4.16.2",
     "jshint": "^2.9.5",
     "jsonwebtoken": "^8.1.1",
