@@ -172,6 +172,10 @@ button {
   line-height: 1;
 }
 
+a.button {
+  padding-bottom: 0.5em;
+}
+
 .button.alt-color {
   background-color: var(--alt-button-color);
 }

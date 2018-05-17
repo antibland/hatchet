@@ -3,6 +3,8 @@ import { auth } from './Auth';
 import Loading from './Loading';
 import FightsAccordion from './shared/components/FightsAccordion';
 import HatchetList from './shared/components/HatchetList';
+import { Link } from 'react-router-dom';
+
 class MyHatchets extends Component {
   constructor() {
     super();
@@ -62,11 +64,21 @@ class MyHatchets extends Component {
         </React.Fragment>
       : ''
 
+    let noContent = waitingOnThem.length === 0 && waitingOnYou.length === 0;
+
     return (
       <div>
         { this.state.loading === true
           ? <Loading />
           : <div>
+              { noContent
+                ? <React.Fragment>
+                    <p className='whiteText'>You've got no hatchets.</p>
+                    <Link to='/create' className="button primary">Create one</Link>
+                  </React.Fragment>
+                : ''
+              }
+
               <div className="twoByTwo">
                 { _waitingOnYou }
                 { _waitingOnThem }

@@ -7,6 +7,11 @@
   flex-grow: 1;
 }
 
+.paginationContainer .noResults {
+  color: white;
+  padding-top: .5em;
+}
+
 .pageNumbers {
   display: flex;
   justify-content: center;
