@@ -47,30 +47,35 @@ exports.getFights = async (req, res) => {
 exports.vote = async (req, res) => {
   const { fightId } = req.params;
   const { side } = req.body;
+  let fight = null;
 
-  const dynamicVoteQuery = {
-    $inc: {[side === 'for' ? 'votes.for' : 'votes.against']: 1}
-  };
+  try {
+    fight = await Fight.findById(fightId);
+  } catch (err) {
+    return res.status(500).json({
+      type: 'failure',
+      message: 'Fight does not exist'
+    });
+  }
 
-  await Fight.findOneAndUpdate(
-    {_id: fightId},
-    dynamicVoteQuery,
-    {
-      new: true
-    }, (err, doc) => {
-      if (err) {
-        return res.status(500).json({
-          type: 'failure',
-          message: 'The vote was not tallied.'
-        });
-      }
+  if (side === 'for') {
+    fight.votes.for = Number(fight.votes.for + 1)
+  } else if (side === 'against') {
+    fight.votes.against = Number(fight.votes.against + 1)
+  }
 
-      return res.status(200).json({
-        type: 'success',
-        votes: doc.votes
+  await fight.save(err => {
+    if (err) {
+      return res.status(500).json({
+        type: 'failure'
       });
     }
-  );
+
+    return res.status(200).json({
+      type: 'success',
+      votes: fight.votes
+    });
+  });
 };
 
 exports.getFight = async (req, res) => {
