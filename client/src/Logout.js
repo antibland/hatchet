@@ -10,7 +10,7 @@ class Logout extends Component {
 
     fetch(url)
       .then(res => res.json())
-      .then(data => {
+      .then(() => {
         auth.signout(() => {
           this.props.history.push('/');
         });

@@ -78,7 +78,7 @@ class Login extends Component {
     return !isDisabled;
   }
 
-  handleBlur = (field) => (e) => {
+  handleBlur = (field) => () => {
     this.setState({
       touched: { ...this.state.touched, [field]: true },
     });
