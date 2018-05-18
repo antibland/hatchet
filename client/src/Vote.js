@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { auth } from './Auth';
 
 const Vote = props => {
   function makeVote() {
@@ -10,7 +11,8 @@ const Vote = props => {
       },
       method: 'POST',
       body: JSON.stringify({
-        side: props.side
+        side: props.side,
+        voterId: auth.user.userid
       })
     })
     .then(res => res.json())

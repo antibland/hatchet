@@ -27,12 +27,15 @@ var UserSchema = new mongoose.Schema({
       trim: true
     }
   },
-  votes: {type: Array, default: []},
   roles: [{ type: 'String' }],
   fights: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Fight'
   }],
+  votedOn: {
+    type : Array,
+    'default' : []
+  },
   watching: [String],
   sessionToken: String
 });

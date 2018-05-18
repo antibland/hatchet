@@ -46,8 +46,9 @@ exports.getFights = async (req, res) => {
 
 exports.vote = async (req, res) => {
   const { fightId } = req.params;
-  const { side } = req.body;
+  const { side, voterId } = req.body;
   let fight = null;
+  let user = null;
 
   try {
     fight = await Fight.findById(fightId);
@@ -70,11 +71,33 @@ exports.vote = async (req, res) => {
         type: 'failure'
       });
     }
+  });
 
-    return res.status(200).json({
-      type: 'success',
-      votes: fight.votes
+  try {
+    user = await User.findById(voterId);
+  } catch (err) {
+    return res.status(500).json({
+      type: 'failure',
+      message: 'User not found'
     });
+  }
+
+  user.votedOn.push({
+    "id": fightId,
+    "side": side
+  });
+
+  await user.save(err => {
+    if (err) {
+      return res.status(500).json({
+        type: 'failure'
+      });
+    }
+  });
+
+  return res.status(200).json({
+    type: 'success',
+    votes: fight.votes
   });
 };
 
