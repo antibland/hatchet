@@ -40,7 +40,7 @@ class Step1 extends Component {
     clearTimeout(Step1.timeout);
   }
 
-  handleKeyUp(e) {
+  handleKeyUp() {
     clearTimeout(Step1.timeout);
     Step1.timeout = setTimeout(this.checkForUser, Step1.timeoutInterval);
   }
