@@ -15,13 +15,16 @@ function UserAvatar({
 }) {
   return (
     <div className="user-avatar">
-      <div style={{
-        backgroundSize: 'cover',
-        width: '100px',
-        height: '100px',
-        borderRadius: '50%',
-        display: 'inline-block',
-        backgroundImage: `url(${imgpath})` }}>
+      <div
+        className={(imgpath === '/user.png') ? 'semiTransparent' : ''}
+        style={{
+          backgroundSize: 'cover',
+          width: '100px',
+          height: '100px',
+          borderRadius: '50%',
+          display: 'inline-block',
+          backgroundImage: `url(${imgpath})`}}
+      >
       </div>
       <h2>
         {username}
