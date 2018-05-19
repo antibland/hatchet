@@ -1,7 +1,6 @@
 const Fight = require('../models/fight');
 const User = require('../models/user');
 const validator = require("email-validator");
-const env = process.env.NODE_ENV || 'development';
 
 const utils = {
   removeItemFromArray: (array, element) => {
@@ -177,7 +176,7 @@ exports.deleteFight = async(req, res) => {
   let user = await User.findById(req.params.userId);
 
   // Delete the fight
-  let fight = await Fight.findByIdAndRemove(fightId, err => {
+  await Fight.findByIdAndRemove(fightId, err => {
     if (err) {
       return res.status(500).json({
         type: 'failure'
@@ -269,7 +268,7 @@ exports.getFightsByCategory = async (req, res) => {
   let fightTypes = Fight.schema.path('type').enumValues;
   let query = null;
 
-  fightTypes.map( (type, index) => {
+  fightTypes.map( (type) => {
     let t = type.toLowerCase().replace(' ', '_').replace('\'', '');
     if (t === category) {
       query = type;
