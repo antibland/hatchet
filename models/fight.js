@@ -1,6 +1,5 @@
 const mongoose = require('mongoose'),
-      Schema = mongoose.Schema,
-      ObjectId = Schema.ObjectId;
+      Schema = mongoose.Schema;
 
 const fightSchema = new Schema({
   created_at: {type: Date, default: Date.now},
