@@ -61,6 +61,7 @@ app.get('/api/:userName/avatar/username', userApi.getAvatarByUserName);
 app.get('/api/:userId', userApi.getUser);
 app.get('/api/:userReference/isUser', userApi.isUser);
 app.get('/api/:userId/:fightId/isUserWatchingFight', userApi.isUserWatchingFight);
+app.get('/api/:userId/:fightId/hasUserVoted', userApi.hasUserVoted);
 
 
 // The "catchall" handler: for any request that doesn't

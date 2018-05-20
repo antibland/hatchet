@@ -297,10 +297,41 @@ exports.getAvatar = async (req, res) => {
   });
 };
 
+exports.hasUserVoted = async(req, res) => {
+  const { fightId, userId } = req.params;
+
+  const user = await User.findById(userId, err => {
+    if (err) {
+      return res.status(500).json({
+        type: 'failure',
+        message: 'The user is invalid'
+      });
+    }
+  });
+
+  user.votedOn.forEach(item => {
+    if (item.fightId === fightId) {
+      res.status(200).json({
+        type: 'success',
+        match: true,
+        vote: {
+          fightId: item.fightId,
+          side: item.side
+        }
+      });
+    }
+  });
+
+  res.status(200).json({
+    type: 'success',
+    match: false
+  });
+};
+
 exports.setAvatar = async (req, res) => {
   const { userId } = req.params;
 
-  const addImage = async (callback) => {
+  const addImage = async () => {
 
     await User.findOne({ _id: userId }, (err, user) => {
       if (user) {

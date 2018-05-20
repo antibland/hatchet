@@ -82,7 +82,7 @@ exports.vote = async (req, res) => {
   }
 
   user.votedOn.push({
-    "id": fightId,
+    "fightId": fightId,
     "side": side
   });
 
@@ -96,7 +96,8 @@ exports.vote = async (req, res) => {
 
   return res.status(200).json({
     type: 'success',
-    votes: fight.votes
+    votes: fight.votes,
+    votedOn: user.votedOn
   });
 };
 

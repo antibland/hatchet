@@ -18,7 +18,7 @@ const Vote = props => {
     .then(res => res.json())
     .then(data => {
       if (data.type === 'success') {
-        props.afterVote(data.votes);
+        props.afterVote(data.votes, data.votedOn);
       }
     });
   }

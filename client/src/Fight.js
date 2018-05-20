@@ -26,9 +26,9 @@ function UserAvatar({
           backgroundImage: `url(${imgpath})`}}
       >
       </div>
-      <h2>
+      <h3>
         {username}
-      </h2>
+      </h3>
     </div>
   )
 };
@@ -37,12 +37,14 @@ class Fight extends Component {
   constructor() {
     super();
     this.state = {
+      showVotes: false,
+      votedFor: '',
       isValid: false,
       isLive: false,
       textAgainst: '',
       fight: '',
-      fight_title: '',
-      fight_type: '',
+      fightTitle: '',
+      fightType: '',
       votes: {
         for: 0,
         against: 0
@@ -62,10 +64,19 @@ class Fight extends Component {
     this.afterVote = this.afterVote.bind(this);
   }
 
-  afterVote(votes) {
+  afterVote(votes, votedOn) {
+    const fightId = this.props.match.params.fightId;
     let newState = Object.assign({}, this.state);
     newState.votes.for = votes.for;
     newState.votes.against = votes.against;
+
+    votedOn.forEach(item => {
+      if (item.fightId === fightId) {
+        newState.showVotes = true;
+        newState.votedFor = item.side;
+      }
+    });
+
     this.setState(newState);
   }
 
@@ -76,16 +87,29 @@ class Fight extends Component {
     });
   }
 
-  componentDidMount() {
-    const fightId = this.props.match.params.fightId;
+  checkIfUserHasVoted(fightId) {
+    // /api/:userId/:fightId/hasUserVoted => hasUserVoted
+    fetch(`/api/${auth.user.userid}/${fightId}/hasUserVoted`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.match === true) {
+          this.setState({
+            showVotes: true,
+            votedFor: data.vote.side
+          });
+        }
+      });
+  }
+
+  getFightDetails(fightId) {
     // /api/:fightId/fight => getFight
     fetch(`/api/${fightId}/fight`)
       .then(res => res.json())
       .then(data => {
         this.setState({
           isLive: data.fight.isLive,
-          fight_title: data.fight.title,
-          fight_type: data.fight.type,
+          fightTitle: data.fight.title,
+          fightType: data.fight.type,
           votes: {
             for: data.fight.votes.for,
             against: data.fight.votes.against,
@@ -106,6 +130,15 @@ class Fight extends Component {
           }
         });
       });
+  }
+
+  componentDidMount() {
+    const fightId = this.props.match.params.fightId;
+    this.getFightDetails(fightId);
+
+    if (auth.isAuthenticated) {
+      this.checkIfUserHasVoted(fightId);
+    }
   };
 
   render() {
@@ -114,7 +147,7 @@ class Fight extends Component {
         defaultUserImg = '/user.png';
 
     const username = auth.user.username;
-    const { isLive, isValid, textAgainst } = this.state;
+    const { isLive, isValid, textAgainst, showVotes, votedFor } = this.state;
     const fightId = this.props.match.params.fightId;
     const placeholderText = 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis fugiat in impedit maxime blanditiis nam assumenda. Dicta quo sequi dolorum similique. Libero repudiandae esse voluptate impedit delectus enim, nostrum quos?';
 
@@ -139,14 +172,22 @@ class Fight extends Component {
 
     const userCanVote = (
       auth.hasValidToken() &&
-      this.state.isLive === true &&
+      isLive === true &&
+      showVotes === false &&
       !(username === defender.username || username === antagonist.username)
     );
 
     const VotesCount = props => {
       return (
-        isLive
-          ? <p className="total-votes">Votes: {props.votes}</p>
+        isLive && showVotes === true
+          ? <p className="totalVotes">Votes: {props.votes}
+              { props.side === votedFor
+                ? <svg aria-hidden="true" className="tilted-ax">
+                    <use xlinkHref="/symbols/svg-defs.svg#tilted-ax" />
+                  </svg>
+                : ''
+              }
+            </p>
           : ''
       )
     };
@@ -157,7 +198,7 @@ class Fight extends Component {
           ? <Vote
               fightId={fightId}
               side={props.side}
-              username={antagonist.username}
+              username={props.username}
               afterVote={this.afterVote}
             />
           : ''
@@ -174,9 +215,9 @@ class Fight extends Component {
               />
             : ''
           }
-        { this.state.fight_title
+        { this.state.fightTitle
           ? <React.Fragment>
-              <h2>{this.state.fight_title}</h2>
+              <h2 className="hatchetTitle">{this.state.fightTitle}</h2>
               <div className="featured-fights-container">
                 <div className="user1">
                   <UserAvatar
@@ -184,8 +225,8 @@ class Fight extends Component {
                     username={antagonist.username}
                   />
                   <p className="fight-text">{antagonist.argument}</p>
-                  <VotesCount votes={this.state.votes.for} />
-                  <VotingButton side='for' />
+                  <VotesCount side='for' votes={this.state.votes.for} />
+                  <VotingButton side='for' username={antagonist.username} />
                 </div>
                 <VersusImg />
                 <div className="user2 fullWidth">
@@ -213,8 +254,8 @@ class Fight extends Component {
                       </React.Fragment>
                     : defender.argument
                   }
-                  <VotesCount votes={this.state.votes.against} />
-                  <VotingButton side='against' />
+                  <VotesCount side='against' votes={this.state.votes.against} />
+                  <VotingButton side='against' username={defender.username} />
                 </div>
               </div>
               </React.Fragment>
