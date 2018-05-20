@@ -299,6 +299,8 @@ exports.getAvatar = async (req, res) => {
 
 exports.hasUserVoted = async(req, res) => {
   const { fightId, userId } = req.params;
+  let match = false;
+  let voteObj;
 
   const user = await User.findById(userId, err => {
     if (err) {
@@ -311,20 +313,18 @@ exports.hasUserVoted = async(req, res) => {
 
   user.votedOn.forEach(item => {
     if (item.fightId === fightId) {
-      res.status(200).json({
-        type: 'success',
-        match: true,
-        vote: {
-          fightId: item.fightId,
-          side: item.side
-        }
-      });
+      match = true;
+      voteObj = {
+        fightId: item.fightId,
+        side: item.side
+      }
     }
   });
 
   res.status(200).json({
     type: 'success',
-    match: false
+    match,
+    vote: voteObj
   });
 };
 
