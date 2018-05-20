@@ -1,37 +1,15 @@
 import React, { Component } from 'react';
 import { auth } from './Auth';
+import Avatar from './shared/components/Avatar';
 import Loading from './Loading';
 import WatchingWidget from './WatchingWidget';
 import StartHatchet from './shared/components/StartHatchet';
 import TextareaWithCountdown from './shared/components/TextareaWithCountdown';
 import VersusImg from './shared/components/VersusImg';
 import Vote from './Vote';
+import VotesCount from './VotesCount';
 import './css/Fight.css';
 import './css/Watching.css';
-
-function UserAvatar({
-  imgpath,
-  username
-}) {
-  return (
-    <div className="user-avatar">
-      <div
-        className={(imgpath === '/user.png') ? 'semiTransparent' : ''}
-        style={{
-          backgroundSize: 'cover',
-          width: '100px',
-          height: '100px',
-          borderRadius: '50%',
-          display: 'inline-block',
-          backgroundImage: `url(${imgpath})`}}
-      >
-      </div>
-      <h3>
-        {username}
-      </h3>
-    </div>
-  )
-};
 
 class Fight extends Component {
   constructor() {
@@ -177,21 +155,6 @@ class Fight extends Component {
       !(username === defender.username || username === antagonist.username)
     );
 
-    const VotesCount = props => {
-      return (
-        isLive && showVotes === true
-          ? <p className="totalVotes">Votes: {props.votes}
-              { props.side === votedFor
-                ? <svg aria-hidden="true" className="tilted-ax">
-                    <use xlinkHref="/symbols/svg-defs.svg#tilted-ax" />
-                  </svg>
-                : ''
-              }
-            </p>
-          : ''
-      )
-    };
-
     const VotingButton = props => {
       return (
         userCanVote
@@ -220,20 +183,26 @@ class Fight extends Component {
               <h2 className="hatchetTitle">{this.state.fightTitle}</h2>
               <div className="featured-fights-container">
                 <div className="user1">
-                  <UserAvatar
-                    imgpath={antagonist.imgpath}
-                    username={antagonist.username}
-                  />
+
+                  <Avatar imgpath={antagonist.imgpath} width='100px' height='100px'>
+                    <h3>{antagonist.username}</h3>
+                  </Avatar>
+
                   <p className="fight-text">{antagonist.argument}</p>
-                  <VotesCount side='for' votes={this.state.votes.for} />
+                  <VotesCount
+                    votedFor={votedFor}
+                    isLive={isLive}
+                    showVotes={showVotes}
+                    side='for'
+                    votes={this.state.votes.for} />
                   <VotingButton side='for' username={antagonist.username} />
                 </div>
                 <VersusImg />
                 <div className="user2 fullWidth">
-                  <UserAvatar
-                    imgpath={defender.imgpath}
-                    username={defender.username}
-                  />
+                  <Avatar imgpath={defender.imgpath} width='100px' height='100px'>
+                    <h3>{defender.username}</h3>
+                  </Avatar>
+
                   { userCanDefend
                     ? <React.Fragment>
                         <div style={{position: 'relative'}}>
@@ -254,7 +223,12 @@ class Fight extends Component {
                       </React.Fragment>
                     : defender.argument
                   }
-                  <VotesCount side='against' votes={this.state.votes.against} />
+                  <VotesCount
+                    votedFor={votedFor}
+                    isLive={isLive}
+                    showVotes={showVotes}
+                    side='against'
+                    votes={this.state.votes.against} />
                   <VotingButton side='against' username={defender.username} />
                 </div>
               </div>
