@@ -94,7 +94,7 @@
   width: 3em;
   top: 0;
   right: -35px;
-  transform: rotate(45deg);
+  transform: rotate(90deg);
   opacity: 0;
   animation: 0.5s ease-in tiltAx forwards 0.2s;
 }
