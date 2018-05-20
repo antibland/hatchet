@@ -64,7 +64,9 @@ class MyHatchets extends Component {
         </React.Fragment>
       : ''
 
-    let noContent = waitingOnThem.length === 0 && waitingOnYou.length === 0;
+    let noContent = waitingOnThem.length === 0 &&
+                    waitingOnYou.length === 0 &&
+                    active.length === 0;
 
     return (
       <div>
