@@ -1,7 +1,5 @@
 const User = require('../models/user');
 const Token = require('../models/verification');
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
@@ -51,7 +49,7 @@ const sendEmail = opts => {
   });
 }
 
-exports.join = async (req, res, next) => {
+exports.join = async (req, res) => {
   if (req.body.username && req.body.email && req.body.password) {
 
     const regex = /^[a-zA-Z0-9_.-]*$/g;
@@ -95,7 +93,7 @@ exports.join = async (req, res, next) => {
   }
 };
 
-exports.login = (req, res, next) => {
+exports.login = (req, res) => {
   User.authenticate(req.body.email, req.body.password, async (error, user) => {
     if (error || !user) {
       return res.status(401).json({
@@ -141,7 +139,7 @@ exports.login = (req, res, next) => {
   });
 };
 
-exports.resetPassword = (req, res, next) => {
+exports.resetPassword = (req, res) => {
   User.findOne({ email: req.body.email })
     .exec((err, user) => {
       if (err) {
@@ -164,15 +162,14 @@ exports.resetPassword = (req, res, next) => {
     });
 }
 
-exports.logout = async (req, res, next) => {
+exports.logout = async (req, res) => {
   let { userId } = req.params;
   let user = await User.findById(userId);
   user.sessionToken = undefined;
 
   await user.save(err => {
     if (err) {
-      throw err;
-      return res.status(500).send({
+      return res.status(500).json({
         type: 'failure',
         message: err.message
       });
@@ -185,7 +182,7 @@ exports.logout = async (req, res, next) => {
   })
 }
 
-exports.confirmationPost = async (req, res, next) => {
+exports.confirmationPost = async (req, res) => {
 
   // Find a matching token
   await Token.findOne({ token: req.params.token_id }, (err, token) => {
@@ -200,18 +197,13 @@ exports.confirmationPost = async (req, res, next) => {
         user.isVerified = true;
         await user.save(err => {
           if (err) { return res.status(500).send({ msg: err.message }); }
-          let data = {
-            type: 'success',
-            message: 'The account has been verified. Please log in.'
-          };
-
           res.status(200).send("The account has been verified! Please log in.");
         });
     });
   });
 };
 
-exports.resendTokenPost = (req, res, next) => {
+exports.resendTokenPost = (req, res) => {
   User.findOne({ email: req.body.email }, (err, user) => {
       if (!user) return res.status(400).send({
         type: 'failure',
@@ -227,12 +219,19 @@ exports.resendTokenPost = (req, res, next) => {
 
       // Save the token
       token.save(err => {
+        if (err) {
+          return res.status(500).send({
+            type: 'failure',
+            message: 'Token cannot be saved',
+            errorDetails: err
+          });
+        }
         sendEmail({ req, res, token, user });
       });
   });
 };
 
-exports.getAvatarByUserName = async (req, res, next) => {
+exports.getAvatarByUserName = async (req, res) => {
   const userName = req.params.userName;
 
   await User.findOne({ username: userName }, (err, user) => {
