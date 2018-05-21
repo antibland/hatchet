@@ -1,4 +1,5 @@
-const Fight = require('../models/fight');
+const Fight = require('../models/fight').Fight;
+const FightExpire = require('../models/fight').FightExpire;
 const User = require('../models/user');
 const validator = require("email-validator");
 
@@ -103,6 +104,14 @@ exports.vote = async (req, res) => {
 
 exports.getFight = async (req, res) => {
   let { fightId } = req.params;
+  let expired = false;
+
+  await FightExpire.findOne({ _id: fightId })
+    .exec((err, doc) => {
+      if (doc == null) {
+        expired = true;
+      }
+    });
 
   let fight = await Fight.findById(fightId)
     .populate({
@@ -118,7 +127,8 @@ exports.getFight = async (req, res) => {
 
   return res.status(200).json({
     type: 'success',
-    fight
+    expired,
+    fight,
   });
 };
 
@@ -218,8 +228,15 @@ exports.newFight = async (req, res) => {
 
     await user.fights.push(fight);
 
-    await fight.save(err => {
+    await fight.save((err, result) => {
       if (err) throw err;
+      let fightExpire = new FightExpire({
+        _id: result._id
+      });
+
+      fightExpire.save(err => {
+        if (err) throw err;
+      });
     });
 
     await user.save(err => {
