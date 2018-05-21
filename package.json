@@ -1,8 +1,11 @@
 {
-  "name": "just-drop-it",
+  "name": "hatchet",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "engines": {
+    "node": "9.4.0"
+  },
   "dependencies": {
     "aws-sdk": "^2.210.0",
     "bcrypt": "^2.0.0",
