@@ -22,13 +22,21 @@ exports.setLive = async (req, res) => {
   fight.text.against = textAgainst;
   fight.isLive = true;
 
-  await fight.save(err => {
+  await fight.save((err, res) => {
     if (err) {
       return res.status(500).json({
         type: 'failure',
         message: 'An error occurred. Please try again.'
       });
     }
+
+    const fightExpire = new FightExpire({
+      _id: res._id
+    });
+
+    fightExpire.save(err => {
+      if (err) throw err;
+    });
   });
 
   return res.status(200).json({
@@ -104,16 +112,9 @@ exports.vote = async (req, res) => {
 
 exports.getFight = async (req, res) => {
   let { fightId } = req.params;
-  let expired = false;
+  let expired;
 
-  await FightExpire.findOne({ _id: fightId })
-    .exec((err, doc) => {
-      if (doc == null) {
-        expired = true;
-      }
-    });
-
-  let fight = await Fight.findById(fightId)
+  const fight = await Fight.findById(fightId)
     .populate({
       path: 'antagonist defender', select: 'username avatar'
     });
@@ -123,6 +124,13 @@ exports.getFight = async (req, res) => {
       type: 'failure',
       message: 'You came here for a fight and got an error. WTF? Please try again.'
     });
+  }
+
+  if (fight.isLive === true) {
+    await FightExpire.findOne({ _id: fightId })
+      .exec((err, doc) => {
+        expired = (doc == null) ? true : false;
+      });
   }
 
   return res.status(200).json({
@@ -228,15 +236,8 @@ exports.newFight = async (req, res) => {
 
     await user.fights.push(fight);
 
-    await fight.save((err, result) => {
+    await fight.save(err => {
       if (err) throw err;
-      let fightExpire = new FightExpire({
-        _id: result._id
-      });
-
-      fightExpire.save(err => {
-        if (err) throw err;
-      });
     });
 
     await user.save(err => {
@@ -246,7 +247,6 @@ exports.newFight = async (req, res) => {
       });
     });
   };
-
 
   let oppenentRef = req.body.opponent;
   let findBy = validator.validate(oppenentRef)
