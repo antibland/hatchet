@@ -6,8 +6,7 @@ const expireSchema = new Schema({
 });
 
 const fightSchema = new Schema({
-  created_at: {type: Date, default: Date.now},
-  ends_at: { type: Date, default: new Date(+ new Date() + 1*24*60*60*1000) },
+  ends_at: { type: Date, default: null },
   type: {
     type: String,
     required: [true, 'Invalid type' ],
@@ -36,7 +35,7 @@ const fightSchema = new Schema({
     ref: 'User'
   },
   isLive: { type: Boolean, default: false }
-});
+}, { timestamps: true });
 
 const Fight = mongoose.model('Fight', fightSchema);
 const FightExpire = mongoose.model('FightExpire', expireSchema);
