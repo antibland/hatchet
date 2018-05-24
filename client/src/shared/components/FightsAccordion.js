@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 //import AcceptInvite from './AcceptInvite';
 import Avatar from './Avatar';
@@ -18,10 +17,6 @@ const FightsAccordion = props => (
           <div className="tab-content">
             <div className="tab-content-inner">
               <div className="meta">
-                <span className="created">
-                  <strong>Created: </strong>
-                  <Moment fromNow format='MMMM Do YYYY'>{fight.created_at}</Moment>
-                </span>
                 <div className="horizontalBox">
                   <span className="antagonist">
                     { fight.antagonist.avatar
