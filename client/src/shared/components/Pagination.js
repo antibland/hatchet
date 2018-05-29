@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import '../../css/Pagination.css';
 import HatchetList from './HatchetList';
-
+import Symbol from '../../shared/components/Symbol';
 class Pagination extends React.Component {
   static numbersCutoff = 5;
   constructor() {
@@ -67,9 +67,7 @@ class Pagination extends React.Component {
         <button
           onClick={this.previousPage}
           disabled={currentPage === 1}>
-          <svg aria-hidden="true" className="chevron-left">
-            <use xlinkHref="./symbols/svg-defs.svg#chevron-left" />
-          </svg>Prev
+          <Symbol name='chevron-left' />Prev
         </button>
       </li>
     );
@@ -79,9 +77,7 @@ class Pagination extends React.Component {
         <button
           onClick={this.nextPage}
           disabled={currentPage === lastPage}>Next
-          <svg aria-hidden="true" className="chevron-right">
-            <use xlinkHref="./symbols/svg-defs.svg#chevron-right" />
-          </svg>
+          <Symbol name='chevron-right' />
         </button>
       </li>
     );

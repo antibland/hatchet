@@ -1,5 +1,6 @@
 import React from 'react'
 import { PropTypes } from 'prop-types';
+import Symbol from './shared/components/Symbol';
 
 const VotesCount = props => {
   const { isLoggedIn, isExpired, isLive, showVotes, votes, votedFor, side } = props;
@@ -8,9 +9,7 @@ const VotesCount = props => {
     isLoggedIn === true && (isExpired === true || (isLive && showVotes === true))
       ? <p className="totalVotes">Votes: {votes[side]}
           { side === votedFor
-            ? <svg aria-hidden="true" className="tilted-ax">
-                <use xlinkHref="/symbols/svg-defs.svg#tilted-ax" />
-              </svg>
+            ? <Symbol name='tilted-ax' />
             : ''
           }
         </p>

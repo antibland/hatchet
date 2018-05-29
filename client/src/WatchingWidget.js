@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Symbol from './shared/components/Symbol';
 
 class WatchingWidget extends Component {
   constructor() {
@@ -50,10 +51,8 @@ class WatchingWidget extends Component {
     return (
       <div>
         <button onClick={this.handleClick} className='watchingEye removeDefaultButtonStyles'>
-        <svg aria-hidden="true">
-          <use xlinkHref="/symbols/svg-defs.svg#watching-eye" />
-        </svg>
-        <span className='watchingEyeText'>{this.state.watchingText}</span>
+          <Symbol name='watching-eye' />
+          <span className='watchingEyeText'>{this.state.watchingText}</span>
         </button>
       </div>
     )

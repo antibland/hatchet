@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { auth } from '../Auth.js';
 import utilities from '../shared/utilities';
-import CheckMarkIcon from './CheckMarkIcon';
+import Symbol from '../shared/components/Symbol';
 import LookupResult from './LookupResult';
 import SlotsThem from './SlotsThem';
 import SlotsYou from './SlotsYou';
@@ -104,7 +104,7 @@ class Step1 extends Component {
             </LookupResult>
           : isUser
             ? <LookupResult>
-                <CheckMarkIcon />
+                <Symbol name='checkmark-icon' />
                 Current opponent: <strong>{someone}</strong>
               </LookupResult>
             : '';

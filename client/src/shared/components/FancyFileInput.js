@@ -1,4 +1,5 @@
 import React from 'react';
+import Symbol from '../../shared/components/Symbol';
 
 const FancyFileInput = props => (
   <div>
@@ -9,10 +10,8 @@ const FancyFileInput = props => (
       name="avatar"
       id="avatar" />
     <label htmlFor="avatar">
-    <svg aria-hidden="true" className="upload-icon">
-      <use xlinkHref="./symbols/svg-defs.svg#upload-icon" />
-    </svg>
-    <span>Choose a file&hellip;</span>
+      <Symbol name='upload-icon' />
+      <span>Choose a file&hellip;</span>
     </label>
   </div>
 );
