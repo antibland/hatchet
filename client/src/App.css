@@ -13,6 +13,10 @@
   --alt-button-color: rgb(66, 158, 202);
 }
 
+::placeholder {
+  color: gray;
+}
+
 body {
   background-color: var(--dark-blue);
   background-attachment: fixed;

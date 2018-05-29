@@ -73,11 +73,6 @@ textarea {
   font-size: 15px;
 }
 
-::placeholder {
-  color: black;
-  font-size: 1em;
-}
-
 [disabled] {
   opacity: .5;
 }
