@@ -15,6 +15,7 @@ class Join extends Component {
   constructor() {
     super();
     this.state = {
+      disableForm: false,
       flash: {
         type: null,
         message: null
@@ -39,6 +40,8 @@ class Join extends Component {
 
     e.preventDefault();
 
+    this.setState({ disableForm: true });
+
     fetch('/api/join', {
       method: 'POST',
       headers: {
@@ -52,6 +55,8 @@ class Join extends Component {
       })
     }).then(res => res.json())
       .then(data => {
+        this.setState({ disableForm: false });
+
         if (data.type === 'success') {
           this.setState({
             flash: {
@@ -124,6 +129,7 @@ class Join extends Component {
         <form
           action="/api/join"
           method="POST"
+          disabled={this.state.disableForm}
           onSubmit={this.handleSubmit}
           onChange={this.handleChange}>
 
