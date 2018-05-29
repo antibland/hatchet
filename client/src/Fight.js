@@ -15,6 +15,7 @@ class Fight extends Component {
   constructor() {
     super();
     this.state = {
+      loaded: false,
       showVotes: false,
       votedFor: '',
       isValid: false,
@@ -39,6 +40,7 @@ class Fight extends Component {
     };
 
     this.handleTextareaChange = this.handleTextareaChange.bind(this);
+    this.checkIfUserHasVoted = this.checkIfUserHasVoted.bind(this);
     this.afterVote = this.afterVote.bind(this);
   }
 
@@ -79,12 +81,13 @@ class Fight extends Component {
       });
   }
 
-  getFightDetails(fightId) {
+  getFightDetails(fightId, cb) {
     // /api/:fightId/fight => getFight
     fetch(`/api/${fightId}/fight`)
       .then(res => res.json())
       .then(data => {
         this.setState({
+          isExpired: data.isExpired,
           isLive: data.fight.isLive,
           fightTitle: data.fight.title,
           fightType: data.fight.type,
@@ -107,16 +110,25 @@ class Fight extends Component {
             argument: data.fight.text.against
           }
         });
+
+        if (auth.isAuthenticated) {
+          if (auth.user.username !== data.fight.antagonist.username &&
+              auth.user.username !== data.fight.defender.username) {
+                cb(fightId);
+          } else {
+            this.setState({ showVotes: true })
+          }
+        }
+
+        setTimeout(() => {
+          this.setState({ loaded: true });
+        }, 500);
       });
   }
 
   componentDidMount() {
     const fightId = this.props.match.params.fightId;
-    this.getFightDetails(fightId);
-
-    if (auth.isAuthenticated) {
-      this.checkIfUserHasVoted(fightId);
-    }
+    this.getFightDetails(fightId, this.checkIfUserHasVoted);
   };
 
   render() {
@@ -125,24 +137,30 @@ class Fight extends Component {
         defaultUserImg = '/user.png';
 
     const username = auth.user.username;
-    const { isLive, isValid, textAgainst, showVotes, votedFor } = this.state;
+    const { isLive, isValid, isExpired, textAgainst, showVotes, loaded } = this.state;
     const fightId = this.props.match.params.fightId;
     const placeholderText = 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis fugiat in impedit maxime blanditiis nam assumenda. Dicta quo sequi dolorum similique. Libero repudiandae esse voluptate impedit delectus enim, nostrum quos?';
 
     antagonist.imgpath = this.state.antagonist.avatarPath === ''
       ? defaultUserImg
       : this.state.antagonist.avatarPath;
-    antagonist.username = this.state.antagonist.username;
+
+    antagonist.username = username === this.state.antagonist.username
+      ? 'You'
+      : this.state.antagonist.username;
+
     antagonist.argument = this.state.antagonist.argument;
 
     defender.imgpath = this.state.defender.avatarPath === ''
       ? defaultUserImg
       : this.state.defender.avatarPath;
-    defender.username = this.state.defender.username;
+    defender.username = username === this.state.defender.username
+      ? 'You'
+      : this.state.defender.username;
 
     defender.argument = isLive
-                          ? <p className="fight-text">{this.state.defender.argument}</p>
-                          : <p className='fight-text blurred'>{placeholderText}</p>
+      ? <p className="fight-text">{this.state.defender.argument}</p>
+      : <p className='fight-text blurred'>{placeholderText}</p>
 
     const userCanDefend = (
       username === defender.username && this.state.isLive === false
@@ -150,9 +168,14 @@ class Fight extends Component {
 
     const userCanVote = (
       auth.hasValidToken() &&
+      isExpired === false &&
       isLive === true &&
       showVotes === false &&
-      !(username === defender.username || username === antagonist.username)
+      !(username === defender.username ||
+        username === antagonist.username ||
+        antagonist.username === "You" ||
+        defender.username === "You"
+      )
     );
 
     const VotingButton = props => {
@@ -178,7 +201,7 @@ class Fight extends Component {
               />
             : ''
           }
-        { this.state.fightTitle
+        { loaded === true
           ? <React.Fragment>
               <h2 className="hatchetTitle">{this.state.fightTitle}</h2>
               <div className="featured-fights-container">
@@ -190,12 +213,15 @@ class Fight extends Component {
 
                   <p className="fight-text">{antagonist.argument}</p>
                   <VotesCount
-                    votedFor={votedFor}
-                    isLive={isLive}
-                    showVotes={showVotes}
+                    { ...this.state }
+                    isLoggedIn={auth.isAuthenticated}
                     side='for'
-                    votes={this.state.votes.for} />
-                  <VotingButton side='for' username={antagonist.username} />
+                  />
+
+                  <VotingButton
+                    side='for'
+                    username={antagonist.username}
+                  />
                 </div>
                 <VersusImg />
                 <div className="user2 fullWidth">
@@ -224,15 +250,18 @@ class Fight extends Component {
                     : defender.argument
                   }
                   <VotesCount
-                    votedFor={votedFor}
-                    isLive={isLive}
-                    showVotes={showVotes}
+                    { ...this.state }
+                    isLoggedIn={auth.isAuthenticated}
                     side='against'
-                    votes={this.state.votes.against} />
-                  <VotingButton side='against' username={defender.username} />
+                  />
+
+                  <VotingButton
+                    side='against'
+                    username={defender.username}
+                  />
                 </div>
               </div>
-              </React.Fragment>
+            </React.Fragment>
           : <Loading />
         }
         </div>

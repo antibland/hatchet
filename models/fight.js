@@ -2,7 +2,7 @@ const mongoose = require('mongoose'),
       Schema = mongoose.Schema;
 
 const expireSchema = new Schema({
-  created_at: { type: Date, default: Date.now, expires: '24h' }
+  createdAt: { type: Date, default: Date.now, expires: '24h' }
 });
 
 const fightSchema = new Schema({

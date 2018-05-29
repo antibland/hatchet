@@ -112,7 +112,7 @@ exports.vote = async (req, res) => {
 
 exports.getFight = async (req, res) => {
   let { fightId } = req.params;
-  let expired;
+  let isExpired = null;
 
   const fight = await Fight.findById(fightId)
     .populate({
@@ -129,15 +129,22 @@ exports.getFight = async (req, res) => {
   if (fight.isLive === true) {
     await FightExpire.findOne({ _id: fightId })
       .exec((err, doc) => {
-        expired = (doc == null) ? true : false;
+        isExpired = (doc == null) ? true : false;
+
+        return res.status(200).json({
+          type: 'success',
+          isExpired,
+          fight,
+        });
       });
+  } else {
+    return res.status(200).json({
+      type: 'success',
+      isExpired: false,
+      fight,
+    });
   }
 
-  return res.status(200).json({
-    type: 'success',
-    expired,
-    fight,
-  });
 };
 
 exports.getWatchedFights = async(req, res) => {
