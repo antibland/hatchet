@@ -163,7 +163,8 @@ class Fight extends Component {
       : <p className='fight-text blurred'>{placeholderText}</p>
 
     const userCanDefend = (
-      username === defender.username && this.state.isLive === false
+      (username === defender.username || defender.username === 'You') &&
+      this.state.isLive === false
     );
 
     const userCanVote = (
