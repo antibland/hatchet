@@ -83,7 +83,12 @@ exports.join = async (req, res) => {
       token: crypto.randomBytes(16).toString('hex')}, (err, token) => {
       // Save the verification token
       token.save(saveErr => {
-        if (saveErr) { return res.status(500).send({ msg: saveErr.message }); }
+        if (saveErr) {
+          return res.status(500).json({
+            type: 'failure',
+            message: 'Something went wrong on our end. Please try that again.'
+          });
+        }
 
         // Send verification email
         sendEmail({ req, res, token, user });
@@ -174,12 +179,12 @@ exports.logout = async (req, res) => {
         message: err.message
       });
     }
-  })
+  });
 
   return res.status(200).json({
     type: 'failure',
     message: `${userId} logged out successfully`
-  })
+  });
 }
 
 exports.confirmationPost = async (req, res) => {
