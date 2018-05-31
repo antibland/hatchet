@@ -54,6 +54,10 @@ class Join extends Component {
         password: this.state.password
       })
     }).then(res => res.json())
+      .catch(error => {
+        this.setState({ disableForm: true });
+        console.error('Error:', error)
+      })
       .then(data => {
         this.setState({ disableForm: false });
 
