@@ -1,6 +1,7 @@
 .categories span {
   color: white;
   text-transform: uppercase;
+  font-size: 1rem;
 }
 
 .categories li {

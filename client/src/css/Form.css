@@ -9,7 +9,7 @@ label {
   display: block;
   cursor: pointer;
   text-transform: uppercase;
-  font-family: 'Bitter', serif;
+  font-family: 'Glegoo', serif;
   color: var(--gold);
   font-weight: bold;
   letter-spacing: 1px;
@@ -102,7 +102,7 @@ button.link-style {
   appearance: none;
   background: none;
   border: none;
-  font-family: 'Bitter';
+  font-family: 'Glegoo';
   font-size: 16px;
   color: blue;
   text-align: center;
