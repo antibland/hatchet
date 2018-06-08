@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { auth } from './Auth';
 import Avatar from './shared/components/Avatar';
 import Loading from './Loading';
-import WatchingWidget from './WatchingWidget';
+// import WatchingWidget from './WatchingWidget';
 import StartHatchet from './shared/components/StartHatchet';
 import TextareaWithCountdown from './shared/components/TextareaWithCountdown';
 import VersusImg from './shared/components/VersusImg';
@@ -15,6 +15,7 @@ class Fight extends Component {
   constructor() {
     super();
     this.state = {
+      addStyle: false,
       loaded: false,
       showVotes: false,
       votedFor: '',
@@ -79,7 +80,7 @@ class Fight extends Component {
           });
         }
       });
-  }
+  };
 
   getFightDetails(fightId, cb) {
     // /api/:fightId/fight => getFight
@@ -122,6 +123,10 @@ class Fight extends Component {
 
         setTimeout(() => {
           this.setState({ loaded: true });
+
+          setTimeout(() => {
+            this.setState({ addStyle: true })
+          }, 400);
         }, 500);
       });
   }
@@ -137,7 +142,7 @@ class Fight extends Component {
         defaultUserImg = '/user.png';
 
     const username = auth.user.username;
-    const { isLive, isValid, isExpired, textAgainst, showVotes, loaded } = this.state;
+    const { isLive, isValid, isExpired, textAgainst, showVotes, loaded, addStyle, votes } = this.state;
     const fightId = this.props.match.params.fightId;
     const placeholderText = 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis fugiat in impedit maxime blanditiis nam assumenda. Dicta quo sequi dolorum similique. Libero repudiandae esse voluptate impedit delectus enim, nostrum quos?';
 
@@ -159,8 +164,8 @@ class Fight extends Component {
       : this.state.defender.username;
 
     defender.argument = isLive
-      ? <p className="fight-text">{this.state.defender.argument}</p>
-      : <p className='fight-text blurred'>{placeholderText}</p>
+      ? <p className="fightText">{this.state.defender.argument}</p>
+      : <p className='fightText blurred'>{placeholderText}</p>
 
     const userCanDefend = (
       (username === defender.username || defender.username === 'You') &&
@@ -192,74 +197,109 @@ class Fight extends Component {
       )
     };
 
+    const votesFor = votes.for;
+    const votesAgainst = votes.against;
+    const totalVotes = votesFor + votesAgainst;
+    let progressUser1;
+    let progressUser2;
+
+    if (votesFor === votesAgainst) {
+      progressUser1 = 50;
+      progressUser2 = 50;
+    } else {
+      progressUser1 = (votesFor / totalVotes) * 100;
+      progressUser2 = (votesAgainst / totalVotes) * 100;
+    }
+
     return (
       <div>
         <div className='contentPadding'>
-          { auth.hasValidToken()
+          {/* { auth.hasValidToken()
             ? <WatchingWidget
                 userId={auth.user.userid}
                 fightId={this.props.location.pathname.split('/').pop()}
               />
             : ''
-          }
+          } */}
         { loaded === true
           ? <React.Fragment>
-              <h2 className="hatchetTitle">{this.state.fightTitle}</h2>
-              <div className="featured-fights-container">
-                <div className="user1">
+              <div className="fightContainer">
+                <header className="fightContainerHeader">
+                  <Avatar imgpath={antagonist.imgpath} width='100px' height='100px' />
+                  <h2 className="hatchetTitle">{this.state.fightTitle}</h2>
+                  <Avatar imgpath={defender.imgpath} width='100px' height='100px' />
+                </header>
 
-                  <Avatar imgpath={antagonist.imgpath} width='100px' height='100px'>
-                    <h3>{antagonist.username}</h3>
-                  </Avatar>
-
-                  <p className="fight-text">{antagonist.argument}</p>
-                  <VotesCount
-                    { ...this.state }
-                    isLoggedIn={auth.isAuthenticated}
-                    side='for'
-                  />
-
-                  <VotingButton
-                    side='for'
-                    username={antagonist.username}
-                  />
+                <div className="fightTally">
+                  <div className="user1">
+                    <div className="fightMeter">
+                      <span style={ addStyle ? {width: `${progressUser1}%`} : {width: '0%'} }></span>
+                    </div>
+                  </div>
+                  <VersusImg />
+                  <div className="user2">
+                    <div className="fightMeter">
+                    <span style={ addStyle ? {width: `${progressUser2}%`} : {width: '0%'} }></span>
+                    </div>
+                  </div>
                 </div>
-                <VersusImg />
-                <div className="user2 fullWidth">
-                  <Avatar imgpath={defender.imgpath} width='100px' height='100px'>
+
+                <div className="fightBody">
+                  <div className="user1">
+                    <h3>{antagonist.username}</h3>
+                    <p className="fightText">{antagonist.argument}</p>
+                    <VotesCount
+                      { ...this.state }
+                      isLoggedIn={auth.isAuthenticated}
+                      side='for'
+                    />
+
+                    <VotingButton
+                      side='for'
+                      username={antagonist.username}
+                    />
+                  </div>
+
+                  <div className="fightTimeRemaining">
+                    <time>23:59</time>
+                    <span>
+                      TIME REMAINING
+                    </span>
+                  </div>
+
+                  <div className="user2">
                     <h3>{defender.username}</h3>
-                  </Avatar>
-
-                  { userCanDefend
-                    ? <React.Fragment>
-                        <div style={{position: 'relative'}}>
-                          <TextareaWithCountdown
-                            countLimit={1000}
-                            onInput={this.handleTextareaChange}
-                            ariaLabel="What happened"
-                            placeholder="Your argument goes here"
-                            fieldName="beef"
-                            fieldId="beef"
+                    { userCanDefend
+                      ? <React.Fragment>
+                          <div style={{position: 'relative'}}>
+                            <TextareaWithCountdown
+                              countLimit={1000}
+                              onInput={this.handleTextareaChange}
+                              ariaLabel="What happened"
+                              placeholder="Your argument goes here"
+                              fieldName="beef"
+                              fieldId="beef"
+                            />
+                          </div>
+                          <StartHatchet
+                            fightId={fightId}
+                            isDisabled={isValid}
+                            textAgainst={textAgainst}
                           />
-                        </div>
-                        <StartHatchet
-                          fightId={fightId}
-                          isDisabled={isValid}
-                          textAgainst={textAgainst}
-                        />
-                      </React.Fragment>
-                    : defender.argument
-                  }
-                  <VotesCount
-                    { ...this.state }
-                    isLoggedIn={auth.isAuthenticated}
-                    side='against'
-                  />
+                        </React.Fragment>
+                      : defender.argument
+                    }
+                    <VotesCount
+                      { ...this.state }
+                      isLoggedIn={auth.isAuthenticated}
+                      side='against'
+                    />
 
-                  <VotingButton
-                    side='against'
-                    username={defender.username}
-                  />
+                    <VotingButton
+                      side='against'
+                      username={defender.username}
+                    />
+                  </div>
                 </div>
               </div>
             </React.Fragment>

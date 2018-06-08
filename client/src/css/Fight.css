@@ -5,52 +5,129 @@
   }
 }
 
-.featured-fights-container {
+.fightMeter {
+  height: 2em;  /* Can be anything */
+	position: relative;
+	background: #555;
+  background-color: rgb(229, 49, 93);
+  border: 2px solid white;
+}
+
+.fightMeter > span {
+  display: block;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--gold);
+  transition: width .4s ease-in-out;
+}
+
+.fightTally {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--dark-blue);
-  margin: 0 auto;
-  border-radius: 4px;
-  overflow: hidden;
-  color: white;
-  max-width: 800px;
+  justify-content: space-between;
+  position: relative;
 }
 
-.featured-fights-container > .versus {
-  flex-shrink: 1;
-  padding: 0;
-  max-width: 90px;
-  align-self: center;
+.fightTally .user1 .fightMeter {
+  display: flex;
+  flex-direction: row-reverse;
 }
 
-.featured-fights-container h3 {
-  margin: 0;
-  padding: 0.3em 0 1em;
-  letter-spacing: 1px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  text-shadow: 2px 2px 0 var(--brown);
-  color: var(--gold);
-  font-size: 1.5em;
+.fightBody {
+  display: flex;
+  justify-content: space-between;
 }
 
-.featured-fights-container > * {
-  flex: 1;
-  padding: 2em;
-  align-self: flex-start;
+.fightTimeRemaining span {
+  text-transform: uppercase;
+}
+
+.fightBody .button.primary {
+  max-width: 100%;
+  width: 100%;
+}
+
+.fightBody .user1,
+.fightBody .user2 {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
 }
 
-.featured-fights-container .button.primary {
-  margin-top: 1em;
+.fightBody .fightTimeRemaining {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 0;
+  align-self: baseline;
+  padding: 25px 30px 0;
+}
+
+.fightBody .fightTimeRemaining time {
+  color: white;
+  font-size: 38px;
+  font-weight: bold;
+  line-height: 1;
+  padding-bottom: 5px;
+}
+
+.fightBody .fightTimeRemaining span {
+  color: var(--teal);
+  line-height: 1;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.fightBody h3 {
+  color: var(--gold);
+  margin: 0;
+}
+
+.fightBody .user1 h3 {
+  align-self: flex-start;
+}
+
+.fightBody .user2 h3 {
+  align-self: flex-end;
+}
+
+.fightTally .user1,
+.fightTally .user2 {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.fightTally .versus {
+  flex-grow: 0;
+  max-height: 5em;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 1em;
+  z-index: 1;
+}
+
+.fightContainer {
+  margin: 0 auto;
+  max-width: 800px;
+  padding-top: 30px;
+}
+
+.fightContainerHeader {
+  display: flex;
+  flex-direction: row;
+  background-color: transparent;
+  padding: 0;
 }
 
 .hatchetTitle {
-  font-size: 1.8em;
-  text-transform: uppercase;
+  font-size: 1.6em;
+  color: white;
+  flex-grow: 1;
+  align-self: flex-start;
+  margin: 0 0 25px;
+  padding: 5px 1em;
+  line-height: 1.2;
 }
 
 .fight-arguments {
@@ -61,21 +138,16 @@
   flex: 1;
 }
 
-.fight-text {
+.fightText {
   margin: 0;
   line-height: 1.5;
+  padding: 22px 0 12px;
+  color: white;
+  text-align: left;
 }
 
 .blurred {
   filter: blur(3px);
-}
-
-.antagonist-argument .fight-text {
-  padding-right: 2em;
-}
-
-.defender-argument .fight-text {
-  padding-left: 2em;
 }
 
 .totalVotes {
