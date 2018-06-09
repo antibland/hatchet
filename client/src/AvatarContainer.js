@@ -76,9 +76,12 @@ class AvatarContainer extends Component {
     e.preventDefault();
     let reader = new FileReader();
     let file = e.target.files[0];
+
+    if (!file) return;
+
     const fileType = file.type;
     const allowedFileTypes = ['jpg', 'jpeg', 'png', 'gif'];
-    const maxFileSize = 130000; // 130KB
+    const maxFileSize = 160000; // 160KB
     let ext = fileType.substr(fileType.lastIndexOf('/')+1);
     let message = '';
     this.setState({ errors: []});
@@ -90,7 +93,8 @@ class AvatarContainer extends Component {
     }
 
     if (file.size > maxFileSize) {
-      message = '🐳 We don\'t mean to fat-shame your file size, but it\'s too big. 130KB is the max.';
+      message = `🐳 We don't mean to fat-shame your file size, but it's too big.
+                ${maxFileSize / 1000}KB is the max.`;
       errors.push(message);
     }
 
@@ -128,24 +132,22 @@ class AvatarContainer extends Component {
       }
     };
 
-    if (imagePreviewUrl) {
-      imagePreview = (
-        <div style={styles.previewContainer}>
+    imagePreview = imagePreviewUrl
+      ? <div style={styles.previewContainer}>
           <Avatar imgpath={imagePreviewUrl} width='120px' height='120px' />
-
-          <button className="submitButton" type="submit">
-            Replace it!
-          </button>
+          <button className="button primary" type="submit">Upload it!</button>
         </div>
-      );
-    } else {
-      imagePreview = '';
-    }
+      : '';
 
     let imagePreviewErrors = errors.length
-      ? errors.map((error, index) => {
-          return <li key={index}>{ error }</li>
-        })
+      ?
+        <ul className="inlineErrorList">
+          {
+            errors.map((error, index) => {
+              return <li key={index}>{ error }</li>
+            })
+          }
+        </ul>
       : '';
 
     let currentAvatar = currentAvatarUrl
@@ -177,9 +179,7 @@ class AvatarContainer extends Component {
           <FancyFileInput updatePreviewImage={this.handleChange} />
 
           { imagePreview }
-          <ul className="inlineErrorList">
-            { imagePreviewErrors }
-          </ul>
+          { imagePreviewErrors }
         </form>
       </div>
     )
