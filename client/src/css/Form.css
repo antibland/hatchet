@@ -5,6 +5,11 @@ form {
   padding: 1em 3em;
 }
 
+textarea,
+input {
+  font-family: 'Glegoo', serif;
+}
+
 label {
   display: block;
   cursor: pointer;
@@ -144,7 +149,7 @@ input:focus + [role=note] {
 
 input.featured {
   width: calc(100% - 1.5em);
-  padding: 1.1em 1.3em;
+  padding: .75em 1em;
   font-size: 1em;
 }
 
