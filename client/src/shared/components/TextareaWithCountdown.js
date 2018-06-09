@@ -35,7 +35,7 @@ class TextareaWithCountdown extends Component {
     const classes = `charsRemaining ${error}`;
 
     return (
-      <div style={{ position: 'relative'}}>
+      <div className='countdownContainer'>
         <textarea
           required
           onInput={this.handleTextareaChange}

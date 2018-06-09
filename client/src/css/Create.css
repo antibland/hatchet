@@ -112,18 +112,38 @@
   padding: 7px 12px;
 }
 
-.charsRemaining {
-  font-size: 0.9em;
+.countdownContainer {
   position: relative;
-  padding: 5px 10px;
-  top: -26px;
-  right: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.countdownContainer textarea {
+  flex-grow: 1;
+  width: 100%;
+  min-height: 200px;
+  padding: 10px;
+  font-size: 1.2em;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  resize: none;
+}
+
+.charsRemaining {
+  background-color: white;
+  flex-grow: 0;
+  font-size: 0.9em;
+  padding: 7.5px 10px;
   display: inline-block;
-  float: right;
-  color: black;
   width: 100%;
   text-align: right;
   border-top: 1px solid var(--gold);
+  color: black;
+  line-height: 1;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
 }
 
 .charsRemaining.error {
@@ -133,14 +153,6 @@
 .fieldWrap {
   margin: 2em 2em 0;
   position: relative;
-}
-
-#beef {
-  border-radius: 4px;
-  width: 100%;
-  min-height: 200px;
-  padding: 10px 10px 32px 10px;
-  font-size: 1.2em;
 }
 
 @media screen and (max-width: 500px) {
