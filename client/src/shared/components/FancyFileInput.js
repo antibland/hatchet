@@ -11,7 +11,7 @@ const FancyFileInput = props => (
       id="avatar" />
     <label htmlFor="avatar">
       <Symbol name='upload-icon' />
-      <span>Choose a file&hellip;</span>
+      <span>Add an image&hellip;</span>
     </label>
   </div>
 );

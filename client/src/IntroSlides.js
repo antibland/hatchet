@@ -13,8 +13,8 @@ export class IntroSlides extends Component {
       <Swiper {...params}>
         <div className='swiper-slide' id='step1'>
           <img className='image' src='./svg/icon-intro-argument.svg' alt='Opposing chat bubbles'/>
-          <div className='title'>Submit Your Conflict</div>
-          <div className='text'>Tell us who you are fighting with, what they did, and why it bothers you.</div>
+          <div className='title'>Share Your Story</div>
+          <div className='text'>Two sides to every story. What's yours?</div>
         </div>
         <div className='swiper-slide' id='step2'>
           <img className='image' src='./svg/icon-intro-clock.svg' alt='Clock'/>
