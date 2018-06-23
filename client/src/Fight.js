@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { auth } from './Auth';
 import Avatar from './shared/components/Avatar';
 import Loading from './Loading';
+import Symbol from './shared/components/Symbol';
 // import WatchingWidget from './WatchingWidget';
 import StartHatchet from './shared/components/StartHatchet';
 import TextareaWithCountdown from './shared/components/TextareaWithCountdown';
@@ -225,9 +226,13 @@ class Fight extends Component {
           ? <React.Fragment>
               <div className="fightContainer">
                 <header className="fightContainerHeader">
-                  <Avatar imgpath={antagonist.imgpath} width='100px' height='100px' />
+                  <Avatar imgpath={antagonist.imgpath} width='100px' height='100px'>
+                    <Symbol name="challenger-hatchet-icon" />
+                  </Avatar>
                   <h2 className="hatchetTitle">{this.state.fightTitle}</h2>
-                  <Avatar imgpath={defender.imgpath} width='100px' height='100px' />
+                  <Avatar imgpath={defender.imgpath} width='100px' height='100px'>
+                    <Symbol name="defender-shield-icon" />
+                  </Avatar>
                 </header>
 
                 <div className="fightTally">
