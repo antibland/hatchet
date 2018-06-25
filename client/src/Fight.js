@@ -9,6 +9,7 @@ import TextareaWithCountdown from './shared/components/TextareaWithCountdown';
 import VersusImg from './shared/components/VersusImg';
 import Vote from './Vote';
 import VotesCount from './VotesCount';
+import moment from 'moment';
 import './css/Fight.css';
 import './css/Watching.css';
 
@@ -83,12 +84,30 @@ class Fight extends Component {
       });
   };
 
+  getTimeRemaining(createdAt) {
+    const startDate = new Date(createdAt);
+    const ms = moment(new Date(),"DD/MM/YYYY HH:mm:ss").diff(moment(startDate,"DD/MM/YYYY HH:mm:ss"));
+    const d = moment.duration(ms);
+    let minutes = (60 - Math.floor(d.asMinutes()) % 60);
+    if (minutes < 10) {
+      minutes = "0" + minutes;
+    }
+    const hours = (23 - Math.floor(d.asHours()));
+
+    if (hours) {
+      return `${hours}:${minutes}`;
+    }
+
+    return '00:00';
+  }
+
   getFightDetails(fightId, cb) {
     // /api/:fightId/fight => getFight
     fetch(`/api/${fightId}/fight`)
       .then(res => res.json())
       .then(data => {
         this.setState({
+          createdAt: data.fight.createdAt,
           isExpired: data.isExpired,
           isLive: data.fight.isLive,
           fightTitle: data.fight.title,
@@ -143,7 +162,16 @@ class Fight extends Component {
         defaultUserImg = '/user.png';
 
     const username = auth.user.username;
-    const { isLive, isValid, isExpired, textAgainst, showVotes, loaded, addStyle, votes } = this.state;
+    const { isLive,
+            isValid,
+            isExpired,
+            textAgainst,
+            showVotes,
+            loaded,
+            addStyle,
+            votes,
+            createdAt
+          } = this.state;
     const fightId = this.props.match.params.fightId;
     const placeholderText = 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis fugiat in impedit maxime blanditiis nam assumenda. Dicta quo sequi dolorum similique. Libero repudiandae esse voluptate impedit delectus enim, nostrum quos?';
 
@@ -184,6 +212,28 @@ class Fight extends Component {
         defender.username === "You"
       )
     );
+
+    const TimeRemaining = () => {
+      return (
+        <div className="fightTimeRemaining">
+          { isLive
+            ? !isExpired
+              ? <React.Fragment>
+                  <time>{this.getTimeRemaining(createdAt)}</time>
+                  <span>TIME REMAINING</span>
+                </React.Fragment>
+              : <React.Fragment>
+                  <time>00:00</time>
+                  <span>EXPIRED!</span>
+                </React.Fragment>
+            : <React.Fragment>
+                <time>24:00</time>
+                <span>PENDING</span>
+              </React.Fragment>
+          }
+        </div>
+      )
+    };
 
     const VotingButton = props => {
       return (
@@ -265,12 +315,7 @@ class Fight extends Component {
                     />
                   </div>
 
-                  <div className="fightTimeRemaining">
-                    <time>23:59</time>
-                    <span>
-                      TIME REMAINING
-                    </span>
-                  </div>
+                  <TimeRemaining />
 
                   <div className="user2">
                     <h3>{defender.username}</h3>
