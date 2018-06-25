@@ -53,7 +53,10 @@ class Wizard extends Component {
         if (data.type === 'success') {
           this.setState({ isModalOpen: true })
         }
-      });
+      })
+      .catch(err => {
+        console.error(err);
+      });;
   }
 
   _next(e, data, completed=false) {
