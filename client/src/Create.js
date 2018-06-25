@@ -111,16 +111,16 @@ class Wizard extends Component {
   }
 
   render() {
-    let { currentStep, isModalOpen } = this.state;
+    let { currentStep, isModalOpen, fight } = this.state;
     let activeStep = `activeStep-${currentStep} stepsContainer`;
     let formAction = `/api/${auth.user.userid}/fight`;
     return (
       <React.Fragment>
         <form action={formAction} method="post" className="stepsForm">
           <div className={activeStep}>
-            <Step1 sendData={this._getData} currentStep={currentStep} afterValid={this._next} />
-            <Step2 sendData={this._getData} currentStep={currentStep} afterValid={this._next} />
-            <Step3 sendData={this._getData} currentStep={currentStep} afterValid={this._next} />
+            <Step1 currentStep={currentStep} afterValid={this._next} />
+            <Step2 currentStep={currentStep} afterValid={this._next} />
+            <Step3 currentStep={currentStep} afterValid={this._next} fightData={fight} />
           </div>
           { currentStep > 1
             ? <PreviousButton onClick={this._prev} />
