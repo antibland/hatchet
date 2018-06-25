@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "engines": {
-    "node": "9.4.0"
+    "node": "10.5.0"
   },
   "dependencies": {
     "aws-sdk": "^2.247.1",
@@ -14,7 +14,7 @@
     "cors": "^2.8.4",
     "dotenv": "^6.0.0",
     "email-validator": "^2.0.0",
-    "eslint": "^4.19.1",
+    "eslint": "5.0.0",
     "express": "^4.16.3",
     "jshint": "^2.9.5",
     "jsonwebtoken": "^8.1.1",
