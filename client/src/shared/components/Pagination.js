@@ -1,8 +1,8 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import '../../css/Pagination.css';
-import HatchetList from './HatchetList';
-import Symbol from '../../shared/components/Symbol';
+import PropTypes from "prop-types";
+import React from "react";
+import "../../css/Pagination.css";
+import HatchetList from "./HatchetList";
+import Symbol from "../../shared/components/Symbol";
 class Pagination extends React.Component {
   static numbersCutoff = 5;
   constructor() {
@@ -44,9 +44,8 @@ class Pagination extends React.Component {
     const pageNumbers = [];
     const lastPage = Math.ceil(items.length / itemsPerPage);
     let numbersStart = 1;
-    let numbersEnd = lastPage < Pagination.numbersCutoff
-          ? lastPage
-          : Pagination.numbersCutoff;
+    let numbersEnd =
+      lastPage < Pagination.numbersCutoff ? lastPage : Pagination.numbersCutoff;
 
     if (currentPage > Pagination.numbersCutoff) {
       let difference = currentPage - Pagination.numbersCutoff;
@@ -58,50 +57,64 @@ class Pagination extends React.Component {
       pageNumbers.push(i);
     }
 
-    const renderItems = (
-      <HatchetList fights={currentItems} />
+    const RenderTableBody = () => (
+      <tbody>
+        <HatchetList fights={currentItems} />
+      </tbody>
+    );
+
+    const RenderTableHeaders = () => (
+      <thead>
+        <tr>
+          <th>Argument Title</th>
+          <th>Challenger</th>
+          <th>Defender</th>
+          <th>Remaining</th>
+        </tr>
+      </thead>
     );
 
     const Previous = () => (
-      <li className='pageNumberNav buttonPrevious'>
-        <button
-          onClick={this.previousPage}
-          disabled={currentPage === 1}>
-          <Symbol name='chevron-left' />Prev
+      <li className="pageNumberNav buttonPrevious">
+        <button onClick={this.previousPage} disabled={currentPage === 1}>
+          <Symbol name="chevron-left" />Prev
         </button>
       </li>
     );
 
     const Next = () => (
-      <li className='pageNumberNav buttonNext'>
-        <button
-          onClick={this.nextPage}
-          disabled={currentPage === lastPage}>Next
-          <Symbol name='chevron-right' />
+      <li className="pageNumberNav buttonNext">
+        <button onClick={this.nextPage} disabled={currentPage === lastPage}>
+          Next
+          <Symbol name="chevron-right" />
         </button>
       </li>
     );
 
     const renderPageNumbers = pageNumbers.map(number => {
       return (
-        <li key={'page' + (number)} className='pageNumberListItem'>
+        <li key={"page" + number} className="pageNumberListItem">
           <button
-            className={'pageNumberButton' + (number === currentPage ? ' active' : '')}
+            className={
+              "pageNumberButton" + (number === currentPage ? " active" : "")
+            }
             id={number}
             onClick={this.handleClick}
-          >{number}
+          >
+            {number}
           </button>
         </li>
       );
     });
 
-
     return (
       <React.Fragment>
-        <ul className='fightList'>
-          {renderItems}
-        </ul>
-        <ul className='pageNumbers'>
+        <table className="fightList">
+          <RenderTableHeaders />
+          <RenderTableBody />
+        </table>
+
+        <ul className="pageNumbers">
           <Previous />
           {renderPageNumbers}
           <Next />

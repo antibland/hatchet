@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import Loading from './Loading.js';
-import Pagination from './shared/components/Pagination';
+import React, { Component } from "react";
+import Loading from "./Loading.js";
+import Pagination from "./shared/components/Pagination";
 
 class Home extends Component {
   constructor() {
@@ -11,7 +11,7 @@ class Home extends Component {
     };
   }
   componentDidMount() {
-    let url = '/api/fights';
+    let url = "/api/fights";
 
     fetch(url)
       .then(res => res.json())
@@ -24,16 +24,23 @@ class Home extends Component {
   }
 
   render() {
+    const NoFightResults = () => (
+      <ul>
+        <li className="noResults center">
+          <p>It's lonely here. Not a hatchet in sight.</p>
+        </li>
+      </ul>
+    );
+
     return (
-      <div className='paginationContainer'>
-        { this.state.loading === true
-            ? <Loading />
-            : this.state.fights.length === 0
-              ? <ul><li className='noResults center'>
-                  <p>It's lonely here. Not a hatchet in sight.</p>
-                </li></ul>
-              : <Pagination items={this.state.fights} />
-        }
+      <div className="paginationContainer">
+        {this.state.loading === true ? (
+          <Loading />
+        ) : this.state.fights.length === 0 ? (
+          <NoFightResults />
+        ) : (
+          <Pagination items={this.state.fights} />
+        )}
       </div>
     );
   }

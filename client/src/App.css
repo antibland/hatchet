@@ -5,12 +5,14 @@
 :root {
   --brown: #722800;
   --gold: rgb(248, 192, 45);
+  --red: rgb(231, 77, 103);
   --bright-gold: rgb(255,	230,	51);
   --teal: rgb(57, 160, 207);
   --dark-blue: rgb(15, 48, 80);
   --content-padding: 0 3em;
   --content-padding-mobile: 0 1.5em;
   --alt-button-color: rgb(66, 158, 202);
+  --dark-text: rgb(37, 73, 101);
 }
 
 ::placeholder {
@@ -54,6 +56,7 @@ main {
   justify-content: center;
   flex-direction: column;
   justify-content: flex-start;
+  background-color: white;
 }
 
 main > * {
@@ -230,15 +233,13 @@ a.button {
 }
 
 .fightList {
-  margin: 0 auto;
+  margin: 0 5em;
   padding: 0;
-  max-width: 100%;
+  max-width: calc(100% - 10em);
   width: 100vw;
   flex-grow: 1;
-}
-
-.fightList li:first-of-type .link {
-  margin-top: 0;
+  border-collapse: collapse;
+  text-align: left;
 }
 
 .fightList .text {
@@ -250,7 +251,52 @@ a.button {
   display: flex;
   align-items: center;
   padding: 0;
-  margin: 7px 0;
+  margin: 0;
+}
+
+.fightList tbody .challengerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 40px;
+}
+
+.fightList tbody tr {
+  border-top: 1px solid var(--teal);
+}
+
+.fightList tbody td {
+  padding: 10px 0;
+}
+
+.fightList th {
+  color: var(--teal);
+  font-size: 0.95em;
+  padding: 1em 0 1.5em;
+  text-align: left;
+}
+
+.fightList tbody .avatar,
+.fightList tbody .part {
+  display: flex;
+}
+
+.fightList tbody .part {
+  align-items: center;
+}
+
+.fightList tbody .avatar {
+  margin-right: 10px;
+}
+
+.fightList tbody .username {
+  color: var(--teal);
+  font-weight: bold;
+}
+
+.fightList tbody .versus {
+  height: 45px;
+  width: 45px;
 }
 
 .fightList .button img {
@@ -260,7 +306,8 @@ a.button {
 .fightList .title {
   flex: 1;
   font-size: .8em;
-  color: white;
+  color: var(--dark-blue);
+  font-weight: 600;
 }
 
 .fightList .created {
