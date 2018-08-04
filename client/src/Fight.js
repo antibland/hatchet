@@ -3,7 +3,6 @@ import { auth } from "./Auth";
 import Avatar from "./shared/components/Avatar";
 import Loading from "./Loading";
 import Symbol from "./shared/components/Symbol";
-// import WatchingWidget from './WatchingWidget';
 import StartHatchet from "./shared/components/StartHatchet";
 import TextareaWithCountdown from "./shared/components/TextareaWithCountdown";
 import VersusImg from "./shared/components/VersusImg";
@@ -279,13 +278,6 @@ class Fight extends Component {
     return (
       <div>
         <div className="contentPadding">
-          {/* { auth.hasValidToken()
-            ? <WatchingWidget
-                userId={auth.user.userid}
-                fightId={this.props.location.pathname.split('/').pop()}
-              />
-            : ''
-          } */}
           {loaded === true ? (
             <React.Fragment>
               <div className="fightContainer">
