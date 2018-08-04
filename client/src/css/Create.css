@@ -42,6 +42,7 @@
 .previousButtonWrap button {
   border-radius: 0 8px 8px 0;
   margin: 45px auto 0;
+  color: white;
 }
 
 .activeStep-1 {
@@ -108,7 +109,6 @@
 }
 
 .lookupResult {
-  color: white;
   padding: 7px 12px;
 }
 

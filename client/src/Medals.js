@@ -1,10 +1,8 @@
-import React from 'react';
+import React from "react";
 
 const Medals = () => (
-  <div className='whiteText'>
-    <div className='contentPadding'>
-      <p>You vain bastard! Here are your precious medals.</p>
-    </div>
+  <div>
+    <p>You vain bastard! Here are your precious medals.</p>
   </div>
 );
 
