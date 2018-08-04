@@ -21,6 +21,7 @@ exports.setLive = async (req, res) => {
 
   fight.text.against = textAgainst;
   fight.isLive = true;
+  fight.activatedAt = new Date();
 
   await fight.save((err, res) => {
     if (err) {
@@ -58,6 +59,12 @@ exports.getFights = async (req, res) => {
         "We can`t seem to retrive any fights right now. Try again, I guess?"
     });
   }
+
+  fights.map(fight => {
+    FightExpire.findOne({ _id: fight._id }).exec((err, doc) => {
+      fight.isExpired = doc == null ? true : false;
+    });
+  });
 
   return res.status(200).json(fights);
 };
@@ -122,7 +129,6 @@ exports.vote = async (req, res) => {
 
 exports.getFight = async (req, res) => {
   let { fightId } = req.params;
-  let isExpired = null;
 
   const fight = await Fight.findById(fightId).populate({
     path: "antagonist defender",
@@ -139,18 +145,16 @@ exports.getFight = async (req, res) => {
 
   if (fight.isLive === true) {
     await FightExpire.findOne({ _id: fightId }).exec((err, doc) => {
-      isExpired = doc == null ? true : false;
+      fight.isExpired = doc == null ? true : false;
 
       return res.status(200).json({
         type: "success",
-        isExpired,
         fight
       });
     });
   } else {
     return res.status(200).json({
       type: "success",
-      isExpired: false,
       fight
     });
   }

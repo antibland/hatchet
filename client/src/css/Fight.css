@@ -60,15 +60,15 @@
   flex-direction: column;
   flex-grow: 0;
   align-self: baseline;
-  padding: 25px 30px 0;
+  padding: 30px 30px 0;
 }
 
 .fightBody .fightTimeRemaining time {
   color: var(--red);
-  font-size: 38px;
+  font-size: 37px;
   font-weight: bold;
   line-height: 1;
-  padding-bottom: 5px;
+  padding-bottom: 7px;
 }
 
 .fightBody .fightTimeRemaining span {

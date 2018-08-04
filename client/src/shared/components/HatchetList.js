@@ -54,16 +54,16 @@ const RemainingRow = props => {
 
 const HatchetList = props =>
   props.fights.map(fight => {
-    //console.log(fight);
-    const { _id, title, type } = fight;
     const {
-      username: antagonistUsername,
-      avatar: antagonistAvatar = ""
-    } = fight.antagonist;
-    const {
-      username: defenderUsername,
-      avatar: defenderAvatar = ""
-    } = fight.defender;
+      _id,
+      title,
+      type,
+      antagonist: {
+        username: antagonistUsername,
+        avatar: antagonistAvatar = ""
+      },
+      defender: { username: defenderUsername, avatar: defenderAvatar = "" }
+    } = fight;
 
     return (
       <tr key={_id}>
