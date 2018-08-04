@@ -6,8 +6,8 @@ import Symbol from "./shared/components/Symbol";
 import StartHatchet from "./shared/components/StartHatchet";
 import TextareaWithCountdown from "./shared/components/TextareaWithCountdown";
 import VersusImg from "./shared/components/VersusImg";
+import utilities from "./shared/utilities";
 import Vote from "./Vote";
-import moment from "moment";
 import "./css/Fight.css";
 import "./css/Watching.css";
 
@@ -80,26 +80,6 @@ class Fight extends Component {
           });
         }
       });
-  }
-
-  getTimeRemaining(activatedAt) {
-    const startDate = new Date(activatedAt);
-    const ms = moment(new Date(), "DD/MM/YYYY HH:mm:ss").diff(
-      moment(startDate, "DD/MM/YYYY HH:mm:ss")
-    );
-    const d = moment.duration(ms);
-    let minutes = 60 - (Math.floor(d.asMinutes()) % 60);
-    if (minutes < 10) {
-      minutes = "0" + minutes;
-    }
-    const hours = 23 - Math.floor(d.asHours());
-    let time = `${hours}:${minutes}`;
-
-    if (hours) {
-      return time === "23:56" ? "1 day" : time;
-    }
-
-    return "00:00";
   }
 
   getFightDetails(fightId, cb) {
@@ -229,7 +209,7 @@ class Fight extends Component {
           {isLive ? (
             !isExpired ? (
               <React.Fragment>
-                <time>{this.getTimeRemaining(activatedAt)}</time>
+                <time>{utilities.getTimeRemaining(activatedAt)}</time>
                 <span>TIME REMAINING</span>
               </React.Fragment>
             ) : (

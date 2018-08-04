@@ -44,10 +44,10 @@ const DefenderRow = props => {
   );
 };
 
-const RemainingRow = props => {
+const TimeRemainingRow = props => {
   return (
     <td>
-      <time>12:32</time>
+      <time>{props.remaining}</time>
     </td>
   );
 };
@@ -58,6 +58,7 @@ const HatchetList = props =>
       _id,
       title,
       type,
+      activatedAt,
       antagonist: {
         username: antagonistUsername,
         avatar: antagonistAvatar = ""
@@ -73,7 +74,7 @@ const HatchetList = props =>
           avatar={antagonistAvatar.path}
         />
         <DefenderRow username={defenderUsername} avatar={defenderAvatar.path} />
-        <RemainingRow />
+        <TimeRemainingRow remaining={utilities.getTimeRemaining(activatedAt)} />
       </tr>
     );
   });
