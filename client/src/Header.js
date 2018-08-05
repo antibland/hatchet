@@ -2,11 +2,39 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import NavList from "./NavList";
 import commonData from "./shared/commonData";
+import Symbol from "./shared/components/Symbol";
+import Avatar from "./shared/components/Avatar";
+import { auth } from "./Auth";
 import "./css/Header.css";
+
+const iconObj = {
+  "search-icon": "/search",
+  "challenger-hatchet-icon": "/create",
+  "notification-icon": "/notifications"
+};
+
+const headerIcons = Object.keys(iconObj).map(key => {
+  return (
+    <li key={key}>
+      <a href={iconObj[key]} className={`link-${key}`}>
+        <Symbol name={key} />
+      </a>
+    </li>
+  );
+});
+
+const UserIcon = () => (
+  <li>
+    <a href="/profile">
+      <Avatar imgpath={auth.user.avatar} width="38px" height="38px" />
+    </a>
+  </li>
+);
 
 const HeaderActions = () => (
   <ul className="headerActions">
-    <li>icon</li>
+    {headerIcons}
+    <UserIcon />
   </ul>
 );
 

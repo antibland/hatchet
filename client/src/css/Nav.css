@@ -33,7 +33,7 @@ nav[role="main"] {
 }
 
 .navItem {
-  padding: 16px 0 10px;
+  padding: 15px 0 10px;
   border-bottom: 3px solid transparent;
   display: block;
   color: var(--dark-text);

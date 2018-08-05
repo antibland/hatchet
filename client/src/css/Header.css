@@ -22,7 +22,7 @@ header a {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 7px 100px;
+  padding: 4px 100px;
 }
 
 .headerTop h1 {
@@ -32,6 +32,38 @@ header a {
 
 .headerActions {
   display: flex;
+  align-items: flex-end;
+}
+
+.headerActions svg {
+  max-height: 100%;
+  max-width: 100%;
+  fill: white;
+}
+
+.headerActions [class^="link-"] {
+  height: 50px;
+  display: flex;
+}
+
+.headerActions .link-search-icon {
+  width: 50px;
+}
+
+.headerActions li {
+  margin-right: 1em;
+}
+
+.headerActions li:last-child {
+  margin-right: 0;
+}
+
+.headerActions .link-challenger-hatchet-icon {
+  width: 30px;
+}
+
+.headerActions .link-notification-icon {
+  width: 50px;
 }
 
 @media screen and (max-width: 500px) {

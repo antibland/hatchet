@@ -1,18 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 
-class NavList extends Component {
-  constructor(props) {
-    super(props);
-  }
+const NavList = props => {
+  let navItems = props.data.map((el, index) => {
+    return <NavItem key={index} content={el.name} url={el.url} />;
+  });
 
-  render() {
-    let navItems = this.props.data.map((el, index) => {
-      return <NavItem key={index} content={el.name} url={el.url} />;
-    });
-
-    return <ul className="navList">{navItems}</ul>;
-  }
+  return (
+    <ul className="navList">{navItems}</ul>
+  )
 }
 
 const NavItem = props => (
