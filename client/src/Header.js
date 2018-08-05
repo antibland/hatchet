@@ -16,9 +16,9 @@ const iconObj = {
 const headerIcons = Object.keys(iconObj).map(key => {
   return (
     <li key={key}>
-      <a href={iconObj[key]} className={`link-${key}`}>
+      <NavLink className={`link-${key}`} exact to={iconObj[key]}>
         <Symbol name={key} />
-      </a>
+      </NavLink>
     </li>
   );
 });
