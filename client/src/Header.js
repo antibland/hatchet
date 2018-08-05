@@ -23,13 +23,16 @@ const headerIcons = Object.keys(iconObj).map(key => {
   );
 });
 
-const UserIcon = () => (
-  <li>
-    <a href="/profile">
-      <Avatar imgpath={auth.user.avatar} width="38px" height="38px" />
-    </a>
-  </li>
-);
+const UserIcon = () => {
+  const imgpath = !auth.user.avatar ? "/user.png" : auth.user.avatar;
+  return (
+    <li>
+      <a href="/profile">
+        <Avatar imgpath={imgpath} width="38px" height="38px" />
+      </a>
+    </li>
+  );
+};
 
 const HeaderActions = () => (
   <ul className="headerActions">
