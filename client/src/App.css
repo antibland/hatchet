@@ -13,6 +13,7 @@
   --content-padding-mobile: 0 1.5em;
   --alt-button-color: rgb(66, 158, 202);
   --dark-text: rgb(37, 73, 101);
+  --header-teal: rgb(203, 235, 245);
 }
 
 ::placeholder {
@@ -145,7 +146,7 @@ footer a {
 
 .logo {
   max-width: 100%;
-  width: 450px;
+  width: 220px;
 }
 
 .logo.vertical {
@@ -234,10 +235,10 @@ a.button {
 }
 
 .fightList {
-  margin: 0 5em;
+  margin: 0 auto;
   padding: 0;
-  max-width: calc(100% - 10em);
-  width: 100vw;
+  max-width: calc(100% - 200px);
+  width: 1070px;
   flex-grow: 1;
   border-collapse: collapse;
   text-align: left;
