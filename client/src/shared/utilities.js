@@ -101,11 +101,11 @@ const utilities = {
     const hours = 23 - Math.floor(d.asHours());
     let time = `${hours}:${minutes}`;
 
-    if (hours) {
-      return time === "23:56" ? "1 day" : time;
+    if (hours < 0) {
+      return "00:00";
     }
 
-    return "00:00";
+    return time === "23:56" ? "1 day" : time;
   }
 };
 
