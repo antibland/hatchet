@@ -76,7 +76,7 @@ footer {
 }
 
 footer.loggedOut {
-  padding: 1em 0 0;
+  padding: 0.5em 0;
   width: 768px;
   margin: 0 auto;
   max-width: 100%;
