@@ -8,38 +8,51 @@ import { auth } from "./Auth";
 import "./css/Header.css";
 
 const iconObj = {
-  "search-icon": "/search",
-  "challenger-hatchet-icon": "/create",
-  "notification-icon": "/notifications"
+  loggedIn: {
+    "search-icon": "/search",
+    "challenger-hatchet-icon": "/create",
+    "notification-icon": "/notifications"
+  },
+  loggedOut: {
+    "search-icon": "/search"
+  }
 };
 
-const headerIcons = Object.keys(iconObj).map(key => {
-  return (
-    <li key={key}>
-      <NavLink className={`link-${key}`} exact to={iconObj[key]}>
-        <Symbol name={key} />
-      </NavLink>
-    </li>
-  );
-});
+const headerIcons = isAuthenticated => {
+  let obj = isAuthenticated ? iconObj.loggedIn : iconObj.loggedOut;
+
+  return Object.keys(obj).map(key => {
+    return (
+      <li key={key}>
+        <NavLink className={`link-${key}`} exact to={obj[key]}>
+          <Symbol name={key} />
+        </NavLink>
+      </li>
+    );
+  });
+};
 
 const UserIcon = () => {
   const imgpath = !auth.user.avatar ? "/user.png" : auth.user.avatar;
   return (
     <li>
       <a href="/profile">
-        <Avatar imgpath={imgpath} width="38px" height="38px" />
+        <Avatar imgpath={imgpath} width="32px" height="32px" />
       </a>
     </li>
   );
 };
 
-const HeaderActions = () => (
-  <ul className="headerActions">
-    {headerIcons}
-    <UserIcon />
-  </ul>
-);
+const HeaderActions = props => {
+  let icons = headerIcons(props.isAuthenticated);
+
+  return (
+    <ul className="headerActions">
+      {icons}
+      <UserIcon />
+    </ul>
+  );
+};
 
 const Logo = () => (
   <h1 aria-labelledby="logoText">
@@ -61,7 +74,7 @@ const Header = props => (
   <header>
     <div className="headerTop">
       <Logo />
-      <HeaderActions />
+      <HeaderActions isAuthenticated={props.isAuthenticated} />
     </div>
     <nav role="main">
       <NavList
