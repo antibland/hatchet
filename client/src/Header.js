@@ -1,5 +1,6 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
+import styled from "styled-components";
 import NavList from "./NavList";
 import commonData from "./shared/commonData";
 import Symbol from "./shared/components/Symbol";
@@ -12,14 +13,27 @@ const iconObj = {
     "search-icon": "/search",
     "challenger-hatchet-icon": "/create",
     "notification-icon": "/notifications"
-  },
-  loggedOut: {
-    "search-icon": "/search"
   }
 };
 
-const headerIcons = isAuthenticated => {
-  let obj = isAuthenticated ? iconObj.loggedIn : iconObj.loggedOut;
+const LoginButton = styled(Link)`
+  color: black;
+  margin: 0 0 0 15px !important;
+`;
+
+const LoggedOutButtons = () => (
+  <div>
+    <LoginButton className="primary button" to="/login">
+      Log In
+    </LoginButton>
+    <LoginButton className="primary button" to="/join">
+      Join
+    </LoginButton>
+  </div>
+);
+
+const HeaderIcons = () => {
+  let obj = iconObj.loggedIn;
 
   return Object.keys(obj).map(key => {
     return (
@@ -44,13 +58,13 @@ const UserIcon = () => {
 };
 
 const HeaderActions = props => {
-  let icons = headerIcons(props.isAuthenticated);
-
-  return (
+  return props.isAuthenticated ? (
     <ul className="headerActions">
-      {icons}
+      <HeaderIcons />
       <UserIcon />
     </ul>
+  ) : (
+    <LoggedOutButtons />
   );
 };
 
