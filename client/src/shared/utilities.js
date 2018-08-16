@@ -5,7 +5,7 @@ const utilities = {
   truncate: (str, len = 75) =>
     str.length > len ? str.substr(0, len - 1) + "…" : str,
   getCategoryImage: word => {
-    let prefix = "/categories/category-";
+    let prefix = "/svg/category-";
     let img = "";
     let w = word.replace("'", "").toLowerCase();
 
@@ -14,8 +14,7 @@ const utilities = {
         img = (
           <img
             className="categoriesImg"
-            src={`${prefix}lover.png`}
-            srcSet={`${prefix}lover.png 1x, ${prefix}lover@2x.png 2x`}
+            src={`${prefix}lovers-quarrel.svg`}
             alt="Lover's Quarrel"
           />
         );
@@ -24,8 +23,7 @@ const utilities = {
         img = (
           <img
             className="categoriesImg"
-            src={`${prefix}coworker.png`}
-            srcSet={`${prefix}coworker.png 1x, ${prefix}coworker@2x.png 2x`}
+            src={`${prefix}workplace-squabble.svg`}
             alt="Workplace Squabble"
           />
         );
@@ -34,8 +32,7 @@ const utilities = {
         img = (
           <img
             className="categoriesImg"
-            src={`${prefix}friend.png`}
-            srcSet={`${prefix}friend.png 1x, ${prefix}friend@2x.png 2x`}
+            src={`${prefix}friend-fight.svg`}
             alt="Friend Fight"
           />
         );
@@ -44,8 +41,7 @@ const utilities = {
         img = (
           <img
             className="categoriesImg"
-            src={`${prefix}roommate.png`}
-            srcSet={`${prefix}roommate.png 1x, ${prefix}roommate@2x.png 2x`}
+            src={`${prefix}roommate-rumble.svg`}
             alt="Roommate Rumble"
           />
         );
@@ -54,18 +50,8 @@ const utilities = {
         img = (
           <img
             className="categoriesImg"
-            src={`${prefix}family.png`}
-            srcSet={`${prefix}family.png 1x, ${prefix}family@2x.png 2x`}
+            src={`${prefix}family-feud.svg`}
             alt="Family Feud"
-          />
-        );
-        break;
-      case "world":
-        img = (
-          <img
-            className="categoriesImg"
-            src={`${prefix}everyone.png`}
-            alt="World War"
           />
         );
         break;
@@ -73,8 +59,8 @@ const utilities = {
         img = (
           <img
             className="categoriesImg"
-            src={`${prefix}everyone.png`}
-            alt="World War"
+            src={`${prefix}family-feud.svg`}
+            alt="Family Feud"
           />
         );
         break;
@@ -105,6 +91,7 @@ const utilities = {
       return "00:00";
     }
 
+    // TODO: Fix time return
     return time === "23:56" ? "1 day" : time;
   }
 };

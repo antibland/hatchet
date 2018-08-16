@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import './css/Categories.css';
-import commonData from './shared/commonData';
-import utilities from './shared/utilities';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import "./css/Categories.css";
+import commonData from "./shared/commonData";
+import utilities from "./shared/utilities";
 
 class Categories extends Component {
   constructor(props) {
@@ -10,7 +10,7 @@ class Categories extends Component {
     this.state = {
       activeButton: null,
       firstButtonClick: true
-    }
+    };
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -19,7 +19,7 @@ class Categories extends Component {
     this.setState({
       firstButtonClick: false,
       activeButton: e.currentTarget.dataset.id
-    })
+    });
   }
 
   render() {
@@ -27,50 +27,54 @@ class Categories extends Component {
 
     return (
       <div>
-        <ul className='categories threeByThree'>
-        {
-          commonData.categories.map((item, index) => {
-            let [ firstWord, lastWord ] = item.split(' ');
-            let url = '/categories/' + item.replace('\'', '').toLowerCase().split(' ').join('_');
+        <ul className="categories">
+          {commonData.categories.map((item, index) => {
+            let [firstWord, lastWord] = item.split(" ");
+            let url =
+              "/categories/" +
+              item
+                .replace("'", "")
+                .toLowerCase()
+                .split(" ")
+                .join("_");
             let categoryImg = utilities.getCategoryImage(firstWord);
             return (
               <li key={index}>
-                { this.props.mode === 'button'
-                    ? <button
-                        data-id={`button-${index}`}
-                        onClick={(e) => {
-                          this.props.onClick(e.currentTarget.firstChild.alt);
-                          this.handleClick(e);
-                        }}
-                        className={
-                          activeButton === `button-${index}`
-                            ? 'active'
-                            : firstButtonClick === false
-                              ? 'inactive'
-                              : ''
-                        }>
-                        { categoryImg }
-                        <span className='firstWord'>{firstWord}</span>
-                        <span>{lastWord}</span>
-                      </button>
-                    : <Link to={url}>
-                        { categoryImg }
-                        <span className='firstWord'>{firstWord}</span>
-                        <span>{lastWord}</span>
-                      </Link>
-                }
+                {this.props.mode === "button" ? (
+                  <button
+                    data-id={`button-${index}`}
+                    onClick={e => {
+                      this.props.onClick(e.currentTarget.firstChild.alt);
+                      this.handleClick(e);
+                    }}
+                    className={
+                      activeButton === `button-${index}`
+                        ? "active"
+                        : firstButtonClick === false
+                          ? "inactive"
+                          : ""
+                    }
+                  >
+                    {categoryImg}
+                    <span className="firstWord">{firstWord}</span>
+                    <span>{lastWord}</span>
+                  </button>
+                ) : (
+                  <Link to={url} title={`${firstWord} ${lastWord}`}>
+                    {categoryImg}
+                  </Link>
+                )}
               </li>
-            )
-          })
-      }
-      </ul>
-    </div>
-    )
+            );
+          })}
+        </ul>
+      </div>
+    );
   }
 }
 
 Categories.defaultProps = {
-  mode: 'link'
+  mode: "link"
 };
 
 export default Categories;
