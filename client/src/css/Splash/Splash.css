@@ -20,11 +20,6 @@
   justify-content: center;
 }
 
-.modal.splash footer {
-  flex-grow: 0;
-  padding-top: 0;
-}
-
 @media screen and (max-width: 500px) {
   .modal.splash .logoContainer {
     flex: 1.6 1;

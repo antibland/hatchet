@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { auth } from "./Auth.js";
-import Footer from "./Footer";
 import Header from "./Header";
 import Main from "./Main";
 import Splash from "./Splash";
@@ -40,7 +39,6 @@ class App extends Component {
           <React.Fragment>
             <Header isAuthenticated={isAuthenticated} />
             <Main />
-            <Footer isAuthenticated={isAuthenticated} />
           </React.Fragment>
         )}
       </div>

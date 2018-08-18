@@ -66,29 +66,6 @@ main > * {
   padding-bottom: 1em;
 }
 
-footer {
-  padding: 1em 2em;
-  background-color: var(--dark-blue);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: var(--teal);
-}
-
-footer.loggedOut {
-  padding: 0.5em 0;
-  width: 768px;
-  margin: 0 auto;
-  max-width: 100%;
-}
-
-footer a {
-  font-size: .8em;
-  text-decoration: none;
-  padding-left: 1.5em;
-  color: currentColor;
-}
-
 .App {
   text-align: center;
   display: flex;
