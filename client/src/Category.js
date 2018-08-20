@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import HatchetList from './shared/components/HatchetList';
-import Loading from './Loading.js';
+import React, { Component } from "react";
+import Pagination from "./shared/components/Pagination";
+import Loading from "./Loading.js";
 
 class Category extends Component {
   constructor() {
@@ -8,13 +8,13 @@ class Category extends Component {
     this.state = {
       fights: [],
       loading: true,
-      message: ''
+      message: ""
     };
   }
 
   componentDidMount() {
     // /api/fights/categories/:category' => fightApi.getFightsByCategory
-    const {pathname} = this.props.location;
+    const { pathname } = this.props.location;
 
     fetch(`/api/fights${pathname}`)
       .then(res => res.json())
@@ -28,18 +28,23 @@ class Category extends Component {
   }
 
   render() {
+    const NoFightResults = () => (
+      <ul>
+        <li className="noResults center">
+          <p>It's lonely here. Not a hatchet in sight.</p>
+        </li>
+      </ul>
+    );
+
     return (
-      <div>
-        <ul className="fightList">
-          { this.state.loading === true
-              ? <Loading />
-              : this.state.fights.length === 0
-                ? <li className="noResults center">
-                  <p>{ this.state.message }</p>
-                </li>
-                : <HatchetList fights={this.state.fights} />
-          }
-        </ul>
+      <div className="paginationContainer">
+        {this.state.loading === true ? (
+          <Loading />
+        ) : this.state.fights.length === 0 ? (
+          <NoFightResults />
+        ) : (
+          <Pagination items={this.state.fights} />
+        )}
       </div>
     );
   }
