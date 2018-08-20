@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Logo from "./Logo";
 import IntroSlides from "./IntroSlides";
 import styled from "styled-components";
-import commonData from "./shared/commonData";
+import utilities from "./shared/utilities";
 import "./css/Splash/Splash.css";
 import "./css/Splash/Slides.css";
 
@@ -18,8 +18,8 @@ const SkipIt = styled.button`
   top: 1em;
   right: 1em;
 
-  ${commonData.media.tablet`font-size: 16px !important`};
-  ${commonData.media.phone`font-size: 13px !important`};
+  ${utilities.media.tablet`font-size: 16px !important`};
+  ${utilities.media.phone`font-size: 13px !important`};
 `;
 
 class Splash extends Component {

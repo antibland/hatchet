@@ -1,7 +1,23 @@
 import React from "react";
 import moment from "moment";
+import { css } from "styled-components";
+
+const sizes = {
+  desktop: 992,
+  tablet: 768,
+  phone: 576
+};
 
 const utilities = {
+  media: Object.keys(sizes).reduce((acc, label) => {
+    acc[label] = (...args) => css`
+      @media (max-width: ${sizes[label] / 16}em) {
+        ${css(...args)};
+      }
+    `;
+
+    return acc;
+  }, {}),
   truncate: (str, len = 75) =>
     str.length > len ? str.substr(0, len - 1) + "…" : str,
   getCategoryImage: word => {
