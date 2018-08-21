@@ -26,8 +26,16 @@ const fightSchema = new Schema(
       against: { type: Number, default: 0 }
     },
     text: {
-      for: String,
-      against: String
+      attacker: {
+        do: String,
+        bother: String,
+        action: String
+      },
+      defender: {
+        do: String,
+        bother: String,
+        action: String
+      }
     },
     antagonist: {
       type: mongoose.Schema.Types.ObjectId,
