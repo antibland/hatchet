@@ -5,6 +5,8 @@ const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const env = process.env.NODE_ENV || "development";
+
+mongoose.set("useFindAndModify", false);
 //const MongoStore = require('connect-mongo')(session);
 
 app.use(
@@ -19,7 +21,6 @@ if (env === "development") {
   require("dotenv").config();
 }
 
-
 // connect to Mongo when the app initializes
 const mongoOpts = {
   useNewUrlParser: true
@@ -32,10 +33,10 @@ if (env === "development") {
 } else if (env === "production") {
   mongoose.connect(
     "mongodb://" +
-    process.env.DB_USER +
-    ":" +
-    process.env.DB_PASS +
-    "@ds263408.mlab.com:63408/hatchet",
+      process.env.DB_USER +
+      ":" +
+      process.env.DB_PASS +
+      "@ds263408.mlab.com:63408/hatchet",
     mongoOpts
   );
 }
@@ -44,7 +45,7 @@ var db = mongoose.connection || null;
 
 //handle mongo error
 db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", function () {
+db.once("open", function() {
   // we're connected!
 });
 
