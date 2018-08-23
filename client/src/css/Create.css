@@ -149,11 +149,6 @@
   color: red;
 }
 
-.fieldWrap {
-  margin: 2em 2em 0;
-  position: relative;
-}
-
 @media screen and (max-width: 500px) {
   .previousButtonWrap {
     position: relative;

@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { auth } from '../Auth.js';
-import utilities from '../shared/utilities';
-import Symbol from '../shared/components/Symbol';
-import LookupResult from './LookupResult';
-import SlotsThem from './SlotsThem';
-import SlotsYou from './SlotsYou';
-import VersusImg from '../shared/components/VersusImg';
+import React, { Component } from "react";
+import { auth } from "../Auth.js";
+import utilities from "../shared/utilities";
+import Symbol from "../shared/components/Symbol";
+import LookupResult from "./LookupResult";
+import SlotsThem from "./SlotsThem";
+import SlotsYou from "./SlotsYou";
+import VersusImg from "../shared/components/VersusImg";
 
 class Step1 extends Component {
   static timeout = null;
@@ -14,10 +14,10 @@ class Step1 extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      opponent: '',
-      someone: '',
+      opponent: "",
+      someone: "",
       isValid: false,
-      opponentAvatarUrl: '',
+      opponentAvatarUrl: "",
       opponentIsValidUser: null
     };
     this.handleChange = this.handleChange.bind(this);
@@ -34,7 +34,7 @@ class Step1 extends Component {
     this.setState({
       opponentIsValidUser: null,
       someone: e.target.value,
-      opponentAvatarUrl: '',
+      opponentAvatarUrl: "",
       isValid: false
     });
     clearTimeout(Step1.timeout);
@@ -53,7 +53,6 @@ class Step1 extends Component {
       fetch(`/api/${someone}/isUser`)
         .then(res => res.json())
         .then(data => {
-
           data.isUser // fetch avatar from returned username
             ? fetch(`/api/${data.username}/avatar/username`)
                 .then(res => res.json())
@@ -65,13 +64,13 @@ class Step1 extends Component {
                   });
                 })
             : this.setState({
-              opponentAvatarUrl: '',
-              opponentIsValidUser: false,
-              isValid: utilities.validateEmail(someone)
-            });
+                opponentAvatarUrl: "",
+                opponentIsValidUser: false,
+                isValid: utilities.validateEmail(someone)
+              });
         })
         .catch(err => {
-          console.log('Request failed', err)
+          console.log("Request failed", err);
         });
     }
   }
@@ -86,43 +85,42 @@ class Step1 extends Component {
       isValid
     } = this.state;
 
-    const notUserIsEmail = opponentIsValidUser === false && utilities.validateEmail(someone) === true;
-    const notUserNotEmail = opponentIsValidUser === false && utilities.validateEmail(someone) === false;
+    const notUserIsEmail =
+      opponentIsValidUser === false &&
+      utilities.validateEmail(someone) === true;
+    const notUserNotEmail =
+      opponentIsValidUser === false &&
+      utilities.validateEmail(someone) === false;
     const isUser = opponentIsValidUser === true && someone !== you;
 
-    const opponentIsValidUserResult =
-      notUserIsEmail
-        ? <LookupResult>
-            The email address <strong>{someone}</strong> isn't connected to any
-            of our users. After your fight is created, we'll email them and
-            invite them to join.
-          </LookupResult>
-        : notUserNotEmail
-          ? <LookupResult>
-              We could not locate <strong>{someone}</strong>. You can look people up
-              by username or email address.
-            </LookupResult>
-          : isUser
-            ? <LookupResult>
-                <Symbol name='checkmark-icon' />
-                Current opponent: <strong>{someone}</strong>
-              </LookupResult>
-            : '';
+    const opponentIsValidUserResult = notUserIsEmail ? (
+      <LookupResult>
+        The email address <strong>{someone}</strong> isn't connected to any of
+        our users. After your fight is created, we'll email them and invite them
+        to join.
+      </LookupResult>
+    ) : notUserNotEmail ? (
+      <LookupResult>
+        We could not locate <strong>{someone}</strong>. You can look people up
+        by username or email address.
+      </LookupResult>
+    ) : isUser ? (
+      <LookupResult>
+        <Symbol name="checkmark-icon" />
+        Current opponent: <strong>{someone}</strong>
+      </LookupResult>
+    ) : (
+      ""
+    );
 
     return (
       <div className="stepContainer">
         <div className="inner">
           <h2>Choose an Opponent</h2>
           <div className="slots">
-            <SlotsYou
-              you={you}
-              avatar={auth.user.avatar}
-            />
+            <SlotsYou you={you} avatar={auth.user.avatar} />
             <VersusImg />
-            <SlotsThem
-              them={someone}
-              opponentAvatarUrl={opponentAvatarUrl}
-            />
+            <SlotsThem them={someone} opponentAvatarUrl={opponentAvatarUrl} />
           </div>
 
           <input
@@ -138,23 +136,25 @@ class Step1 extends Component {
             spellCheck="false"
             onInput={this.handleInput}
             onKeyUp={this.handleKeyUp}
-            placeholder="Enter username or email address" />
+            placeholder="Enter username or email address"
+          />
 
           {opponentIsValidUserResult}
 
           <button
             type="submit"
-            onClick={(event) => this.props.afterValid(
-              event,
-              { opponent:someone }
-            )}
-            style={{ display: 'block', margin: '2em auto 0'}}
+            onClick={event =>
+              this.props.afterValid(event, { opponent: someone })
+            }
+            style={{ display: "block", margin: "2em auto 0" }}
             disabled={!isValid}
-            className="button">Continue
+            className="button"
+          >
+            Continue
           </button>
         </div>
       </div>
-    )
+    );
   }
 }
 

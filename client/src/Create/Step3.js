@@ -1,12 +1,42 @@
-import React, {Component} from 'react';
-import TextareaWithCountdown from '../shared/components/TextareaWithCountdown';
+import React, { Component } from "react";
+import styled, { css } from "styled-components";
+import TextareaWithCountdown from "../shared/components/TextareaWithCountdown";
+
+const Highlight = styled.span`
+  color: var(--red);
+`;
+
+const headerStyles = css`
+  color: var(--teal);
+  margin-bottom: 5px;
+`;
+
+const PageH1 = styled.h1`
+  font-size: 27px;
+  ${headerStyles};
+`;
+
+const PageH2 = styled.h2`
+  ${headerStyles};
+`;
+
+const FieldWrap = styled.div`
+  margin: 0 2em;
+  position: relative;
+`;
+
+const SubmitButton = styled.button`
+  display: "block";
+  margin: "2em auto 0;
+`;
+
 class Step3 extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       count: 0,
-      title: '',
-      beef: '',
+      title: "",
+      beef: "",
       isValid: false,
       isTitleValid: false,
       isBeefValid: false
@@ -19,7 +49,7 @@ class Step3 extends Component {
   setOverallValidity() {
     setTimeout(() => {
       const { isTitleValid, isBeefValid } = this.state;
-      this.setState({ isValid: isTitleValid === true && isBeefValid === true })
+      this.setState({ isValid: isTitleValid === true && isBeefValid === true });
     }, 50);
   }
 
@@ -28,7 +58,7 @@ class Step3 extends Component {
 
     this.setState({
       title: e.target.value,
-      isTitleValid: (count > 0) ? true : false
+      isTitleValid: count > 0 ? true : false
     });
 
     this.setOverallValidity();
@@ -38,20 +68,20 @@ class Step3 extends Component {
     this.setState({
       isBeefValid: fieldValidity,
       beef: fieldVal
-    })
+    });
 
     this.setOverallValidity();
   }
 
   render() {
-    const role="note";
     const { isValid, beef, title } = this.state;
+    const opponent = this.props.fightData.opponent;
 
     return (
       <div className="stepContainer">
         <div className="inner">
-          <h2>How about a title?</h2>
-          <div className="fieldWrap">
+          <PageH1>Enter a title for your fight</PageH1>
+          <FieldWrap>
             <input
               required
               id="title"
@@ -59,39 +89,40 @@ class Step3 extends Component {
               value={this.state.title}
               maxLength="75"
               className="fullWidth"
-              aria-label="Create title."
+              aria-label="Make it intriguing without giving too much away."
+              placeholder="Make it intriguing without giving too much away!"
               onInput={this.handleTitleInput}
-              type="text"/>
-            <span role={role}>Creative titles get featured, so make it good.</span>
-          </div>
+              type="text"
+            />
+          </FieldWrap>
 
-          <h2>What happened?</h2>
-          <div className="fieldWrap">
+          <PageH2>
+            What did <Highlight>{opponent}</Highlight> do?
+          </PageH2>
+          <FieldWrap>
             <TextareaWithCountdown
               countLimit={1000}
               onInput={this.handleTextareaChange}
-              ariaLabel="What happened"
-              placeholder="Your argument goes here"
+              ariaLabel={`What did ${opponent} do?`}
+              placeholder={`${opponent}…`}
               fieldName="beef"
               fieldId="beef"
             />
-          </div>
+          </FieldWrap>
 
-          <button
+          <SubmitButton
             type="submit"
-            onClick={(event) => this.props.afterValid(
-              event,
-              { beef:beef, title:title },
-              true
-            )}
-            style={{ display: 'block', margin: '2em auto 0'}}
+            onClick={event =>
+              this.props.afterValid(event, { beef: beef, title: title }, true)
+            }
             disabled={!isValid}
-            className="button primary">Complete
-          </button>
-
+            className="button primary"
+          >
+            Complete
+          </SubmitButton>
         </div>
       </div>
-    )
+    );
   }
 }
 
