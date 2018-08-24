@@ -29,13 +29,7 @@ class TextareaWithCountdown extends Component {
 
   render() {
     const { count, isFieldValid } = this.state;
-    const {
-      fieldName,
-      fieldId,
-      ariaLabel,
-      placeholder,
-      countLimit
-    } = this.props;
+    const { fieldName, ariaLabel, placeholder, countLimit } = this.props;
     const countRemaining = countLimit - count;
     const error = isFieldValid === false ? "error" : "";
     const classes = `charsRemaining ${error}`;
@@ -46,7 +40,7 @@ class TextareaWithCountdown extends Component {
           required
           onInput={this.handleTextareaChange}
           name={fieldName}
-          id={fieldId}
+          id={fieldName}
           aria-label={ariaLabel}
           placeholder={placeholder}
         />
@@ -60,7 +54,6 @@ TextareaWithCountdown.propTypes = {
   onInput: PropTypes.func.isRequired,
   countLimit: PropTypes.number.isRequired,
   fieldName: PropTypes.string.isRequired,
-  fieldId: PropTypes.string.isRequired,
   placeholder: PropTypes.string
 };
 

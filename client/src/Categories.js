@@ -56,8 +56,6 @@ class Categories extends Component {
                     }
                   >
                     {categoryImg}
-                    <span className="firstWord">{firstWord}</span>
-                    <span>{lastWord}</span>
                   </button>
                 ) : (
                   <Link to={url} title={`${firstWord} ${lastWord}`}>

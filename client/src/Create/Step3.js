@@ -120,7 +120,6 @@ class Step3 extends Component {
               ariaLabel={`What did ${opponent} do?`}
               placeholder={`${opponent}…`}
               fieldName="beef"
-              fieldId="beef"
             />
           </FieldWrap>
 
@@ -134,7 +133,6 @@ class Step3 extends Component {
               ariaLabel={`What did ${opponent} do?`}
               placeholder={`This is where you really get to plead your case against ${opponent}. Tell the voters why this bothers you so much.`}
               fieldName="bother"
-              fieldId="bother"
             />
           </FieldWrap>
 
