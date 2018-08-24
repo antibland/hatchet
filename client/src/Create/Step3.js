@@ -37,9 +37,11 @@ class Step3 extends Component {
       count: 0,
       title: "",
       beef: "",
+      bother: "",
       isValid: false,
       isTitleValid: false,
-      isBeefValid: false
+      isBeefValid: false,
+      isBotherYouValid: false
     };
 
     this.handleTitleInput = this.handleTitleInput.bind(this);
@@ -48,8 +50,13 @@ class Step3 extends Component {
 
   setOverallValidity() {
     setTimeout(() => {
-      const { isTitleValid, isBeefValid } = this.state;
-      this.setState({ isValid: isTitleValid === true && isBeefValid === true });
+      const { isTitleValid, isBeefValid, isBotherYouValid } = this.state;
+      this.setState({
+        isValid:
+          isTitleValid === true &&
+          isBeefValid === true &&
+          isBotherYouValid === true
+      });
     }, 50);
   }
 
@@ -64,17 +71,24 @@ class Step3 extends Component {
     this.setOverallValidity();
   }
 
-  handleTextareaChange(fieldValidity, fieldVal) {
+  handleTextareaChange(fieldValidity, fieldVal, fieldId) {
+    let validField = null;
+    if (fieldId === "beef") {
+      validField = "isBeefValid";
+    } else if (fieldId === "bother") {
+      validField = "isBotherYouValid";
+    }
+
     this.setState({
-      isBeefValid: fieldValidity,
-      beef: fieldVal
+      [validField]: fieldValidity,
+      [fieldId]: fieldVal
     });
 
     this.setOverallValidity();
   }
 
   render() {
-    const { isValid, beef, title } = this.state;
+    const { isValid, beef, bother, title } = this.state;
     const opponent = this.props.fightData.opponent;
 
     return (
@@ -110,10 +124,24 @@ class Step3 extends Component {
             />
           </FieldWrap>
 
+          <PageH2>
+            Why does this bother <Highlight>you</Highlight>?
+          </PageH2>
+          <FieldWrap>
+            <TextareaWithCountdown
+              countLimit={1000}
+              onInput={this.handleTextareaChange}
+              ariaLabel={`What did ${opponent} do?`}
+              placeholder={`This is where you really get to plead your case against ${opponent}. Tell the voters why this bothers you so much.`}
+              fieldName="bother"
+              fieldId="bother"
+            />
+          </FieldWrap>
+
           <SubmitButton
             type="submit"
             onClick={event =>
-              this.props.afterValid(event, { beef: beef, title: title }, true)
+              this.props.afterValid(event, { beef, bother, title }, true)
             }
             disabled={!isValid}
             className="button primary"

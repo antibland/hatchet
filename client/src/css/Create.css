@@ -121,12 +121,12 @@
 .countdownContainer textarea {
   flex-grow: 1;
   width: 100%;
-  min-height: 200px;
   padding: 10px;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
+  border: 1px solid var(--teal);
   resize: none;
 }
 
