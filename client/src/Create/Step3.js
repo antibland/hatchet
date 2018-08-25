@@ -38,7 +38,7 @@ class Step3 extends Component {
       title: "",
       beef: "",
       bother: "",
-      action: "",
+      takeAction: "",
       isValid: false,
       isTitleValid: false,
       isBeefValid: false,
@@ -86,7 +86,7 @@ class Step3 extends Component {
         return "isBeefValid";
       case "bother":
         return "isBotherYouValid";
-      case "action":
+      case "takeAction":
         return "isActionValid";
       default:
         return "";
@@ -105,7 +105,7 @@ class Step3 extends Component {
   }
 
   render() {
-    const { isValid, beef, bother, action, title } = this.state;
+    const { isValid, beef, bother, takeAction, title } = this.state;
     const opponent = this.props.fightData.opponent;
 
     return (
@@ -162,7 +162,7 @@ class Step3 extends Component {
               onInput={this.handleTextareaChange}
               ariaLabel={`What should ${opponent} do now?`}
               placeholder="What is it that you really want? An apology? Financial restitution? A change in behavior?"
-              fieldName="action"
+              fieldName="takeAction"
             />
           </FieldWrap>
 
@@ -171,7 +171,7 @@ class Step3 extends Component {
             onClick={event =>
               this.props.afterValid(
                 event,
-                { beef, bother, action, title },
+                { beef, bother, takeAction, title },
                 true
               )
             }
