@@ -48,6 +48,7 @@ class Step3 extends Component {
 
     this.handleTitleInput = this.handleTitleInput.bind(this);
     this.handleTextareaChange = this.handleTextareaChange.bind(this);
+    this.locateField = this.locateField.bind(this);
   }
 
   setOverallValidity() {
@@ -79,15 +80,21 @@ class Step3 extends Component {
     this.setOverallValidity();
   }
 
-  handleTextareaChange(fieldValidity, fieldVal, fieldId) {
-    let validField = null;
-    if (fieldId === "beef") {
-      validField = "isBeefValid";
-    } else if (fieldId === "bother") {
-      validField = "isBotherYouValid";
-    } else if (fieldId === "action") {
-      validField = "isActionValid";
+  locateField(fieldId) {
+    switch (fieldId) {
+      case "beef":
+        return "isBeefValid";
+      case "bother":
+        return "isBotherYouValid";
+      case "action":
+        return "isActionValid";
+      default:
+        return "";
     }
+  }
+
+  handleTextareaChange(fieldValidity, fieldVal, fieldId) {
+    const validField = this.locateField(fieldId);
 
     this.setState({
       [validField]: fieldValidity,
