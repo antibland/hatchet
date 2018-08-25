@@ -1,21 +1,19 @@
-import React, { Component } from 'react';
-import { auth } from './Auth';
-import Modal from './shared/components/Modal';
-import Step1 from './Create/Step1';
-import Step2 from './Create/Step2';
-import Step3 from './Create/Step3';
-import './css/Create.css';
-import './css/Form.css';
+import React, { Component } from "react";
+import { auth } from "./Auth";
+import Modal from "./shared/components/Modal";
+import Step1 from "./Create/Step1";
+import Step2 from "./Create/Step2";
+import Step3 from "./Create/Step3";
+import "./css/Create.css";
+import "./css/Form.css";
 
 const PreviousButton = props => (
   <div className="previousButtonWrap">
-    <button
-      type="submit"
-      onClick={props.onClick}
-      className="button alt-color">Back
+    <button type="submit" onClick={props.onClick} className="button alt-color">
+      Back
     </button>
   </div>
-)
+);
 class Wizard extends Component {
   constructor() {
     super();
@@ -37,10 +35,10 @@ class Wizard extends Component {
 
     // '/api/:userId/fight' => fightApi.newFight
     fetch(`/api/${auth.user.userid}/fight`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
+        Accept: "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         type,
@@ -48,48 +46,36 @@ class Wizard extends Component {
         beef,
         opponent
       })
-    }).then(res => res.json())
+    })
+      .then(res => res.json())
       .then(data => {
-        if (data.type === 'success') {
-          this.setState({ isModalOpen: true })
+        if (data.type === "success") {
+          this.setState({ isModalOpen: true });
         }
       })
       .catch(err => {
         console.error(err);
-      });;
+      });
   }
 
-  _next(e, data, completed=false) {
+  _next(e, data, completed = false) {
     e.preventDefault();
-    let currentStep = this.state.currentStep;
 
-    if (currentStep >= 2) {
-      currentStep = 3;
-    } else {
-      currentStep += 1;
-    }
-
-    this.setState({
-      currentStep: currentStep
-    });
+    this.setState(prevState => ({
+      currentStep: prevState.currentStep >= 2 ? 3 : ++prevState.currentStep
+    }));
 
     setTimeout(() => {
       this._gatherData(data, completed);
-    }, 300)
+    }, 300);
   }
 
   _prev(e) {
     e.preventDefault();
-    let currentStep = this.state.currentStep;
-    if (currentStep <= 1) {
-      currentStep = 1;
-    } else {
-      currentStep -= 1;
-    }
 
-    this.setState({
-      currentStep: currentStep
-    });
+    this.setState(prevState => ({
+      currentStep: prevState.currentStep <= 1 ? 1 : --prevState.currentStep
+    }));
   }
 
   _gatherData(data, completed) {
@@ -105,12 +91,12 @@ class Wizard extends Component {
   }
 
   closeModal() {
-    this.setState({ isModalOpen: false })
-    this.props.history.push('/');
+    this.setState({ isModalOpen: false });
+    this.props.history.push("/");
   }
 
   openModal() {
-    this.setState({ isModalOpen: true })
+    this.setState({ isModalOpen: true });
   }
 
   render() {
@@ -123,16 +109,19 @@ class Wizard extends Component {
           <div className={activeStep}>
             <Step1 currentStep={currentStep} afterValid={this._next} />
             <Step2 currentStep={currentStep} afterValid={this._next} />
-            <Step3 currentStep={currentStep} afterValid={this._next} fightData={fight} />
+            <Step3
+              currentStep={currentStep}
+              afterValid={this._next}
+              fightData={fight}
+            />
           </div>
-          { currentStep > 1
-            ? <PreviousButton onClick={this._prev} />
-            : ''
-          }
+          {currentStep > 1 ? <PreviousButton onClick={this._prev} /> : ""}
         </form>
         <Modal isOpen={isModalOpen} closeModal={this.closeModal}>
-          <p>The fight was created. Everything worked. Now it's up to them. May your hatchet be
-            swiftly buried.</p>
+          <p>
+            The fight was created. Everything worked. Now it's up to them. May
+            your hatchet be swiftly buried.
+          </p>
         </Modal>
       </React.Fragment>
     );
