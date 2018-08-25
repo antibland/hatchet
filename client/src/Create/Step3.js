@@ -38,10 +38,12 @@ class Step3 extends Component {
       title: "",
       beef: "",
       bother: "",
+      action: "",
       isValid: false,
       isTitleValid: false,
       isBeefValid: false,
-      isBotherYouValid: false
+      isBotherYouValid: false,
+      isActionValid: false
     };
 
     this.handleTitleInput = this.handleTitleInput.bind(this);
@@ -50,12 +52,18 @@ class Step3 extends Component {
 
   setOverallValidity() {
     setTimeout(() => {
-      const { isTitleValid, isBeefValid, isBotherYouValid } = this.state;
+      const {
+        isTitleValid,
+        isBeefValid,
+        isBotherYouValid,
+        isActionValid
+      } = this.state;
       this.setState({
         isValid:
           isTitleValid === true &&
           isBeefValid === true &&
-          isBotherYouValid === true
+          isBotherYouValid === true &&
+          isActionValid === true
       });
     }, 50);
   }
@@ -77,6 +85,8 @@ class Step3 extends Component {
       validField = "isBeefValid";
     } else if (fieldId === "bother") {
       validField = "isBotherYouValid";
+    } else if (fieldId === "action") {
+      validField = "isActionValid";
     }
 
     this.setState({
@@ -88,7 +98,7 @@ class Step3 extends Component {
   }
 
   render() {
-    const { isValid, beef, bother, title } = this.state;
+    const { isValid, beef, bother, action, title } = this.state;
     const opponent = this.props.fightData.opponent;
 
     return (
@@ -136,10 +146,27 @@ class Step3 extends Component {
             />
           </FieldWrap>
 
+          <PageH2>
+            What should <Highlight>{opponent}</Highlight> do now?
+          </PageH2>
+          <FieldWrap>
+            <TextareaWithCountdown
+              countLimit={1000}
+              onInput={this.handleTextareaChange}
+              ariaLabel={`What should ${opponent} do now?`}
+              placeholder="What is it that you really want? An apology? Financial restitution? A change in behavior?"
+              fieldName="action"
+            />
+          </FieldWrap>
+
           <SubmitButton
             type="submit"
             onClick={event =>
-              this.props.afterValid(event, { beef, bother, title }, true)
+              this.props.afterValid(
+                event,
+                { beef, bother, action, title },
+                true
+              )
             }
             disabled={!isValid}
             className="button primary"
