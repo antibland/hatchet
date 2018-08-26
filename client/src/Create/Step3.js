@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import styled, { css } from "styled-components";
 import TextareaWithCountdown from "../shared/components/TextareaWithCountdown";
+import shared from "./shared/styles";
+
+const StepButtons = shared.stepButtons();
+const SubmitButton = shared.submitButton();
+const FieldWrap = shared.fieldWrap();
 
 const Highlight = styled.span`
   color: var(--red);
@@ -18,16 +23,6 @@ const PageH1 = styled.h1`
 
 const PageH2 = styled.h2`
   ${headerStyles};
-`;
-
-const FieldWrap = styled.div`
-  margin: 0 2em;
-  position: relative;
-`;
-
-const SubmitButton = styled.button`
-  display: "block";
-  margin: "2em auto 0;
 `;
 
 class Step3 extends Component {
@@ -166,20 +161,23 @@ class Step3 extends Component {
             />
           </FieldWrap>
 
-          <SubmitButton
-            type="submit"
-            onClick={event =>
-              this.props.afterValid(
-                event,
-                { beef, bother, takeAction, title },
-                true
-              )
-            }
-            disabled={!isValid}
-            className="button primary"
-          >
-            Complete
-          </SubmitButton>
+          <StepButtons>
+            {this.props.children}
+            <SubmitButton
+              type="submit"
+              onClick={event =>
+                this.props.afterValid(
+                  event,
+                  { beef, bother, takeAction, title },
+                  true
+                )
+              }
+              disabled={!isValid}
+              className="button primary"
+            >
+              Complete
+            </SubmitButton>
+          </StepButtons>
         </div>
       </div>
     );

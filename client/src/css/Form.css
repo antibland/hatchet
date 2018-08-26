@@ -159,6 +159,10 @@ input.featured {
   border: 1px solid var(--teal);
 }
 
+input.featured + [type="submit"] {
+  margin-top: 15px;
+}
+
 .joinTerms {
   font-size: 70%;
   padding: 1em 0;

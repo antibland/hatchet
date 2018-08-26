@@ -8,11 +8,9 @@ import "./css/Create.css";
 import "./css/Form.css";
 
 const PreviousButton = props => (
-  <div className="previousButtonWrap">
-    <button type="submit" onClick={props.onClick} className="button alt-color">
-      Back
-    </button>
-  </div>
+  <button type="submit" onClick={props.onClick} className="button primary alt">
+    Back
+  </button>
 );
 class Wizard extends Component {
   constructor() {
@@ -108,14 +106,17 @@ class Wizard extends Component {
         <form action={formAction} method="post" className="stepsForm">
           <div className={activeStep}>
             <Step1 currentStep={currentStep} afterValid={this._next} />
-            <Step2 currentStep={currentStep} afterValid={this._next} />
+            <Step2 currentStep={currentStep} afterValid={this._next}>
+              <PreviousButton onClick={this._prev} />
+            </Step2>
             <Step3
               currentStep={currentStep}
               afterValid={this._next}
               fightData={fight}
-            />
+            >
+              <PreviousButton onClick={this._prev} />
+            </Step3>
           </div>
-          {currentStep > 1 ? <PreviousButton onClick={this._prev} /> : ""}
         </form>
         <Modal isOpen={isModalOpen} closeModal={this.closeModal}>
           <p>

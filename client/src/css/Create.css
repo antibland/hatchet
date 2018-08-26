@@ -28,23 +28,6 @@
   margin: 0 auto;
 }
 
-.previousButtonWrap {
-  position: absolute;
-  top: -1em;
-  left: 0;
-}
-
-.previousButtonWrap button,
-.stepContainer button {
-  font-size: 1em;
-}
-
-.previousButtonWrap button {
-  border-radius: 0 8px 8px 0;
-  margin: 45px auto 0;
-  color: white;
-}
-
 .activeStep-1 {
   transform: translateX(0);
 }
@@ -147,14 +130,4 @@
 
 .charsRemaining.error {
   color: red;
-}
-
-@media screen and (max-width: 500px) {
-  .previousButtonWrap {
-    position: relative;
-  }
-
-  .previousButtonWrap button {
-    border-radius: 8px;
-  }
 }

@@ -6,6 +6,9 @@ import LookupResult from "./LookupResult";
 import SlotsThem from "./SlotsThem";
 import SlotsYou from "./SlotsYou";
 import VersusImg from "../shared/components/VersusImg";
+import shared from "./shared/styles";
+
+const SubmitButton = shared.submitButton();
 
 class Step1 extends Component {
   static timeout = null;
@@ -141,17 +144,16 @@ class Step1 extends Component {
 
           {opponentIsValidUserResult}
 
-          <button
+          <SubmitButton
             type="submit"
             onClick={event =>
               this.props.afterValid(event, { opponent: someone })
             }
-            style={{ display: "block", margin: "2em auto 0" }}
             disabled={!isValid}
-            className="button"
+            className="button primary"
           >
             Continue
-          </button>
+          </SubmitButton>
         </div>
       </div>
     );

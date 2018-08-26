@@ -1,12 +1,16 @@
-import React, { Component } from 'react';
-import Categories from '../Categories';
+import React, { Component } from "react";
+import Categories from "../Categories";
+import shared from "./shared/styles";
+
+const StepButtons = shared.stepButtons();
+const SubmitButton = shared.submitButton();
 
 class Step2 extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isValid: false,
-      type: ''
+      type: ""
     };
     this.handleButtonClick = this.handleButtonClick.bind(this);
   }
@@ -15,30 +19,32 @@ class Step2 extends Component {
     this.setState({
       isValid: true,
       type
-    })
+    });
   }
 
   render() {
     const { isValid, type } = this.state;
+    console.log(this.props.children[0]);
 
     return (
       <div className="stepContainer">
         <div className="inner">
           <h2>Pick a Category</h2>
-          <Categories mode='button' onClick={this.handleButtonClick} />
-          <button
-            type="submit"
-            onClick={(event) => this.props.afterValid(
-              event,
-              { type:type }
-            )}
-            style={{ display: 'block', margin: '2em auto 0'}}
-            disabled={!isValid}
-            className="button">Continue
-          </button>
+          <Categories mode="button" onClick={this.handleButtonClick} />
+          <StepButtons>
+            {this.props.children}
+            <SubmitButton
+              type="submit"
+              onClick={event => this.props.afterValid(event, { type: type })}
+              disabled={!isValid}
+              className="button primary"
+            >
+              Continue
+            </SubmitButton>
+          </StepButtons>
         </div>
       </div>
-    )
+    );
   }
 }
 

@@ -8,6 +8,7 @@
   --red: rgb(231, 77, 103);
   --bright-gold: rgb(255,	230,	51);
   --teal: rgb(57, 160, 207);
+  --bright-teal: rgb(102, 193, 224);
   --dark-blue: rgb(15, 48, 80);
   --content-padding: 0 3em;
   --content-padding-mobile: 0 1.5em;
@@ -191,6 +192,19 @@ a.button {
   max-width: 280px;
   margin: 0 auto;
   white-space: nowrap;
+}
+
+.button.primary.alt {
+  background: linear-gradient(
+    -35deg, var(--teal),
+    var(--teal) 30%, var(--teal) 30%,
+    var(--bright-teal) 30%, var(--bright-teal) 33%,
+    var(--teal) 33%, var(--teal) 35%,
+    var(--bright-teal) 35%, var(--bright-teal) 65%,
+    var(--teal) 65%, var(--teal) 67%,
+    var(--bright-teal) 67%, var(--bright-teal) 70%,
+    var(--teal) 70%
+  );
 }
 
 .bottom-margin {
