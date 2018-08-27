@@ -9,6 +9,7 @@ import VersusImg from "../shared/components/VersusImg";
 import shared from "./shared/styles";
 
 const SubmitButton = shared.submitButton();
+const StepButtons = shared.stepButtons();
 
 class Step1 extends Component {
   static timeout = null;
@@ -144,16 +145,18 @@ class Step1 extends Component {
 
           {opponentIsValidUserResult}
 
-          <SubmitButton
-            type="submit"
-            onClick={event =>
-              this.props.afterValid(event, { opponent: someone })
-            }
-            disabled={!isValid}
-            className="button primary"
-          >
-            Continue
-          </SubmitButton>
+          <StepButtons>
+            <SubmitButton
+              type="submit"
+              onClick={event =>
+                this.props.afterValid(event, { opponent: someone })
+              }
+              disabled={!isValid}
+              className="button primary"
+            >
+              Continue
+            </SubmitButton>
+          </StepButtons>
         </div>
       </div>
     );
