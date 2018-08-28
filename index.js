@@ -7,7 +7,7 @@ const cors = require("cors");
 const env = process.env.NODE_ENV || "development";
 
 mongoose.set("useFindAndModify", false);
-//const MongoStore = require('connect-mongo')(session);
+mongoose.set("useCreateIndex", true);
 
 app.use(
   bodyParser.urlencoded({
