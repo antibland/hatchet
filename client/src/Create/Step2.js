@@ -24,7 +24,6 @@ class Step2 extends Component {
 
   render() {
     const { isValid, type } = this.state;
-    console.log(this.props.children[0]);
 
     return (
       <div className="stepContainer">
