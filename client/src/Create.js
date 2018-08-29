@@ -29,7 +29,14 @@ class Wizard extends Component {
   }
 
   _submitForm() {
-    const { type, title, beef, opponent } = this.state.fight;
+    const {
+      type,
+      title,
+      beef,
+      opponent,
+      bother,
+      takeAction
+    } = this.state.fight;
 
     // '/api/:userId/fight' => fightApi.newFight
     fetch(`/api/${auth.user.userid}/fight`, {
@@ -42,7 +49,9 @@ class Wizard extends Component {
         type,
         title,
         beef,
-        opponent
+        opponent,
+        bother,
+        takeAction
       })
     })
       .then(res => res.json())

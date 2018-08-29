@@ -251,7 +251,13 @@ exports.newFight = async (req, res) => {
     type: req.body.type,
     title: req.body.title,
     antagonist: user,
-    text: { for: req.body.beef }
+    text: {
+      attacker: {
+        do: req.body.beef,
+        bother: req.body.bother,
+        action: req.body.takeAction
+      }
+    }
   };
 
   const create = async () => {
@@ -277,7 +283,6 @@ exports.newFight = async (req, res) => {
     : { username: oppenentRef };
 
   opponent = await User.findOne(findBy);
-  //console.log('opponent', opponent);
 
   if (!opponent || opponent === null) {
     // Case: User not found via email lookup. Send an invite
