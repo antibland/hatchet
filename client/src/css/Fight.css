@@ -81,8 +81,8 @@
 
 .fightBody h3 {
   color: var(--teal);
-  margin: 0;
   font-size: 1.4rem;
+  margin: 0 0 20px;
 }
 
 .fightBody .user1 h3 {
@@ -165,10 +165,10 @@
 .fightText {
   margin: 0;
   line-height: 1.5;
-  padding: 22px 0 12px;
   color: var(--dark-text);
   text-align: left;
   font-weight: bold;
+  padding: 0 0 10px;
 }
 
 .blurred {

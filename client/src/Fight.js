@@ -11,6 +11,18 @@ import Vote from "./Vote";
 import "./css/Fight.css";
 import "./css/Watching.css";
 
+const PlaceholderText = () => {
+  const placeholderText =
+    "Lorem, ipsum dolor sit amet consect adipisicing elit. Facilis fugiat in impedit maxime adipisicing elit";
+
+  return (
+    <React.Fragment>
+      <p className="fightText blurred">{placeholderText}</p>
+      <p className="fightText blurred">{placeholderText}</p>
+      <p className="fightText blurred">{placeholderText}</p>
+    </React.Fragment>
+  );
+};
 class Fight extends Component {
   constructor() {
     super();
@@ -32,7 +44,11 @@ class Fight extends Component {
       antagonist: {
         avatarPath: "",
         username: "",
-        argument: ""
+        argument: {
+          offense: "",
+          bother: "",
+          action: ""
+        }
       },
       defender: {
         avatarPath: "",
@@ -102,7 +118,11 @@ class Fight extends Component {
               ? data.fight.antagonist.avatar.path
               : "",
             username: data.fight.antagonist.username,
-            argument: data.fight.text.for
+            argument: {
+              offense: data.fight.text.attacker.do,
+              bother: data.fight.text.attacker.bother,
+              action: data.fight.text.attacker.action
+            }
           },
           defender: {
             avatarPath: data.fight.defender.avatar
@@ -156,9 +176,10 @@ class Fight extends Component {
       votes,
       activatedAt
     } = this.state;
+
+    const { offense, bother, action } = this.state.antagonist.argument;
+
     const fightId = this.props.match.params.fightId;
-    const placeholderText =
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis fugiat in impedit maxime blanditiis nam assumenda. Dicta quo sequi dolorum similique. Libero repudiandae esse voluptate impedit delectus enim, nostrum quos?";
 
     antagonist.imgpath =
       this.state.antagonist.avatarPath === ""
@@ -169,8 +190,6 @@ class Fight extends Component {
       username === this.state.antagonist.username
         ? "You"
         : this.state.antagonist.username;
-
-    antagonist.argument = this.state.antagonist.argument;
 
     defender.imgpath =
       this.state.defender.avatarPath === ""
@@ -184,7 +203,7 @@ class Fight extends Component {
     defender.argument = isLive ? (
       <p className="fightText">{this.state.defender.argument}</p>
     ) : (
-      <p className="fightText blurred">{placeholderText}</p>
+      <PlaceholderText />
     );
 
     const userCanDefend =
@@ -308,7 +327,9 @@ class Fight extends Component {
                 <div className="fightBody">
                   <div className="user1">
                     <h3>{antagonist.username}</h3>
-                    <p className="fightText">{antagonist.argument}</p>
+                    <p className="fightText">{offense}</p>
+                    <p className="fightText">{bother}</p>
+                    <p className="fightText">{action}</p>
 
                     <VotingButton side="for" username={antagonist.username} />
                   </div>
