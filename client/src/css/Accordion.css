@@ -10,16 +10,21 @@
   color: #fff;
   overflow: hidden;
 }
-input[type="checkbox"] {
+
+.tab [type="checkbox"] {
   position: absolute;
   opacity: 0;
   z-index: -1;
 }
 
+.tab [type="checkbox"]:focus + label {
+  font-weight: bold;
+}
+
 .tab-label {
   position: relative;
   display: block;
-  font-weight: bold;
+  font-weight: normal;
   line-height: 2;
   background-color: var(--teal);
   color: white;
@@ -29,6 +34,7 @@ input[type="checkbox"] {
   padding: .5em 2em .5em 1em;
   margin: 0;
 }
+
 .tab-content {
   max-height: 0;
   overflow: hidden;
