@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Pagination from "./shared/components/Pagination";
 import Loading from "./Loading.js";
+import utilities from "./shared/utilities";
 
 class Category extends Component {
   constructor() {
@@ -8,13 +9,16 @@ class Category extends Component {
     this.state = {
       fights: [],
       loading: true,
-      message: ""
+      message: "",
+      firstWord: ""
     };
   }
 
   componentDidMount() {
     // /api/fights/categories/:category' => fightApi.getFightsByCategory
     const { pathname } = this.props.location;
+    const lastSegment = pathname.substr(pathname.lastIndexOf("/") + 1);
+    this.setState({ firstWord: lastSegment.split("_")[0] });
 
     fetch(`/api/fights${pathname}`)
       .then(res => res.json())
@@ -28,6 +32,7 @@ class Category extends Component {
   }
 
   render() {
+    const categoryImg = utilities.getCategoryImage(this.state.firstWord);
     const NoFightResults = () => (
       <ul>
         <li className="noResults center">
@@ -37,14 +42,17 @@ class Category extends Component {
     );
 
     return (
-      <div className="paginationContainer">
-        {this.state.loading === true ? (
-          <Loading />
-        ) : this.state.fights.length === 0 ? (
-          <NoFightResults />
-        ) : (
-          <Pagination items={this.state.fights} />
-        )}
+      <div>
+        {categoryImg}
+        <div className="paginationContainer">
+          {this.state.loading === true ? (
+            <Loading />
+          ) : this.state.fights.length === 0 ? (
+            <NoFightResults />
+          ) : (
+            <Pagination items={this.state.fights} />
+          )}
+        </div>
       </div>
     );
   }
