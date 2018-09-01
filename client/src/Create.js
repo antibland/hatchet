@@ -4,15 +4,22 @@ import Modal from "./shared/components/Modal";
 import Step1 from "./Create/Step1";
 import Step2 from "./Create/Step2";
 import Step3 from "./Create/Step3";
+import Step4 from "./Create/Step4";
 import "./css/Create.css";
 import "./css/Form.css";
 
 const PreviousButton = props => (
-  <button type="submit" onClick={props.onClick} className="button primary alt">
+  <button
+    type="submit"
+    onClick={props.onClick}
+    className="button primary alt maxWidth"
+  >
     Back
   </button>
 );
 class Wizard extends Component {
+  static TOTAL_STEPS = 4;
+
   constructor() {
     super();
     this.state = {
@@ -69,7 +76,10 @@ class Wizard extends Component {
     e.preventDefault();
 
     this.setState(prevState => ({
-      currentStep: prevState.currentStep >= 2 ? 3 : ++prevState.currentStep
+      currentStep:
+        prevState.currentStep >= Wizard.TOTAL_STEPS
+          ? Wizard.TOTAL_STEPS
+          : ++prevState.currentStep
     }));
 
     setTimeout(() => {
@@ -86,14 +96,14 @@ class Wizard extends Component {
   }
 
   _gatherData(data, completed) {
-    Object.keys(data).forEach(key => {
-      let newState = Object.assign({}, this.state);
-      newState.fight[key] = data[key];
-      this.setState(newState);
-    });
-
     if (completed === true) {
       this._submitForm();
+    } else {
+      Object.keys(data).forEach(key => {
+        let newState = Object.assign({}, this.state);
+        newState.fight[key] = data[key];
+        this.setState(newState);
+      });
     }
   }
 
@@ -125,6 +135,13 @@ class Wizard extends Component {
             >
               <PreviousButton onClick={this._prev} />
             </Step3>
+            <Step4
+              currentStep={currentStep}
+              afterValid={this._next}
+              fightData={fight}
+            >
+              <PreviousButton onClick={this._prev} />
+            </Step4>
           </div>
         </form>
         <Modal isOpen={isModalOpen} closeModal={this.closeModal}>

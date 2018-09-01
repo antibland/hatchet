@@ -5,24 +5,12 @@ import Loading from "./Loading";
 import Symbol from "./shared/components/Symbol";
 import StartHatchet from "./shared/components/StartHatchet";
 import TextareaWithCountdown from "./shared/components/TextareaWithCountdown";
+import PlaceholderText from "./shared/components/PlaceholderText";
 import VersusImg from "./shared/components/VersusImg";
 import utilities from "./shared/utilities";
 import Vote from "./Vote";
 import "./css/Fight.css";
-import "./css/Watching.css";
 
-const PlaceholderText = () => {
-  const placeholderText =
-    "Lorem, ipsum dolor sit amet consect adipisicing elit. Facilis fugiat in impedit maxime adipisicing elit";
-
-  return (
-    <React.Fragment>
-      <p className="fightText blurred">{placeholderText}</p>
-      <p className="fightText blurred">{placeholderText}</p>
-      <p className="fightText blurred">{placeholderText}</p>
-    </React.Fragment>
-  );
-};
 class Fight extends Component {
   constructor() {
     super();

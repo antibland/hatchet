@@ -9,7 +9,7 @@
 .stepsContainer {
   overflow: hidden;
   display: flex;
-  width: 300vw;
+  width: 400vw;
   flex-flow: row wrap;
   transform: translateX(0);
   transition: 0.3s transform;
@@ -29,6 +29,10 @@
   padding: 0 1em;
 }
 
+.stepContainer .inner.relaxedWidth {
+  max-width: none;
+}
+
 .activeStep-1 {
   transform: translateX(0);
 }
@@ -41,20 +45,35 @@
   transform: translateX(-200vw);
 }
 
+.activeStep-4 {
+  transform: translateX(-300vw);
+}
+
+
 .activeStep-1 .stepContainer:nth-child(2),
-.activeStep-1 .stepContainer:nth-child(3) {
+.activeStep-1 .stepContainer:nth-child(3),
+.activeStep-1 .stepContainer:nth-child(4) {
   height: 0;
   opacity: 0;
 }
 
 .activeStep-2 .stepContainer:nth-child(1),
-.activeStep-2 .stepContainer:nth-child(3) {
+.activeStep-2 .stepContainer:nth-child(3),
+.activeStep-2 .stepContainer:nth-child(4) {
   height: 0;
   opacity: 0;
 }
 
 .activeStep-3 .stepContainer:nth-child(1),
-.activeStep-3 .stepContainer:nth-child(2) {
+.activeStep-3 .stepContainer:nth-child(2),
+.activeStep-3 .stepContainer:nth-child(4) {
+  height: 0;
+  opacity: 0;
+}
+
+.activeStep-4 .stepContainer:nth-child(1),
+.activeStep-4 .stepContainer:nth-child(2),
+.activeStep-4 .stepContainer:nth-child(3) {
   height: 0;
   opacity: 0;
 }

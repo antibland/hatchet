@@ -15,6 +15,7 @@
   --alt-button-color: rgb(66, 158, 202);
   --dark-text: rgb(37, 73, 101);
   --header-teal: rgb(203, 235, 245);
+  --button-max-width: 250px;
 }
 
 ::placeholder {
@@ -172,6 +173,10 @@ a.button {
   width: 100%;
 }
 
+.button.maxWidth {
+  max-width: var(--button-max-width) !important;
+}
+
 .fullWidth {
   width: 100%;
 }
@@ -189,7 +194,7 @@ a.button {
   );
   border: none;
   width: auto;
-  max-width: 280px;
+  max-width: var(--button-max-width);
   margin: 0 auto;
   white-space: nowrap;
 }

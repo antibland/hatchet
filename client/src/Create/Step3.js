@@ -166,16 +166,17 @@ class Step3 extends Component {
             <SubmitButton
               type="submit"
               onClick={event =>
-                this.props.afterValid(
-                  event,
-                  { beef, bother, takeAction, title },
-                  true
-                )
+                this.props.afterValid(event, {
+                  beef,
+                  bother,
+                  takeAction,
+                  title
+                })
               }
               disabled={!isValid}
               className="button primary"
             >
-              Complete
+              Preview
             </SubmitButton>
           </StepButtons>
         </div>

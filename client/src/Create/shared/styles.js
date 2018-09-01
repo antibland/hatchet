@@ -7,7 +7,6 @@ const shared = {
       justify-content: center;
       padding-top: 20px;
       & > * {
-        max-width: none !important;
         padding-top: 0.9em !important;
         padding-bottom: 0.9em !important;
         flex: 1;
