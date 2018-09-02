@@ -29,7 +29,7 @@ class Step2 extends Component {
       <div className="stepContainer">
         <div className="inner">
           <h2>Pick a Category</h2>
-          <Categories mode="button" onClick={this.handleButtonClick} />
+          <Categories view="stepsPage" onClick={this.handleButtonClick} />
           <StepButtons>
             {this.props.children}
             <SubmitButton
