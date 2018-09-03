@@ -16,7 +16,10 @@ class Category extends Component {
 
   componentDidMount() {
     // /api/fights/categories/:category' => fightApi.getFightsByCategory
-    const { pathname } = this.props.location;
+    let pathname = this.props.pathname
+      ? this.props.pathname
+      : this.props.location.pathname;
+
     const lastSegment = pathname.substr(pathname.lastIndexOf("/") + 1);
     this.setState({ firstWord: lastSegment.split("_")[0] });
 
@@ -32,7 +35,12 @@ class Category extends Component {
   }
 
   render() {
-    const categoryImg = utilities.getCategoryImage(this.state.firstWord);
+    const CategoryImg = () => {
+      return this.props.renderFrom === "listPage"
+        ? ""
+        : utilities.getCategoryImage(this.state.firstWord);
+    };
+
     const NoFightResults = () => (
       <ul>
         <li className="noResults center">
@@ -43,7 +51,7 @@ class Category extends Component {
 
     return (
       <div>
-        {categoryImg}
+        <CategoryImg />
         <div className="paginationContainer">
           {this.state.loading === true ? (
             <Loading />
@@ -57,5 +65,9 @@ class Category extends Component {
     );
   }
 }
+
+Category.defaultProps = {
+  renderFrom: ""
+};
 
 export default Category;

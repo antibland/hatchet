@@ -5,8 +5,19 @@
 
 .categories.listPage {
   grid-template-columns: repeat(5, [col] auto);
-  padding-top: 3.5em;
-  margin-bottom: auto;
+  padding: 3.5em 6.5em 0;
+}
+
+.categories.listPage a {
+  display: block;
+}
+
+.categories.listPage img {
+  pointer-events: none;
+}
+
+.categories.listPage + .results {
+  flex-grow: 1;
 }
 
 .categories.stepsPage li:nth-last-child(3) {
