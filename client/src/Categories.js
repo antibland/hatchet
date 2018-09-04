@@ -65,7 +65,7 @@ class Categories extends Component {
       .join("_");
   }
 
-  createCategoryLink(item, categoryImg) {
+  createCategoryLink(item, categoryImg, isMobile = false) {
     let [firstWord, lastWord] = item.split(" ");
     let url = `/categories/${this.filterItem(item)}`;
 
@@ -74,10 +74,12 @@ class Categories extends Component {
         to={url}
         title={`${firstWord} ${lastWord}`}
         onClick={e => {
-          e.preventDefault();
-          this.setState({
-            filteredItem: this.filterItem(item)
-          });
+          if (!isMobile) {
+            e.preventDefault();
+            this.setState({
+              filteredItem: this.filterItem(item)
+            });
+          }
         }}
       >
         {categoryImg}
@@ -108,13 +110,31 @@ class Categories extends Component {
       );
     };
 
-    const RenderCategories = () => {
+    const MobileMenu = () => {
       return (
-        <ul className={classes}>
+        <ul className={`${classes} mobile`}>
           {commonData.categories.map((item, index) => {
             let categoryImg = utilities.getCategoryImage(item.split(" ")[0]);
             return (
               <li key={index}>
+                {this.createCategoryLink(item, categoryImg, true)}
+              </li>
+            );
+          })}
+        </ul>
+      );
+    };
+
+    const Menu = () => {
+      return (
+        <ul className={classes}>
+          {commonData.categories.map((item, index) => {
+            let categoryImg = utilities.getCategoryImage(item.split(" ")[0]);
+            let filteredItem = this.state.filteredItem;
+            let currentItem = this.filterItem(item);
+            let activeClass = filteredItem === currentItem ? "active" : "";
+            return (
+              <li key={index} className={`categoriesListitem ${activeClass}`}>
                 {this.props.view === "stepsPage"
                   ? this.createCategoryButton(index, categoryImg)
                   : this.createCategoryLink(item, categoryImg)}
@@ -122,6 +142,15 @@ class Categories extends Component {
             );
           })}
         </ul>
+      );
+    };
+
+    const RenderCategories = () => {
+      return (
+        <React.Fragment>
+          <Menu />
+          {this.props.view === "listPage" && <MobileMenu />}
+        </React.Fragment>
       );
     };
 
