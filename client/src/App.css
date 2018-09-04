@@ -263,6 +263,10 @@ a.button {
   border-top: 1px solid var(--teal);
 }
 
+.fightList tbody tr:last-child {
+  border-bottom: 1px solid var(--teal);
+}
+
 .fightList tbody td {
   padding: 10px 0;
 }
@@ -378,6 +382,22 @@ a.button {
   margin: 0;
 }
 
+@media screen and (max-width: 800px) {
+  .fightList {
+    max-width: calc(100% - 80px);
+  }
+  .fightList thead th:nth-child(2),
+  .fightList thead th:nth-child(3),
+  .fightList tbody td:nth-child(2),
+  .fightList tbody td:nth-child(3) {
+    display: none;
+  }
+
+  .fightList .categoriesImg {
+    height: auto;
+  }
+}
+
 @media screen and (max-width: 500px) {
   .contentPadding {
     padding: var(--content-padding-mobile);
@@ -385,5 +405,13 @@ a.button {
 
   .logo.vertical {
     max-width: 130px;
+  }
+
+  .fightList {
+    max-width: calc(100% - 40px);
+  }
+
+  .fightList .categoriesImg {
+    display: none;
   }
 }
