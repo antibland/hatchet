@@ -137,7 +137,7 @@
 }
 
 .challenger-hatchet-icon {
-  left: 100px;
+  /* left: 100px; */
 }
 
 .defender-shield-icon {
@@ -210,8 +210,71 @@
   }
 }
 
-@media screen and (max-width: 500px) {
-  .fightContainerHeader svg {
-    position: static;
+@media screen and (max-width: 768px) {
+  .fightContainerHeader {
+    flex-wrap: wrap;
+    position: relative;
+    justify-content: space-around;
+  }
+
+  .fightContainerHeader .avatar:first-of-type {
+    padding-right: 2em;
+  }
+
+  .fightContainerHeader .avatar:last-of-type {
+    padding-left: 2em;
+  }
+
+  .fightContainerHeader .avatar > div {
+    width: 70px !important;
+    height: 70px !important;
+  }
+
+  .fightContainerHeader .challenger-hatchet-icon,
+  .fightContainerHeader .defender-shield-icon {
+    position: absolute;
+  }
+
+  .fightContainerHeader .challenger-hatchet-icon {
+    left: -30px;
+    bottom: 8px;
+  }
+
+  .fightContainerHeader .defender-shield-icon {
+    right: -30px;
+    left: inherit;
+    bottom: 8px;
+  }
+
+  .fightContainerHeader .hatchetTitle {
+    order: 2;
+    padding: 2em 0 0;
+    margin-bottom: 0;
+  }
+
+  .fightBody .fightTimeRemaining {
+    order: -1;
+    align-self: center;
+    padding: 30px 0 10px;
+  }
+
+  .fightBody .user2 h3 {
+    align-self: flex-start;
+  }
+
+  .fightBody {
+    flex-direction: column;
+  }
+
+  .fightBody .user1, .fightBody .user2 {
+    padding-bottom: 30px;
+  }
+
+  .fightTally {
+    transform: translateX(-50%) scale(0.7, 0.7);
+    position: absolute;
+    width: 100%;
+    left: 50%;
+    top: 115px;
   }
 }
