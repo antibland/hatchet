@@ -93,7 +93,7 @@
     display: grid;
     grid-template-columns: repeat(2, [col] auto);
     grid-template-rows: repeat(3, [row] auto);
-    padding-top: 0;
+    padding: 0;
   }
 
   .categories.listPage.mobile li:nth-last-child(3) {
