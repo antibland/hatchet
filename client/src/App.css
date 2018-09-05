@@ -250,13 +250,14 @@ a.button {
   align-items: center;
   padding: 0 10px 0 0;
   margin: 0;
+  position: relative;
 }
 
 .fightList tbody .challengerRow {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-right: 40px;
+  padding-right: 20px;
 }
 
 .fightList tbody tr {
@@ -281,6 +282,7 @@ a.button {
 .fightList tbody td:last-child,
 .fightList th:last-child {
   text-align: right;
+  padding-left: 10px;
 }
 
 .fightList tbody .avatar,
@@ -293,7 +295,7 @@ a.button {
 }
 
 .fightList tbody .part:first-child {
-  padding-right: 10px;
+  padding-right: 20px;
 }
 
 .fightList tbody .avatar {
@@ -307,12 +309,13 @@ a.button {
 }
 
 .fightList tbody .versus {
-  height: 45px;
-  width: 45px;
+  height: 35px;
+  width: 35px;
 }
 
 .fightList .button img {
-  margin-right: .5em;
+  position: absolute;
+  left: -72px;
 }
 
 .fightList .title {
@@ -394,7 +397,7 @@ a.button {
   }
 
   .fightList .categoriesImg {
-    height: auto;
+    display: none;
   }
 }
 
@@ -409,9 +412,5 @@ a.button {
 
   .fightList {
     max-width: calc(100% - 40px);
-  }
-
-  .fightList .categoriesImg {
-    display: none;
   }
 }

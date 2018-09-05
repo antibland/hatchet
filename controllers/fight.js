@@ -340,5 +340,8 @@ exports.getFightsByCategory = async (req, res) => {
     };
 
     return res.status(200).json(returnOptions);
+  }).populate({
+    path: "antagonist defender",
+    select: "username avatar"
   });
 };
