@@ -245,7 +245,7 @@
 
   .fightContainerHeader .hatchetTitle {
     order: 2;
-    padding: 2em 0 0;
+    padding: 3.5em 0 0;
     margin-bottom: 0;
     width: 100%;
   }
@@ -269,7 +269,7 @@
   }
 
   .fightTally {
-    transform: translateX(-50%) scale(0.7, 0.7);
+    transform: translateX(-50%) scale(0.9, 0.9);
     position: absolute;
     width: 100%;
     left: 50%;

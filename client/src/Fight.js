@@ -3,12 +3,11 @@ import { auth } from "./Auth";
 import Avatar from "./shared/components/Avatar";
 import Loading from "./Loading";
 import Symbol from "./shared/components/Symbol";
-import StartHatchet from "./shared/components/StartHatchet";
-import TextareaWithCountdown from "./shared/components/TextareaWithCountdown";
 import PlaceholderText from "./shared/components/PlaceholderText";
 import VersusImg from "./shared/components/VersusImg";
 import utilities from "./shared/utilities";
 import Vote from "./Vote";
+import styled from "styled-components";
 import "./css/Fight.css";
 
 class Fight extends Component {
@@ -248,6 +247,22 @@ class Fight extends Component {
       );
     };
 
+    const UserCanDefendWrapper = styled.div`
+      position: relative;
+      .blurred {
+        opacity: 0.6;
+      }
+    `;
+
+    const DefendButton = styled.a`
+      position: absolute !important;
+      padding: 1em 1.5em !important;
+      width: auto !important;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    `;
+
     const votesFor = votes.for;
     const votesAgainst = votes.against;
     const totalVotes = votesFor + votesAgainst;
@@ -327,23 +342,12 @@ class Fight extends Component {
                   <div className="user2">
                     <h3>{defender.username}</h3>
                     {userCanDefend ? (
-                      <React.Fragment>
-                        <div style={{ position: "relative" }}>
-                          <TextareaWithCountdown
-                            countLimit={1000}
-                            onInput={this.handleTextareaChange}
-                            ariaLabel="What happened"
-                            placeholder="Your argument goes here"
-                            fieldName="beef"
-                            fieldId="beef"
-                          />
-                        </div>
-                        <StartHatchet
-                          fightId={fightId}
-                          isDisabled={isValid}
-                          textAgainst={textAgainst}
-                        />
-                      </React.Fragment>
+                      <UserCanDefendWrapper>
+                        <PlaceholderText />
+                        <DefendButton className="primary button">
+                          Defend yourself
+                        </DefendButton>
+                      </UserCanDefendWrapper>
                     ) : (
                       defender.argument
                     )}
