@@ -212,8 +212,8 @@ asynckit@^0.4.0:
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
 
 aws-sdk@^2.247.1:
-  version "2.309.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.309.0.tgz#1da631f553e706249e62a33465b4490e9864bb7d"
+  version "2.310.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.310.0.tgz#31a42a3b087940189efec0d8bef5e934c985174a"
   dependencies:
     buffer "4.9.1"
     events "1.1.1"
@@ -798,7 +798,7 @@ exit@0.1.2, exit@0.1.x:
 
 express@^4.16.3:
   version "4.16.3"
-  resolved "https://registry.yarnpkg.com/express/-/express-4.16.3.tgz#6af8a502350db3246ecc4becf6b5a34d22f7ed53"
+  resolved "http://registry.npmjs.org/express/-/express-4.16.3.tgz#6af8a502350db3246ecc4becf6b5a34d22f7ed53"
   dependencies:
     accepts "~1.3.5"
     array-flatten "1.1.1"
