@@ -154,9 +154,7 @@ class Fight extends Component {
     const username = auth.user.username;
     const {
       isLive,
-      isValid,
       isExpired,
-      textAgainst,
       showVotes,
       loaded,
       addStyle,
