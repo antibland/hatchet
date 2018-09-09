@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { auth } from "./Auth";
+import { Link } from "react-router-dom";
 import Avatar from "./shared/components/Avatar";
 import Loading from "./Loading";
 import Symbol from "./shared/components/Symbol";
@@ -252,7 +253,7 @@ class Fight extends Component {
       }
     `;
 
-    const DefendButton = styled.a`
+    const DefendButton = styled(Link)`
       position: absolute !important;
       padding: 1em 1.5em !important;
       width: auto !important;
@@ -342,7 +343,10 @@ class Fight extends Component {
                     {userCanDefend ? (
                       <UserCanDefendWrapper>
                         <PlaceholderText />
-                        <DefendButton className="primary button">
+                        <DefendButton
+                          className="primary button"
+                          to={`/defend/${this.props.match.params.fightId}`}
+                        >
                           Defend yourself
                         </DefendButton>
                       </UserCanDefendWrapper>

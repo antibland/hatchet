@@ -25,9 +25,20 @@ const PageH2 = styled.h2`
   ${headerStyles};
 `;
 
+const PageTitle = styled.h2`
+  color: black;
+  font-style: italic;
+`;
+
+const AttackerStatement = styled.div`
+  font-style: italic;
+  padding-bottom: 0.5em;
+`;
+
 class Step3 extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       count: 0,
       title: "",
@@ -38,12 +49,34 @@ class Step3 extends Component {
       isTitleValid: false,
       isBeefValid: false,
       isBotherYouValid: false,
-      isActionValid: false
+      isActionValid: false,
+      side: "",
+      copiesBeef: "",
+      copiesBother: "",
+      copiesTakeAction: ""
     };
 
     this.handleTitleInput = this.handleTitleInput.bind(this);
     this.handleTextareaChange = this.handleTextareaChange.bind(this);
     this.locateField = this.locateField.bind(this);
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      if (this.props.side === "defender") {
+        this.setState({
+          side: this.props.side,
+          title: this.props.fightData.title,
+          beef: this.props.fightData.text.attacker.do,
+          bother: this.props.fightData.text.attacker.bother,
+          takeAction: this.props.fightData.text.attacker.action,
+          copiesBeef: this.props.fightData.text.attacker.do,
+          copiesBother: this.props.fightData.text.attacker.bother,
+          copiesTakeAction: this.props.fightData.text.attacker.action,
+          isTitleValid: true
+        });
+      }
+    });
   }
 
   setOverallValidity() {
@@ -100,62 +133,126 @@ class Step3 extends Component {
   }
 
   render() {
-    const { isValid, beef, bother, takeAction, title } = this.state;
-    const opponent = this.props.fightData.opponent;
+    const { isValid, beef, bother, takeAction, title, side } = this.state;
+    const opponent = side !== "defender" ? this.props.fightData.opponent : "";
+    const attacker =
+      side === "defender" ? this.props.fightData.antagonist.username : "";
+    let labels = {
+      do:
+        side === "defender"
+          ? `Why is ${attacker} wrong?`
+          : `What did ${opponent} do?`,
+      bother:
+        side === "defender"
+          ? "Why are you right?"
+          : "Why does this bother you?",
+      takeAction:
+        side === "defender"
+          ? `Why should ${attacker} do now?`
+          : `What should ${opponent} do now?`
+    };
+
+    let placeholders = {
+      do:
+        side === "defender"
+          ? `Is ${attacker} accurate? Tell us about it.`
+          : `${opponent}…`,
+      bother:
+        side === "defender"
+          ? `Time to defend yourself! Convince the community of your innocence. Better yet, convince them that ${attacker} is wrong.`
+          : `This is where you really get to plead your case against ${opponent}. Tell the voters why this bothers you so much.`,
+      takeAction:
+        side === "defender"
+          ? `Why should ${attacker} do now?`
+          : `What should ${opponent} do now?`
+    };
+
+    const fieldTitle = (
+      <input
+        required
+        id="title"
+        name="title"
+        defaultValue={title}
+        maxLength="75"
+        className="fullWidth"
+        aria-label="Make it intriguing without giving too much away."
+        placeholder="Make it intriguing without giving too much away!"
+        onInput={this.handleTitleInput}
+        type="text"
+      />
+    );
 
     return (
       <div className="stepContainer">
         <div className="inner">
-          <PageH1>Enter a title for your fight</PageH1>
-          <FieldWrap>
-            <input
-              required
-              id="title"
-              name="title"
-              value={this.state.title}
-              maxLength="75"
-              className="fullWidth"
-              aria-label="Make it intriguing without giving too much away."
-              placeholder="Make it intriguing without giving too much away!"
-              onInput={this.handleTitleInput}
-              type="text"
-            />
-          </FieldWrap>
+          {side !== "defender" ? (
+            <React.Fragment>
+              <PageH1>Enter a title for your fight</PageH1>
+              <FieldWrap>{fieldTitle}</FieldWrap>
+            </React.Fragment>
+          ) : (
+            <PageTitle>{title}</PageTitle>
+          )}
 
-          <PageH2>
-            What did <Highlight>{opponent}</Highlight> do?
-          </PageH2>
+          {side !== "defender" ? (
+            <PageH2>
+              What did <Highlight>{opponent}</Highlight> do?
+            </PageH2>
+          ) : (
+            <AttackerStatement>
+              &ldquo;
+              {this.state.copiesBeef}
+              &rdquo;
+            </AttackerStatement>
+          )}
+
           <FieldWrap>
             <TextareaWithCountdown
               countLimit={1000}
               onInput={this.handleTextareaChange}
-              ariaLabel={`What did ${opponent} do?`}
-              placeholder={`${opponent}…`}
+              ariaLabel={labels.do}
+              placeholder={placeholders.do}
               fieldName="beef"
             />
           </FieldWrap>
 
           <PageH2>
-            Why does this bother <Highlight>you</Highlight>?
+            {side !== "defender" ? (
+              <React.Fragment>
+                Why does this bother <Highlight>you</Highlight>?
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                Why are <Highlight>you</Highlight> right?
+              </React.Fragment>
+            )}
           </PageH2>
           <FieldWrap>
             <TextareaWithCountdown
               countLimit={1000}
               onInput={this.handleTextareaChange}
-              ariaLabel={`What did ${opponent} do?`}
-              placeholder={`This is where you really get to plead your case against ${opponent}. Tell the voters why this bothers you so much.`}
+              ariaLabel={labels.bother}
+              placeholder={placeholders.bother}
               fieldName="bother"
             />
           </FieldWrap>
 
           <PageH2>
-            What should <Highlight>{opponent}</Highlight> do now?
+            {side !== "defender" ? (
+              <React.Fragment>
+                What should <Highlight>{opponent}</Highlight> do now?
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                What should <Highlight>{attacker}</Highlight> do now?
+              </React.Fragment>
+            )}
           </PageH2>
           <FieldWrap>
             <TextareaWithCountdown
               countLimit={1000}
               onInput={this.handleTextareaChange}
-              ariaLabel={`What should ${opponent} do now?`}
+              ariaLabel={labels.takeAction}
               placeholder="What is it that you really want? An apology? Financial restitution? A change in behavior?"
               fieldName="takeAction"
             />

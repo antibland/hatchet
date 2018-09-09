@@ -9,7 +9,6 @@
 .stepsContainer {
   overflow: hidden;
   display: flex;
-  width: 400vw;
   flex-flow: row wrap;
   transform: translateX(0);
   transition: 0.3s transform;

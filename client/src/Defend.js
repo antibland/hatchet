@@ -1,10 +1,9 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { auth } from "./Auth";
 import Modal from "./shared/components/Modal";
-import Step1 from "./Create/Step1";
-import Step2 from "./Create/Step2";
-import Step3 from "./Create/Step3";
-import Step4 from "./Create/Step4";
+import Step1 from "./Defend/Step1";
+import Step2 from "./Defend/Step2";
 import styled from "styled-components";
 import "./css/Create.css";
 import "./css/Form.css";
@@ -20,10 +19,17 @@ const PreviousButton = props => (
 );
 
 const StepsContainer = styled.div`
-  width: 400vw;
+  width: 200vw;
 `;
-class Wizard extends Component {
-  static TOTAL_STEPS = 4;
+
+export class Wizard extends Component {
+  static TOTAL_STEPS = 2;
+
+  static propTypes = {
+    params: PropTypes.shape({
+      fightId: PropTypes.string
+    })
+  };
 
   constructor() {
     super();
@@ -38,6 +44,22 @@ class Wizard extends Component {
     this._gatherData = this._gatherData.bind(this);
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+  }
+
+  componentDidMount() {
+    const fightId = this.props.match.params.fightId;
+    this.getFightDetails(fightId);
+  }
+
+  getFightDetails(fightId) {
+    fetch(`/api/${fightId}/fight`)
+      .then(res => res.json())
+      .then(data => {
+        this._gatherData(data.fight);
+      })
+      .catch(err => {
+        console.error(err);
+      });
   }
 
   _submitForm() {
@@ -125,28 +147,25 @@ class Wizard extends Component {
     let { currentStep, isModalOpen, fight } = this.state;
     let activeStep = `activeStep-${currentStep} stepsContainer`;
     let formAction = `/api/${auth.user.userid}/fight`;
+
     return (
       <React.Fragment>
         <form action={formAction} method="post" className="stepsForm">
           <StepsContainer className={activeStep}>
-            <Step1 currentStep={currentStep} afterValid={this._next} />
-            <Step2 currentStep={currentStep} afterValid={this._next}>
+            <Step1
+              currentStep={currentStep}
+              fightData={fight}
+              afterValid={this._next}
+              side="defender"
+            />
+            <Step2
+              currentStep={currentStep}
+              fightData={fight}
+              afterValid={this._next}
+              side="defender"
+            >
               <PreviousButton onClick={this._prev} />
             </Step2>
-            <Step3
-              currentStep={currentStep}
-              afterValid={this._next}
-              fightData={fight}
-            >
-              <PreviousButton onClick={this._prev} />
-            </Step3>
-            <Step4
-              currentStep={currentStep}
-              afterValid={this._next}
-              fightData={fight}
-            >
-              <PreviousButton onClick={this._prev} />
-            </Step4>
           </StepsContainer>
         </form>
         <Modal isOpen={isModalOpen} closeModal={this.closeModal}>
