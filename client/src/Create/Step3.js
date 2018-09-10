@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled, { css } from "styled-components";
 import TextareaWithCountdown from "../shared/components/TextareaWithCountdown";
+import Loading from "../Loading.js";
 import shared from "./shared/styles";
 
 const StepButtons = shared.stepButtons();
@@ -40,6 +41,7 @@ class Step3 extends Component {
     super(props);
 
     this.state = {
+      loading: true,
       count: 0,
       title: "",
       beef: "",
@@ -76,7 +78,8 @@ class Step3 extends Component {
           isTitleValid: true
         });
       }
-    });
+      this.setState({ loading: false });
+    }, 200);
   }
 
   setOverallValidity() {
@@ -133,7 +136,15 @@ class Step3 extends Component {
   }
 
   render() {
-    const { isValid, beef, bother, takeAction, title, side } = this.state;
+    const {
+      isValid,
+      beef,
+      bother,
+      takeAction,
+      title,
+      side,
+      loading
+    } = this.state;
     const opponent = side !== "defender" ? this.props.fightData.opponent : "";
     const attacker =
       side === "defender" ? this.props.fightData.antagonist.username : "";
@@ -184,99 +195,103 @@ class Step3 extends Component {
 
     return (
       <div className="stepContainer">
-        <div className="inner">
-          {side !== "defender" ? (
-            <React.Fragment>
-              <PageH1>Enter a title for your fight</PageH1>
-              <FieldWrap>{fieldTitle}</FieldWrap>
-            </React.Fragment>
-          ) : (
-            <PageTitle>{title}</PageTitle>
-          )}
+        {loading === true ? (
+          <Loading />
+        ) : (
+          <div className="inner">
+            {side !== "defender" ? (
+              <React.Fragment>
+                <PageH1>Enter a title for your fight</PageH1>
+                <FieldWrap>{fieldTitle}</FieldWrap>
+              </React.Fragment>
+            ) : (
+              <PageTitle>{title}</PageTitle>
+            )}
 
-          {side !== "defender" ? (
+            {side !== "defender" ? (
+              <PageH2>
+                What did <Highlight>{opponent}</Highlight> do?
+              </PageH2>
+            ) : (
+              <AttackerStatement>
+                &ldquo;
+                {this.state.copiesBeef}
+                &rdquo;
+              </AttackerStatement>
+            )}
+
+            <FieldWrap>
+              <TextareaWithCountdown
+                countLimit={1000}
+                onInput={this.handleTextareaChange}
+                ariaLabel={labels.do}
+                placeholder={placeholders.do}
+                fieldName="beef"
+              />
+            </FieldWrap>
+
             <PageH2>
-              What did <Highlight>{opponent}</Highlight> do?
+              {side !== "defender" ? (
+                <React.Fragment>
+                  Why does this bother <Highlight>you</Highlight>?
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  Why are <Highlight>you</Highlight> right?
+                </React.Fragment>
+              )}
             </PageH2>
-          ) : (
-            <AttackerStatement>
-              &ldquo;
-              {this.state.copiesBeef}
-              &rdquo;
-            </AttackerStatement>
-          )}
+            <FieldWrap>
+              <TextareaWithCountdown
+                countLimit={1000}
+                onInput={this.handleTextareaChange}
+                ariaLabel={labels.bother}
+                placeholder={placeholders.bother}
+                fieldName="bother"
+              />
+            </FieldWrap>
 
-          <FieldWrap>
-            <TextareaWithCountdown
-              countLimit={1000}
-              onInput={this.handleTextareaChange}
-              ariaLabel={labels.do}
-              placeholder={placeholders.do}
-              fieldName="beef"
-            />
-          </FieldWrap>
+            <PageH2>
+              {side !== "defender" ? (
+                <React.Fragment>
+                  What should <Highlight>{opponent}</Highlight> do now?
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  What should <Highlight>{attacker}</Highlight> do now?
+                </React.Fragment>
+              )}
+            </PageH2>
+            <FieldWrap>
+              <TextareaWithCountdown
+                countLimit={1000}
+                onInput={this.handleTextareaChange}
+                ariaLabel={labels.takeAction}
+                placeholder="What is it that you really want? An apology? Financial restitution? A change in behavior?"
+                fieldName="takeAction"
+              />
+            </FieldWrap>
 
-          <PageH2>
-            {side !== "defender" ? (
-              <React.Fragment>
-                Why does this bother <Highlight>you</Highlight>?
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                Why are <Highlight>you</Highlight> right?
-              </React.Fragment>
-            )}
-          </PageH2>
-          <FieldWrap>
-            <TextareaWithCountdown
-              countLimit={1000}
-              onInput={this.handleTextareaChange}
-              ariaLabel={labels.bother}
-              placeholder={placeholders.bother}
-              fieldName="bother"
-            />
-          </FieldWrap>
-
-          <PageH2>
-            {side !== "defender" ? (
-              <React.Fragment>
-                What should <Highlight>{opponent}</Highlight> do now?
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                What should <Highlight>{attacker}</Highlight> do now?
-              </React.Fragment>
-            )}
-          </PageH2>
-          <FieldWrap>
-            <TextareaWithCountdown
-              countLimit={1000}
-              onInput={this.handleTextareaChange}
-              ariaLabel={labels.takeAction}
-              placeholder="What is it that you really want? An apology? Financial restitution? A change in behavior?"
-              fieldName="takeAction"
-            />
-          </FieldWrap>
-
-          <StepButtons>
-            {this.props.children}
-            <SubmitButton
-              type="submit"
-              onClick={event =>
-                this.props.afterValid(event, {
-                  beef,
-                  bother,
-                  takeAction,
-                  title
-                })
-              }
-              disabled={!isValid}
-              className="button primary"
-            >
-              Preview
-            </SubmitButton>
-          </StepButtons>
-        </div>
+            <StepButtons>
+              {this.props.children}
+              <SubmitButton
+                type="submit"
+                onClick={event =>
+                  this.props.afterValid(event, {
+                    beef,
+                    bother,
+                    takeAction,
+                    title
+                  })
+                }
+                disabled={!isValid}
+                className="button primary"
+              >
+                Preview
+              </SubmitButton>
+            </StepButtons>
+          </div>
+        )}
       </div>
     );
   }
