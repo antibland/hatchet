@@ -35,11 +35,11 @@ class Step4 extends Component {
     };
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps) {
     return nextProps !== this.props;
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     const side = this.props.side || "";
     let proceed = false;
     if (side === "defender" && this.props.fightData.antagonist) {
@@ -79,7 +79,7 @@ class Step4 extends Component {
   }
 
   render() {
-    const { title, side, loading } = this.state;
+    const { side, loading } = this.state;
 
     return (
       <div className="stepContainer">
@@ -93,7 +93,7 @@ class Step4 extends Component {
                   <Avatar>
                     <Symbol name="challenger-hatchet-icon" />
                   </Avatar>
-                  <h2 className="hatchetTitle">{title}</h2>
+                  <h2 className="hatchetTitle">{this.props.fightData.title}</h2>
                   <Avatar>
                     <Symbol name="defender-shield-icon" />
                   </Avatar>

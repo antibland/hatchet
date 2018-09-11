@@ -40,7 +40,12 @@ class Fight extends Component {
       },
       defender: {
         avatarPath: "",
-        username: ""
+        username: "",
+        argument: {
+          offense: "",
+          bother: "",
+          action: ""
+        }
       }
     };
 
@@ -117,7 +122,11 @@ class Fight extends Component {
               ? data.fight.defender.avatar.path
               : "",
             username: data.fight.defender.username,
-            argument: data.fight.text.against
+            argument: {
+              offense: data.fight.isLive ? data.fight.text.defender.do : "",
+              bother: data.fight.isLive ? data.fight.text.defender.bother : "",
+              action: data.fight.isLive ? data.fight.text.defender.action : ""
+            }
           }
         });
 
@@ -164,6 +173,11 @@ class Fight extends Component {
     } = this.state;
 
     const { offense, bother, action } = this.state.antagonist.argument;
+    const {
+      offense: defend_offense,
+      bother: defend_bother,
+      action: defend_action
+    } = this.state.defender.argument;
 
     const fightId = this.props.match.params.fightId;
 
@@ -351,7 +365,11 @@ class Fight extends Component {
                         </DefendButton>
                       </UserCanDefendWrapper>
                     ) : (
-                      defender.argument
+                      <React.Fragment>
+                        <p className="fightText">{defend_offense}</p>
+                        <p className="fightText">{defend_bother}</p>
+                        <p className="fightText">{defend_action}</p>
+                      </React.Fragment>
                     )}
 
                     <VotingButton side="against" username={defender.username} />

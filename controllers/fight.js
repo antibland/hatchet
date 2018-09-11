@@ -15,11 +15,13 @@ const utils = {
 
 exports.setLive = async (req, res) => {
   let { fightId } = req.params;
-  let { textAgainst } = req.body;
+  let { beef, bother, takeAction } = req.body;
 
   let fight = await Fight.findById(fightId);
 
-  fight.text.against = textAgainst;
+  fight.text.defender.do = beef;
+  fight.text.defender.bother = bother;
+  fight.text.defender.action = takeAction;
   fight.isLive = true;
   fight.activatedAt = new Date();
 

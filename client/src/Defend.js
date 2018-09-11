@@ -36,6 +36,7 @@ export class Wizard extends Component {
     this.state = {
       currentStep: 1,
       isModalOpen: false,
+      fightId: "",
       fight: {}
     };
 
@@ -47,12 +48,13 @@ export class Wizard extends Component {
   }
 
   componentDidMount() {
-    const fightId = this.props.match.params.fightId;
-    this.getFightDetails(fightId);
+    this.setState({ fightId: this.props.match.params.fightId }, () => {
+      this.getFightDetails();
+    });
   }
 
-  getFightDetails(fightId) {
-    fetch(`/api/${fightId}/fight`)
+  getFightDetails() {
+    fetch(`/api/${this.state.fightId}/fight`)
       .then(res => res.json())
       .then(data => {
         this._gatherData(data.fight);
@@ -63,27 +65,17 @@ export class Wizard extends Component {
   }
 
   _submitForm() {
-    const {
-      type,
-      title,
-      beef,
-      opponent,
-      bother,
-      takeAction
-    } = this.state.fight;
+    const { beef, bother, takeAction } = this.state.fight;
 
-    // '/api/:userId/fight' => fightApi.newFight
-    fetch(`/api/${auth.user.userid}/fight`, {
+    // '/api/:fightId/fight/setLive' => fightApi.setLive
+    fetch(`/api/${this.state.fightId}/fight/setLive`, {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        type,
-        title,
         beef,
-        opponent,
         bother,
         takeAction
       })
@@ -136,7 +128,7 @@ export class Wizard extends Component {
 
   closeModal() {
     this.setState({ isModalOpen: false });
-    this.props.history.push("/");
+    this.props.history.push(`/fight/${this.state.fightId}`);
   }
 
   openModal() {
@@ -169,10 +161,7 @@ export class Wizard extends Component {
           </StepsContainer>
         </form>
         <Modal isOpen={isModalOpen} closeModal={this.closeModal}>
-          <p>
-            The fight was created. Everything worked. Now it's up to them. May
-            your hatchet be swiftly buried.
-          </p>
+          <p>The fight is live! Tell your friends. Nag the townspeople.</p>
         </Modal>
       </React.Fragment>
     );
