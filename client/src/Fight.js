@@ -98,7 +98,7 @@ class Fight extends Component {
       .then(data => {
         this.setState({
           activatedAt: data.fight.activatedAt,
-          isExpired: data.isExpired,
+          isExpired: data.fight.isExpired,
           isLive: data.fight.isLive,
           fightTitle: data.fight.title,
           fightType: data.fight.type,
@@ -364,14 +364,16 @@ class Fight extends Component {
                           Defend yourself
                         </DefendButton>
                       </UserCanDefendWrapper>
-                    ) : (
+                    ) : defend_offense.length ? (
                       <React.Fragment>
                         <p className="fightText">{defend_offense}</p>
                         <p className="fightText">{defend_bother}</p>
                         <p className="fightText">{defend_action}</p>
                       </React.Fragment>
+                    ) : (
+                      <PlaceholderText />
                     )}
-
+                    }
                     <VotingButton side="against" username={defender.username} />
                   </div>
                 </div>
