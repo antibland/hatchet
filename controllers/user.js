@@ -18,38 +18,55 @@ const sendEmail = opts => {
   const req = opts.req;
   const res = opts.res;
   const token = opts.token;
-  const user = opts.user;
 
-  let transporter = nodemailer.createTransport({
-    host: "smtp.ethereal.email",
-    port: 587,
-    auth: {
-      user: process.env.EMAIL_USER, // generated ethereal user
-      pass: process.env.EMAIL_PASS // generated ethereal password
+  // Generate SMTP service account from ethereal.email
+  nodemailer.createTestAccount((err, account) => {
+    if (err) {
+      console.error("Failed to create a testing account. " + err.message);
+      return process.exit(1);
     }
-  });
 
-  let mailOptions = {
-    from: "no-reply@yourwebapplication.com",
-    to: user.email,
-    subject: "Account Verification Token",
-    text:
-      "Hello,\n\n" +
-      "Please verify your account by clicking the link: \nhttp://" +
-      req.headers.host +
-      "/api/confirmation/" +
-      token.token +
-      ".\n"
-  };
+    console.log("Credentials obtained, sending message...");
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    console.log("Message sent: %s", info.messageId);
-    // Preview only available when sending through an Ethereal account
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+    // Create a SMTP transporter object
+    let transporter = nodemailer.createTransport({
+      host: account.smtp.host,
+      port: account.smtp.port,
+      secure: account.smtp.secure,
+      auth: {
+        user: account.user,
+        pass: account.pass
+      }
+    });
 
-    res.json({
-      type: "success",
-      message: "We've just emailed you a verification link. Make things real!"
+    // Message object
+    let message = {
+      from: "Sender Name <sender@example.com>",
+      to: "Recipient <recipient@example.com>",
+      subject: "Account Verification ✔",
+      text:
+        "Hello,\n\n" +
+        "Please verify your account by clicking the link: \nhttp://" +
+        req.headers.host +
+        "/api/confirmation/" +
+        token.token +
+        ".\n"
+    };
+
+    transporter.sendMail(message, (err, info) => {
+      if (err) {
+        console.log("Error occurred. " + err.message);
+        return process.exit(1);
+      }
+
+      console.log("Message sent: %s", info.messageId);
+      // Preview only available when sending through an Ethereal account
+      console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+
+      res.json({
+        type: "success",
+        message: "We've just emailed you a verification link. Make things real!"
+      });
     });
   });
 };
