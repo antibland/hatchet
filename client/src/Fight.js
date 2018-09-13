@@ -373,7 +373,6 @@ class Fight extends Component {
                     ) : (
                       <PlaceholderText />
                     )}
-                    }
                     <VotingButton side="against" username={defender.username} />
                   </div>
                 </div>
