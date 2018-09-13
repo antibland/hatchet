@@ -4,6 +4,12 @@ import Loading from "./Loading";
 import FightsAccordion from "./shared/components/FightsAccordion";
 import HatchetList from "./shared/components/HatchetList";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
+
+const StartHatchetLink = styled(Link)`
+  margin-top: 2em !important;
+  margin-bottom: 1em !important;
+`;
 
 class MyHatchets extends Component {
   constructor() {
@@ -80,6 +86,9 @@ class MyHatchets extends Component {
           <Loading />
         ) : (
           <div>
+            <StartHatchetLink to="/create" className="button primary">
+              Start a new Hatchet
+            </StartHatchetLink>
             {noContent ? (
               <React.Fragment>
                 <p>You've got no hatchets.</p>
