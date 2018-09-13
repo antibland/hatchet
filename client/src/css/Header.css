@@ -25,6 +25,11 @@ header a {
   padding: 15px 50px;
 }
 
+.headerTop .button.primary {
+  font-size: 1em;
+  padding: .6em 1em;
+}
+
 .headerTop h1 {
   font-size: 0;
   margin: 0;
