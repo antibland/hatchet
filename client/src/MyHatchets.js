@@ -4,11 +4,53 @@ import Loading from "./Loading";
 import FightsAccordion from "./shared/components/FightsAccordion";
 import HatchetList from "./shared/components/HatchetList";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-const StartHatchetLink = styled(Link)`
-  margin-top: 2em !important;
-  margin-bottom: 1em !important;
+const sharedButtonStyles = css`
+  padding: 1em 2.5em !important;
+  font-size: 0.9rem !important;
+  min-width: 200px !important;
+  text-align: center;
+  font-weight: bold;
+`;
+
+const HatchetListTable = styled.table`
+  &.hatchetList {
+    margin-top: 2em;
+    display: block;
+  }
+
+  tbody td:first-child {
+    width: 100%;
+    font-size: 95%;
+    padding-right: 10px;
+  }
+`;
+
+const HatchetListHeader = styled.th`
+  text-align: left !important;
+  padding: 0 0 0.5em !important;
+  font-size: 100% !important;
+
+  &.pending {
+    color: var(--red) !important;
+  }
+`;
+
+const Highlight = styled.span`
+  color: var(--teal);
+`;
+
+const RedLink = styled(Link)`
+  color: var(--red);
+`;
+
+const HatchetListButton = styled.button`
+  ${sharedButtonStyles};
+`;
+
+const HatchetListLink = styled(Link)`
+  ${sharedButtonStyles};
 `;
 
 class MyHatchets extends Component {
@@ -20,7 +62,12 @@ class MyHatchets extends Component {
       active: [],
       loading: true
     };
+
+    this.handleSurrenderClick = this.handleSurrenderClick.bind(this);
+    this.handleCancelClick = this.handleCancelClick.bind(this);
+    this.handleRemindThemClick = this.handleRemindThemClick.bind(this);
   }
+
   componentDidMount() {
     // /api/:userId/fights => getUserFights
     let url = `/api/${auth.user.userid}/fights`;
@@ -39,30 +86,108 @@ class MyHatchets extends Component {
       });
   }
 
+  handleSurrenderClick() {
+    alert("handle surrender");
+  }
+
+  handleCancelClick() {
+    alert("handle cancel");
+  }
+
+  handleRemindThemClick() {
+    alert("handle remind them");
+  }
+
   render() {
-    let { waitingOnYou, waitingOnThem, active } = this.state;
+    const { waitingOnYou, waitingOnThem, active, loading } = this.state;
 
-    let _waitingOnYou = waitingOnYou.length ? (
-      <div className="block">
-        <h2>Waiting On You</h2>
-        <FightsAccordion
-          indexModifier="waitingOnYou"
-          obj={waitingOnYou}
-          action="accept invite"
-        />
-      </div>
-    ) : (
-      ""
+    const PendingHeaders = () => (
+      <thead>
+        <tr>
+          <HatchetListHeader className="pending">Pending</HatchetListHeader>
+        </tr>
+      </thead>
     );
 
-    let _waitingOnThem = waitingOnThem.length ? (
-      <div className="block">
-        <h2>Waiting On Them</h2>
-        <FightsAccordion indexModifier="waitingOnThem" obj={waitingOnThem} />
-      </div>
-    ) : (
-      ""
+    const PendingBody = () => (
+      <tbody>
+        {_waitingOnYou}
+        {_waitingOnThem}
+      </tbody>
     );
+
+    const Pending = () => (
+      <HatchetListTable className="fightList hatchetList">
+        <PendingHeaders />
+        <PendingBody />
+      </HatchetListTable>
+    );
+
+    let _waitingOnYou =
+      waitingOnYou.length &&
+      waitingOnYou.map(fight => {
+        return (
+          <tr key={fight._id}>
+            <td>
+              <React.Fragment>
+                <Highlight>{fight.antagonist.username}</Highlight> has an{" "}
+                <RedLink to={`/defend/${fight._id}`}>Axe to Grind</RedLink> with
+                you!
+              </React.Fragment>
+            </td>
+            <td>
+              <HatchetListButton
+                type="button"
+                onClick={this.handleSurrenderClick}
+                className="button primary alt"
+              >
+                Surrender
+              </HatchetListButton>
+            </td>
+            <td>
+              <HatchetListLink
+                className="button primary"
+                to={`/defend/${fight._id}`}
+              >
+                Respond
+              </HatchetListLink>
+            </td>
+          </tr>
+        );
+      });
+
+    let _waitingOnThem =
+      waitingOnThem.length &&
+      waitingOnThem.map(fight => {
+        return (
+          <tr key={fight._id}>
+            <td>
+              <React.Fragment>
+                You started a Hatchet with{" "}
+                <Highlight>{fight.defender.username}</Highlight>.
+              </React.Fragment>
+            </td>
+            <td>
+              <HatchetListButton
+                type="button"
+                onClick={this.handleCancelClick}
+                className="button primary alt"
+              >
+                Cancel
+              </HatchetListButton>
+            </td>
+            <td>
+              <HatchetListButton
+                type="button"
+                onClick={this.handleRemindThemClick}
+                className="button primary"
+              >
+                Remind them
+              </HatchetListButton>
+            </td>
+          </tr>
+        );
+      });
 
     let _active = active.length ? (
       <React.Fragment>
@@ -82,30 +207,17 @@ class MyHatchets extends Component {
 
     return (
       <div>
-        {this.state.loading === true ? (
+        {loading === true ? (
           <Loading />
         ) : (
-          <div>
-            <StartHatchetLink to="/create" className="button primary">
+          <React.Fragment>
+            <HatchetListLink to="/create" className="button primary">
               Start a new Hatchet
-            </StartHatchetLink>
-            {noContent ? (
-              <React.Fragment>
-                <p>You've got no hatchets.</p>
-                <Link to="/create" className="button primary">
-                  Create one
-                </Link>
-              </React.Fragment>
-            ) : (
-              ""
-            )}
+            </HatchetListLink>
+            {noContent && <p>You've got no hatchets.</p>}
 
-            <div className="twoByTwo">
-              {_waitingOnYou}
-              {_waitingOnThem}
-            </div>
-            {_active}
-          </div>
+            <Pending />
+          </React.Fragment>
         )}
       </div>
     );

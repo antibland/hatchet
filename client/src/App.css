@@ -145,6 +145,7 @@ button {
 }
 
 .button {
+  font-family: 'Glegoo', serif;
   background-color: var(--gold);
   color: var(--dark-blue);
   padding: 0.8em 1.4em;
@@ -385,10 +386,10 @@ button {
   .fightList {
     max-width: calc(100% - 80px);
   }
-  .fightList thead th:nth-child(2),
-  .fightList thead th:nth-child(3),
-  .fightList tbody td:nth-child(2),
-  .fightList tbody td:nth-child(3) {
+  .paginationContainer .fightList thead th:nth-child(2),
+  .paginationContainer .fightList thead th:nth-child(3),
+  .paginationContainer .fightList tbody td:nth-child(2),
+  .paginationContainer .fightList tbody td:nth-child(3) {
     display: none;
   }
 
