@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { auth } from "./Auth";
 import Loading from "./Loading";
-import FightsAccordion from "./shared/components/FightsAccordion";
 import HatchetList from "./shared/components/HatchetList";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
+import utilities from "./shared/utilities";
 
 const sharedButtonStyles = css`
   padding: 1em 2.5em !important;
@@ -18,12 +18,48 @@ const HatchetListTable = styled.table`
   &.hatchetList {
     margin-top: 2em;
     display: block;
+
+    ${utilities.media.phone`
+      max-width: 100%;
+    `};
   }
 
-  tbody td:first-child {
-    width: 100%;
-    font-size: 95%;
-    padding-right: 10px;
+  tbody {
+    td:first-child {
+      width: 100%;
+      font-size: 95%;
+      padding-right: 10px;
+
+      ${utilities.media.phone`
+        padding-bottom: 0;
+      `};
+    }
+
+    td:not(:first-child) {
+      ${utilities.media.phone`
+        flex: 1;
+        width: 50%;
+        text-align: center !important;
+      `};
+
+      .button {
+        ${utilities.media.phone`
+          min-width: auto !important;
+          padding: 1em 0 !important;
+          width: 100%;
+          max-width: 200px;
+        `};
+      }
+    }
+
+    tr {
+      ${utilities.media.phone`
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0.5em 1em 1em;
+        width: 100vw;
+      `};
+    }
   }
 `;
 
@@ -34,6 +70,10 @@ const HatchetListHeader = styled.th`
 
   &.pending {
     color: var(--red) !important;
+
+    ${utilities.media.phone`
+      padding-left: 1em !important;
+    `};
   }
 `;
 
@@ -51,6 +91,12 @@ const HatchetListButton = styled.button`
 
 const HatchetListLink = styled(Link)`
   ${sharedButtonStyles};
+
+  &.top {
+    ${utilities.media.phone`
+      margin-top: 2em !important;
+    `};
+  }
 `;
 
 class MyHatchets extends Component {
@@ -211,7 +257,7 @@ class MyHatchets extends Component {
           <Loading />
         ) : (
           <React.Fragment>
-            <HatchetListLink to="/create" className="button primary">
+            <HatchetListLink to="/create" className="button primary top">
               Start a new Hatchet
             </HatchetListLink>
             {noContent && <p>You've got no hatchets.</p>}
