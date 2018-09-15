@@ -58,7 +58,7 @@ exports.getFights = async (req, res) => {
     return res.status(500).json({
       type: "failure",
       message:
-        "We can`t seem to retrive any fights right now. Try again, I guess?"
+        "We can`t seem to retrieve any fights right now. Try again, I guess?"
     });
   }
 
@@ -279,28 +279,28 @@ exports.newFight = async (req, res) => {
     });
   };
 
-  let oppenentRef = req.body.opponent;
-  let findBy = validator.validate(oppenentRef)
-    ? { email: oppenentRef }
-    : { username: oppenentRef };
+  let opponentRef = req.body.opponent;
+  let findBy = validator.validate(opponentRef)
+    ? { email: opponentRef }
+    : { username: opponentRef };
 
   opponent = await User.findOne(findBy);
 
   if (!opponent || opponent === null) {
     // Case: User not found via email lookup. Send an invite
-    if (validator.validate(oppenentRef)) {
-      console.log(`We just sent a site invitation to ${oppenentRef}...`);
+    if (validator.validate(opponentRef)) {
+      console.log(`We just sent a site invitation to ${opponentRef}...`);
       // res.status(400).json({
       //   type: 'failure',
-      //   message: `We just sent a site invitation to ${oppenentRef}...`
+      //   message: `We just sent a site invitation to ${opponentRef}...`
       // });
       res.redirect("back");
     } else {
       // Case: User not found via username lookup. Give up
-      console.log(`Sorry, we have no record of ${oppenentRef}`);
+      console.log(`Sorry, we have no record of ${opponentRef}`);
       // res.status(400).json({
       //   type: 'failure',
-      //   message: `Sorry, we have no record of ${oppenentRef}`
+      //   message: `Sorry, we have no record of ${opponentRef}`
       // });
       res.redirect("back");
     }
