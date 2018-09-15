@@ -23,6 +23,12 @@ const HatchetListTable = styled.table`
     `};
   }
 
+  &.activeList tbody tr {
+    ${utilities.media.phone`
+      flex-wrap: nowrap;
+    `};
+  }
+
   tbody {
     td:first-child {
       width: 100%;
@@ -108,7 +114,8 @@ class MyHatchets extends Component {
     this.state = {
       waitingOnYou: [],
       waitingOnThem: [],
-      active: [],
+      activeChallenger: [],
+      activeDefender: [],
       loading: true
     };
 
@@ -127,7 +134,12 @@ class MyHatchets extends Component {
         let { active, waitingOnYou, waitingOnThem } = data;
 
         this.setState({
-          active,
+          activeChallenger: active.filter(
+            fight => fight.antagonist.username === auth.user.username
+          ),
+          activeDefender: active.filter(
+            fight => fight.antagonist.username !== auth.user.username
+          ),
           waitingOnYou,
           waitingOnThem,
           loading: false
@@ -148,7 +160,13 @@ class MyHatchets extends Component {
   }
 
   render() {
-    const { waitingOnYou, waitingOnThem, active, loading } = this.state;
+    const {
+      waitingOnYou,
+      waitingOnThem,
+      activeChallenger,
+      activeDefender,
+      loading
+    } = this.state;
 
     const PendingHeaders = () => (
       <thead>
@@ -165,16 +183,32 @@ class MyHatchets extends Component {
       </tbody>
     );
 
-    const ActiveHeaders = () => (
+    const ActiveHeaders = props => (
       <thead>
         <tr>
-          <HatchetListHeader className="active">Challenger</HatchetListHeader>
+          <HatchetListHeader className="active">{props.side}</HatchetListHeader>
         </tr>
       </thead>
     );
 
-    const _active = active.length ? (
-      active.map(fight => {
+    const ChallengerBody = () => <tbody>{_activeChallenger}</tbody>;
+    const DefenderBody = () => <tbody>{_activeDefender}</tbody>;
+
+    const _activeChallenger = activeChallenger.length ? (
+      activeChallenger.map(fight => {
+        return (
+          <tr key={fight._id}>
+            <td>{fight.title}</td>
+            <td>{utilities.getTimeRemaining(fight.activatedAt)}</td>
+          </tr>
+        );
+      })
+    ) : (
+      <React.Fragment />
+    );
+
+    const _activeDefender = activeDefender.length ? (
+      activeDefender.map(fight => {
         return (
           <tr key={fight._id}>
             <td>{fight.title}</td>
@@ -193,8 +227,12 @@ class MyHatchets extends Component {
           <PendingBody />
         </HatchetListTable>
         <HatchetListTable className="fightList hatchetList activeList">
-          <ActiveHeaders />
-          <tbody>{_active}</tbody>
+          <ActiveHeaders side="Challenger" />
+          <ChallengerBody />
+        </HatchetListTable>
+        <HatchetListTable className="fightList hatchetList activeList">
+          <ActiveHeaders side="Defender" />
+          <DefenderBody />
         </HatchetListTable>
       </React.Fragment>
     );
@@ -272,7 +310,8 @@ class MyHatchets extends Component {
     const noContent =
       waitingOnThem.length === 0 &&
       waitingOnYou.length === 0 &&
-      active.length === 0;
+      activeChallenger.length === 0 &&
+      activeDefender.length === 0;
 
     return (
       <div>

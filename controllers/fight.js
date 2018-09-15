@@ -197,7 +197,7 @@ exports.getUserFights = async (req, res) => {
       { $and: [{ antagonist: user }, { isLive: true }] },
       { $and: [{ defender: user }, { isLive: true }] }
     ]
-  });
+  }).populate(populateOptions);
   let waitingOnYou = await Fight.find({
     defender: userId,
     isLive: false
