@@ -13,6 +13,11 @@ const sharedButtonStyles = css`
   font-weight: bold;
 `;
 
+const HatchetListWrapper = styled.div`
+  padding-bottom: 3em;
+  padding-top: 3em;
+`;
+
 const HatchetListTable = styled.table`
   &.hatchetList {
     margin-top: 2em;
@@ -21,12 +26,26 @@ const HatchetListTable = styled.table`
     ${utilities.media.phone`
       max-width: 100%;
     `};
+
+    td {
+      padding: 15px 0;
+    }
   }
 
-  &.activeList tbody tr {
-    ${utilities.media.phone`
-      flex-wrap: nowrap;
+  &.activeList tbody {
+    tr {
+      ${utilities.media.phone`
+        flex-wrap: nowrap;
+        padding-bottom: 0.5em;
+        padding-top: 0.5em;
+      `};
+    }
+
+    td {
+      ${utilities.media.phone`
+        padding: 0;
     `};
+    }
   }
 
   tbody {
@@ -61,7 +80,7 @@ const HatchetListTable = styled.table`
       ${utilities.media.phone`
         display: flex;
         flex-wrap: wrap;
-        padding: 0.5em 1em 1em;
+        padding: 0.25em 1em 0.5em;
         width: 100vw;
       `};
     }
@@ -198,7 +217,9 @@ class MyHatchets extends Component {
       activeChallenger.map(fight => {
         return (
           <tr key={fight._id}>
-            <td>{fight.title}</td>
+            <td>
+              <Link to={`/fight/${fight._id}`}>{fight.title}</Link>
+            </td>
             <td>{utilities.getTimeRemaining(fight.activatedAt)}</td>
           </tr>
         );
@@ -211,7 +232,9 @@ class MyHatchets extends Component {
       activeDefender.map(fight => {
         return (
           <tr key={fight._id}>
-            <td>{fight.title}</td>
+            <td>
+              <Link to={`/fight/${fight._id}`}>{fight.title}</Link>
+            </td>
             <td>{utilities.getTimeRemaining(fight.activatedAt)}</td>
           </tr>
         );
@@ -314,7 +337,7 @@ class MyHatchets extends Component {
       activeDefender.length === 0;
 
     return (
-      <div>
+      <HatchetListWrapper>
         {loading === true ? (
           <Loading />
         ) : (
@@ -327,7 +350,7 @@ class MyHatchets extends Component {
             <HatchetList />
           </React.Fragment>
         )}
-      </div>
+      </HatchetListWrapper>
     );
   }
 }

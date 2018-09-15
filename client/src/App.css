@@ -8,6 +8,7 @@
   --red: rgb(231, 77, 103);
   --bright-gold: rgb(255,	230,	51);
   --teal: rgb(57, 160, 207);
+  --light-teal: rgb(172,	223,	238);
   --bright-teal: rgb(102, 193, 224);
   --dark-blue: rgb(15, 48, 80);
   --content-padding: 0 3em;
@@ -258,11 +259,11 @@ button {
 }
 
 .fightList tbody tr {
-  border-top: 1px solid var(--teal);
+  border-top: 1px solid var(--light-teal);
 }
 
 .fightList tbody tr:last-child {
-  border-bottom: 1px solid var(--teal);
+  border-bottom: 1px solid var(--light-teal);
 }
 
 .fightList tbody td {
