@@ -108,7 +108,7 @@ const utilities = {
     }
 
     // TODO: Fix time return
-    return time === "24:00" ? "1 day" : time;
+    return time === "23:60" ? "1 day" : time;
   }
 };
 

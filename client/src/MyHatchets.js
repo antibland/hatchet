@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { auth } from "./Auth";
 import Loading from "./Loading";
-import HatchetList from "./shared/components/HatchetList";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import utilities from "./shared/utilities";
@@ -70,11 +69,15 @@ const HatchetListHeader = styled.th`
 
   &.pending {
     color: var(--red) !important;
-
-    ${utilities.media.phone`
-      padding-left: 1em !important;
-    `};
   }
+
+  &.active {
+    color: var(--teal) !important;
+  }
+
+  ${utilities.media.phone`
+    padding-left: 1em !important;
+  `};
 `;
 
 const Highlight = styled.span`
@@ -162,15 +165,41 @@ class MyHatchets extends Component {
       </tbody>
     );
 
-    const Pending = () => (
-      <HatchetListTable className="fightList hatchetList">
-        <PendingHeaders />
-        <PendingBody />
-      </HatchetListTable>
+    const ActiveHeaders = () => (
+      <thead>
+        <tr>
+          <HatchetListHeader className="active">Challenger</HatchetListHeader>
+        </tr>
+      </thead>
     );
 
-    let _waitingOnYou =
-      waitingOnYou.length &&
+    const _active = active.length ? (
+      active.map(fight => {
+        return (
+          <tr key={fight._id}>
+            <td>{fight.title}</td>
+            <td>{utilities.getTimeRemaining(fight.activatedAt)}</td>
+          </tr>
+        );
+      })
+    ) : (
+      <React.Fragment />
+    );
+
+    const HatchetList = () => (
+      <React.Fragment>
+        <HatchetListTable className="fightList hatchetList">
+          <PendingHeaders />
+          <PendingBody />
+        </HatchetListTable>
+        <HatchetListTable className="fightList hatchetList activeList">
+          <ActiveHeaders />
+          <tbody>{_active}</tbody>
+        </HatchetListTable>
+      </React.Fragment>
+    );
+
+    const _waitingOnYou = waitingOnYou.length ? (
       waitingOnYou.map(fight => {
         return (
           <tr key={fight._id}>
@@ -200,10 +229,12 @@ class MyHatchets extends Component {
             </td>
           </tr>
         );
-      });
+      })
+    ) : (
+      <React.Fragment />
+    );
 
-    let _waitingOnThem =
-      waitingOnThem.length &&
+    const _waitingOnThem = waitingOnThem.length ? (
       waitingOnThem.map(fight => {
         return (
           <tr key={fight._id}>
@@ -233,20 +264,12 @@ class MyHatchets extends Component {
             </td>
           </tr>
         );
-      });
-
-    let _active = active.length ? (
-      <React.Fragment>
-        <h2>Active Fights</h2>
-        <ul className="fightList">
-          <HatchetList fights={active} />
-        </ul>
-      </React.Fragment>
+      })
     ) : (
-      ""
+      <React.Fragment />
     );
 
-    let noContent =
+    const noContent =
       waitingOnThem.length === 0 &&
       waitingOnYou.length === 0 &&
       active.length === 0;
@@ -262,7 +285,7 @@ class MyHatchets extends Component {
             </HatchetListLink>
             {noContent && <p>You've got no hatchets.</p>}
 
-            <Pending />
+            <HatchetList />
           </React.Fragment>
         )}
       </div>
