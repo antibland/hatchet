@@ -4,6 +4,7 @@ import Loading from "./Loading";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import utilities from "./shared/utilities";
+import CancelFight from "./CancelFight";
 
 const sharedButtonStyles = css`
   padding: 1em 2.5em !important;
@@ -139,7 +140,6 @@ class MyHatchets extends Component {
     };
 
     this.handleSurrenderClick = this.handleSurrenderClick.bind(this);
-    this.handleCancelClick = this.handleCancelClick.bind(this);
     this.handleRemindThemClick = this.handleRemindThemClick.bind(this);
   }
 
@@ -168,10 +168,6 @@ class MyHatchets extends Component {
 
   handleSurrenderClick() {
     alert("handle surrender");
-  }
-
-  handleCancelClick() {
-    alert("handle cancel");
   }
 
   handleRemindThemClick() {
@@ -301,18 +297,13 @@ class MyHatchets extends Component {
           <tr key={fight._id}>
             <td>
               <React.Fragment>
-                You started a Hatchet with{" "}
+                You started a{" "}
+                <RedLink to={`/fight/${fight._id}`}>Hatchet</RedLink> with{" "}
                 <Highlight>{fight.defender.username}</Highlight>.
               </React.Fragment>
             </td>
             <td>
-              <HatchetListButton
-                type="button"
-                onClick={this.handleCancelClick}
-                className="button primary alt"
-              >
-                Cancel
-              </HatchetListButton>
+              <CancelFight fightId={fight._id} classes="button primary alt" />
             </td>
             <td>
               <HatchetListButton

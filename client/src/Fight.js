@@ -11,10 +11,40 @@ import Vote from "./Vote";
 import styled from "styled-components";
 import "./css/Fight.css";
 
+const GifWrapper = styled.figure`
+  position: relative;
+  margin: 0;
+  display: inline-block;
+
+  video {
+    max-width: 100%;
+  }
+`;
+
+const GifCaption = styled.figcaption`
+  position: absolute;
+  bottom: 0;
+  transform: translateX(-50%);
+  left: 50%;
+  font-size: 1.2em;
+  width: 100%;
+  padding: 0.7em 2em 1em;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: black;
+
+  ${utilities.media.phone`
+    transform: none;
+    position: static;
+    padding: 0;
+  `};
+`;
+
 class Fight extends Component {
   constructor() {
     super();
     this.state = {
+      showGif: false,
+      gifCaption: "",
       addStyle: false,
       loaded: false,
       showVotes: false,
@@ -91,11 +121,19 @@ class Fight extends Component {
       });
   }
 
+  handleError(message) {
+    this.setState({ loaded: true, showGif: true, gifCaption: message });
+  }
+
   getFightDetails(fightId, cb) {
     // /api/:fightId/fight => getFight
     fetch(`/api/${fightId}/fight`)
       .then(res => res.json())
       .then(data => {
+        if (data.type === "failure") {
+          this.handleError(data.message);
+          return;
+        }
         this.setState({
           activatedAt: data.fight.activatedAt,
           isExpired: data.fight.isExpired,
@@ -148,6 +186,9 @@ class Fight extends Component {
             this.setState({ addStyle: true });
           }, 400);
         }, 500);
+      })
+      .catch(err => {
+        console.error(err);
       });
   }
 
@@ -295,88 +336,104 @@ class Fight extends Component {
         <div className="contentPadding">
           {loaded === true ? (
             <React.Fragment>
-              <div className="fightContainer">
-                <header className="fightContainerHeader">
-                  <Avatar
-                    imgpath={antagonist.imgpath}
-                    width="100px"
-                    height="100px"
-                  >
-                    <Symbol name="challenger-hatchet-icon" />
-                  </Avatar>
-                  <h2 className="hatchetTitle">{this.state.fightTitle}</h2>
-                  <Avatar
-                    imgpath={defender.imgpath}
-                    width="100px"
-                    height="100px"
-                  >
-                    <Symbol name="defender-shield-icon" />
-                  </Avatar>
-                </header>
+              {this.state.showGif === true ? (
+                <GifWrapper>
+                  <video autoPlay loop muted>
+                    <source
+                      src="https://media.giphy.com/media/L6Dx055YCpcFa/giphy.mp4"
+                      type="video/mp4"
+                    />
+                    <source src="movie.ogg" type="video/ogg" />
+                  </video>
+                  <GifCaption>{this.state.gifCaption}</GifCaption>
+                </GifWrapper>
+              ) : (
+                <div className="fightContainer">
+                  <header className="fightContainerHeader">
+                    <Avatar
+                      imgpath={antagonist.imgpath}
+                      width="100px"
+                      height="100px"
+                    >
+                      <Symbol name="challenger-hatchet-icon" />
+                    </Avatar>
+                    <h2 className="hatchetTitle">{this.state.fightTitle}</h2>
+                    <Avatar
+                      imgpath={defender.imgpath}
+                      width="100px"
+                      height="100px"
+                    >
+                      <Symbol name="defender-shield-icon" />
+                    </Avatar>
+                  </header>
 
-                <div className="fightTally">
-                  <div className="user1">
-                    <div className="fightMeter">
-                      <span
-                        style={
-                          addStyle
-                            ? { width: `${progressUser1}%` }
-                            : { width: "0%" }
-                        }
-                      />
+                  <div className="fightTally">
+                    <div className="user1">
+                      <div className="fightMeter">
+                        <span
+                          style={
+                            addStyle
+                              ? { width: `${progressUser1}%` }
+                              : { width: "0%" }
+                          }
+                        />
+                      </div>
+                    </div>
+                    <VersusImg />
+                    <div className="user2">
+                      <div className="fightMeter">
+                        <span
+                          style={
+                            addStyle
+                              ? { width: `${progressUser2}%` }
+                              : { width: "0%" }
+                          }
+                        />
+                      </div>
                     </div>
                   </div>
-                  <VersusImg />
-                  <div className="user2">
-                    <div className="fightMeter">
-                      <span
-                        style={
-                          addStyle
-                            ? { width: `${progressUser2}%` }
-                            : { width: "0%" }
-                        }
-                      />
+
+                  <div className="fightBody">
+                    <div className="user1">
+                      <h3>{antagonist.username}</h3>
+                      <p className="fightText">{offense}</p>
+                      <p className="fightText">{bother}</p>
+                      <p className="fightText">{action}</p>
+
+                      <VotingButton side="for" username={antagonist.username} />
                     </div>
-                  </div>
-                </div>
 
-                <div className="fightBody">
-                  <div className="user1">
-                    <h3>{antagonist.username}</h3>
-                    <p className="fightText">{offense}</p>
-                    <p className="fightText">{bother}</p>
-                    <p className="fightText">{action}</p>
+                    <TimeRemaining />
 
-                    <VotingButton side="for" username={antagonist.username} />
-                  </div>
-
-                  <TimeRemaining />
-
-                  <div className="user2">
-                    <h3>{defender.username}</h3>
-                    {userCanDefend ? (
-                      <UserCanDefendWrapper>
+                    <div className="user2">
+                      <h3>{defender.username}</h3>
+                      {userCanDefend ? (
+                        <UserCanDefendWrapper>
+                          <PlaceholderText />
+                          <DefendButton
+                            className="primary button"
+                            to={`/defend/${this.props.match.params.fightId}`}
+                          >
+                            Defend yourself
+                          </DefendButton>
+                        </UserCanDefendWrapper>
+                      ) : defend_offense.length ? (
+                        <React.Fragment>
+                          <p className="fightText">{defend_offense}</p>
+                          <p className="fightText">{defend_bother}</p>
+                          <p className="fightText">{defend_action}</p>
+                        </React.Fragment>
+                      ) : (
                         <PlaceholderText />
-                        <DefendButton
-                          className="primary button"
-                          to={`/defend/${this.props.match.params.fightId}`}
-                        >
-                          Defend yourself
-                        </DefendButton>
-                      </UserCanDefendWrapper>
-                    ) : defend_offense.length ? (
-                      <React.Fragment>
-                        <p className="fightText">{defend_offense}</p>
-                        <p className="fightText">{defend_bother}</p>
-                        <p className="fightText">{defend_action}</p>
-                      </React.Fragment>
-                    ) : (
-                      <PlaceholderText />
-                    )}
-                    <VotingButton side="against" username={defender.username} />
+                      )}
+                      <VotingButton
+                        side="against"
+                        username={defender.username}
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </React.Fragment>
           ) : (
             <Loading />

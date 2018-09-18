@@ -140,8 +140,7 @@ exports.getFight = async (req, res) => {
   if (!fight) {
     return res.status(500).json({
       type: "failure",
-      message:
-        "You came here for a fight and got an error. WTF? Please try again."
+      message: "This hatchet was canceled, deleted, called-off, 86ed."
     });
   }
 
@@ -155,6 +154,7 @@ exports.getFight = async (req, res) => {
       });
     });
   } else {
+    // TODO: Handle expired fight case
     return res.status(200).json({
       type: "success",
       fight
@@ -215,11 +215,11 @@ exports.getUserFights = async (req, res) => {
   });
 };
 
-exports.deleteFight = async (req, res) => {
+exports.cancelFight = async (req, res) => {
   let fightId = req.params.fightId;
   let user = await User.findById(req.params.userId);
 
-  // Delete the fight
+  // Remove the fight from DB
   await Fight.findByIdAndRemove(fightId, err => {
     if (err) {
       return res.status(500).json({
