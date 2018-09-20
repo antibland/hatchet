@@ -87,6 +87,9 @@ const utilities = {
     const re = /\S+@\S+\.\S+/;
     return re.test(email);
   },
+  stripNumbers: str => {
+    return str.replace(/\D/g, "");
+  },
   getTimeRemaining(activatedAt) {
     if (!activatedAt) {
       return "PENDING";

@@ -8,8 +8,7 @@ const TimeRemaining = props => {
 
 function formatTime(unit) {
   let u = unit;
-  u = u.replace(/\D/g, "");
-  u = parseInt(u, 10);
+  u = parseInt(utilities.stripNumbers(u), 10);
 
   if (unit === "1 day") {
     return <div dangerouslySetInnerHTML={{ __html: `<time>24:00</time>` }} />;
