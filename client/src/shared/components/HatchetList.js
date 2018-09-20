@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import utilities from "../../shared/utilities";
 import Avatar from "../../shared/components/Avatar";
 import VersusImg from "../../shared/components/VersusImg";
+import TimeRemaining from "../../shared/components/TimeRemaining";
 
 const TitleRow = props => {
   let firstWord = props.type.split(" ")[0].replace("'", "");
@@ -44,14 +45,6 @@ const DefenderRow = props => {
   );
 };
 
-const TimeRemainingRow = props => {
-  return (
-    <td>
-      <time>{props.remaining}</time>
-    </td>
-  );
-};
-
 const HatchetList = props =>
   props.fights.map(fight => {
     const {
@@ -74,7 +67,13 @@ const HatchetList = props =>
           avatar={antagonistAvatar.path}
         />
         <DefenderRow username={defenderUsername} avatar={defenderAvatar.path} />
-        <TimeRemainingRow remaining={utilities.getTimeRemaining(activatedAt)} />
+        <td>
+          {activatedAt == null ? (
+            "PENDING"
+          ) : (
+            <TimeRemaining remaining={activatedAt} />
+          )}
+        </td>
       </tr>
     );
   });

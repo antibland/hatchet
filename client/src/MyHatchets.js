@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import utilities from "./shared/utilities";
 import CancelFight from "./CancelFight";
+import TimeRemaining from "./shared/components/TimeRemaining";
 
 const sharedButtonStyles = css`
   padding: 1em 2.5em !important;
@@ -216,7 +217,9 @@ class MyHatchets extends Component {
             <td>
               <Link to={`/fight/${fight._id}`}>{fight.title}</Link>
             </td>
-            <td>{utilities.getTimeRemaining(fight.activatedAt)}</td>
+            <td>
+              <TimeRemaining remaining={fight.activatedAt} />
+            </td>
           </tr>
         );
       })
@@ -231,7 +234,9 @@ class MyHatchets extends Component {
             <td>
               <Link to={`/fight/${fight._id}`}>{fight.title}</Link>
             </td>
-            <td>{utilities.getTimeRemaining(fight.activatedAt)}</td>
+            <td>
+              <TimeRemaining remaining={fight.activatedAt} />
+            </td>
           </tr>
         );
       })
@@ -239,20 +244,42 @@ class MyHatchets extends Component {
       <React.Fragment />
     );
 
+    const HatchetListWrapperComponent = props => {
+      if (props.type === "pending") {
+        return waitingOnYou.length || waitingOnThem.length ? (
+          props.children
+        ) : (
+          <React.Fragment />
+        );
+      } else if (props.type === "challenger") {
+        return activeChallenger.length ? props.children : <React.Fragment />;
+      } else if (props.type === "defender") {
+        return activeDefender.length ? props.children : <React.Fragment />;
+      }
+    };
+
     const HatchetList = () => (
       <React.Fragment>
-        <HatchetListTable className="fightList hatchetList">
-          <PendingHeaders />
-          <PendingBody />
-        </HatchetListTable>
-        <HatchetListTable className="fightList hatchetList activeList">
-          <ActiveHeaders side="Challenger" />
-          <ChallengerBody />
-        </HatchetListTable>
-        <HatchetListTable className="fightList hatchetList activeList">
-          <ActiveHeaders side="Defender" />
-          <DefenderBody />
-        </HatchetListTable>
+        <HatchetListWrapperComponent type="pending">
+          <HatchetListTable className="fightList hatchetList">
+            <PendingHeaders />
+            <PendingBody />
+          </HatchetListTable>
+        </HatchetListWrapperComponent>
+
+        <HatchetListWrapperComponent type="challenger">
+          <HatchetListTable className="fightList hatchetList activeList">
+            <ActiveHeaders side="Challenger" />
+            <ChallengerBody />
+          </HatchetListTable>
+        </HatchetListWrapperComponent>
+
+        <HatchetListWrapperComponent type="defender">
+          <HatchetListTable className="fightList hatchetList activeList">
+            <ActiveHeaders side="Defender" />
+            <DefenderBody />
+          </HatchetListTable>
+        </HatchetListWrapperComponent>
       </React.Fragment>
     );
 

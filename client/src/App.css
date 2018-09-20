@@ -306,6 +306,10 @@ button {
   font-weight: bold;
 }
 
+.fightList tbody time.expiresSoon {
+  color: var(--red);
+}
+
 .fightList tbody .versus {
   height: 35px;
   width: 35px;
