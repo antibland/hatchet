@@ -212,8 +212,8 @@ asynckit@^0.4.0:
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
 
 aws-sdk@^2.247.1:
-  version "2.319.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.319.0.tgz#b119da670d13d5d0d40a1eb768dc46244673d417"
+  version "2.320.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.320.0.tgz#8089976be31e170771652f62b6796aab5dd9d7b4"
   dependencies:
     buffer "4.9.1"
     events "1.1.1"
@@ -1533,8 +1533,8 @@ mongoose-legacy-pluralize@1.0.2:
   resolved "https://registry.yarnpkg.com/mongoose-legacy-pluralize/-/mongoose-legacy-pluralize-1.0.2.tgz#3ba9f91fa507b5186d399fb40854bff18fb563e4"
 
 mongoose@*:
-  version "5.2.16"
-  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-5.2.16.tgz#8b9da299816d373470efd4baf2c4e5d7732aeda4"
+  version "5.2.17"
+  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-5.2.17.tgz#8baeb60a675d00da03633d679a72457dbb5b2285"
   dependencies:
     async "2.6.1"
     bson "~1.0.5"
