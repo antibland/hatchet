@@ -15,6 +15,10 @@ const sharedButtonStyles = css`
   font-weight: bold;
 `;
 
+const Record = styled.h2`
+  padding: 15px 0 0;
+`;
+
 const RecordHighlight = styled.strong`
   background: var(--dark-text);
   color: white;
@@ -274,16 +278,16 @@ class MyHatchets extends Component {
       }
     };
 
-    const Record = () => {
+    const FightRecord = () => {
       const { ties, wins, losses } = this.state;
       return (
         <React.Fragment>
-          <h2>
+          <Record>
             Your record is{" "}
             <RecordHighlight>
               {wins}-{losses}-{ties}
             </RecordHighlight>
-          </h2>
+          </Record>
         </React.Fragment>
       );
     };
@@ -398,7 +402,7 @@ class MyHatchets extends Component {
               <p>You've got no hatchets.</p>
             ) : (
               <React.Fragment>
-                <Record />
+                <FightRecord />
                 <HatchetList />
               </React.Fragment>
             )}
