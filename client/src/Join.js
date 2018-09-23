@@ -164,7 +164,7 @@ class Join extends Component {
               name="username"
               id="username"
               data-lpignore="true"
-              value={this.state.username}
+              defaultValue={this.state.username}
               placeholder="choose a username"
               aria-label="choose a username"
               maxLength="28"
@@ -183,7 +183,7 @@ class Join extends Component {
               name="email"
               id="email"
               data-lpignore="true"
-              value={this.state.email}
+              defaultValue={this.state.email}
               aria-label="email address"
               placeholder="email address"
               onBlur={this.handleBlur("email")}
@@ -198,7 +198,7 @@ class Join extends Component {
               name="password"
               id="password"
               data-lpignore="true"
-              value={this.state.password}
+              defaultValue={this.state.password}
               placeholder="password"
               aria-label="password"
               onBlur={this.handleBlur("password")}

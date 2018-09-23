@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { auth } from './Auth.js';
-import './css/Flash.css';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { auth } from "./Auth.js";
+import "./css/Flash.css";
 
 function validate(email, password) {
   // true means invalid, so our conditions got reversed
   return {
     email: email.length === 0,
-    password: password.length === 0,
+    password: password.length === 0
   };
 }
 class Login extends Component {
@@ -18,11 +18,11 @@ class Login extends Component {
         type: null,
         message: null
       },
-      email: '',
-      password: '',
+      email: "",
+      password: "",
       touched: {
         email: false,
-        password: false,
+        password: false
       }
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -37,19 +37,20 @@ class Login extends Component {
 
     e.preventDefault();
 
-    fetch('/api/login', {
-      method: 'POST',
+    fetch("/api/login", {
+      method: "POST",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
+        Accept: "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         email: this.state.email,
-        password: this.state.password,
+        password: this.state.password
       })
-    }).then(res => res.json())
+    })
+      .then(res => res.json())
       .then(data => {
-        if (data.type === 'success' && data.token.length) {
+        if (data.type === "success" && data.token.length) {
           auth.authenticate(() => {
             auth.user = {
               username: data.user.username,
@@ -57,15 +58,15 @@ class Login extends Component {
               token: data.token,
               avatar: data.user.avatar
             };
-            localStorage.setObject('user', auth.user);
+            localStorage.setObject("user", auth.user);
             auth.isAuthenticated = auth.hasValidToken();
-            this.props.history.push('/');
+            this.props.history.push("/");
           });
-        } else if (data.type === 'failure') {
+        } else if (data.type === "failure") {
           this.setState({
             flash: {
               message: data.message,
-              type: 'error'
+              type: "error"
             }
           });
         }
@@ -78,16 +79,16 @@ class Login extends Component {
     return !isDisabled;
   }
 
-  handleBlur = (field) => () => {
+  handleBlur = field => () => {
     this.setState({
-      touched: { ...this.state.touched, [field]: true },
+      touched: { ...this.state.touched, [field]: true }
     });
-  }
+  };
 
   handleChange(e) {
-    if (e.target.id === 'email') {
+    if (e.target.id === "email") {
       this.setState({ email: e.target.value });
-    } else if (e.target.id === 'password') {
+    } else if (e.target.id === "password") {
       this.setState({ password: e.target.value });
     }
   }
@@ -95,29 +96,29 @@ class Login extends Component {
   render() {
     let styles = {
       forgottenPassword: {
-        padding: '1em 0'
+        padding: "1em 0"
       }
     };
 
     const errors = validate(this.state.email, this.state.password);
     const isDisabled = Object.keys(errors).some(x => errors[x]);
 
-    const shouldMarkError = (field) => {
+    const shouldMarkError = field => {
       const hasError = errors[field];
       const shouldShow = this.state.touched[field];
 
       return hasError ? shouldShow : false;
     };
 
-    let flashClasses = this.state.flash.type !== null
-      ? `flash ${this.state.flash.type}`
-      : '';
+    let flashClasses =
+      this.state.flash.type !== null ? `flash ${this.state.flash.type}` : "";
 
-    let flashMessage = this.state.flash.message !== null
-      ? <div className={flashClasses}>
-          { this.state.flash.message }
-        </div>
-      : '';
+    let flashMessage =
+      this.state.flash.message !== null ? (
+        <div className={flashClasses}>{this.state.flash.message}</div>
+      ) : (
+        ""
+      );
 
     return (
       <div>
@@ -126,13 +127,13 @@ class Login extends Component {
           action="/api/login"
           method="POST"
           onSubmit={this.handleSubmit}
-          onChange={this.handleChange}>
-
-          { flashMessage }
+          onChange={this.handleChange}
+        >
+          {flashMessage}
 
           <div className="required-field-wrapper">
             <input
-              className={shouldMarkError('email') ? "error" : ""}
+              className={shouldMarkError("email") ? "error" : ""}
               required
               aria-label="email"
               type="email"
@@ -140,13 +141,14 @@ class Login extends Component {
               id="email"
               data-lpignore="true"
               placeholder="email"
-              value={this.state.email}
-              onBlur={this.handleBlur('email')}/>
+              defaultValue={this.state.email}
+              onBlur={this.handleBlur("email")}
+            />
           </div>
 
           <div className="required-field-wrapper">
             <input
-              className={shouldMarkError('password') ? "error" : ""}
+              className={shouldMarkError("password") ? "error" : ""}
               required
               aria-label="password"
               type="password"
@@ -154,21 +156,31 @@ class Login extends Component {
               id="password"
               data-lpignore="true"
               placeholder="password"
-              value={this.state.password}
-              onBlur={this.handleBlur('password')}/>
-            </div>
+              defaultValue={this.state.password}
+              onBlur={this.handleBlur("password")}
+            />
+          </div>
           <button
             type="submit"
             disabled={isDisabled}
-            className="button primary">Log In</button>
-            <div style={styles.forgottenPassword}>
-              <Link className="form-link" to={`/forgot_password?email=${this.state.email}`}>
-                I forgot my password
-              </Link>
-              <Link className="form-link" to={`/resend?email=${this.state.email}`}>
-                Resend verification link
-              </Link>
-            </div>
+            className="button primary"
+          >
+            Log In
+          </button>
+          <div style={styles.forgottenPassword}>
+            <Link
+              className="form-link"
+              to={`/forgot_password?email=${this.state.email}`}
+            >
+              I forgot my password
+            </Link>
+            <Link
+              className="form-link"
+              to={`/resend?email=${this.state.email}`}
+            >
+              Resend verification link
+            </Link>
+          </div>
         </form>
       </div>
     );
