@@ -15,6 +15,16 @@ const sharedButtonStyles = css`
   font-weight: bold;
 `;
 
+const RecordHighlight = styled.strong`
+  background: var(--dark-text);
+  color: white;
+  padding: 0 10px;
+  animation: simpleFadeIn 0.8s forwards ease-in 0.2s;
+  opacity: 0;
+  visibility: hidden;
+  text-shadow: 0 0 1px var(--red);
+`;
+
 const HatchetListWrapper = styled.div`
   padding-bottom: 3em;
   padding-top: 3em;
@@ -137,7 +147,10 @@ class MyHatchets extends Component {
       waitingOnThem: [],
       activeChallenger: [],
       activeDefender: [],
-      loading: true
+      loading: true,
+      ties: 0,
+      wins: 0,
+      losses: 0
     };
 
     this.handleSurrenderClick = this.handleSurrenderClick.bind(this);
@@ -151,7 +164,7 @@ class MyHatchets extends Component {
     fetch(url)
       .then(res => res.json())
       .then(data => {
-        let { active, waitingOnYou, waitingOnThem } = data;
+        let { active, waitingOnYou, waitingOnThem, record } = data;
 
         this.setState({
           activeChallenger: active.filter(
@@ -162,7 +175,10 @@ class MyHatchets extends Component {
           ),
           waitingOnYou,
           waitingOnThem,
-          loading: false
+          loading: false,
+          ties: record.ties,
+          wins: record.wins,
+          losses: record.losses
         });
       });
   }
@@ -256,6 +272,20 @@ class MyHatchets extends Component {
       } else if (props.type === "defender") {
         return activeDefender.length ? props.children : <React.Fragment />;
       }
+    };
+
+    const Record = () => {
+      const { ties, wins, losses } = this.state;
+      return (
+        <React.Fragment>
+          <h2>
+            Your record is{" "}
+            <RecordHighlight>
+              {wins}-{losses}-{ties}
+            </RecordHighlight>
+          </h2>
+        </React.Fragment>
+      );
     };
 
     const HatchetList = () => (
@@ -363,9 +393,15 @@ class MyHatchets extends Component {
             <HatchetListLink to="/create" className="button primary top">
               Start a new Hatchet
             </HatchetListLink>
-            {noContent && <p>You've got no hatchets.</p>}
 
-            <HatchetList />
+            {noContent ? (
+              <p>You've got no hatchets.</p>
+            ) : (
+              <React.Fragment>
+                <Record />
+                <HatchetList />
+              </React.Fragment>
+            )}
           </React.Fragment>
         )}
       </HatchetListWrapper>

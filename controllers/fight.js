@@ -192,16 +192,44 @@ exports.getUserFights = async (req, res) => {
     select: "username avatar"
   };
 
-  let active = await Fight.find({
+  let active = null;
+
+  let record = {
+    ties: 0,
+    wins: 0,
+    losses: 0
+  };
+
+  await Fight.find({
     $or: [
       { $and: [{ antagonist: user }, { isLive: true }] },
       { $and: [{ defender: user }, { isLive: true }] }
     ]
-  }).populate(populateOptions);
+  })
+    .populate(populateOptions)
+    .then(result => {
+      active = result;
+      result.map(fight => {
+        FightExpire.findOne({ _id: fight._id }).exec((err, doc) => {
+          if (doc == null) {
+            // Tally record for expired fights
+            if (fight.votes.for === fight.votes.against) {
+              ++record.ties;
+            } else if (fight.votes.for > fight.votes.against) {
+              ++record.wins;
+            } else if (fight.votes.for < fight.votes.against) {
+              ++record.losses;
+            }
+          }
+        });
+      });
+    });
+
   let waitingOnYou = await Fight.find({
     defender: userId,
     isLive: false
   }).populate(populateOptions);
+
   let waitingOnThem = await Fight.find({
     antagonist: userId,
     isLive: false
@@ -211,7 +239,8 @@ exports.getUserFights = async (req, res) => {
     type: "success",
     active,
     waitingOnYou,
-    waitingOnThem
+    waitingOnThem,
+    record
   });
 };
 
