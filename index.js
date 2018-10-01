@@ -78,6 +78,7 @@ app.get("/api/confirmation/:token_id", userApi.confirmationPost);
 app.get("/api/:userId/avatar", userApi.getAvatar);
 app.get("/api/:userName/avatar/username", userApi.getAvatarByUserName);
 app.get("/api/:userId", userApi.getUser);
+app.get("/api/:userId/record", userApi.getUserRecord);
 app.get("/api/:userReference/isUser", userApi.isUser);
 app.get(
   "/api/:userId/:fightId/isUserWatchingFight",

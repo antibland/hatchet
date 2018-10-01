@@ -436,6 +436,27 @@ exports.getUser = async (req, res) => {
   });
 };
 
+exports.getUserRecord = async (req, res) => {
+  let { userId } = req.params;
+
+  await User.findById(userId)
+    .then(user => {
+      if (user) {
+        return res.status(200).json({
+          message: "success",
+          record: user.record
+        });
+      }
+    })
+    .catch(err => {
+      return res.status(500).json({
+        type: "failure",
+        message: "Could not retrieve user record",
+        error: err
+      });
+    });
+};
+
 exports.isUser = async (req, res) => {
   let ref = req.params.userReference;
 
