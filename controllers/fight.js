@@ -239,9 +239,48 @@ exports.getUserFights = async (req, res) => {
     type: "success",
     active,
     waitingOnYou,
-    waitingOnThem,
-    record
+    waitingOnThem
   });
+};
+
+exports.surrender = async (req, res) => {
+  let fightId = req.params.fightId;
+  const expireHatchet = async () => {
+    await Fight.findOneAndUpdate(
+      { _id: fightId },
+      {
+        $set: {
+          "votes.for": 1,
+          isLive: true,
+          isExpired: true,
+          userSurrendered: true,
+          activatedAt: new Date(new Date().setDate(new Date().getDate() - 1))
+        }
+      }
+    )
+      .then(() => {
+        return res.status(200).json({
+          type: "success",
+          message: "You did it. You gave up."
+        });
+      })
+      .catch(err => {
+        return res.status(500).json({
+          type: "failure",
+          error: err
+        });
+      });
+  };
+  await FightExpire.findOneAndRemove(fightId)
+    .then(() => {
+      expireHatchet();
+    })
+    .catch(err => {
+      return res.status(500).json({
+        type: "failure",
+        error: err
+      });
+    });
 };
 
 exports.cancelFight = async (req, res) => {

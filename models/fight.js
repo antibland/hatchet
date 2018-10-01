@@ -46,7 +46,8 @@ const fightSchema = new Schema(
       ref: "User"
     },
     isLive: { type: Boolean, default: false },
-    isExpired: { type: Boolean, default: false }
+    isExpired: { type: Boolean, default: false },
+    userSurrendered: { type: Boolean, default: false }
   },
   { timestamps: true }
 );

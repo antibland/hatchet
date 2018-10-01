@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import utilities from "./shared/utilities";
 import CancelFight from "./CancelFight";
+import SurrenderButton from "./Surrender";
 import TimeRemaining from "./shared/components/TimeRemaining";
 
 const sharedButtonStyles = css`
@@ -329,13 +330,14 @@ class MyHatchets extends Component {
               </React.Fragment>
             </td>
             <td>
-              <HatchetListButton
+              <SurrenderButton
                 type="button"
-                onClick={this.handleSurrenderClick}
-                className="button primary alt"
+                fightId={fight._id}
+                classes="button primary alt"
+                opponent={fight.antagonist.username}
               >
                 Surrender
-              </HatchetListButton>
+              </SurrenderButton>
             </td>
             <td>
               <HatchetListLink

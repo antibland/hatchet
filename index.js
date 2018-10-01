@@ -59,6 +59,7 @@ app.post("/api/:userId/fight", fightApi.newFight);
 app.post("/api/:fightId/fight/setLive", fightApi.setLive);
 app.post("/api/:fightId/vote", fightApi.vote);
 app.delete("/api/:userId/:fightId", fightApi.cancelFight);
+app.patch("/api/:userId/:fightId", fightApi.surrender);
 app.get("/api/fights", fightApi.getFights);
 app.get("/api/:fightId/fight", fightApi.getFight);
 app.get("/api/:userId/fights", fightApi.getUserFights);
