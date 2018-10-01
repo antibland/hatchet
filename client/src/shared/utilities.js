@@ -110,7 +110,6 @@ const utilities = {
       return "00:00";
     }
 
-    // TODO: Fix time return
     return time === "23:60" ? "1 day" : time;
   }
 };

@@ -2,6 +2,7 @@ const Fight = require("../models/fight").Fight;
 const FightExpire = require("../models/fight").FightExpire;
 const User = require("../models/user");
 const validator = require("email-validator");
+const schedule = require("node-schedule");
 
 const utils = {
   removeItemFromArray: (array, element) => {
@@ -13,11 +14,89 @@ const utils = {
   }
 };
 
+const scheduleJob = fightId => {
+  let startTime = new Date(Date.now());
+  let endTime = new Date(startTime.getTime() + 1 * 24 * 60 * 60 * 1000);
+  //let endTime = new Date(startTime.getTime() + 30000);
+
+  schedule.scheduleJob(endTime, function() {
+    const errorJSON = (message, type = "failure") => {
+      return {
+        type,
+        message
+      };
+    };
+
+    Fight.findById(fightId)
+      .populate({
+        path: "antagonist defender",
+        select: "_id"
+      })
+      .then(fight => {
+        const updateUserRecord = (side, instruction) => {
+          User.findOneAndUpdate(
+            { _id: fight[side]._id },
+            {
+              $inc: {
+                [instruction]: 1
+              }
+            }
+          )
+            .then(user => {
+              if (!user) {
+                console.error("User record not updated");
+              }
+            })
+            .catch(err => {
+              console.error(err);
+            });
+        };
+
+        let result =
+          fight.votes.for === fight.votes.against
+            ? "tie"
+            : fight.votes.for > fight.votes.against
+              ? "aggressor"
+              : "defender";
+
+        if (result === "tie") {
+          updateUserRecord("antagonist", "record.ties");
+          updateUserRecord("defender", "record.ties");
+        } else if (result === "aggressor") {
+          updateUserRecord("antagonist", "record.wins");
+          updateUserRecord("defender", "record.losses");
+        } else if (result === "defender") {
+          updateUserRecord("antagonist", "record.losses");
+          updateUserRecord("defender", "record.wins");
+        }
+
+        fight.isExpired = true;
+        fight.save((err, res) => {
+          if (err) {
+            return res
+              .status(500)
+              .json(
+                errorJSON(
+                  "For what it's worth, an error occurred with the timer."
+                )
+              );
+          }
+        });
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  });
+};
+
 exports.setLive = async (req, res) => {
   let { fightId } = req.params;
   let { beef, bother, takeAction } = req.body;
 
-  let fight = await Fight.findById(fightId);
+  let fight = await Fight.findById(fightId).populate({
+    path: "antagonist defender",
+    select: "_id"
+  });
 
   fight.text.defender.do = beef;
   fight.text.defender.bother = bother;
@@ -39,6 +118,7 @@ exports.setLive = async (req, res) => {
 
     fightExpire.save(err => {
       if (err) throw err;
+      scheduleJob(fightId);
     });
   });
 
@@ -61,12 +141,6 @@ exports.getFights = async (req, res) => {
         "We can`t seem to retrieve any fights right now. Try again, I guess?"
     });
   }
-
-  fights.map(fight => {
-    FightExpire.findOne({ _id: fight._id }).exec((err, doc) => {
-      fight.isExpired = doc == null ? true : false;
-    });
-  });
 
   return res.status(200).json(fights);
 };
@@ -144,22 +218,10 @@ exports.getFight = async (req, res) => {
     });
   }
 
-  if (fight.isLive === true) {
-    await FightExpire.findOne({ _id: fightId }).exec((err, doc) => {
-      fight.isExpired = doc == null ? true : false;
-
-      return res.status(200).json({
-        type: "success",
-        fight
-      });
-    });
-  } else {
-    // TODO: Handle expired fight case
-    return res.status(200).json({
-      type: "success",
-      fight
-    });
-  }
+  return res.status(200).json({
+    type: "success",
+    fight
+  });
 };
 
 exports.getWatchedFights = async (req, res) => {
@@ -194,12 +256,6 @@ exports.getUserFights = async (req, res) => {
 
   let active = null;
 
-  let record = {
-    ties: 0,
-    wins: 0,
-    losses: 0
-  };
-
   await Fight.find({
     $or: [
       { $and: [{ antagonist: user }, { isLive: true }] },
@@ -209,28 +265,17 @@ exports.getUserFights = async (req, res) => {
     .populate(populateOptions)
     .then(result => {
       active = result;
-      result.map(fight => {
-        FightExpire.findOne({ _id: fight._id }).exec((err, doc) => {
-          if (doc == null) {
-            // Tally record for expired fights
-            if (fight.votes.for === fight.votes.against) {
-              ++record.ties;
-            } else if (fight.votes.for > fight.votes.against) {
-              ++record.wins;
-            } else if (fight.votes.for < fight.votes.against) {
-              ++record.losses;
-            }
-          }
-        });
-      });
+    })
+    .catch(err => {
+      console.error(err);
     });
 
-  let waitingOnYou = await Fight.find({
+  const waitingOnYou = await Fight.find({
     defender: userId,
     isLive: false
   }).populate(populateOptions);
 
-  let waitingOnThem = await Fight.find({
+  const waitingOnThem = await Fight.find({
     antagonist: userId,
     isLive: false
   }).populate(populateOptions);

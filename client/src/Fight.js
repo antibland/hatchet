@@ -134,6 +134,11 @@ class Fight extends Component {
           this.handleError(data.message);
           return;
         }
+
+        let offense = data.fight.text.defender.do || "";
+        let bother = data.fight.text.defender.bother || "";
+        let action = data.fight.text.defender.action || "";
+
         this.setState({
           activatedAt: data.fight.activatedAt,
           isExpired: data.fight.isExpired,
@@ -161,10 +166,11 @@ class Fight extends Component {
               : "",
             username: data.fight.defender.username,
             argument: {
-              offense: data.fight.isLive ? data.fight.text.defender.do : "",
-              bother: data.fight.isLive ? data.fight.text.defender.bother : "",
-              action: data.fight.isLive ? data.fight.text.defender.action : ""
-            }
+              offense,
+              bother,
+              action
+            },
+            userSurrendered: data.fight.userSurrendered
           }
         });
 
@@ -403,7 +409,10 @@ class Fight extends Component {
                       <VotingButton side="for" username={antagonist.username} />
                     </div>
 
-                    <TimeRemaining />
+                    <TimeRemaining
+                      isExpired={isExpired}
+                      activatedAt={activatedAt}
+                    />
 
                     <div className="user2">
                       <h3>{defender.username}</h3>

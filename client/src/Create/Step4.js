@@ -122,7 +122,7 @@ class Step4 extends Component {
                   </div>
 
                   <div className="fightTimeRemaining">
-                    <TimeRemaining />
+                    <TimeRemaining isExpired={false} activatedAt={Date.now()} />
                   </div>
 
                   <div className="user2">

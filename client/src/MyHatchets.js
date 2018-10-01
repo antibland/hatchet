@@ -158,38 +158,45 @@ class MyHatchets extends Component {
       losses: 0
     };
 
-    this.handleSurrenderClick = this.handleSurrenderClick.bind(this);
     this.handleRemindThemClick = this.handleRemindThemClick.bind(this);
   }
 
-  componentDidMount() {
+  getUserFights() {
     // /api/:userId/fights => getUserFights
     let url = `/api/${auth.user.userid}/fights`;
-
-    fetch(url)
-      .then(res => res.json())
-      .then(data => {
-        let { active, waitingOnYou, waitingOnThem, record } = data;
-
-        this.setState({
-          activeChallenger: active.filter(
-            fight => fight.antagonist.username === auth.user.username
-          ),
-          activeDefender: active.filter(
-            fight => fight.antagonist.username !== auth.user.username
-          ),
-          waitingOnYou,
-          waitingOnThem,
-          loading: false,
-          ties: record.ties,
-          wins: record.wins,
-          losses: record.losses
-        });
-      });
+    return fetch(url).then(res => res.json());
   }
 
-  handleSurrenderClick() {
-    alert("handle surrender");
+  getUserRecord() {
+    // /api/:userId/record => getUserRecord
+    let url = `/api/${auth.user.userid}/record`;
+    return fetch(url).then(res => res.json());
+  }
+
+  getFightsAndUserRecord() {
+    return Promise.all([this.getUserFights(), this.getUserRecord()]);
+  }
+
+  componentDidMount() {
+    this.getFightsAndUserRecord().then(([fights, user]) => {
+      let { active, waitingOnYou, waitingOnThem } = fights;
+      let { ties, wins, losses } = user.record;
+
+      this.setState({
+        activeChallenger: active.filter(
+          fight => fight.antagonist.username === auth.user.username
+        ),
+        activeDefender: active.filter(
+          fight => fight.antagonist.username !== auth.user.username
+        ),
+        waitingOnYou,
+        waitingOnThem,
+        loading: false,
+        ties,
+        wins,
+        losses
+      });
+    });
   }
 
   handleRemindThemClick() {
@@ -231,6 +238,11 @@ class MyHatchets extends Component {
     const ChallengerBody = () => <tbody>{_activeChallenger}</tbody>;
     const DefenderBody = () => <tbody>{_activeDefender}</tbody>;
 
+    const ShowTime = props => {
+      const { activatedAt, isExpired } = props;
+      return <TimeRemaining isExpired={isExpired} activatedAt={activatedAt} />;
+    };
+
     const _activeChallenger = activeChallenger.length ? (
       activeChallenger.map(fight => {
         return (
@@ -239,7 +251,10 @@ class MyHatchets extends Component {
               <Link to={`/fight/${fight._id}`}>{fight.title}</Link>
             </td>
             <td>
-              <TimeRemaining remaining={fight.activatedAt} />
+              <ShowTime
+                activatedAt={fight.activatedAt}
+                isExpired={fight.isExpired}
+              />
             </td>
           </tr>
         );
@@ -256,7 +271,10 @@ class MyHatchets extends Component {
               <Link to={`/fight/${fight._id}`}>{fight.title}</Link>
             </td>
             <td>
-              <TimeRemaining remaining={fight.activatedAt} />
+              <TimeRemaining
+                isExpired={fight.isExpired}
+                activatedAt={fight.activatedAt}
+              />
             </td>
           </tr>
         );

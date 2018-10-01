@@ -45,6 +45,11 @@ const DefenderRow = props => {
   );
 };
 
+const ShowTime = props => {
+  const { activatedAt, isExpired } = props;
+  return <TimeRemaining isExpired={isExpired} activatedAt={activatedAt} />;
+};
+
 const HatchetList = props =>
   props.fights.map(fight => {
     const {
@@ -52,6 +57,7 @@ const HatchetList = props =>
       title,
       type,
       activatedAt,
+      isExpired,
       antagonist: {
         username: antagonistUsername,
         avatar: antagonistAvatar = ""
@@ -68,11 +74,7 @@ const HatchetList = props =>
         />
         <DefenderRow username={defenderUsername} avatar={defenderAvatar.path} />
         <td>
-          {activatedAt == null ? (
-            "PENDING"
-          ) : (
-            <TimeRemaining remaining={activatedAt} />
-          )}
+          <ShowTime activatedAt={activatedAt} isExpired={isExpired} />
         </td>
       </tr>
     );
