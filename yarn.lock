@@ -247,9 +247,9 @@ asynckit@^0.4.0:
   integrity sha1-x57Zf380y48robyXkLzDZkdLS3k=
 
 aws-sdk@^2.247.1:
-  version "2.326.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.326.0.tgz#2a8c036bdf3dbc67ccafab4c3deb9b4dfe89ce8f"
-  integrity sha512-R8CzUxH7TKsmQTT59CoXGQSXYscmc5TiU/OXb/R0xq1WYEngiznBy+J+cahJOjugSjN+5VQWTGbEzBC3Bc75kQ==
+  version "2.327.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.327.0.tgz#0192f71f764182bd2f81a65851071ed5265121bd"
+  integrity sha512-qmDXPR7i2NhK2Gsvfh9TIkHyx6P1YGQ+3n08EIJrQ+Lgl8mS63Xg5AuMtOXszdRivjh3G6LTJe6HXmpsebkL1w==
   dependencies:
     buffer "4.9.1"
     events "1.1.1"
@@ -1831,9 +1831,9 @@ mongoose-legacy-pluralize@1.0.2:
   integrity sha512-Yo/7qQU4/EyIS8YDFSeenIvXxZN+ld7YdV9LqFVQJzTLye8unujAWPZ4NWKfFA+RNjh+wvTWKY9Z3E5XM6ZZiQ==
 
 mongoose@*:
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-5.3.0.tgz#5deadc5351cbf751c0af2d34f777fa9115a4a225"
-  integrity sha512-flRnA3CBkngBSPg2v0eYKPPwduE448PmicUk15DCxNjY1FoFD241Ntfa97oyvRm0APfj7i2ppz9zuMbXOrZMzg==
+  version "5.3.1"
+  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-5.3.1.tgz#52d5bfb67788a2194e5f7a2a5c0d597e4b86fd7a"
+  integrity sha512-uiZC6KJbW/bACmOpIpfeHfyi70Ddfjpe1HRNafTHYZwOs3WbvzbP1VYRknsSQkW3xR+S7Z6Ze3EH7G/ao1Zqbw==
   dependencies:
     async "2.6.1"
     bson "~1.0.5"
