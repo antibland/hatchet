@@ -135,9 +135,15 @@ class Fight extends Component {
           return;
         }
 
-        let offense = data.fight.text.defender.do || "";
-        let bother = data.fight.text.defender.bother || "";
-        let action = data.fight.text.defender.action || "";
+        let offense = "";
+        let bother = "";
+        let action = "";
+
+        if (data.fight.text && data.fight.text.defender) {
+          offense = data.fight.text.defender.do;
+          bother = data.fight.text.defender.bother;
+          action = data.fight.text.defender.action;
+        }
 
         this.setState({
           activatedAt: data.fight.activatedAt,
