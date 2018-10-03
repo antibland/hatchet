@@ -267,6 +267,7 @@
   .fightBody .user1, .fightBody .user2 {
     padding-bottom: 30px;
     max-width: 400px;
+    min-width: 100%;
     align-self: center;
   }
 

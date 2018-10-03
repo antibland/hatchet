@@ -11,10 +11,18 @@ const TimeRemaining = props => {
 };
 
 function TimeWrapper(props) {
+  let outerClass =
+    props.fromFightPage && props.fromFightPage === true
+      ? "fightTimeRemaining"
+      : "";
+
+  let timeClass = props.classes ? props.classes : "";
+
   return (
     <div
+      className={outerClass}
       dangerouslySetInnerHTML={{
-        __html: `<time class='${props.classes}'>${props.children}</time>`
+        __html: `<time class='${timeClass}'>${props.children}</time>`
       }}
     />
   );
@@ -45,7 +53,7 @@ function formatTime(unit, isExpired, fromFightPage) {
     // 2 hours to go
     return <TimeWrapper classes="expiresSoon">{unit}</TimeWrapper>;
   } else {
-    return <TimeWrapper>{unit}</TimeWrapper>;
+    return <TimeWrapper fromFightPage={fromFightPage}>{unit}</TimeWrapper>;
   }
 }
 
