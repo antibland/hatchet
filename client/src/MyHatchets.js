@@ -179,8 +179,24 @@ class MyHatchets extends Component {
 
   componentDidMount() {
     this.getFightsAndUserRecord().then(([fights, user]) => {
-      let { active, waitingOnYou, waitingOnThem } = fights;
-      let { ties, wins, losses } = user.record;
+      let active = null;
+      let waitingOnYou = null;
+      let waitingOnThem = null;
+      let ties = 0;
+      let wins = 0;
+      let losses = 0;
+
+      if (fights) {
+        active = fights.active;
+        waitingOnYou = fights.waitingOnYou;
+        waitingOnThem = fights.waitingOnThem;
+      }
+
+      if (user && user.record) {
+        ties = user.record.ties;
+        losses = user.record.losses;
+        wins = user.record.wins;
+      }
 
       this.setState({
         activeChallenger: active.filter(
@@ -271,9 +287,9 @@ class MyHatchets extends Component {
               <Link to={`/fight/${fight._id}`}>{fight.title}</Link>
             </td>
             <td>
-              <TimeRemaining
-                isExpired={fight.isExpired}
+              <ShowTime
                 activatedAt={fight.activatedAt}
+                isExpired={fight.isExpired}
               />
             </td>
           </tr>
