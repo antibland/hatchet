@@ -206,22 +206,23 @@ exports.vote = async (req, res) => {
 exports.getFight = async (req, res) => {
   let { fightId } = req.params;
 
-  const fight = await Fight.findById(fightId).populate({
-    path: "antagonist defender",
-    select: "username avatar"
-  });
-
-  if (!fight) {
-    return res.status(500).json({
-      type: "failure",
-      message: "This hatchet was canceled, deleted, called-off, 86ed."
+  await Fight.findById(fightId)
+    .populate({
+      path: "antagonist defender",
+      select: "username avatar"
+    })
+    .then(fight => {
+      return res.status(200).json({
+        type: "success",
+        fight
+      });
+    })
+    .catch(err => {
+      return res.status(500).json({
+        type: "failure",
+        message: "This hatchet was canceled, deleted, called-off, 86ed."
+      });
     });
-  }
-
-  return res.status(200).json({
-    type: "success",
-    fight
-  });
 };
 
 exports.getWatchedFights = async (req, res) => {
