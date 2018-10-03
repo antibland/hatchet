@@ -10,6 +10,7 @@ import utilities from "./shared/utilities";
 import Vote from "./Vote";
 import styled from "styled-components";
 import "./css/Fight.css";
+import TimeRemaining from "./shared/components/TimeRemaining";
 
 const GifWrapper = styled.figure`
   position: relative;
@@ -275,31 +276,6 @@ class Fight extends Component {
         defender.username === "You"
       );
 
-    const TimeRemaining = () => {
-      return (
-        <div className="fightTimeRemaining">
-          {isLive ? (
-            !isExpired ? (
-              <React.Fragment>
-                <time>{utilities.getTimeRemaining(activatedAt)}</time>
-                <span>TIME REMAINING</span>
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                <time>00:00</time>
-                <span>EXPIRED!</span>
-              </React.Fragment>
-            )
-          ) : (
-            <React.Fragment>
-              <time>24:00</time>
-              <span>PENDING</span>
-            </React.Fragment>
-          )}
-        </div>
-      );
-    };
-
     const VotingButton = props => {
       return userCanVote ? (
         <Vote
@@ -418,6 +394,7 @@ class Fight extends Component {
                     <TimeRemaining
                       isExpired={isExpired}
                       activatedAt={activatedAt}
+                      fromFightPage={true}
                     />
 
                     <div className="user2">

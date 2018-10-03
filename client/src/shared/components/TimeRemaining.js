@@ -5,7 +5,8 @@ import utilities from "../utilities";
 const TimeRemaining = props => {
   return formatTime(
     utilities.getTimeRemaining(props.activatedAt),
-    props.isExpired
+    props.isExpired,
+    props.fromFightPage
   );
 };
 
@@ -19,8 +20,18 @@ function TimeWrapper(props) {
   );
 }
 
-function formatTime(unit, isExpired) {
-  if (isExpired === true) {
+function formatTime(unit, isExpired, fromFightPage) {
+  if (isExpired === true || unit === "00:00") {
+    if (fromFightPage === true) {
+      return (
+        <div
+          className="fightTimeRemaining"
+          dangerouslySetInnerHTML={{
+            __html: `<time>00:00</time><span>EXPIRED!</span>`
+          }}
+        />
+      );
+    }
     return "EXPIRED";
   }
   let u = unit;
@@ -30,7 +41,7 @@ function formatTime(unit, isExpired) {
     return <TimeWrapper>24:00</TimeWrapper>;
   } else if (isNaN(u)) {
     return "PENDING";
-  } else if (u <= 200) {
+  } else if (u <= 200 && u > 0) {
     // 2 hours to go
     return <TimeWrapper classes="expiresSoon">{unit}</TimeWrapper>;
   } else {
@@ -40,7 +51,12 @@ function formatTime(unit, isExpired) {
 
 TimeRemaining.propTypes = {
   activatedAt: PropTypes.string,
-  isExpired: PropTypes.bool
+  isExpired: PropTypes.bool,
+  fromFightPage: PropTypes.bool
+};
+
+TimeRemaining.defaultProps = {
+  fromFightPage: false
 };
 
 export default TimeRemaining;
