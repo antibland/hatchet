@@ -131,7 +131,7 @@ class Fight extends Component {
     fetch(`/api/${fightId}/fight`)
       .then(res => res.json())
       .then(data => {
-        if (data.type === "failure") {
+        if (data.type === "not found") {
           this.handleError(data.message);
           return;
         }
