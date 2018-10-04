@@ -216,8 +216,8 @@ exports.getFight = async (req, res) => {
       path: "antagonist defender",
       select: "username avatar"
     })
-    .then((err, fight) => {
-      if (err || !fight) {
+    .then(fight => {
+      if (!fight) {
         return res.status(404).json(notFoundJSON);
       }
       return res.status(200).json({
