@@ -129,6 +129,13 @@ class Fight extends Component {
   getFightDetails(fightId, cb) {
     // /api/:fightId/fight => getFight
     fetch(`/api/${fightId}/fight`)
+      .then(res => {
+        if (res.ok) {
+          return res;
+        } else {
+          throw Error(`Request rejected with status ${res.status}`);
+        }
+      })
       .then(res => res.json())
       .then(data => {
         if (data.type === "not found") {
