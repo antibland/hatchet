@@ -10,50 +10,75 @@ const TimeRemaining = props => {
   );
 };
 
-function TimeWrapper(props) {
-  let outerClass =
-    props.fromFightPage && props.fromFightPage === true
-      ? "fightTimeRemaining"
-      : "";
-
-  let timeClass = props.classes ? props.classes : "";
-
-  return (
-    <div
-      className={outerClass}
-      dangerouslySetInnerHTML={{
-        __html: `<time class='${timeClass}'>${props.children}</time>`
-      }}
-    />
-  );
-}
+const TimeHTML = props => {
+  const { unit, fromFightPage, lbl, expiresSoon } = props;
+  let timeClass = expiresSoon === true ? "expiresSoon" : "";
+  if (fromFightPage === true) {
+    return (
+      <div
+        className="fightTimeRemaining"
+        dangerouslySetInnerHTML={{
+          __html: `<time class=${timeClass}>${unit}</time><span>${lbl}</span>`
+        }}
+      />
+    );
+  } else {
+    let html =
+      lbl === "PENDING"
+        ? `<span>${lbl}</span>`
+        : unit !== "00:00"
+          ? `<time class=${timeClass}>${unit}</time>`
+          : `<span>${lbl}</span>`;
+    return (
+      <div
+        className="fightTimeRemaining"
+        dangerouslySetInnerHTML={{
+          __html: html
+        }}
+      />
+    );
+  }
+};
 
 function formatTime(unit, isExpired, fromFightPage) {
   if (isExpired === true || unit === "00:00") {
-    if (fromFightPage === true) {
-      return (
-        <div
-          className="fightTimeRemaining"
-          dangerouslySetInnerHTML={{
-            __html: `<time>00:00</time><span>EXPIRED!</span>`
-          }}
-        />
-      );
-    }
-    return "EXPIRED";
+    return (
+      <TimeHTML unit="00:00" fromFightPage={fromFightPage} lbl="EXPIRED" />
+    );
   }
   let u = unit;
   u = parseInt(utilities.stripNumbers(u), 10);
 
   if (unit === "1 day") {
-    return <TimeWrapper>24:00</TimeWrapper>;
+    return (
+      <TimeHTML
+        unit="24:00"
+        fromFightPage={fromFightPage}
+        lbl="TIME REMAINING"
+      />
+    );
   } else if (isNaN(u)) {
-    return "PENDING";
+    return (
+      <TimeHTML unit="24:00" fromFightPage={fromFightPage} lbl="PENDING" />
+    );
   } else if (u <= 200 && u > 0) {
     // 2 hours to go
-    return <TimeWrapper classes="expiresSoon">{unit}</TimeWrapper>;
+    return (
+      <TimeHTML
+        expiresSoon={true}
+        unit={unit}
+        fromFightPage={fromFightPage}
+        lbl="TIME REMAINING"
+      />
+    );
   } else {
-    return <TimeWrapper fromFightPage={fromFightPage}>{unit}</TimeWrapper>;
+    return (
+      <TimeHTML
+        unit={unit}
+        fromFightPage={fromFightPage}
+        lbl="TIME REMAINING"
+      />
+    );
   }
 }
 
