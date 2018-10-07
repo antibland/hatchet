@@ -22,7 +22,7 @@ header a {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 15px 50px;
+  padding: 5px 50px;
 }
 
 .headerTop .button.primary {
@@ -73,7 +73,7 @@ header a {
 
 @media screen and (max-width: 500px) {
   .headerTop {
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 }

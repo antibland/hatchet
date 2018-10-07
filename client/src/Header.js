@@ -71,12 +71,11 @@ const HeaderActions = props => {
 const Logo = () => (
   <h1 aria-labelledby="logoText">
     <NavLink exact to="/">
-      <img
-        className="logo"
-        src="/logo.png"
-        srcSet="/logo.png 1x, /logo@2x.png 2x, /logo@3x.png 3x"
-        alt="Bury The Hatchet logo"
-      />
+      <picture>
+        <source srcSet="/svg/logo-mobile.svg" media="(max-width: 768px)" />
+        <source srcSet="/logo.png 1x, /logo@2x.png 2x, /logo@3x.png 3x" />
+        <img className="logo" srcSet="/logo.png" alt="Bury The Hatchet logo" />
+      </picture>
     </NavLink>
     <span className="a11yText" id="logoText">
       Bury The Hatchet
