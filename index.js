@@ -52,8 +52,6 @@ db.once("open", function() {
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, "client/build")));
 
-const upload = require("./multer_config")(app);
-
 const fightApi = require("./controllers/fight.js");
 app.post("/api/:userId/fight", fightApi.newFight);
 app.post("/api/:fightId/fight/setLive", fightApi.setLive);
@@ -71,7 +69,7 @@ app.post("/api/join", userApi.join);
 app.post("/api/login", cors(), userApi.login);
 app.post("/api/resetPassword", userApi.resetPassword);
 app.post("/api/resend", userApi.resendTokenPost);
-app.post("/api/:userId/avatar", upload.single("avatar"), userApi.setAvatar);
+app.post("/api/:userId/avatar", userApi.setAvatar);
 app.patch("/api/:userId/:fightId/setWatch", userApi.setWatch);
 app.get("/api/:userId/logout", userApi.logout);
 app.get("/api/confirmation/:token_id", userApi.confirmationPost);

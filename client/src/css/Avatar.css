@@ -11,6 +11,11 @@
   position: relative;
 }
 
+.profileAvatar:hover,
+.profileAvatar:focus {
+  cursor: pointer;
+}
+
 @media screen and (max-width: 500px) {
   .tablist .avatar > div,
   .slots .avatar > div {

@@ -3,16 +3,9 @@ const Token = require("../models/verification");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
-const env = process.env.NODE_ENV || "development";
 const validator = require("email-validator");
 
 // Helper functions
-
-const getAvatarPath = path => {
-  if (path) {
-    return "/avatars/" + path.substr(path.lastIndexOf("/") + 1);
-  }
-};
 
 const sendEmail = opts => {
   const req = opts.req;
@@ -385,36 +378,25 @@ exports.hasUserVoted = async (req, res) => {
 exports.setAvatar = async (req, res) => {
   const { userId } = req.params;
 
-  const addImage = async () => {
-    await User.findOne({ _id: userId }, (err, user) => {
-      if (user) {
-        if (env === "development") {
-          if (!user.avatar) {
-            user.avatar = {};
-          }
-          user.avatar.path = getAvatarPath(req.file.path);
-        } else {
-          user.avatar.path = req.file.location;
-        }
-
-        user.save(err => {
-          if (err) {
-            return res.status(500).json({
-              type: "failure",
-              message:
-                "The bad news is the image didn't save. The good news is… um…"
-            });
-          }
-          res.status(200).json({
-            type: "success",
-            message: "Woo-hoo! Nice new look."
-          });
+  await User.findByIdAndUpdate(
+    userId,
+    { "avatar.path": req.body.currentAvatar },
+    { new: true },
+    err => {
+      if (err) {
+        return res.status(500).json({
+          type: "failure",
+          message:
+            "The bad news is your avatar didn't update. The good news is… um…"
         });
       }
-    });
-  };
 
-  await addImage();
+      res.status(200).json({
+        type: "success",
+        message: "Woo-hoo! Nice new look."
+      });
+    }
+  );
 };
 
 exports.getUser = async (req, res) => {
