@@ -11,8 +11,8 @@
   position: relative;
 }
 
-.profileAvatar:hover,
-.profileAvatar:focus {
+.profilePage .avatar:hover,
+.profilePage .avatar:focus {
   cursor: pointer;
 }
 

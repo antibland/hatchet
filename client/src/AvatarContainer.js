@@ -88,7 +88,7 @@ class AvatarContainer extends Component {
       />
     );
 
-    return <div>{_currentAvatar}</div>;
+    return <div className="profilePage">{_currentAvatar}</div>;
   }
 }
 

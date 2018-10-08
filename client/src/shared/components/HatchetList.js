@@ -65,14 +65,25 @@ const HatchetList = props =>
       defender: { username: defenderUsername, avatar: defenderAvatar = "" }
     } = fight;
 
+    let avatars = {
+      antagonist:
+        antagonistAvatar.path && antagonistAvatar.path.length > 0
+          ? `/svg/avatars/${antagonistAvatar.path}`
+          : "",
+      defender:
+        defenderAvatar.path && defenderAvatar.path.length > 0
+          ? `/svg/avatars/${defenderAvatar.path}`
+          : ""
+    };
+
     return (
       <tr key={_id}>
         <TitleRow id={_id} title={title} type={type} />
         <ChallengerRow
           username={antagonistUsername}
-          avatar={antagonistAvatar.path}
+          avatar={avatars.antagonist}
         />
-        <DefenderRow username={defenderUsername} avatar={defenderAvatar.path} />
+        <DefenderRow username={defenderUsername} avatar={avatars.defender} />
         <td>
           <ShowTime activatedAt={activatedAt} isExpired={isExpired} />
         </td>

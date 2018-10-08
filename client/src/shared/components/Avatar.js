@@ -2,7 +2,7 @@ import React from "react";
 
 const Avatar = props => {
   return (
-    <div className="profileAvatar">
+    <div className="avatar">
       <div
         onClick={props.onClick}
         style={{
