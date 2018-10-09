@@ -245,7 +245,7 @@ class Fight extends Component {
     antagonist.imgpath =
       this.state.antagonist.avatarPath === ""
         ? defaultUserImg
-        : this.state.antagonist.avatarPath;
+        : `/svg/avatars/${this.state.antagonist.avatarPath}`;
 
     antagonist.username =
       username === this.state.antagonist.username
@@ -255,7 +255,7 @@ class Fight extends Component {
     defender.imgpath =
       this.state.defender.avatarPath === ""
         ? defaultUserImg
-        : this.state.defender.avatarPath;
+        : `/svg/avatars/${this.state.defender.avatarPath}`;
     defender.username =
       username === this.state.defender.username
         ? "You"

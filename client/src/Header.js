@@ -47,7 +47,9 @@ const HeaderIcons = () => {
 };
 
 const UserIcon = () => {
-  const imgpath = !auth.user.avatar ? "/user.png" : auth.user.avatar;
+  const imgpath = !auth.user.avatar
+    ? "/user.png"
+    : `/svg/avatars/${auth.user.avatar}`;
   return (
     <li>
       <a href="/profile">

@@ -60,6 +60,17 @@ class AvatarContainer extends Component {
         .then(res => res.json())
         .then(() => {
           this.setState({ currentAvatar: nextProps.chosenAvatar });
+
+          auth.authenticate(() => {
+            auth.user = {
+              username: auth.user.username,
+              userid: auth.user.userid,
+              token: auth.token,
+              avatar: nextProps.chosenAvatar
+            };
+            localStorage.setObject("user", auth.user);
+            auth.isAuthenticated = auth.hasValidToken();
+          });
         })
         .catch(err => {
           console.error(err);

@@ -23,7 +23,7 @@ const auth = {
   },
   isAuthenticated: false,
   hasValidToken() {
-    let userObject = localStorage.getObject('user');
+    let userObject = localStorage.getObject("user");
 
     if (userObject !== null) {
       this.user = userObject;
@@ -34,11 +34,11 @@ const auth = {
 
     return this.isAuthenticated;
   },
-  authenticate(cb){
+  authenticate(cb) {
     setTimeout(cb, 100);
   },
   signout(cb) {
-    localStorage.removeItem('user');
+    localStorage.removeItem("user");
     this.hasValidToken();
     setTimeout(cb, 100);
   }
