@@ -15,6 +15,7 @@ class Profile extends Component {
     this.state = {
       loading: true,
       isModalOpen: false,
+      changedAvatar: false,
       chosenAvatar: null,
       avatars: {}
     };
@@ -45,7 +46,11 @@ class Profile extends Component {
   }
 
   closeModal() {
-    this.setState({ isModalOpen: false });
+    this.setState({ isModalOpen: false }, () => {
+      if (this.state.changedAvatar === true) {
+        window.location.reload();
+      }
+    });
   }
 
   openModal() {
@@ -54,7 +59,7 @@ class Profile extends Component {
 
   handleClick(e) {
     const chosenAvatar = e.currentTarget.dataset.img;
-    this.setState({ chosenAvatar });
+    this.setState({ chosenAvatar, changedAvatar: true });
   }
 
   render() {
