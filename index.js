@@ -27,7 +27,7 @@ const mongoOpts = {
 };
 if (env === "development") {
   mongoose.connect(
-    "mongodb://localhost:27017/jdi",
+    "mongodb://localhost:27017/hatchet",
     mongoOpts
   );
 } else if (env === "production") {
