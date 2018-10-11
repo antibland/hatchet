@@ -137,8 +137,9 @@ main > * {
 }
 
 .logo {
-  max-width: 100%;
   width: 350px;
+  max-width: 350px;
+  max-height: 63px;
 }
 
 .logo.vertical {
@@ -432,5 +433,7 @@ button {
 @media screen and (max-width: 768px) {
   .logo {
     width: 60px;
+    max-width: 60px;
+    max-height: 38px;
   }
 }
