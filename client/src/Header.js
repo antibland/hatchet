@@ -6,6 +6,7 @@ import commonData from "./shared/commonData";
 import Symbol from "./shared/components/Symbol";
 import Avatar from "./shared/components/Avatar";
 import { auth } from "./Auth";
+import utilities from "./shared/utilities";
 import "./css/Header.css";
 
 const iconObj = {
@@ -15,6 +16,25 @@ const iconObj = {
     "notification-icon": "/notifications"
   }
 };
+
+const MobileMenu = styled.button`
+  width: 30px;
+  height: 18px;
+  color: white;
+  margin-right: 1.5em !important;
+  display: inline-block;
+  display: none;
+
+  ${utilities.media.tablet`
+    display: block;
+  `};
+
+  svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+  }
+`;
 
 const LoginButton = styled(Link)`
   color: black;
@@ -85,9 +105,23 @@ const Logo = () => (
   </h1>
 );
 
+const handleClick = () => {
+  document.body.classList.toggle("toggleMenuShow");
+};
+
+const MobileMenuContainer = () => (
+  <MobileMenu
+    onClick={handleClick}
+    className="mobileToggle removeDefaultButtonStyles"
+  >
+    <Symbol name="hamburger" />
+  </MobileMenu>
+);
+
 const Header = props => (
   <header>
     <div className="headerTop">
+      <MobileMenuContainer />
       <Logo />
       <HeaderActions isAuthenticated={props.isAuthenticated} />
     </div>

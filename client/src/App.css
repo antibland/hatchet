@@ -24,6 +24,29 @@
   font-family: 'Glegoo', serif;
 }
 
+#mobileMenu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100vw;
+  transform: scale(0, 0);
+  transition: transform, opacity .3s ease-in-out;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  background-color: var(--red);
+  color: white;
+}
+
+.toggleMenuShow #mobileMenu {
+  transform: scale(1, 1);
+  opacity: 1 !important;
+}
+
 body {
   background-color: var(--dark-blue);
   background-attachment: fixed;

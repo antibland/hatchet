@@ -27,6 +27,19 @@
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
+    <script>
+      function toggleMobileMenu() {
+        document.body.classList.toggle('toggleMenuShow');
+      }
+    </script>
+    <div id="mobileMenu" style="opacity: 0;">
+      <ul>
+        <li>one</li>
+        <li>two</li>
+        <li>three</li>
+        <button type="button" onclick=toggleMobileMenu()>Close</button>
+      </ul>
+    </div>
     <div id="root"></div>
     <!--
       This HTML file is a template.
