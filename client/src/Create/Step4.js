@@ -11,10 +11,10 @@ const StepButtons = shared.stepButtons();
 const SubmitButton = shared.submitButton();
 
 const TimeRemaining = () => (
-  <React.Fragment>
+  <>
     <time>24:00</time>
     <span>PENDING</span>
-  </React.Fragment>
+  </>
 );
 
 class Step4 extends Component {
@@ -88,7 +88,7 @@ class Step4 extends Component {
         ) : (
           <div className="inner relaxedWidth">
             <div className="fightContainer">
-              <React.Fragment>
+              <>
                 <header className="fightContainerHeader">
                   <Avatar>
                     <Symbol name="challenger-hatchet-icon" />
@@ -127,23 +127,23 @@ class Step4 extends Component {
 
                   <div className="user2">
                     {side === "defender" ? (
-                      <React.Fragment>
+                      <>
                         <h3>{this.state.user2_username}</h3>
                         <p className="fightText">{this.state.user2_beef}</p>
                         <p className="fightText">{this.state.user2_bother}</p>
                         <p className="fightText">
                           {this.state.user2_takeAction}
                         </p>
-                      </React.Fragment>
+                      </>
                     ) : (
-                      <React.Fragment>
+                      <>
                         <h3>Someone</h3>
                         <PlaceholderText />
-                      </React.Fragment>
+                      </>
                     )}
                   </div>
                 </div>
-              </React.Fragment>
+              </>
               <StepButtons>
                 {this.props.children}
                 <SubmitButton

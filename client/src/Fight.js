@@ -330,7 +330,7 @@ class Fight extends Component {
       <div>
         <div className="contentPadding">
           {loaded === true ? (
-            <React.Fragment>
+            <>
               {this.state.showGif === true ? (
                 <GifWrapper>
                   <video autoPlay loop muted>
@@ -417,11 +417,11 @@ class Fight extends Component {
                           </DefendButton>
                         </UserCanDefendWrapper>
                       ) : defend_offense.length ? (
-                        <React.Fragment>
+                        <>
                           <p className="fightText">{defend_offense}</p>
                           <p className="fightText">{defend_bother}</p>
                           <p className="fightText">{defend_action}</p>
-                        </React.Fragment>
+                        </>
                       ) : (
                         <PlaceholderText />
                       )}
@@ -433,7 +433,7 @@ class Fight extends Component {
                   </div>
                 </div>
               )}
-            </React.Fragment>
+            </>
           ) : (
             <Loading />
           )}

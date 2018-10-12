@@ -109,7 +109,7 @@ class Pagination extends React.Component {
     });
 
     return (
-      <React.Fragment>
+      <>
         <table className="fightList">
           <RenderTableHeaders />
           <RenderTableBody />
@@ -120,7 +120,7 @@ class Pagination extends React.Component {
           {renderPageNumbers}
           <Next />
         </ul>
-      </React.Fragment>
+      </>
     );
   }
 }

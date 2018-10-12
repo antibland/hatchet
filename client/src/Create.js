@@ -126,7 +126,7 @@ class Wizard extends Component {
     let activeStep = `activeStep-${currentStep} stepsContainer`;
     let formAction = `/api/${auth.user.userid}/fight`;
     return (
-      <React.Fragment>
+      <>
         <form action={formAction} method="post" className="stepsForm">
           <StepsContainer className={activeStep}>
             <Step1 currentStep={currentStep} afterValid={this._next} />
@@ -155,7 +155,7 @@ class Wizard extends Component {
             your hatchet be swiftly buried.
           </p>
         </Modal>
-      </React.Fragment>
+      </>
     );
   }
 }

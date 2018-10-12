@@ -49,7 +49,7 @@ export class StartHatchet extends Component {
     const { isModalOpen } = this.state;
 
     return (
-      <React.Fragment>
+      <>
         <button
           className='button primary'
           disabled={!this.props.isDisabled}
@@ -59,7 +59,7 @@ export class StartHatchet extends Component {
           <p>The Hatchet is live! You've got 24 hours to amass as many votes as possible. Share the
              link and cross your fingers.</p>
         </Modal>
-      </React.Fragment>
+      </>
     )
   }
 }

@@ -316,19 +316,19 @@ class MyHatchets extends Component {
     const FightRecord = () => {
       const { ties, wins, losses } = this.state;
       return (
-        <React.Fragment>
+        <>
           <Record>
             Your record is{" "}
             <RecordHighlight>
               {wins}-{losses}-{ties}
             </RecordHighlight>
           </Record>
-        </React.Fragment>
+        </>
       );
     };
 
     const HatchetList = () => (
-      <React.Fragment>
+      <>
         <HatchetListWrapperComponent type="pending">
           <HatchetListTable className="fightList hatchetList">
             <PendingHeaders />
@@ -349,7 +349,7 @@ class MyHatchets extends Component {
             <DefenderBody />
           </HatchetListTable>
         </HatchetListWrapperComponent>
-      </React.Fragment>
+      </>
     );
 
     const _waitingOnYou = waitingOnYou.length ? (
@@ -357,11 +357,11 @@ class MyHatchets extends Component {
         return (
           <tr key={fight._id}>
             <td>
-              <React.Fragment>
+              <>
                 <Highlight>{fight.antagonist.username}</Highlight> has an{" "}
                 <RedLink to={`/defend/${fight._id}`}>Axe to Grind</RedLink> with
                 you!
-              </React.Fragment>
+              </>
             </td>
             <td>
               <SurrenderButton
@@ -393,11 +393,11 @@ class MyHatchets extends Component {
         return (
           <tr key={fight._id}>
             <td>
-              <React.Fragment>
+              <>
                 You started a{" "}
                 <RedLink to={`/fight/${fight._id}`}>Hatchet</RedLink> with{" "}
                 <Highlight>{fight.defender.username}</Highlight>.
-              </React.Fragment>
+              </>
             </td>
             <td>
               <CancelFight fightId={fight._id} classes="button primary alt" />
@@ -429,7 +429,7 @@ class MyHatchets extends Component {
         {loading === true ? (
           <Loading />
         ) : (
-          <React.Fragment>
+          <>
             <HatchetListLink to="/create" className="button primary top">
               Start a new Hatchet
             </HatchetListLink>
@@ -437,12 +437,12 @@ class MyHatchets extends Component {
             {noContent ? (
               <p>You've got no hatchets.</p>
             ) : (
-              <React.Fragment>
+              <>
                 <FightRecord />
                 <HatchetList />
-              </React.Fragment>
+              </>
             )}
-          </React.Fragment>
+          </>
         )}
       </HatchetListWrapper>
     );

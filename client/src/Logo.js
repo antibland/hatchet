@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const Logo = props => {
   return (
-    <React.Fragment>
+    <>
       <img
         className={(`logo ${props.direction}`)}
         src={
@@ -18,7 +18,7 @@ const Logo = props => {
         }
         alt='Bury The Hatchet logo'
       />
-    </React.Fragment>
+    </>
   )
 };
 

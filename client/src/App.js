@@ -36,10 +36,10 @@ class App extends Component {
         {showSplash === "show" && isAuthenticated === false ? (
           <Splash />
         ) : (
-          <React.Fragment>
+          <>
             <Header isAuthenticated={isAuthenticated} />
             <Main />
-          </React.Fragment>
+          </>
         )}
       </div>
     );

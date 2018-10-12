@@ -147,18 +147,18 @@ class Categories extends Component {
 
     const RenderCategories = () => {
       return (
-        <React.Fragment>
+        <>
           <Menu />
           {this.props.view === "listPage" && <MobileMenu />}
-        </React.Fragment>
+        </>
       );
     };
 
     return (
-      <React.Fragment>
+      <>
         <RenderCategories />
         <Results />
-      </React.Fragment>
+      </>
     );
   }
 }

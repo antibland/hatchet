@@ -124,12 +124,12 @@ class Profile extends Component {
           closeModal={this.closeModal}
           style={modalStyles.content}
         >
-          <React.Fragment>
+          <>
             <h2 style={modalStyles.title}>Choose an avatar</h2>
             <div style={modalStyles.buttonContainer}>
               <UserAvatarList />
             </div>
-          </React.Fragment>
+          </>
         </Modal>
       </div>
     );

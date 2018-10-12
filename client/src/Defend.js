@@ -141,7 +141,7 @@ export class Wizard extends Component {
     let formAction = `/api/${auth.user.userid}/fight`;
 
     return (
-      <React.Fragment>
+      <>
         <form action={formAction} method="post" className="stepsForm">
           <StepsContainer className={activeStep}>
             <Step1
@@ -163,7 +163,7 @@ export class Wizard extends Component {
         <Modal isOpen={isModalOpen} closeModal={this.closeModal}>
           <p>The fight is live! Tell your friends. Nag the townspeople.</p>
         </Modal>
-      </React.Fragment>
+      </>
     );
   }
 }

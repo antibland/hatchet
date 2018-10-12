@@ -200,10 +200,10 @@ class Step3 extends Component {
         ) : (
           <div className="inner">
             {side !== "defender" ? (
-              <React.Fragment>
+              <>
                 <PageH1>Enter a title for your fight</PageH1>
                 <FieldWrap>{fieldTitle}</FieldWrap>
-              </React.Fragment>
+              </>
             ) : (
               <PageTitle>{title}</PageTitle>
             )}
@@ -232,13 +232,13 @@ class Step3 extends Component {
 
             <PageH2>
               {side !== "defender" ? (
-                <React.Fragment>
+                <>
                   Why does this bother <Highlight>you</Highlight>?
-                </React.Fragment>
+                </>
               ) : (
-                <React.Fragment>
+                <>
                   Why are <Highlight>you</Highlight> right?
-                </React.Fragment>
+                </>
               )}
             </PageH2>
             <FieldWrap>
@@ -253,13 +253,13 @@ class Step3 extends Component {
 
             <PageH2>
               {side !== "defender" ? (
-                <React.Fragment>
+                <>
                   What should <Highlight>{opponent}</Highlight> do now?
-                </React.Fragment>
+                </>
               ) : (
-                <React.Fragment>
+                <>
                   What should <Highlight>{attacker}</Highlight> do now?
-                </React.Fragment>
+                </>
               )}
             </PageH2>
             <FieldWrap>
