@@ -193,7 +193,7 @@ main > * {
   to { transform: rotate(360deg); }
 }
 
-.logo {
+.headerTop .logo {
   width: 350px;
   max-width: 350px;
   max-height: 63px;
@@ -488,7 +488,7 @@ button {
 }
 
 @media screen and (max-width: 768px) {
-  .logo {
+  .headerTop .logo {
     width: 60px;
     max-width: 60px;
     max-height: 38px;
