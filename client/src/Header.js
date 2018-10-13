@@ -23,10 +23,11 @@ const MobileMenu = styled.button`
   color: white;
   margin-right: 1.5em !important;
   display: inline-block;
-  display: none;
+  top: 3px;
+  position: relative;
 
   ${utilities.media.tablet`
-    display: block;
+    top: 0;
   `};
 
   svg {

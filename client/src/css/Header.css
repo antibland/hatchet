@@ -25,6 +25,11 @@ header a {
   padding: 5px 50px;
 }
 
+.loggedOut .headerTop {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
 .headerTop .button.primary {
   font-size: 1em;
   padding: .6em 1em;
