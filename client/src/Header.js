@@ -106,7 +106,7 @@ const Logo = () => (
 );
 
 const handleClick = () => {
-  document.body.classList.toggle("toggleMenuShow");
+  document.body.classList.toggle("showMobileMenu");
 };
 
 const MobileMenuContainer = () => (

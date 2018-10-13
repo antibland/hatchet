@@ -42,7 +42,41 @@
   color: white;
 }
 
-.toggleMenuShow #mobileMenu {
+#mobileMenu button {
+  width: 44px;
+  height: 44px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transition: 0.3s transform;
+  outline: none;
+}
+
+#mobileMenu button > * {
+  pointer-events: none;
+}
+
+#mobileMenu button:hover,
+#mobileMenu button:focus {
+  transform: scale(1.1, 1.1);
+}
+
+#mobileMenu svg {
+  fill: white;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+#mobileMenu .logout {
+  color: white;
+  font-size: 1.5em;
+}
+
+.loggedOut .mobileToggle {
+  display: none;
+}
+
+.showMobileMenu #mobileMenu {
   transform: scale(1, 1);
   opacity: 1 !important;
 }

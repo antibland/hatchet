@@ -61,6 +61,8 @@ class Login extends Component {
             localStorage.setObject("user", auth.user);
             auth.isAuthenticated = auth.hasValidToken();
             this.props.history.push("/");
+            document.body.classList.remove("loggedOut");
+            window.init();
           });
         } else if (data.type === "failure") {
           this.setState({
