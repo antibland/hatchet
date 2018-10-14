@@ -25,21 +25,18 @@ if (env === "development") {
 const mongoOpts = {
   useNewUrlParser: true
 };
-if (env === "development") {
-  mongoose.connect(
-    "mongodb://localhost:27017/hatchet",
-    mongoOpts
-  );
-} else if (env === "production") {
-  mongoose.connect(
-    "mongodb://" +
-      process.env.DB_USER +
-      ":" +
-      process.env.DB_PASS +
-      "@ds263408.mlab.com:63408/hatchet",
-    mongoOpts
-  );
-}
+
+let connectionString =
+  env === "development"
+    ? "mongodb://localhost:27017/hatchet"
+    : `mongodb://${process.env.DB_USER}:${
+        process.env.DB_PASS
+      }@ds263408.mlab.com:63408/hatchet`;
+
+mongoose.connect(
+  connectionString,
+  mongoOpts
+);
 
 var db = mongoose.connection || null;
 
