@@ -205,11 +205,12 @@ exports.vote = async (req, res) => {
 
 exports.getFight = async (req, res) => {
   let { fightId } = req.params;
-  let notFoundJSON = {
-    type: "not found",
-    message:
-      "This hatchet is either canceled, deleted, or non-existent. The choice is yours."
-  };
+  function notFoundJSON(message, type = "not found") {
+    return {
+      type,
+      message
+    };
+  }
 
   await Fight.findById(fightId)
     .populate({
@@ -217,16 +218,19 @@ exports.getFight = async (req, res) => {
       select: "username avatar"
     })
     .then(fight => {
-      if (!fight) {
-        return res.status(404).json(notFoundJSON);
-      }
       return res.status(200).json({
         type: "success",
         fight
       });
     })
-    .catch(err => {
-      return res.status(404).json(notFoundJSON);
+    .catch(() => {
+      return res
+        .status(404)
+        .json(
+          notFoundJSON(
+            "This hatchet is either canceled, deleted, or non-existent. The choice is yours."
+          )
+        );
     });
 };
 
