@@ -2,7 +2,7 @@ const Fight = require("../models/fight").Fight;
 const FightExpire = require("../models/fight").FightExpire;
 const User = require("../models/user");
 const validator = require("email-validator");
-const schedule = require("node-schedule");
+const cron = require("node-cron");
 
 const utils = {
   removeItemFromArray: (array, element) => {
@@ -15,78 +15,93 @@ const utils = {
 };
 
 const scheduleJob = fightId => {
+  let job = null;
   let startTime = new Date(Date.now());
-  let endTime = new Date(startTime.getTime() + 1 * 24 * 60 * 60 * 1000);
-  //let endTime = new Date(startTime.getTime() + 30000);
+  let minuteBefore = startTime.getMinutes() - 1;
+  let currentHour = startTime.getHours();
+  let endTime = `00 ${minuteBefore} ${currentHour} * * *`;
 
-  schedule.scheduleJob(endTime, function() {
-    const errorJSON = (message, type = "failure") => {
-      return {
-        type,
-        message
-      };
-    };
+  const stopJob = () => {
+    job.stop();
+  };
 
-    Fight.findById(fightId)
-      .populate({
-        path: "antagonist defender",
-        select: "_id"
-      })
-      .then(fight => {
-        const updateUserRecord = (side, instruction) => {
-          User.findOneAndUpdate(
-            { _id: fight[side]._id },
-            {
-              $inc: {
-                [instruction]: 1
-              }
-            }
-          )
-            .then(user => {
-              if (!user) {
-                console.error("User record not updated");
-              }
-            })
-            .catch(err => {
-              console.error(err);
-            });
+  const destroyJob = () => {
+    job.destroy();
+  };
+
+  job = cron.schedule(
+    endTime,
+    function(_id) {
+      const errorJSON = (message, type = "failure") => {
+        return {
+          type,
+          message
         };
+      };
 
-        let result =
-          fight.votes.for === fight.votes.against
-            ? "tie"
-            : fight.votes.for > fight.votes.against
-              ? "aggressor"
-              : "defender";
+      Fight.findById(_id)
+        .populate({
+          path: "antagonist defender",
+          select: "_id"
+        })
+        .then(fight => {
+          const updateUserRecord = (side, instruction) => {
+            User.findOneAndUpdate(
+              { _id: fight[side]._id },
+              {
+                $inc: {
+                  [instruction]: 1
+                }
+              }
+            )
+              .then(user => {
+                if (!user) {
+                  console.error("User record not updated");
+                }
+              })
+              .catch(err => {
+                console.error(err);
+              });
+          };
 
-        if (result === "tie") {
-          updateUserRecord("antagonist", "record.ties");
-          updateUserRecord("defender", "record.ties");
-        } else if (result === "aggressor") {
-          updateUserRecord("antagonist", "record.wins");
-          updateUserRecord("defender", "record.losses");
-        } else if (result === "defender") {
-          updateUserRecord("antagonist", "record.losses");
-          updateUserRecord("defender", "record.wins");
-        }
+          let result =
+            fight.votes.for === fight.votes.against
+              ? "tie"
+              : fight.votes.for > fight.votes.against
+                ? "aggressor"
+                : "defender";
 
-        fight.isExpired = true;
-        fight.save((err, res) => {
-          if (err) {
-            return res
-              .status(500)
-              .json(
-                errorJSON(
-                  "For what it's worth, an error occurred with the timer."
-                )
-              );
+          if (result === "tie") {
+            updateUserRecord("antagonist", "record.ties");
+            updateUserRecord("defender", "record.ties");
+          } else if (result === "aggressor") {
+            updateUserRecord("antagonist", "record.wins");
+            updateUserRecord("defender", "record.losses");
+          } else if (result === "defender") {
+            updateUserRecord("antagonist", "record.losses");
+            updateUserRecord("defender", "record.wins");
           }
+
+          fight.isExpired = true;
+          fight.save((err, res) => {
+            if (err) {
+              return res
+                .status(500)
+                .json(
+                  errorJSON(
+                    "For what it's worth, an error occurred with the timer."
+                  )
+                );
+            }
+          });
+        })
+        .catch(err => {
+          destroyJob();
+          console.error(err);
         });
-      })
-      .catch(err => {
-        console.error(err);
-      });
-  });
+      stopJob();
+    }.bind(null, fightId)
+  );
 };
 
 exports.setLive = async (req, res) => {
