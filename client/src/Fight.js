@@ -289,6 +289,12 @@ class Fight extends Component {
       );
     };
 
+    const VersusWrapper = () => (
+      <div className="versusWrapper">
+        <VersusImg />
+      </div>
+    );
+
     const UserCanDefendWrapper = styled.div`
       position: relative;
       .blurred {
@@ -396,6 +402,8 @@ class Fight extends Component {
                       activatedAt={activatedAt}
                       fromFightPage={true}
                     />
+
+                    <VersusWrapper />
 
                     <div className="user2">
                       <h3>{defender.username}</h3>
