@@ -22,15 +22,7 @@ const StepsContainer = styled.div`
   width: 200vw;
 `;
 
-export class Wizard extends Component {
-  static TOTAL_STEPS = 2;
-
-  static propTypes = {
-    params: PropTypes.shape({
-      fightId: PropTypes.string
-    })
-  };
-
+class Wizard extends Component {
   constructor() {
     super();
     this.state = {
@@ -167,5 +159,12 @@ export class Wizard extends Component {
     );
   }
 }
+
+Wizard.TOTAL_STEPS = 2;
+Wizard.propTypes = {
+  params: PropTypes.shape({
+    fightId: PropTypes.string
+  })
+};
 
 export default Wizard;

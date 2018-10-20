@@ -23,8 +23,6 @@ const StepsContainer = styled.div`
   width: 400vw;
 `;
 class Wizard extends Component {
-  static TOTAL_STEPS = 4;
-
   constructor() {
     super();
     this.state = {
@@ -159,5 +157,7 @@ class Wizard extends Component {
     );
   }
 }
+
+Wizard.TOTAL_STEPS = 4;
 
 export default Wizard;
