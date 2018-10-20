@@ -6,11 +6,53 @@ import Loading from "./Loading";
 import Symbol from "./shared/components/Symbol";
 import PlaceholderText from "./shared/components/PlaceholderText";
 import VersusImg from "./shared/components/VersusImg";
+import Modal from "./shared/components/Modal";
 import utilities from "./shared/utilities";
+import commonData from "./shared/commonData";
 import Vote from "./Vote";
 import styled from "styled-components";
 import "./css/Fight.css";
 import TimeRemaining from "./shared/components/TimeRemaining";
+
+const modalStyles = {
+  frame: {
+    backgroundColor: "white",
+    paddingLeft: "2em",
+    paddingRight: "2em",
+    width: "22em"
+  },
+  labelTxt: {
+    color: "var(--teal)"
+  },
+  list: {
+    marginBottom: "1.8em"
+  },
+  listButtons: {
+    marginBottom: ".5em",
+    marginTop: ".5em",
+    paddingTop: ".6em",
+    paddingBottom: ".6em",
+    width: "100%",
+    maxWidth: "none"
+  }
+};
+
+const VoteAgainstList = props => (
+  <ul style={modalStyles.list}>
+    {commonData.voteAgainst.map((item, index) => (
+      <li key={item}>
+        <button
+          style={modalStyles.listButtons}
+          className={index % 2 === 0 ? "button primary" : "button primary alt"}
+          onClick={() => props.onItemClick(item)}
+          type="button"
+        >
+          {item}
+        </button>
+      </li>
+    ))}
+  </ul>
+);
 
 const GifWrapper = styled.figure`
   position: relative;
@@ -40,10 +82,15 @@ const GifCaption = styled.figcaption`
   `};
 `;
 
+const Highlight = styled.span`
+  color: var(--teal);
+`;
+
 class Fight extends Component {
   constructor() {
     super();
     this.state = {
+      isModalOpen: false,
       showGif: false,
       gifCaption: "",
       addStyle: false,
@@ -81,8 +128,24 @@ class Fight extends Component {
     };
 
     this.handleTextareaChange = this.handleTextareaChange.bind(this);
+    this.handleItemClick = this.handleItemClick.bind(this);
     this.checkIfUserHasVoted = this.checkIfUserHasVoted.bind(this);
     this.afterVote = this.afterVote.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.openModal = this.openModal.bind(this);
+  }
+
+  handleItemClick(item) {
+    // TODO: Post result to server
+    this.setState({ isModalOpen: false }, () => alert(item));
+  }
+
+  closeModal() {
+    this.setState({ isModalOpen: false });
+  }
+
+  openModal() {
+    this.setState({ isModalOpen: true });
   }
 
   afterVote(votes, votedOn) {
@@ -217,6 +280,7 @@ class Fight extends Component {
 
     const username = auth.user.username;
     const {
+      isModalOpen,
       isLive,
       isExpired,
       showVotes,
@@ -439,6 +503,17 @@ class Fight extends Component {
             <Loading />
           )}
         </div>
+        <Modal
+          style={modalStyles.frame}
+          isOpen={isModalOpen}
+          onCancel={this.closeModal}
+        >
+          <h2 className="title">
+            Why did you vote against <Highlight>Jude</Highlight>?
+          </h2>
+          <p style={modalStyles.labelTxt}>They were being:</p>
+          <VoteAgainstList onItemClick={this.handleItemClick} />
+        </Modal>
       </div>
     );
   }

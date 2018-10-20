@@ -121,7 +121,7 @@ class Profile extends Component {
         )}
         <Modal
           isOpen={isModalOpen}
-          closeModal={this.closeModal}
+          onAction={this.closeModal}
           style={modalStyles.content}
         >
           <>

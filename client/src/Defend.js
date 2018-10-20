@@ -160,7 +160,7 @@ export class Wizard extends Component {
             </Step2>
           </StepsContainer>
         </form>
-        <Modal isOpen={isModalOpen} closeModal={this.closeModal}>
+        <Modal isOpen={isModalOpen} onAction={this.closeModal}>
           <p>The fight is live! Tell your friends. Nag the townspeople.</p>
         </Modal>
       </>

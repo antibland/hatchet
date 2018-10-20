@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import Modal from './Modal';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import Modal from "./Modal";
 
 export class StartHatchet extends Component {
   constructor(props) {
@@ -15,24 +15,26 @@ export class StartHatchet extends Component {
   }
 
   startHatchet() {
-    if (window.confirm('Are you sure? Once you confirm, the hatchet is live!')) {
+    if (
+      window.confirm("Are you sure? Once you confirm, the hatchet is live!")
+    ) {
       // '/api/:fightId/fight/setLive' => fightApi.setLive
-      fetch(`/api/${this.props.fightId}/fight/setLive`,  {
+      fetch(`/api/${this.props.fightId}/fight/setLive`, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          Accept: "application/json",
+          "Content-Type": "application/json"
         },
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify({
           textAgainst: this.props.textAgainst
         })
       })
-      .then(res => res.json())
-      .then(data => {
-        if (data.type === 'success') {
-          this.openModal();
-        }
-      });
+        .then(res => res.json())
+        .then(data => {
+          if (data.type === "success") {
+            this.openModal();
+          }
+        });
     }
   }
 
@@ -51,16 +53,20 @@ export class StartHatchet extends Component {
     return (
       <>
         <button
-          className='button primary'
+          className="button primary"
           disabled={!this.props.isDisabled}
-          onClick={this.startHatchet}>Start Hatchet
+          onClick={this.startHatchet}
+        >
+          Start Hatchet
         </button>
-        <Modal isOpen={isModalOpen} closeModal={this.closeModal}>
-          <p>The Hatchet is live! You've got 24 hours to amass as many votes as possible. Share the
-             link and cross your fingers.</p>
+        <Modal isOpen={isModalOpen} onAction={this.closeModal}>
+          <p>
+            The Hatchet is live! You've got 24 hours to amass as many votes as
+            possible. Share the link and cross your fingers.
+          </p>
         </Modal>
       </>
-    )
+    );
   }
 }
 

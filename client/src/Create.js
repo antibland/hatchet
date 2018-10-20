@@ -149,7 +149,7 @@ class Wizard extends Component {
             </Step4>
           </StepsContainer>
         </form>
-        <Modal isOpen={isModalOpen} closeModal={this.closeModal}>
+        <Modal isOpen={isModalOpen} onAction={this.closeModal}>
           <p>
             The fight was created. Everything worked. Now it's up to them. May
             your hatchet be swiftly buried.

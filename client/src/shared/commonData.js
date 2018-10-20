@@ -6,6 +6,14 @@ const commonData = {
     "Roommate Rumble",
     "Family Feud"
   ],
+  voteAgainst: [
+    "Overly Sensitive",
+    "Short-tempered",
+    "Inconsiderate",
+    "Irrational",
+    "Judgemental",
+    "Selfish"
+  ],
   mainTabs: [
     { id: 1, url: "/", name: "Popular" },
     { id: 2, url: "/categories", name: "Categories" },
