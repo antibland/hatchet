@@ -7,7 +7,7 @@ import Symbol from "./shared/components/Symbol";
 import PlaceholderText from "./shared/components/PlaceholderText";
 import VersusImg from "./shared/components/VersusImg";
 import Modal from "./shared/components/Modal";
-import utilities from "./shared/utilities";
+import Gif from "./shared/components/Gif";
 import commonData from "./shared/commonData";
 import Vote from "./Vote";
 import styled from "styled-components";
@@ -53,34 +53,6 @@ const VoteAgainstList = props => (
     ))}
   </ul>
 );
-
-const GifWrapper = styled.figure`
-  position: relative;
-  margin: 0;
-  display: inline-block;
-
-  video {
-    max-width: 100%;
-  }
-`;
-
-const GifCaption = styled.figcaption`
-  position: absolute;
-  bottom: 0;
-  transform: translateX(-50%);
-  left: 50%;
-  font-size: 1.2em;
-  width: 100%;
-  padding: 0.7em 2em 1em;
-  background-color: rgba(255, 255, 255, 0.8);
-  color: black;
-
-  ${utilities.media.phone`
-    transform: none;
-    position: static;
-    padding: 0;
-  `};
-`;
 
 const Highlight = styled.span`
   color: var(--teal);
@@ -395,16 +367,10 @@ class Fight extends Component {
           {loaded === true ? (
             <>
               {this.state.showGif === true ? (
-                <GifWrapper>
-                  <video autoPlay loop muted>
-                    <source
-                      src="https://media.giphy.com/media/L6Dx055YCpcFa/giphy.mp4"
-                      type="video/mp4"
-                    />
-                    <source src="movie.ogg" type="video/ogg" />
-                  </video>
-                  <GifCaption>{this.state.gifCaption}</GifCaption>
-                </GifWrapper>
+                <Gif
+                  src="https://media.giphy.com/media/L6Dx055YCpcFa/giphy.mp4"
+                  caption={this.state.gifCaption}
+                />
               ) : (
                 <div className="fightContainer">
                   <header className="fightContainerHeader">
