@@ -160,6 +160,32 @@ exports.getFights = async (req, res) => {
   return res.status(200).json(fights);
 };
 
+exports.voteReason = async (req, res) => {
+  const { username } = req.params;
+  const { reason } = req.body;
+
+  User.findOneAndUpdate(
+    { username: username },
+    {
+      $inc: {
+        [`stats.${reason}`]: 1
+      }
+    }
+  )
+    .then(user => {
+      if (!user) {
+        return res.status(500).json({
+          type: "failure"
+        });
+      }
+
+      return res.status(200).json({
+        type: "success"
+      });
+    })
+    .catch(err => console.log(err));
+};
+
 exports.vote = async (req, res) => {
   const { fightId } = req.params;
   const { side, voterId } = req.body;

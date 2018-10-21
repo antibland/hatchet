@@ -58,6 +58,22 @@ const Highlight = styled.span`
   color: var(--teal);
 `;
 
+const UserCanDefendWrapper = styled.div`
+  position: relative;
+  .blurred {
+    opacity: 0.6;
+  }
+`;
+
+const DefendButton = styled(Link)`
+  position: absolute !important;
+  padding: 1em 1.5em !important;
+  width: auto !important;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
 class Fight extends Component {
   constructor() {
     super();
@@ -102,14 +118,50 @@ class Fight extends Component {
     this.handleTextareaChange = this.handleTextareaChange.bind(this);
     this.handleItemClick = this.handleItemClick.bind(this);
     this.checkIfUserHasVoted = this.checkIfUserHasVoted.bind(this);
+    this.getUsernameFromSide = this.getUsernameFromSide.bind(this);
     this.afterVote = this.afterVote.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.openModal = this.openModal.bind(this);
   }
 
-  handleItemClick(item) {
-    // TODO: Post result to server
-    this.setState({ isModalOpen: false }, () => alert(item));
+  getUsernameFromSide(votedFor) {
+    const { defender, antagonist } = this.state;
+    return votedFor === ""
+      ? ""
+      : votedFor === "for"
+        ? defender.username
+        : antagonist.username;
+  }
+
+  handleItemClick(reason) {
+    const username = this.getUsernameFromSide(this.state.votedFor);
+
+    // "/api/:fightId/voteReason" => fightApi.voteReason
+    fetch(`/api/${username}/voteReason`, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      method: "PATCH",
+      body: JSON.stringify({
+        reason: reason.toLowerCase()
+      })
+    })
+      .then(res => {
+        if (res.ok) {
+          return res;
+        } else {
+          throw Error(`Request rejected with status ${res.status}`);
+        }
+      })
+      .then(res => res.json())
+      .then(data => {
+        this.setState({ isModalOpen: false });
+      })
+      .catch(err => {
+        console.error(err);
+        this.setState({ isModalOpen: false });
+      });
   }
 
   closeModal() {
@@ -133,7 +185,7 @@ class Fight extends Component {
       }
     });
 
-    this.setState(newState);
+    this.setState(newState, () => this.setState({ isModalOpen: true }));
   }
 
   handleTextareaChange(fieldValidity, val) {
@@ -331,22 +383,6 @@ class Fight extends Component {
       </div>
     );
 
-    const UserCanDefendWrapper = styled.div`
-      position: relative;
-      .blurred {
-        opacity: 0.6;
-      }
-    `;
-
-    const DefendButton = styled(Link)`
-      position: absolute !important;
-      padding: 1em 1.5em !important;
-      width: auto !important;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    `;
-
     const votesFor = votes.for;
     const votesAgainst = votes.against;
     const totalVotes = votesFor + votesAgainst;
@@ -360,6 +396,9 @@ class Fight extends Component {
       progressUser1 = (votesFor / totalVotes) * 100;
       progressUser2 = (votesAgainst / totalVotes) * 100;
     }
+
+    const VotedAgainstUsername = () =>
+      this.getUsernameFromSide(this.state.votedFor);
 
     return (
       <div>
@@ -475,7 +514,11 @@ class Fight extends Component {
           onCancel={this.closeModal}
         >
           <h2 className="title">
-            Why did you vote against <Highlight>Jude</Highlight>?
+            Why did you vote against{" "}
+            <Highlight>
+              <VotedAgainstUsername />
+            </Highlight>
+            ?
           </h2>
           <p style={modalStyles.labelTxt}>They were being:</p>
           <VoteAgainstList onItemClick={this.handleItemClick} />

@@ -44,7 +44,7 @@ var UserSchema = new mongoose.Schema({
     ties: { type: Number, default: 0 }
   },
   stats: {
-    "overly-sensitive": { type: Number, default: 0 },
+    "overly sensitive": { type: Number, default: 0 },
     "short-tempered": { type: Number, default: 0 },
     inconsiderate: { type: Number, default: 0 },
     irrational: { type: Number, default: 0 },
