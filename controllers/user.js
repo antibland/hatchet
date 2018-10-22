@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const validator = require("email-validator");
+const env = process.env.NODE_ENV || "development";
 
 // Helper functions
 
@@ -21,21 +22,32 @@ const sendEmail = opts => {
 
     console.log("Credentials obtained, sending message...");
 
+    let transporterOptions =
+      env === "development"
+        ? {
+            host: account.smtp.host,
+            port: account.smtp.port,
+            secure: account.smtp.secure,
+            auth: {
+              user: account.user,
+              pass: account.pass
+            }
+          }
+        : {
+            service: process.env.EMAIL_SERVICE,
+            auth: {
+              user: process.env.EMAIL_USER,
+              pass: process.env.EMAIL_PASS
+            }
+          };
+
     // Create a SMTP transporter object
-    let transporter = nodemailer.createTransport({
-      host: account.smtp.host,
-      port: account.smtp.port,
-      secure: account.smtp.secure,
-      auth: {
-        user: account.user,
-        pass: account.pass
-      }
-    });
+    let transporter = nodemailer.createTransport(transporterOptions);
 
     // Message object
     let message = {
       from: "Sender Name <sender@example.com>",
-      to: "Recipient <recipient@example.com>",
+      to: req.body.email,
       subject: "Account Verification ✔",
       text:
         "Hello,\n\n" +
