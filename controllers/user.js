@@ -46,7 +46,7 @@ const sendEmail = opts => {
 
     // Message object
     let message = {
-      from: "Sender Name <sender@example.com>",
+      from: process.env.EMAIL_USER || "",
       to: req.body.email,
       subject: "Account Verification ✔",
       text:
