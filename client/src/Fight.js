@@ -149,14 +149,10 @@ class Fight extends Component {
     })
       .then(res => {
         if (res.ok) {
-          return res;
+          this.setState({ isModalOpen: false });
         } else {
           throw Error(`Request rejected with status ${res.status}`);
         }
-      })
-      .then(res => res.json())
-      .then(data => {
-        this.setState({ isModalOpen: false });
       })
       .catch(err => {
         console.error(err);
