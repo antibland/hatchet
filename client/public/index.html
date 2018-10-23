@@ -51,18 +51,22 @@
 
       function init() {
         try {
-          if (localStorage.getItem("user") && localStorage.getItem("user") != null) {
-            let li = document.createElement("li");
-            let a = document.createElement("a");
-            a.href="/logout";
-            a.className = "logout";
-            a.appendChild(document.createTextNode("Logout"));
-            li.appendChild(a);
-            document.querySelector("#mobileMenu ul").appendChild(li);
-          } else {
-            document.body.classList.add("loggedOut");
-            document.body.classList.remove("showMobileMenu");
-          }
+          window.setTimeout(function() {
+            if (localStorage.getItem("user") && localStorage.getItem("user") != null) {
+              let menu = document.querySelector("#mobileMenu ul");
+              let li = document.createElement("li");
+              let a = document.createElement("a");
+              menu.innerHTML = "";
+              a.href="/logout";
+              a.className = "logout";
+              a.appendChild(document.createTextNode("Logout"));
+              li.appendChild(a);
+              menu.appendChild(li);
+            } else {
+              document.body.classList.add("loggedOut");
+              document.body.classList.remove("showMobileMenu");
+            }
+          }, 200)
         } catch(e) {};
       }
 
