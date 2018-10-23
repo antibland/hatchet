@@ -238,19 +238,19 @@ exports.confirmationPost = async (req, res) => {
         return res
           .status(400)
           .send({ msg: "We were unable to find a user for this token." });
-      if (user.isVerified)
-        return res.status(400).send({
-          type: "already-verified",
-          msg: "This user has already been verified."
-        });
 
-      // Verify and save the user
+      // User is already verified—redirect to login
+      if (user.isVerified) {
+        return res.redirect(`${process.env.ROOT_URL}/login?verified=2`);
+      }
+
+      // Verify user and redirect to login
       user.isVerified = true;
       await user.save(err => {
         if (err) {
           return res.status(500).send({ msg: err.message });
         }
-        res.status(200).send("The account has been verified! Please log in.");
+        return res.redirect(`${process.env.ROOT_URL}/login?verified=1`);
       });
     });
   });

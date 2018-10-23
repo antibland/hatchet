@@ -29,6 +29,27 @@ class Login extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  componentDidMount() {
+    let params = this.props.location.search;
+
+    let message = "";
+    if (params.length > 0) {
+      params = params.slice(1);
+      if (params === "verified=1") {
+        message = "Your account is 100% verified. Log in and look around.";
+      } else if (params === "verified=2") {
+        message = "You account was previously verified.";
+      }
+
+      if (message.length > 0) {
+        let flash = { ...this.state.flash };
+        flash.type = "success";
+        flash.message = message;
+        this.setState({ flash });
+      }
+    }
+  }
+
   handleSubmit(e) {
     if (!this.canBeSubmitted()) {
       e.preventDefault();
