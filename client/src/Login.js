@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { auth } from "./Auth.js";
+import queryString from "query-string";
 import "./css/Flash.css";
 
 function validate(email, password) {
@@ -30,16 +31,15 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    let params = this.props.location.search;
+    const params = queryString.parse(this.props.location.search);
 
-    let message = "";
-    if (params.length > 0) {
-      params = params.slice(1);
-      if (params === "verified=1") {
-        message = "Your account is 100% verified. Log in and look around.";
-      } else if (params === "verified=2") {
-        message = "You account was previously verified.";
-      }
+    if (params.verified) {
+      let message =
+        params.verified === "1"
+          ? "Your account is 100% verified. Log in and look around."
+          : params.verified === "2"
+            ? "You account was previously verified."
+            : "";
 
       if (message.length > 0) {
         let flash = { ...this.state.flash };
