@@ -45,13 +45,15 @@ const sendEmail = opts => {
     let transporter = nodemailer.createTransport(transporterOptions);
 
     // Message object
+    let prefix = env === "development" ? "http://" : "https://";
     let message = {
       from: process.env.EMAIL_USER || "",
       to: req.body.email,
       subject: "Account Verification ✔",
       text:
         "Hello,\n\n" +
-        "Please verify your account by clicking the link: \nhttp://" +
+        "Please take a moment to verify your account: \n " +
+        prefix +
         req.headers.host +
         "/api/confirmation/" +
         token.token +
@@ -241,7 +243,7 @@ exports.confirmationPost = async (req, res) => {
 
       // User is already verified—redirect to login
       if (user.isVerified) {
-        return res.redirect(`${process.env.ROOT_URL}/login?verified=2`);
+        return res.redirect(401, `${process.env.ROOT_URL}/login?verified=2`);
       }
 
       // Verify user and redirect to login
@@ -250,7 +252,7 @@ exports.confirmationPost = async (req, res) => {
         if (err) {
           return res.status(500).send({ msg: err.message });
         }
-        return res.redirect(`${process.env.ROOT_URL}/login?verified=1`);
+        return res.redirect(401, `${process.env.ROOT_URL}/login?verified=1`);
       });
     });
   });
