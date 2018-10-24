@@ -243,7 +243,13 @@ exports.confirmationPost = async (req, res) => {
 
       // User is already verified—redirect to login
       if (user.isVerified) {
-        return res.redirect(401, `${process.env.ROOT_URL}/login?verified=2`);
+        return res
+          .status(200)
+          .send(
+            `This account has <em>already</em> been verified! Please log in <a href="${
+              process.env.ROOT_URL
+            }/login?verified=2">here</a>.`
+          );
       }
 
       // Verify user and redirect to login
@@ -252,7 +258,13 @@ exports.confirmationPost = async (req, res) => {
         if (err) {
           return res.status(500).send({ msg: err.message });
         }
-        return res.redirect(401, `${process.env.ROOT_URL}/login?verified=1`);
+        return res
+          .status(200)
+          .send(
+            `Account verified! Please log in <a href="${
+              process.env.ROOT_URL
+            }/login?verified=1">here</a>.`
+          );
       });
     });
   });
