@@ -25,5 +25,8 @@
   "scripts": {
     "start": "node index.js",
     "heroku-postbuild": "cd client && yarn --production=false && yarn run build"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1"
   }
 }
