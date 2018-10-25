@@ -33,6 +33,10 @@ class Login extends Component {
   componentDidMount() {
     const params = queryString.parse(this.props.location.search);
 
+    if (params.email) {
+      this.setState({ email: params.email });
+    }
+
     if (params.verified) {
       let message =
         params.verified === "1"

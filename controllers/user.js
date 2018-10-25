@@ -243,12 +243,12 @@ exports.confirmationPost = async (req, res) => {
 
       // User is already verified—redirect to login
       if (user.isVerified) {
+        let redirectUrl =
+          process.env.ROOT_URL + "/login?verified=2&email=" + user.email;
         return res
           .status(200)
           .send(
-            `This account has <em>already</em> been verified! Please log in <a href="${
-              process.env.ROOT_URL
-            }/login?verified=2">here</a>.`
+            `<p>This account has already been verified! Redirecting you to the login page…</p><script>(function() { setTimeout(function() { window.location.href = "${redirectUrl}" }, 2500) })()</script>`
           );
       }
 
@@ -258,12 +258,12 @@ exports.confirmationPost = async (req, res) => {
         if (err) {
           return res.status(500).send({ msg: err.message });
         }
+        let redirectUrl =
+          process.env.ROOT_URL + "/login?verified=1&email=" + user.email;
         return res
           .status(200)
           .send(
-            `Account verified! Please log in <a href="${
-              process.env.ROOT_URL
-            }/login?verified=1">here</a>.`
+            `<p>Account verified! Redirecting you to the login page…</p><script>(function() { setTimeout(function() { window.location.href = "${redirectUrl}" }, 2500) })()</script>`
           );
       });
     });
