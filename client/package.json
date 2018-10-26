@@ -2,7 +2,6 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "homepage": "./",
   "dependencies": {
     "moment": "^2.22.1",
     "prop-types": "^15.6.0",
