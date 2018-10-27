@@ -36,6 +36,10 @@ class Wizard extends Component {
     this._gatherData = this._gatherData.bind(this);
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.scrollToTop = this.scrollToTop.bind(this);
+  }
+  scrollToTop() {
+    window.scroll({ behavior: "smooth", top: 0 });
   }
 
   _submitForm() {
@@ -78,12 +82,15 @@ class Wizard extends Component {
   _next(e, data, completed = false) {
     e.preventDefault();
 
-    this.setState(prevState => ({
-      currentStep:
-        prevState.currentStep >= Wizard.TOTAL_STEPS
-          ? Wizard.TOTAL_STEPS
-          : ++prevState.currentStep
-    }));
+    this.setState(
+      prevState => ({
+        currentStep:
+          prevState.currentStep >= Wizard.TOTAL_STEPS
+            ? Wizard.TOTAL_STEPS
+            : ++prevState.currentStep
+      }),
+      () => this.scrollToTop()
+    );
 
     setTimeout(() => {
       this._gatherData(data, completed);
@@ -93,9 +100,12 @@ class Wizard extends Component {
   _prev(e) {
     e.preventDefault();
 
-    this.setState(prevState => ({
-      currentStep: prevState.currentStep <= 1 ? 1 : --prevState.currentStep
-    }));
+    this.setState(
+      prevState => ({
+        currentStep: prevState.currentStep <= 1 ? 1 : --prevState.currentStep
+      }),
+      () => this.scrollToTop()
+    );
   }
 
   _gatherData(data, completed) {
