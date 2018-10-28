@@ -32,9 +32,11 @@ const sendEmail = (req, res, opponentEmail, fightId) => {
     let transporter = nodemailer.createTransport(transporterOptions);
 
     // Message object
-    let url = `${req.headers["x-forwarded-proto"]}://${
-      req.headers["x-forwarded-host"]
-    }/fight/${fightId}`;
+    let host =
+      env === "development"
+        ? req.headers["x-forwarded-host"]
+        : req.headers.host;
+    let url = `${req.headers["x-forwarded-proto"]}://${host}/fight/${fightId}`;
     let message = {
       from: process.env.EMAIL_USER || "",
       to: opponentEmail,
