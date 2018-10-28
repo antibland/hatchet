@@ -43,13 +43,13 @@ const sendEmail = (req, res, opponentEmail, fightId) => {
       subject: "You're invited!",
       text: `Hello,
 
-        We have a ${req.body.type} on our hands. One of our site members, ${
+We have a ${req.body.type} on our hands. One of our site members, ${
         req.body.username
       }, has told us their side of things. Now it's your turn.
 
-      Check out the hatchet to be right here: ${url}.
+Check out the hatchet to be right here: ${url}.
 
-      `
+`
     };
 
     transporter.sendMail(message, (err, info) => {
