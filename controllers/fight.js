@@ -3,6 +3,7 @@ const FightExpire = require("../models/fight").FightExpire;
 const User = require("../models/user");
 const validator = require("email-validator");
 const cron = require("node-cron");
+const sendEmail = require("./mail");
 
 const utils = {
   removeItemFromArray: (array, element) => {
@@ -437,9 +438,7 @@ exports.newFight = async (req, res) => {
 
     await user.save(err => {
       if (err) throw err;
-      return res.status(200).json({
-        type: "success"
-      });
+      sendEmail(req, res, opponent.email, fight._id);
     });
   };
 

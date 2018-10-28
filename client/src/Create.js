@@ -38,6 +38,7 @@ class Wizard extends Component {
     this.closeModal = this.closeModal.bind(this);
     this.scrollToTop = this.scrollToTop.bind(this);
   }
+
   scrollToTop() {
     window.scroll({ behavior: "smooth", top: 0 });
   }
@@ -65,7 +66,8 @@ class Wizard extends Component {
         beef,
         opponent,
         bother,
-        takeAction
+        takeAction,
+        username: auth.user.username
       })
     })
       .then(res => res.json())
