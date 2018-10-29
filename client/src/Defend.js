@@ -4,6 +4,7 @@ import { auth } from "./Auth";
 import Modal from "./shared/components/Modal";
 import Step1 from "./Defend/Step1";
 import Step2 from "./Defend/Step2";
+import TwitterShareButton from "./shared/components/TwitterShareButton";
 import styled from "styled-components";
 import "./css/Create.css";
 import "./css/Form.css";
@@ -153,7 +154,10 @@ class Wizard extends Component {
           </StepsContainer>
         </form>
         <Modal isOpen={isModalOpen} onAction={this.closeModal}>
-          <p>The fight is live! Tell your friends. Nag the townspeople.</p>
+          <p>
+            The fight is live! Tell your friends. Nag the townspeople.{" "}
+            <TwitterShareButton />
+          </p>
         </Modal>
       </>
     );

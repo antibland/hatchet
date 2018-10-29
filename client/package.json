@@ -11,6 +11,7 @@
     "react-id-swiper": "^1.6.2",
     "react-router-dom": "^4.2.2",
     "react-scripts": "^2.0.5",
+    "react-twitter-share-link": "^1.2.0",
     "styled-components": "^4.0.0"
   },
   "scripts": {

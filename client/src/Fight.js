@@ -8,11 +8,12 @@ import PlaceholderText from "./shared/components/PlaceholderText";
 import VersusImg from "./shared/components/VersusImg";
 import Modal from "./shared/components/Modal";
 import Gif from "./shared/components/Gif";
-import commonData from "./shared/commonData";
 import Vote from "./Vote";
-import styled from "styled-components";
-import "./css/Fight.css";
 import TimeRemaining from "./shared/components/TimeRemaining";
+import commonData from "./shared/commonData";
+import styled from "styled-components";
+import TwitterShareButton from "./shared/components/TwitterShareButton";
+import "./css/Fight.css";
 
 const modalStyles = {
   frame: {
@@ -416,7 +417,10 @@ class Fight extends Component {
                     >
                       <Symbol name="challenger-hatchet-icon" />
                     </Avatar>
-                    <h2 className="hatchetTitle">{this.state.fightTitle}</h2>
+                    <h2 className="hatchetTitle">
+                      {this.state.fightTitle}
+                      <TwitterShareButton />
+                    </h2>
                     <Avatar
                       imgpath={defender.imgpath}
                       width="100px"
