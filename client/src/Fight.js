@@ -512,6 +512,7 @@ class Fight extends Component {
           style={modalStyles.frame}
           isOpen={isModalOpen}
           onCancel={this.closeModal}
+          onCancelText="Skip"
         >
           <h2 className="title">
             Why did you vote against{" "}

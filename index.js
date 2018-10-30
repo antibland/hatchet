@@ -61,6 +61,7 @@ app.get("/api/:fightId/fight", fightApi.getFight);
 app.get("/api/:userId/fights", fightApi.getUserFights);
 app.get("/api/:userId/getWatchedFights", fightApi.getWatchedFights);
 app.get("/api/fights/categories/:category", fightApi.getFightsByCategory);
+app.get("/api/remind/:fightId", fightApi.remindUserOfFight);
 
 const userApi = require("./controllers/user.js");
 app.post("/api/join", userApi.join);

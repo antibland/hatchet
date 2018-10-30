@@ -144,6 +144,27 @@ exports.setLive = async (req, res) => {
   });
 };
 
+exports.remindUserOfFight = async (req, res) => {
+  const { fightId } = req.params;
+
+  const fight = await Fight.findById(fightId).populate({
+    path: "antagonist defender",
+    select: "username avatar email"
+  });
+
+  if (fight) {
+    fight.remindedUsed = true;
+    await fight.save(err => {
+      if (err) {
+        return res.status(500).json({
+          type: "failure"
+        });
+      }
+      sendEmail({ req, res, fight, type: "HATCHET_REMINDER" });
+    });
+  }
+};
+
 exports.getFights = async (req, res) => {
   const fights = await Fight.find({}).populate({
     path: "antagonist defender",
@@ -438,7 +459,13 @@ exports.newFight = async (req, res) => {
 
     await user.save(err => {
       if (err) throw err;
-      sendEmail(req, res, opponent.email, fight._id);
+      sendEmail({
+        req,
+        res,
+        defenderEmail: opponent.email,
+        fightId: fight._id,
+        type: "HATCHET_INVITE"
+      });
     });
   };
 

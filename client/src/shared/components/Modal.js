@@ -11,21 +11,25 @@ const ModalButtons = styled.div`
 `;
 
 const CancelButton = styled.button`
-  color: var(--teal);
+  color: white;
   font-size: 1em;
 `;
 
 class Modal extends React.Component {
   render() {
-    const { style, children, onAction, onCancel, isOpen } = this.props;
+    const {
+      style,
+      children,
+      onAction,
+      onCancel,
+      onCancelText,
+      isOpen
+    } = this.props;
     if (isOpen === false) return null;
 
     const CancelButtonWrapper = () => (
       <CancelButton className="removeDefaultButtonStyles" onClick={onCancel}>
-        Skip{" "}
-        <span role="img" aria-label="Indifferent emoji">
-          😑
-        </span>
+        {onCancelText}
       </CancelButton>
     );
 
@@ -54,7 +58,12 @@ Modal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onAction: PropTypes.func,
   onCancel: PropTypes.func,
+  onCancelText: PropTypes.string,
   style: PropTypes.object
+};
+
+Modal.defaultProps = {
+  onCancelText: "Cancel"
 };
 
 export default Modal;

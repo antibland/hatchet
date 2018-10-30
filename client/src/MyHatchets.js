@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import utilities from "./shared/utilities";
 import CancelFight from "./CancelFight";
+import RemindThem from "./RemindThem";
 import SurrenderButton from "./Surrender";
 import TimeRemaining from "./shared/components/TimeRemaining";
 
@@ -128,10 +129,6 @@ const Highlight = styled.span`
 
 const RedLink = styled(Link)`
   color: var(--red);
-`;
-
-const HatchetListButton = styled.button`
-  ${sharedButtonStyles};
 `;
 
 const HatchetListLink = styled(Link)`
@@ -403,13 +400,15 @@ class MyHatchets extends Component {
               <CancelFight fightId={fight._id} classes="button primary alt" />
             </td>
             <td>
-              <HatchetListButton
-                type="button"
-                onClick={this.handleRemindThemClick}
-                className="button primary"
-              >
-                Remind them
-              </HatchetListButton>
+              <RemindThem
+                fightId={fight._id}
+                isDisabled={fight.remindedUsed}
+                classes={
+                  fight.remindedUsed
+                    ? "disabled button primary"
+                    : "button primary"
+                }
+              />
             </td>
           </tr>
         );

@@ -232,6 +232,12 @@ button {
   line-height: 1;
 }
 
+.button.disabled {
+  user-select: none !important;
+  pointer-events: none !important;
+  cursor: not-allowed !important;
+}
+
 .button.alt-color {
   background-color: var(--alt-button-color);
 }
