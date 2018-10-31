@@ -319,6 +319,22 @@ exports.getWatchedFights = async (req, res) => {
   );
 };
 
+exports.getFightsFromSearch = async (req, res) => {
+  let { query } = req.body;
+  let fights = {};
+
+  fights = await Fight.find(
+    { title: { $regex: query, $options: "i" } },
+    err => {
+      if (err) throw err;
+    }
+  );
+
+  return res.status(200).json({
+    fights
+  });
+};
+
 exports.getUserFights = async (req, res) => {
   let { userId } = req.params;
   let user = await User.findById(userId);

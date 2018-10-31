@@ -15,7 +15,7 @@ import Categories from "./Categories";
 import Category from "./Category";
 import Defend from "./Defend";
 import MyHatchets from "./MyHatchets";
-import Watching from "./Watching";
+import Search from "./Search";
 import Medals from "./Medals";
 import Terms from "./Terms";
 
@@ -34,12 +34,10 @@ const Main = () => (
       <Route exact path="/my-hatchets" component={MyHatchets} />
       <Route exact path="/fight/:fightId" component={Fight} />
       <Route exact path="/medals" component={Medals} />
-      <Route exact path="/watching" component={Watching} />
+      <Route exact path="/search" component={Search} />
       <Route path="/forgot_password" component={ForgotPassword} />
       <Route path="/resend" component={Resend} />
       <Route exact path="/terms" component={Terms} />
-      {/*
-      <Route exact path='/privacy' component={Privacy}/> */}
     </Switch>
   </main>
 );
