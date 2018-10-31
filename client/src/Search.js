@@ -9,11 +9,12 @@ const SearchResults = styled.ul`
   }
 
   li.empty {
-    padding: 0.5em;
+    display: block;
   }
 
   a {
-    padding: 0.5em;
+    padding: 0.25em 0.5em;
+    display: block;
     text-decoration: none;
     color: var(--dark-text);
   }
