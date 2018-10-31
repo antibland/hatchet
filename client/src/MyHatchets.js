@@ -7,6 +7,7 @@ import utilities from "./shared/utilities";
 import CancelFight from "./CancelFight";
 import RemindThem from "./RemindThem";
 import SurrenderButton from "./Surrender";
+import Avatar from "./shared/components/Avatar";
 import TimeRemaining from "./shared/components/TimeRemaining";
 
 const sharedButtonStyles = css`
@@ -71,6 +72,15 @@ const HatchetListTable = styled.table`
       width: 100%;
       font-size: 95%;
       padding-right: 10px;
+
+      p {
+        line-height: 1.3em;
+      }
+
+      .inner {
+        display: flex;
+        align-items: center;
+      }
 
       ${utilities.media.phone`
         padding-bottom: 0;
@@ -355,9 +365,18 @@ class MyHatchets extends Component {
           <tr key={fight._id}>
             <td>
               <>
-                <Highlight>{fight.antagonist.username}</Highlight> has an{" "}
-                <RedLink to={`/defend/${fight._id}`}>Axe to Grind</RedLink> with
-                you!
+                <div className="inner">
+                  <Avatar
+                    imgpath={`svg/avatars/${fight.antagonist.avatar.path}`}
+                    width="36px"
+                    height="36px"
+                  />
+                  <p>
+                    <Highlight>{fight.antagonist.username}</Highlight> has an{" "}
+                    <RedLink to={`/defend/${fight._id}`}>Axe to Grind</RedLink>{" "}
+                    with you!
+                  </p>
+                </div>
               </>
             </td>
             <td>
@@ -391,9 +410,18 @@ class MyHatchets extends Component {
           <tr key={fight._id}>
             <td>
               <>
-                You started a{" "}
-                <RedLink to={`/fight/${fight._id}`}>Hatchet</RedLink> with{" "}
-                <Highlight>{fight.defender.username}</Highlight>.
+                <div className="inner">
+                  <Avatar
+                    imgpath={`svg/avatars/${fight.defender.avatar.path}`}
+                    width="36px"
+                    height="36px"
+                  />
+                  <p>
+                    You started a{" "}
+                    <RedLink to={`/fight/${fight._id}`}>Hatchet</RedLink> with{" "}
+                    <Highlight>{fight.defender.username}</Highlight>.
+                  </p>
+                </div>
               </>
             </td>
             <td>
