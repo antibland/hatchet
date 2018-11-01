@@ -31,7 +31,8 @@ class Step4 extends Component {
       user2_beef: "",
       user2_bother: "",
       user2_takeAction: "",
-      side: ""
+      side: "",
+      opponent: ""
     };
   }
 
@@ -69,7 +70,8 @@ class Step4 extends Component {
           side === "defender"
             ? this.props.fightData.text.attacker.action
             : this.props.fightData.takeAction,
-        user2_username: side === "defender" ? "You" : "",
+        user2_username:
+          side === "defender" ? "You" : this.props.fightData.opponent,
         user2_beef: side === "defender" ? this.props.fightData.beef : "",
         user2_bother: side === "defender" ? this.props.fightData.bother : "",
         user2_takeAction:
@@ -80,6 +82,12 @@ class Step4 extends Component {
 
   render() {
     const { side, loading } = this.state;
+
+    const VersusWrapper = () => (
+      <div className="versusWrapper">
+        <VersusImg />
+      </div>
+    );
 
     return (
       <div className="stepContainer">
@@ -125,10 +133,12 @@ class Step4 extends Component {
                     <TimeRemaining isExpired={false} activatedAt={Date.now()} />
                   </div>
 
+                  <VersusWrapper />
+
                   <div className="user2">
+                    <h3>{this.state.user2_username}</h3>
                     {side === "defender" ? (
                       <>
-                        <h3>{this.state.user2_username}</h3>
                         <p className="fightText">{this.state.user2_beef}</p>
                         <p className="fightText">{this.state.user2_bother}</p>
                         <p className="fightText">
@@ -137,7 +147,6 @@ class Step4 extends Component {
                       </>
                     ) : (
                       <>
-                        <h3>Someone</h3>
                         <PlaceholderText />
                       </>
                     )}

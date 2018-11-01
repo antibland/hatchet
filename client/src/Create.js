@@ -139,8 +139,16 @@ class Wizard extends Component {
       <>
         <form action={formAction} method="post" className="stepsForm">
           <StepsContainer className={activeStep}>
-            <Step1 currentStep={currentStep} afterValid={this._next} />
-            <Step2 currentStep={currentStep} afterValid={this._next}>
+            <Step1
+              currentStep={currentStep}
+              afterValid={this._next}
+              fightData={fight}
+            />
+            <Step2
+              currentStep={currentStep}
+              afterValid={this._next}
+              fightData={fight}
+            >
               <PreviousButton onClick={this._prev} />
             </Step2>
             <Step3
