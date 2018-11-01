@@ -199,3 +199,12 @@ input.featured + [type="submit"] {
     padding: .9em 1.1em;
   }
 }
+
+/* Prevent iOS auto screen-zooming */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  select,
+  textarea,
+  input {
+    font-size: 16px;
+  }
+}

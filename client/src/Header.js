@@ -18,8 +18,9 @@ const iconObj = {
 };
 
 const MobileMenu = styled.button`
-  width: 30px;
+  width: 27px;
   height: 18px;
+  min-width: 27px;
   color: white;
   margin-right: 1.5em !important;
   display: inline-block;

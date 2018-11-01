@@ -49,6 +49,7 @@ const SearchInput = styled.input`
   left: 0;
   right: 0;
   width: 100%;
+  padding: 0.2em 0.6em;
   text-align: center;
   border: none !important;
   border-bottom: 1px solid rgba(57, 160, 207, 0.1) !important;
