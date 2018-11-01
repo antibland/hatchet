@@ -140,7 +140,7 @@ export class Search extends Component {
         );
       })
     ) : (
-      <li class="empty">Nothing right now.</li>
+      <li className="empty">Nothing right now.</li>
     );
 
     return (
