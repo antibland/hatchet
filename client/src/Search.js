@@ -22,11 +22,12 @@ const SearchResults = styled.ul`
 
 const LoadingSpinner = styled.div`
   position: absolute;
-  top: 34px;
+  top: 19px;
   right: 1em;
   width: 30px;
   height: 30px;
-  animation: spinIt 0.3s linear infinite;
+  animation: spinIt 0.5s linear infinite;
+  fill: var(--teal);
 
   svg {
     width: 100%;
@@ -35,7 +36,7 @@ const LoadingSpinner = styled.div`
 
   @keyframes spinIt {
     to {
-      transform: rotate(-360deg);
+      transform: rotate(360deg);
     }
   }
 `;
@@ -181,7 +182,7 @@ export class Search extends Component {
         />
         {serverIsBusy ? (
           <LoadingSpinner>
-            <Symbol name="tilted-ax" />
+            <Symbol name="challenger-hatchet-icon" />
           </LoadingSpinner>
         ) : (
           <>
