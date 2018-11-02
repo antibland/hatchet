@@ -319,9 +319,10 @@ exports.getWatchedFights = async (req, res) => {
   );
 };
 
-exports.getFightsFromSearch = async (req, res) => {
+exports.getFightsAndUsersFromSearch = async (req, res) => {
   let { query } = req.body;
   let fights = {};
+  let users = {};
 
   fights = await Fight.find(
     { title: { $regex: query, $options: "i" } },
@@ -330,8 +331,13 @@ exports.getFightsFromSearch = async (req, res) => {
     }
   );
 
+  users = await User.find({ username: query }, err => {
+    if (err) throw err;
+  });
+
   return res.status(200).json({
-    fights
+    fights,
+    users
   });
 };
 

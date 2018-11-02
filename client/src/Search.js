@@ -1,10 +1,55 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Symbol from "./shared/components/Symbol";
+import Avatar from "./shared/components/Avatar";
 import styled from "styled-components";
 
-const SearchResults = styled.ul`
-  li:not(.empty):nth-child(odd) {
+const FlexWrapVertical = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+`;
+
+const SearchResults = styled.div`
+  flex: 1;
+
+  &.notEmpty {
+    padding-top: 2em;
+    padding-bottom: 2em;
+    background-color: white;
+  }
+`;
+
+const SearchResultUsers = styled.div`
+  ul {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2em;
+  }
+
+  li a {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    font-weight: bold;
+
+    .username {
+      color: var(--teal);
+    }
+  }
+`;
+
+const SearchResultFights = styled.div`
+  ul {
+    background-color: white;
+  }
+
+  li:not(.empty):nth-child(even) {
     background-color: var(--light-teal);
   }
 
@@ -45,10 +90,6 @@ const SearchInput = styled.input`
   font-size: 2rem;
   align-self: center;
   flex: 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
   width: 100%;
   padding: 0.2em 0.6em;
   text-align: center;
@@ -70,7 +111,8 @@ export class Search extends Component {
     this.state = {
       q: "",
       serverIsBusy: false,
-      results: [],
+      resultFights: [],
+      resultUsers: [],
       a11yText: ""
     };
 
@@ -103,20 +145,22 @@ export class Search extends Component {
               });
         })
         .then(data => {
-          let count = data.fights.length;
+          let fightCount = data.fights.length;
+          let userCount = data.users.length;
           let a11yText =
-            count === 0
-              ? "Your search yielded no results."
-              : `Results returned: ${count}`;
+            fightCount === 0 && userCount === 0
+              ? `Your query, ${q}, yielded no results.`
+              : `Hatchets found: ${fightCount}. Users found: ${userCount}`;
           this.setState({
-            results: data.fights,
+            resultFights: data.fights,
+            resultUsers: data.users,
             serverIsBusy: false,
             a11yText
           });
         })
         .catch(err => console.error(err));
     } else {
-      this.setState({ results: [], a11yText: "" });
+      this.setState({ resultFights: [], resultUsers: [], a11yText: "" });
     }
   }
 
@@ -144,27 +188,42 @@ export class Search extends Component {
   }
 
   render() {
-    const { results, serverIsBusy, a11yText, q } = this.state;
+    const { resultFights, resultUsers, serverIsBusy, a11yText, q } = this.state;
+    const notEmpty = resultUsers.length > 0 || resultFights.length > 0;
+    const searchResultUsers = resultUsers.length
+      ? resultUsers.map(user => {
+          return (
+            <li key={user._id}>
+              <Link to={`/profile/${user.username}`}>
+                <Avatar
+                  imgpath={`/svg/avatars/${user.avatar.path}`}
+                  width="100px"
+                  height="100px"
+                />
+                <div className="username">{user.username}</div>
+              </Link>
+            </li>
+          );
+        })
+      : "";
 
-    const searchResults = results.length ? (
-      results.map(fight => {
-        return (
-          <li key={fight._id}>
-            <Link
-              to={`/fight/${fight._id}`}
-              dangerouslySetInnerHTML={{
-                __html: this.highlightTerms(q, fight.title)
-              }}
-            />
-          </li>
-        );
-      })
-    ) : (
-      <li className="empty">Nothing right now.</li>
-    );
+    const searchResultFights = resultFights.length
+      ? resultFights.map(fight => {
+          return (
+            <li key={fight._id}>
+              <Link
+                to={`/fight/${fight._id}`}
+                dangerouslySetInnerHTML={{
+                  __html: this.highlightTerms(q, fight.title)
+                }}
+              />
+            </li>
+          );
+        })
+      : "";
 
     return (
-      <div>
+      <FlexWrapVertical>
         <SearchInput
           type="text"
           aria-label="Search…"
@@ -175,7 +234,7 @@ export class Search extends Component {
           autoCorrect="off"
           autoCapitalize="off"
           spellCheck="false"
-          ariaOwns="searchResults"
+          ariaOwns="searchResultFights searchResultUsers"
           onInput={this.handleInput}
           onKeyUp={this.handleKeyUp}
           placeholder="Search…"
@@ -185,14 +244,19 @@ export class Search extends Component {
             <Symbol name="challenger-hatchet-icon" />
           </LoadingSpinner>
         ) : (
-          <>
-            <SearchResults id="searchResults">{searchResults}</SearchResults>
+          <SearchResults className={notEmpty && "notEmpty"}>
+            <SearchResultUsers>
+              <ul id="searchResultUsers">{searchResultUsers}</ul>
+            </SearchResultUsers>
+            <SearchResultFights>
+              <ul id="searchResultFights">{searchResultFights}</ul>
+            </SearchResultFights>
             <div aria-live="assertive" className="screenReaderText">
               {a11yText}
             </div>
-          </>
+          </SearchResults>
         )}
-      </div>
+      </FlexWrapVertical>
     );
   }
 }

@@ -53,7 +53,7 @@ const fightApi = require("./controllers/fight.js");
 app.post("/api/:userId/fight", fightApi.newFight);
 app.post("/api/:fightId/fight/setLive", fightApi.setLive);
 app.post("/api/:fightId/vote", fightApi.vote);
-app.post("/api/search", fightApi.getFightsFromSearch);
+app.post("/api/search", fightApi.getFightsAndUsersFromSearch);
 app.patch("/api/:username/voteReason", fightApi.voteReason);
 app.delete("/api/:userId/:fightId", fightApi.cancelFight);
 app.patch("/api/:userId/:fightId", fightApi.surrender);
