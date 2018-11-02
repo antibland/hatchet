@@ -12,8 +12,7 @@ import "./css/Header.css";
 const iconObj = {
   loggedIn: {
     "search-icon": "/search",
-    "challenger-hatchet-icon": "/create",
-    "notification-icon": "/notifications"
+    "challenger-hatchet-icon": "/create"
   }
 };
 
@@ -43,15 +42,20 @@ const LoginButton = styled(Link)`
   margin: 0 0 0 15px !important;
 `;
 
+const LoggedOutButtonsContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 const LoggedOutButtons = () => (
-  <div>
+  <LoggedOutButtonsContainer>
     <LoginButton className="primary button" to="/login">
       Log In
     </LoginButton>
     <LoginButton className="primary button" to="/join">
       Join
     </LoginButton>
-  </div>
+  </LoggedOutButtonsContainer>
 );
 
 const HeaderIcons = () => {

@@ -63,7 +63,11 @@ header a {
 }
 
 .headerActions li {
-  margin-right: 1em;
+  margin-right: 1.4rem;
+}
+
+.headerActions li:first-child {
+  margin-right: .5rem;
 }
 
 .headerActions li:last-child {
@@ -82,9 +86,5 @@ header a {
   .headerTop {
     padding-left: 20px;
     padding-right: 20px;
-  }
-
-  .headerActions li {
-    margin-right: 0.4em;
   }
 }
