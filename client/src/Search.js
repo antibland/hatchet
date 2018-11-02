@@ -76,6 +76,7 @@ export class Search extends Component {
     this.handleInput = this.handleInput.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
     this.fetchResults = this.fetchResults.bind(this);
+    this.highlightTerms = this.highlightTerms.bind(this);
   }
 
   fetchResults() {
@@ -128,14 +129,32 @@ export class Search extends Component {
     clearTimeout(Search.timeout);
   }
 
+  highlightTerms(needle, haystack) {
+    let ret;
+    try {
+      ret = haystack.replace(
+        new RegExp(needle, "gi"),
+        str => `<strong>${str}</strong>`
+      );
+    } catch (err) {
+      return false;
+    }
+    return ret;
+  }
+
   render() {
-    const { results, serverIsBusy, a11yText } = this.state;
+    const { results, serverIsBusy, a11yText, q } = this.state;
 
     const searchResults = results.length ? (
       results.map(fight => {
         return (
           <li key={fight._id}>
-            <Link to={`/fight/${fight._id}`}>{fight.title}</Link>
+            <Link
+              to={`/fight/${fight._id}`}
+              dangerouslySetInnerHTML={{
+                __html: this.highlightTerms(q, fight.title)
+              }}
+            />
           </li>
         );
       })
