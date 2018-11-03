@@ -361,16 +361,15 @@ class MyHatchets extends Component {
 
     const _waitingOnYou = waitingOnYou.length ? (
       waitingOnYou.map(fight => {
+        let imgpath = fight.antagonist.avatar
+          ? `svg/avatars/${fight.antagonist.avatar.path}`
+          : "/svg/unknown-user.svg";
         return (
           <tr key={fight._id}>
             <td>
               <>
                 <div className="inner">
-                  <Avatar
-                    imgpath={`svg/avatars/${fight.antagonist.avatar.path}`}
-                    width="36px"
-                    height="36px"
-                  />
+                  <Avatar imgpath={imgpath} width="36px" height="36px" />
                   <p>
                     <Highlight>{fight.antagonist.username}</Highlight> has an{" "}
                     <RedLink to={`/defend/${fight._id}`}>Axe to Grind</RedLink>{" "}
@@ -406,16 +405,15 @@ class MyHatchets extends Component {
 
     const _waitingOnThem = waitingOnThem.length ? (
       waitingOnThem.map(fight => {
+        let imgpath = fight.defender.avatar
+          ? `svg/avatars/${fight.defender.avatar.path}`
+          : "/svg/unknown-user.svg";
         return (
           <tr key={fight._id}>
             <td>
               <>
                 <div className="inner">
-                  <Avatar
-                    imgpath={`svg/avatars/${fight.defender.avatar.path}`}
-                    width="36px"
-                    height="36px"
-                  />
+                  <Avatar imgpath={imgpath} width="36px" height="36px" />
                   <p>
                     You started a{" "}
                     <RedLink to={`/fight/${fight._id}`}>Hatchet</RedLink> with{" "}
