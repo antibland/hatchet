@@ -26,16 +26,6 @@ const PageH2 = styled.h2`
   ${headerStyles};
 `;
 
-const PageTitle = styled.h2`
-  color: black;
-  font-style: italic;
-`;
-
-const AttackerStatement = styled.div`
-  font-style: italic;
-  padding-bottom: 0.5em;
-`;
-
 class Step3 extends Component {
   constructor(props) {
     super(props);
@@ -51,11 +41,7 @@ class Step3 extends Component {
       isTitleValid: false,
       isBeefValid: false,
       isBotherYouValid: false,
-      isActionValid: false,
-      side: "",
-      copiesBeef: "",
-      copiesBother: "",
-      copiesTakeAction: ""
+      isActionValid: false
     };
 
     this.handleTitleInput = this.handleTitleInput.bind(this);
@@ -64,22 +50,7 @@ class Step3 extends Component {
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      if (this.props.side === "defender") {
-        this.setState({
-          side: this.props.side,
-          title: this.props.fightData.title,
-          beef: this.props.fightData.text.attacker.do,
-          bother: this.props.fightData.text.attacker.bother,
-          takeAction: this.props.fightData.text.attacker.action,
-          copiesBeef: this.props.fightData.text.attacker.do,
-          copiesBother: this.props.fightData.text.attacker.bother,
-          copiesTakeAction: this.props.fightData.text.attacker.action,
-          isTitleValid: true
-        });
-      }
-      this.setState({ loading: false });
-    }, 200);
+    this.setState({ loading: false });
   }
 
   setOverallValidity() {
@@ -136,46 +107,19 @@ class Step3 extends Component {
   }
 
   render() {
-    const {
-      isValid,
-      beef,
-      bother,
-      takeAction,
-      title,
-      side,
-      loading
-    } = this.state;
-    const opponent = side !== "defender" ? this.props.fightData.opponent : "";
-    const attacker =
-      side === "defender" ? this.props.fightData.antagonist.username : "";
+    const { isValid, beef, bother, takeAction, title, loading } = this.state;
+    const opponent = this.props.fightData.opponent;
+
     let labels = {
-      do:
-        side === "defender"
-          ? `Why is ${attacker} wrong?`
-          : `What did ${opponent} do?`,
-      bother:
-        side === "defender"
-          ? "Why are you right?"
-          : "Why does this bother you?",
-      takeAction:
-        side === "defender"
-          ? `Why should ${attacker} do now?`
-          : `What should ${opponent} do now?`
+      do: `What did ${opponent} do?`,
+      bother: "Why does this bother you?",
+      takeAction: `What should ${opponent} do now?`
     };
 
     let placeholders = {
-      do:
-        side === "defender"
-          ? `Is ${attacker} accurate? Tell us about it.`
-          : `${opponent}…`,
-      bother:
-        side === "defender"
-          ? `Time to defend yourself! Convince the community of your innocence. Better yet, convince them that ${attacker} is wrong.`
-          : `This is where you really get to plead your case against ${opponent}. Tell the voters why this bothers you so much.`,
-      takeAction:
-        side === "defender"
-          ? `Why should ${attacker} do now?`
-          : `What should ${opponent} do now?`
+      do: `${opponent}…`,
+      bother: `This is where you really get to plead your case against ${opponent}. Tell the voters why this bothers you so much.`,
+      takeAction: `What should ${opponent} do now?`
     };
 
     const fieldTitle = (
@@ -199,26 +143,12 @@ class Step3 extends Component {
           <Loading />
         ) : (
           <div className="inner">
-            {side !== "defender" ? (
-              <>
-                <PageH1>Enter a title for your fight</PageH1>
-                <FieldWrap>{fieldTitle}</FieldWrap>
-              </>
-            ) : (
-              <PageTitle>{title}</PageTitle>
-            )}
+            <PageH1>Enter a title for your fight</PageH1>
+            <FieldWrap>{fieldTitle}</FieldWrap>
 
-            {side !== "defender" ? (
-              <PageH2>
-                What did <Highlight>{opponent}</Highlight> do?
-              </PageH2>
-            ) : (
-              <AttackerStatement>
-                &ldquo;
-                {this.state.copiesBeef}
-                &rdquo;
-              </AttackerStatement>
-            )}
+            <PageH2>
+              What did <Highlight>{opponent}</Highlight> do?
+            </PageH2>
 
             <FieldWrap>
               <TextareaWithCountdown
@@ -231,15 +161,7 @@ class Step3 extends Component {
             </FieldWrap>
 
             <PageH2>
-              {side !== "defender" ? (
-                <>
-                  Why does this bother <Highlight>you</Highlight>?
-                </>
-              ) : (
-                <>
-                  Why are <Highlight>you</Highlight> right?
-                </>
-              )}
+              Why does this bother <Highlight>you</Highlight>?
             </PageH2>
             <FieldWrap>
               <TextareaWithCountdown
@@ -252,15 +174,7 @@ class Step3 extends Component {
             </FieldWrap>
 
             <PageH2>
-              {side !== "defender" ? (
-                <>
-                  What should <Highlight>{opponent}</Highlight> do now?
-                </>
-              ) : (
-                <>
-                  What should <Highlight>{attacker}</Highlight> do now?
-                </>
-              )}
+              What should <Highlight>{opponent}</Highlight> do now?
             </PageH2>
             <FieldWrap>
               <TextareaWithCountdown

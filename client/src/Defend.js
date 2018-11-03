@@ -48,13 +48,18 @@ class Wizard extends Component {
 
   getFightDetails() {
     fetch(`/api/${this.state.fightId}/fight`)
-      .then(res => res.json())
+      .then(res => {
+        return res.ok
+          ? Promise.resolve(res.json())
+          : Promise.reject({
+              status: res.status,
+              statusText: res.statusText
+            });
+      })
       .then(data => {
         this._gatherData(data.fight);
       })
-      .catch(err => {
-        console.error(err);
-      });
+      .catch(err => console.error(err));
   }
 
   _submitForm() {
@@ -141,7 +146,6 @@ class Wizard extends Component {
               currentStep={currentStep}
               fightData={fight}
               afterValid={this._next}
-              side="defender"
             />
             <Step2
               currentStep={currentStep}
