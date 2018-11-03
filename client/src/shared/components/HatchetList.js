@@ -21,10 +21,11 @@ const TitleRow = props => {
 };
 
 const ChallengerRow = props => {
+  let imgpath = props.avatar ? props.avatar : "/svg/unknown-user.svg";
   return (
     <td className="challengerRow">
       <div className="part">
-        <Avatar width={60} height={60} imgpath={props.avatar} />
+        <Avatar width={60} height={60} imgpath={imgpath} />
         <span className="username">{props.username}</span>
       </div>
       <div className="part">
@@ -35,10 +36,11 @@ const ChallengerRow = props => {
 };
 
 const DefenderRow = props => {
+  let imgpath = props.avatar ? props.avatar : "/svg/unknown-user.svg";
   return (
     <td className="defenderRow">
       <div className="part">
-        <Avatar width={60} height={60} imgpath={props.avatar} />
+        <Avatar width={60} height={60} imgpath={imgpath} />
         <span className="username">{props.username}</span>
       </div>
     </td>

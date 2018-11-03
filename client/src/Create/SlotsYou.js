@@ -6,7 +6,7 @@ const SlotsYou = props => {
   return (
     <div className="you">
       {props.avatar === null || props.avatar === "" ? (
-        <Avatar imgpath="/user.png" width="94px" height="94px" />
+        <Avatar width="94px" height="94px" />
       ) : (
         <Avatar imgpath={`/svg/avatars/${props.avatar}`}>
           <span className="username">{props.you}</span>

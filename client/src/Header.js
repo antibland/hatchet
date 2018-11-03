@@ -74,7 +74,7 @@ const HeaderIcons = () => {
 
 const UserIcon = () => {
   const imgpath = !auth.user.avatar
-    ? "/user.png"
+    ? "/svg/unknown-user.svg"
     : `/svg/avatars/${auth.user.avatar}`;
   return (
     <li>

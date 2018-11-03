@@ -297,7 +297,7 @@ class Fight extends Component {
   render() {
     let antagonist = {},
       defender = {},
-      defaultUserImg = "/user.png";
+      defaultUserImg = "/svg/unknown-user.svg";
 
     const username = auth.user.username;
     const {

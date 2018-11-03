@@ -38,8 +38,18 @@ const SearchResultUsers = styled.div`
     text-decoration: none;
     font-weight: bold;
 
+    .avatar {
+      display: inline-flex;
+    }
+
     .username {
       color: var(--teal);
+      padding-top: 3px;
+    }
+
+    .unknown-user {
+      width: 100px;
+      height: 100px;
     }
   }
 `;
@@ -192,14 +202,20 @@ export class Search extends Component {
     const notEmpty = resultUsers.length > 0 || resultFights.length > 0;
     const searchResultUsers = resultUsers.length
       ? resultUsers.map(user => {
+          let avatar =
+            user.avatar && user.avatar.path ? (
+              <Avatar
+                imgpath={`svg/avatars/${user.avatar.path}`}
+                width="100px"
+                height="100px"
+              />
+            ) : (
+              <Symbol name="unknown-user" />
+            );
           return (
             <li key={user._id}>
               <Link to={`/profile/${user.username}`}>
-                <Avatar
-                  imgpath={`/svg/avatars/${user.avatar.path}`}
-                  width="100px"
-                  height="100px"
-                />
+                {avatar}
                 <div className="username">{user.username}</div>
               </Link>
             </li>

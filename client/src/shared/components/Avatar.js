@@ -21,7 +21,7 @@ const Avatar = props => {
 };
 
 Avatar.defaultProps = {
-  imgpath: "/question_mark.png",
+  imgpath: "/svg/unknown-user.svg",
   backgroundSize: "cover",
   width: "100px",
   height: "100px",
