@@ -17,17 +17,51 @@ class Profile extends Component {
       isModalOpen: false,
       changedAvatar: false,
       chosenAvatar: null,
+      userId: null,
+      userName: null,
       avatars: {}
     };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.loadAvatars = this.loadAvatars.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.loadUser = this.loadUser.bind(this);
   }
 
   componentDidMount() {
-    this.setState({ loading: false });
+    this.loadUser();
     this.loadAvatars();
+  }
+
+  loadUser() {
+    let urlParts = document.location.href.split("/");
+    if (urlParts.length !== 5) {
+      this.setState({
+        loading: false,
+        userId: auth.user.userid,
+        userName: auth.user.username
+      });
+      return;
+    }
+
+    // "/api/:userId" => userApi.getUser
+    // retrieve id, username
+    fetch(`/api/${urlParts.pop()}`)
+      .then(res => {
+        return res.ok
+          ? Promise.resolve(res.json())
+          : Promise.reject({
+              status: res.status,
+              statusText: res.statusText
+            });
+      })
+      .then(data => {
+        this.setState(
+          { userId: data.user._id, userName: data.user.username },
+          () => this.setState({ loading: false })
+        );
+      })
+      .catch(err => console.error(err));
   }
 
   loadAvatars() {
@@ -63,7 +97,16 @@ class Profile extends Component {
   }
 
   render() {
-    let { loading, isModalOpen, avatars, chosenAvatar } = this.state;
+    const { loading, isModalOpen, avatars, chosenAvatar, userId } = this.state;
+
+    const self = auth.user.userid === userId;
+
+    const ProfileHeader = () => {
+      const { userName } = this.state;
+      let headerText =
+        userName === auth.user.username ? `Hey, ${userName}!` : userName;
+      return <h1 className="profileH1">{headerText}</h1>;
+    };
 
     const modalStyles = {
       content: {
@@ -111,12 +154,15 @@ class Profile extends Component {
           <Loading />
         ) : (
           <div>
-            <h1 className="profileH1">Hey, {auth.user.username}!</h1>
+            <ProfileHeader />
             <AvatarContainer
-              onClick={this.openModal}
+              onClick={() => {
+                if (self) this.openModal();
+              }}
               chosenAvatar={chosenAvatar}
+              userId={userId}
             />
-            <MyHatchets />
+            {self && <MyHatchets />}
           </div>
         )}
         <Modal

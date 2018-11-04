@@ -214,7 +214,7 @@ export class Search extends Component {
             );
           return (
             <li key={user._id}>
-              <Link to={`/profile/${user.username}`}>
+              <Link to={`/profile/${user._id}`}>
                 {avatar}
                 <div className="username">{user.username}</div>
               </Link>

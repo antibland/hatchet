@@ -426,22 +426,29 @@ exports.setAvatar = async (req, res) => {
 };
 
 exports.getUser = async (req, res) => {
-  await User.findOne({ username: req.params.userId }).exec((err, user) => {
-    if (err) {
-      res.status(401).json({
-        type: "failure"
-      });
-    } else if (!user) {
-      res.status(401).json({
-        type: false
-      });
-    } else {
-      res.status(200).json({
-        type: true,
+  const { userId } = req.params;
+  await User.findById(userId)
+    .select("username")
+    .then(user => {
+      if (!user) {
+        return res.status(500).json({
+          type: "failure",
+          message:
+            "The bad news is your avatar didn't update. The good news is… um…"
+        });
+      }
+
+      return res.status(200).json({
         user
       });
-    }
-  });
+    })
+    .catch(err => {
+      return res.status(500).json({
+        type: "failure",
+        err,
+        message: "User not found"
+      });
+    });
 };
 
 exports.getUserRecord = async (req, res) => {

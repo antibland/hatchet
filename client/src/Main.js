@@ -27,7 +27,7 @@ const Main = () => (
       <Route exact path="/join" component={Join} />
       <Route path="/login" component={Login} />
       <Route exact path="/logout" component={Logout} />
-      <Route exact path="/profile" component={Profile} />
+      <Route path="/profile" component={Profile} />
       <Route exact path="/categories" component={Categories} />
       <Route path="/categories/:category" component={Category} />
       <Route path="/defend/:fightId" component={Defend} />

@@ -6,13 +6,14 @@ class AvatarContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentAvatar: null
+      currentAvatar: null,
+      userId: null
     };
   }
 
   getAvatar() {
     // /api/:userId/avatar", userApi.getAvatar
-    fetch(`/api/${auth.user.userid}/avatar`)
+    fetch(`/api/${this.state.userId}/avatar`)
       .then(res => {
         if (res.ok) {
           return res;
@@ -32,7 +33,9 @@ class AvatarContainer extends Component {
   }
 
   componentDidMount() {
-    this.getAvatar();
+    this.setState({ userId: this.props.userId }, () => {
+      this.getAvatar();
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -83,7 +86,7 @@ class AvatarContainer extends Component {
 
     let _currentAvatar = currentAvatar ? (
       <Avatar
-        imgpath={`svg/avatars/${currentAvatar}`}
+        imgpath={`/svg/avatars/${currentAvatar}`}
         width="250px"
         height="250px"
         onClick={this.props.onClick}
