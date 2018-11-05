@@ -4,6 +4,7 @@ import Loading from "./Loading.js";
 import AvatarContainer from "./AvatarContainer";
 import MyHatchets from "./MyHatchets";
 import Modal from "./shared/components/Modal";
+import UserRecord from "./shared/components/UserRecord";
 import "./css/Flash.css";
 import "./css/ProfileFightList.css";
 import "./css/Accordion.css";
@@ -154,6 +155,7 @@ class Profile extends Component {
           <Loading />
         ) : (
           <div>
+            <UserRecord id={userId} />
             <ProfileHeader />
             <AvatarContainer
               onClick={() => {

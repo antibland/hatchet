@@ -92,7 +92,7 @@ class AvatarContainer extends Component {
         onClick={this.props.onClick}
       />
     ) : (
-      <Avatar width="120px" height="120px" onClick={this.props.onClick} />
+      <Avatar width="250px" height="250px" onClick={this.props.onClick} />
     );
 
     return <div className="profilePage">{_currentAvatar}</div>;

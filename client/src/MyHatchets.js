@@ -18,20 +18,6 @@ const sharedButtonStyles = css`
   font-weight: bold;
 `;
 
-const Record = styled.h2`
-  padding: 15px 0 0;
-`;
-
-const RecordHighlight = styled.strong`
-  background: var(--dark-text);
-  color: white;
-  padding: 0 10px;
-  animation: simpleFadeIn 0.8s forwards ease-in 0.2s;
-  opacity: 0;
-  visibility: hidden;
-  text-shadow: 0 0 1px var(--red);
-`;
-
 const HatchetListWrapper = styled.div`
   padding-bottom: 3em;
   padding-top: 3em;
@@ -159,13 +145,8 @@ class MyHatchets extends Component {
       waitingOnThem: [],
       activeChallenger: [],
       activeDefender: [],
-      loading: true,
-      ties: 0,
-      wins: 0,
-      losses: 0
+      loading: true
     };
-
-    this.handleRemindThemClick = this.handleRemindThemClick.bind(this);
   }
 
   getUserFights() {
@@ -174,35 +155,16 @@ class MyHatchets extends Component {
     return fetch(url).then(res => res.json());
   }
 
-  getUserRecord() {
-    // /api/:userId/record => getUserRecord
-    let url = `/api/${auth.user.userid}/record`;
-    return fetch(url).then(res => res.json());
-  }
-
-  getFightsAndUserRecord() {
-    return Promise.all([this.getUserFights(), this.getUserRecord()]);
-  }
-
   componentDidMount() {
-    this.getFightsAndUserRecord().then(([fights, user]) => {
+    this.getUserFights().then(fights => {
       let active = null;
       let waitingOnYou = null;
       let waitingOnThem = null;
-      let ties = 0;
-      let wins = 0;
-      let losses = 0;
 
       if (fights) {
         active = fights.active;
         waitingOnYou = fights.waitingOnYou;
         waitingOnThem = fights.waitingOnThem;
-      }
-
-      if (user && user.record) {
-        ties = user.record.ties;
-        losses = user.record.losses;
-        wins = user.record.wins;
       }
 
       this.setState({
@@ -214,16 +176,9 @@ class MyHatchets extends Component {
         ),
         waitingOnYou,
         waitingOnThem,
-        loading: false,
-        ties,
-        wins,
-        losses
+        loading: false
       });
     });
-  }
-
-  handleRemindThemClick() {
-    alert("handle remind them");
   }
 
   render() {
@@ -318,20 +273,6 @@ class MyHatchets extends Component {
       } else if (props.type === "defender") {
         return activeDefender.length ? props.children : <React.Fragment />;
       }
-    };
-
-    const FightRecord = () => {
-      const { ties, wins, losses } = this.state;
-      return (
-        <>
-          <Record>
-            Your record is{" "}
-            <RecordHighlight>
-              {wins}-{losses}-{ties}
-            </RecordHighlight>
-          </Record>
-        </>
-      );
     };
 
     const HatchetList = () => (
@@ -463,7 +404,6 @@ class MyHatchets extends Component {
               <p>You've got no hatchets.</p>
             ) : (
               <>
-                <FightRecord />
                 <HatchetList />
               </>
             )}
