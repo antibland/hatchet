@@ -53,10 +53,9 @@ const sendEmail = opts => {
         to: email,
         subject: `A nudge from ${username}`,
         text: `Hi,
+Remember that time ${username} had an axe to grind with you? Well, they just used their one chance to remind you to respond.
 
-  Remember that time ${username} had an axe to grind with you? Well, they just used their one chance to remind you to respond.
-
-  Have a look: ${url}.
+Have a look: ${url}.
 
   `
       };
