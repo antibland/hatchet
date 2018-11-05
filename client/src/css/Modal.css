@@ -36,6 +36,7 @@
 .modal .button.primary {
   width: 100%;
   padding: .6em 1em;
+  max-height: 44px;
 }
 
 .modal .twitter-share-icon {

@@ -222,7 +222,9 @@ button {
   padding: 0.8em 1.4em;
   text-transform: uppercase;
   text-decoration: none;
-  display: inline-block;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 0.7em;
   font-size: 1.15em;
   cursor: pointer;
