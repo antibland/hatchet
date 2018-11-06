@@ -15,12 +15,10 @@ class RemindThem extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      isModalOpen: false
-    };
+    this.state = { isModalOpen: false, isServerBusy: false };
     this.handleClick = this.handleClick.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
-    this.handleRemindThemClick = this.handleRemindThemClick.bind(this);
+    this.mainAction = this.mainAction.bind(this);
   }
 
   handleClick() {
@@ -31,8 +29,9 @@ class RemindThem extends Component {
     this.setState({ isModalOpen: false });
   }
 
-  handleRemindThemClick() {
+  mainAction() {
     const { fightId } = this.props;
+    this.setState({ isServerBusy: true });
 
     // '/api/:userId/:fightId' => fightApi.RemindThem
     fetch(`/api/remind/${fightId}`)
@@ -47,11 +46,14 @@ class RemindThem extends Component {
       .then(() => {
         window.location.reload();
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err);
+        this.setState({ isServerBusy: false });
+      });
   }
 
   render() {
-    const { isModalOpen } = this.state;
+    const { isModalOpen, isServerBusy } = this.state;
     const { isDisabled, classes } = this.props;
 
     return (
@@ -65,8 +67,9 @@ class RemindThem extends Component {
         </RemindButton>
         <Modal
           isOpen={isModalOpen}
-          onAction={this.handleRemindThemClick}
+          onAction={this.mainAction}
           onCancel={this.handleCancel}
+          isDisabled={isServerBusy}
         >
           <p>Are you sure? You can only do this once.</p>
         </Modal>

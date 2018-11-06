@@ -16,7 +16,7 @@ class SurrenderButton extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { isModalOpen: false };
+    this.state = { isModalOpen: false, isServerBusy: false };
     this.handleClick = this.handleClick.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     this.mainAction = this.mainAction.bind(this);
@@ -32,6 +32,7 @@ class SurrenderButton extends Component {
 
   mainAction() {
     const { fightId } = this.props;
+    this.setState({ isServerBusy: true });
 
     // '/api/:userId/:fightId' => fightApi.surrender
     fetch(`/api/${auth.user.userid}/${fightId}`, {
@@ -47,11 +48,15 @@ class SurrenderButton extends Component {
       })
       .then(() => {
         window.location.reload();
+      })
+      .catch(err => {
+        console.error(err);
+        this.setState({ isServerBusy: false });
       });
   }
 
   render() {
-    const { isModalOpen } = this.state;
+    const { isModalOpen, isServerBusy } = this.state;
     const { opponent } = this.props;
 
     return (
@@ -67,6 +72,7 @@ class SurrenderButton extends Component {
           isOpen={isModalOpen}
           onAction={this.mainAction}
           onCancel={this.handleCancel}
+          isDisabled={isServerBusy}
         >
           <p>
             Are you sure? You're making things pretty easy for{" "}

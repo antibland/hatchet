@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import LoadingText from "./LoadingText";
 import styled from "styled-components";
 import "../../css/Modal.css";
 
@@ -28,14 +29,22 @@ class Modal extends React.Component {
     if (isOpen === false) return null;
 
     const CancelButtonWrapper = () => (
-      <CancelButton className="removeDefaultButtonStyles" onClick={onCancel}>
+      <CancelButton
+        disabled={this.props.isDisabled}
+        className="removeDefaultButtonStyles"
+        onClick={onCancel}
+      >
         {onCancelText}
       </CancelButton>
     );
 
     const ActionButton = () => (
-      <button onClick={onAction} className="button primary">
-        Ok
+      <button
+        disabled={this.props.isDisabled}
+        onClick={onAction}
+        className="button primary"
+      >
+        <LoadingText isDisabled={this.props.isDisabled}>Ok</LoadingText>
       </button>
     );
 
@@ -56,6 +65,7 @@ class Modal extends React.Component {
 
 Modal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
+  isDisabled: PropTypes.bool,
   onAction: PropTypes.func,
   onCancel: PropTypes.func,
   onCancelText: PropTypes.string,
@@ -63,7 +73,8 @@ Modal.propTypes = {
 };
 
 Modal.defaultProps = {
-  onCancelText: "Cancel"
+  onCancelText: "Cancel",
+  isDisabled: false
 };
 
 export default Modal;
