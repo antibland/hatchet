@@ -37,6 +37,7 @@ const SearchResultUsers = styled.div`
     flex-direction: column;
     text-decoration: none;
     font-weight: bold;
+    align-items: center;
 
     .avatar {
       display: inline-flex;
