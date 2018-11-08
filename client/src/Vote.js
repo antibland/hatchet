@@ -1,33 +1,35 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { auth } from './Auth';
+import React from "react";
+import PropTypes from "prop-types";
+import { auth } from "./Auth";
 
 const Vote = props => {
   function makeVote() {
     fetch(`/api/${props.fightId}/vote`, {
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        Accept: "application/json",
+        "Content-Type": "application/json"
       },
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify({
         side: props.side,
         voterId: auth.user.userid
       })
     })
-    .then(res => res.json())
-    .then(data => {
-      if (data.type === 'success') {
-        props.afterVote(data.votes, data.votedOn);
-      }
-    });
+      .then(res => res.json())
+      .then(data => {
+        if (data.type === "success") {
+          props.afterVote(data.votes, data.votedOn);
+        }
+      });
   }
 
   return (
     <button
-      className='button primary'
+      className="button primary"
       onClick={makeVote}
-    >Vote for {props.username}
+      title={props.username}
+    >
+      Vote for {props.username}
     </button>
   );
 };

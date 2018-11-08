@@ -43,8 +43,12 @@
 }
 
 .fightBody .button.primary {
-  max-width: 100%;
+  max-width: 270px;
   width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: block;
 }
 
 .fightBody .user1,
