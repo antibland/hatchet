@@ -97,6 +97,7 @@ class Fight extends Component {
         against: 0
       },
       antagonist: {
+        id: "",
         avatarPath: "",
         username: "",
         argument: {
@@ -106,6 +107,7 @@ class Fight extends Component {
         }
       },
       defender: {
+        id: "",
         avatarPath: "",
         username: "",
         argument: {
@@ -130,8 +132,8 @@ class Fight extends Component {
     return votedFor === ""
       ? ""
       : votedFor === "for"
-        ? defender.username
-        : antagonist.username;
+      ? defender.username
+      : antagonist.username;
   }
 
   handleItemClick(reason) {
@@ -241,6 +243,7 @@ class Fight extends Component {
             against: data.fight.votes.against
           },
           antagonist: {
+            id: data.fight.antagonist._id,
             avatarPath: data.fight.antagonist.avatar
               ? data.fight.antagonist.avatar.path
               : "",
@@ -252,6 +255,7 @@ class Fight extends Component {
             }
           },
           defender: {
+            id: data.fight.defender._id,
             avatarPath: data.fight.defender.avatar
               ? data.fight.defender.avatar.path
               : "",
@@ -320,6 +324,7 @@ class Fight extends Component {
 
     const fightId = this.props.match.params.fightId;
 
+    antagonist.id = this.state.antagonist.id;
     antagonist.imgpath =
       this.state.antagonist.avatarPath === ""
         ? defaultUserImg
@@ -330,6 +335,7 @@ class Fight extends Component {
         ? "You"
         : this.state.antagonist.username;
 
+    defender.id = this.state.defender.id;
     defender.imgpath =
       this.state.defender.avatarPath === ""
         ? defaultUserImg
@@ -410,24 +416,28 @@ class Fight extends Component {
               ) : (
                 <div className="fightContainer">
                   <header className="fightContainerHeader">
-                    <Avatar
-                      imgpath={antagonist.imgpath}
-                      width="100px"
-                      height="100px"
-                    >
-                      <Symbol name="challenger-hatchet-icon" />
-                    </Avatar>
+                    <Link to={`/profile/${antagonist.id}`}>
+                      <Avatar
+                        imgpath={antagonist.imgpath}
+                        width="100px"
+                        height="100px"
+                      >
+                        <Symbol name="challenger-hatchet-icon" />
+                      </Avatar>
+                    </Link>
                     <h2 className="hatchetTitle">
                       {this.state.fightTitle}
                       <TwitterShareButton />
                     </h2>
-                    <Avatar
-                      imgpath={defender.imgpath}
-                      width="100px"
-                      height="100px"
-                    >
-                      <Symbol name="defender-shield-icon" />
-                    </Avatar>
+                    <Link to={`/profile/${defender.id}`}>
+                      <Avatar
+                        imgpath={defender.imgpath}
+                        width="100px"
+                        height="100px"
+                      >
+                        <Symbol name="defender-shield-icon" />
+                      </Avatar>
+                    </Link>
                   </header>
 
                   <div className="fightTally">

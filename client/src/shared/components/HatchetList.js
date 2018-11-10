@@ -22,11 +22,14 @@ const TitleRow = props => {
 
 const ChallengerRow = props => {
   let imgpath = props.avatar ? props.avatar : "/svg/unknown-user.svg";
+
   return (
     <td className="challengerRow">
       <div className="part">
-        <Avatar width={60} height={60} imgpath={imgpath} />
-        <span className="username">{props.username}</span>
+        <Link to={`/profile/${props.id}`}>
+          <Avatar width={60} height={60} imgpath={imgpath} />
+          <span className="username">{props.username}</span>
+        </Link>
       </div>
       <div className="part">
         <VersusImg />
@@ -40,8 +43,10 @@ const DefenderRow = props => {
   return (
     <td className="defenderRow">
       <div className="part">
-        <Avatar width={60} height={60} imgpath={imgpath} />
-        <span className="username">{props.username}</span>
+        <Link to={`/profile/${props.id}`}>
+          <Avatar width={60} height={60} imgpath={imgpath} />
+          <span className="username">{props.username}</span>
+        </Link>
       </div>
     </td>
   );
@@ -62,9 +67,14 @@ const HatchetList = props =>
       isExpired,
       antagonist: {
         username: antagonistUsername,
-        avatar: antagonistAvatar = ""
+        avatar: antagonistAvatar = "",
+        _id: antagonistId
       },
-      defender: { username: defenderUsername, avatar: defenderAvatar = "" }
+      defender: {
+        username: defenderUsername,
+        avatar: defenderAvatar = "",
+        _id: defenderId
+      }
     } = fight;
 
     let avatars = {
@@ -84,8 +94,13 @@ const HatchetList = props =>
         <ChallengerRow
           username={antagonistUsername}
           avatar={avatars.antagonist}
+          id={antagonistId}
         />
-        <DefenderRow username={defenderUsername} avatar={avatars.defender} />
+        <DefenderRow
+          username={defenderUsername}
+          avatar={avatars.defender}
+          id={defenderId}
+        />
         <td>
           <ShowTime activatedAt={activatedAt} isExpired={isExpired} />
         </td>

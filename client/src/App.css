@@ -362,15 +362,18 @@ button {
 }
 
 .fightList tbody .avatar,
-.fightList tbody .part {
+.fightList tbody .part,
+.fightList tbody .part > a {
   display: flex;
 }
 
-.fightList tbody .part {
+.fightList tbody .part,
+.fightList tbody .part > a {
   align-items: center;
 }
 
-.fightList tbody .part:first-child {
+.fightList tbody .part:first-child,
+.fightList tbody .part > a:first-child {
   padding-right: 20px;
 }
 
