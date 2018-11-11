@@ -305,14 +305,20 @@ class MyHatchets extends Component {
         let imgpath = fight.antagonist.avatar
           ? `svg/avatars/${fight.antagonist.avatar.path}`
           : "/svg/unknown-user.svg";
+        let antagonistId = fight.antagonist._id;
         return (
           <tr key={fight._id}>
             <td>
               <>
                 <div className="inner">
-                  <Avatar imgpath={imgpath} width="36px" height="36px" />
+                  <a href={`/profile/${antagonistId}`}>
+                    <Avatar imgpath={imgpath} width="36px" height="36px" />
+                  </a>
                   <p>
-                    <Highlight>{fight.antagonist.username}</Highlight> has an{" "}
+                    <a href={`/profile/${antagonistId}`}>
+                      <Highlight>{fight.antagonist.username}</Highlight>
+                    </a>{" "}
+                    has an{" "}
                     <RedLink to={`/defend/${fight._id}`}>Axe to Grind</RedLink>{" "}
                     with you!
                   </p>
@@ -349,16 +355,22 @@ class MyHatchets extends Component {
         let imgpath = fight.defender.avatar
           ? `svg/avatars/${fight.defender.avatar.path}`
           : "/svg/unknown-user.svg";
+        let defenderId = fight.defender._id;
         return (
           <tr key={fight._id}>
             <td>
               <>
                 <div className="inner">
-                  <Avatar imgpath={imgpath} width="36px" height="36px" />
+                  <a href={`/profile/${defenderId}`}>
+                    <Avatar imgpath={imgpath} width="36px" height="36px" />
+                  </a>
                   <p>
                     You started a{" "}
                     <RedLink to={`/fight/${fight._id}`}>Hatchet</RedLink> with{" "}
-                    <Highlight>{fight.defender.username}</Highlight>.
+                    <a href={`/profile/${defenderId}`}>
+                      <Highlight>{fight.defender.username}</Highlight>
+                    </a>
+                    .
                   </p>
                 </div>
               </>
