@@ -71,6 +71,14 @@
   color: white;
 }
 
+.avatarButton {
+  border: 1px solid transparent !important;
+}
+
+.avatarButton[data-selected=true] {
+  border-color: var(--bright-gold) !important;
+}
+
 .horizontalBox {
   display: flex;
   justify-content: center;

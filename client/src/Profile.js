@@ -16,16 +16,16 @@ class Profile extends Component {
     this.state = {
       loading: true,
       isModalOpen: false,
-      changedAvatar: false,
+      hasAvatarChanged: false,
       chosenAvatar: null,
       userId: null,
       userName: null,
+      currentAvatar: auth.user.avatar,
       avatars: {}
     };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.loadAvatars = this.loadAvatars.bind(this);
-    this.handleClick = this.handleClick.bind(this);
     this.loadUser = this.loadUser.bind(this);
   }
 
@@ -82,7 +82,7 @@ class Profile extends Component {
 
   closeModal() {
     this.setState({ isModalOpen: false }, () => {
-      if (this.state.changedAvatar === true) {
+      if (this.state.hasAvatarChanged === true) {
         window.location.reload();
       }
     });
@@ -92,9 +92,12 @@ class Profile extends Component {
     this.setState({ isModalOpen: true });
   }
 
-  handleClick(e) {
-    const chosenAvatar = e.currentTarget.dataset.img;
-    this.setState({ chosenAvatar, changedAvatar: true });
+  handleClick(index, e) {
+    let { currentAvatar } = this.state;
+    const hasAvatarChanged = e.currentTarget.dataset.originalavatar !== "true";
+    const chosenAvatar =
+      hasAvatarChanged === true ? e.currentTarget.dataset.img : currentAvatar;
+    this.setState({ chosenAvatar, selectedIndex: index, hasAvatarChanged });
   }
 
   render() {
@@ -133,12 +136,17 @@ class Profile extends Component {
     const UserAvatarList = () => {
       let buttons = [];
       let index = 0;
+      const { currentAvatar, selectedIndex } = this.state;
+
       for (let a in avatars) {
         buttons.push(
           <button
             key={`${++index}-${a}`}
             data-img={a}
-            onClick={this.handleClick}
+            onClick={this.handleClick.bind(this, index)}
+            className="avatarButton"
+            data-selected={index === selectedIndex}
+            data-originalavatar={a === currentAvatar}
             style={modalStyles.avatarButton}
             dangerouslySetInnerHTML={{
               __html: `<img src='/svg/avatars/${a}' alt='' />`
