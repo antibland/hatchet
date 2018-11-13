@@ -18,7 +18,8 @@ const utils = {
 const scheduleJob = fightId => {
   let job = null;
   let startTime = new Date(Date.now());
-  let minuteBefore = startTime.getMinutes() - 1;
+  let minuteBefore =
+    startTime.getMinutes() === 0 ? 0 : startTime.getMinutes() - 1;
   let currentHour = startTime.getHours();
   let endTime = `00 ${minuteBefore} ${currentHour} * * *`;
 
@@ -69,8 +70,8 @@ const scheduleJob = fightId => {
             fight.votes.for === fight.votes.against
               ? "tie"
               : fight.votes.for > fight.votes.against
-                ? "aggressor"
-                : "defender";
+              ? "aggressor"
+              : "defender";
 
           if (result === "tie") {
             updateUserRecord("antagonist", "record.ties");
