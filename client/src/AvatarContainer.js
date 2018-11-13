@@ -87,16 +87,25 @@ class AvatarContainer extends Component {
     let _currentAvatar = currentAvatar ? (
       <Avatar
         imgpath={`/svg/avatars/${currentAvatar}`}
-        width="250px"
-        height="250px"
+        width={this.props.width}
+        height={this.props.height}
         onClick={this.props.onClick}
       />
     ) : (
-      <Avatar width="250px" height="250px" onClick={this.props.onClick} />
+      <Avatar
+        width={this.props.width}
+        height={this.props.height}
+        onClick={this.props.onClick}
+      />
     );
 
     return <div className="profilePage">{_currentAvatar}</div>;
   }
 }
+
+AvatarContainer.defaultProps = {
+  width: "250px",
+  height: "250px"
+};
 
 export default AvatarContainer;

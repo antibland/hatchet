@@ -1,19 +1,13 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { auth } from "../../Auth";
 
-const Record = styled.h2`
-  padding: 15px 0 0;
+const RecordLabel = styled.span`
+  color: var(--teal);
+  padding-right: 0.5rem;
 `;
 
 const RecordHighlight = styled.strong`
-  background: var(--dark-text);
-  color: white;
-  padding: 0 10px;
-  animation: simpleFadeIn 0.8s forwards ease-in 0.2s;
-  opacity: 0;
-  visibility: hidden;
-  text-shadow: 0 0 1px var(--red);
+  color: var(--dark-text);
 `;
 
 class UserRecord extends Component {
@@ -55,21 +49,15 @@ class UserRecord extends Component {
   }
 
   render() {
-    const { id } = this.props;
-    const self = auth.user.userid === id;
-
     const FightRecord = () => {
       const { ties, wins, losses } = this.state;
-      let recordText = self ? "Your record is " : "Record: ";
       return (
-        <>
-          <Record>
-            {recordText}
-            <RecordHighlight>
-              {wins}-{losses}-{ties}
-            </RecordHighlight>
-          </Record>
-        </>
+        <div>
+          <RecordLabel>Wins/Losses/Ties:</RecordLabel>
+          <RecordHighlight>
+            {wins}-{losses}-{ties}
+          </RecordHighlight>
+        </div>
       );
     };
 

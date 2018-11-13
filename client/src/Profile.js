@@ -1,14 +1,46 @@
 import React, { Component } from "react";
 import { auth } from "./Auth.js";
+import styled from "styled-components";
 import Loading from "./Loading.js";
 import AvatarContainer from "./AvatarContainer";
 import MyHatchets from "./MyHatchets";
 import Modal from "./shared/components/Modal";
 import UserRecord from "./shared/components/UserRecord";
+import utilities from "./shared/utilities";
 import "./css/Flash.css";
 import "./css/ProfileFightList.css";
 import "./css/Accordion.css";
 import "./css/ImagePreview.css";
+
+const UserInfoText = styled.div`
+  padding-left: 1em;
+
+  ${utilities.media.phone`
+    padding-left: 0;
+  `}
+`;
+
+const ProfileHeader = styled.header`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  ${utilities.media.phone`
+    flex-direction: column;
+
+    h2 {
+      text-align: center;
+    }
+  `}
+`;
+
+const Username = styled.h2`
+  color: var(--red);
+  text-align: left;
+  font-size: 2rem;
+  margin: 0;
+  line-height: 1;
+`;
 
 class Profile extends Component {
   constructor() {
@@ -101,15 +133,41 @@ class Profile extends Component {
   }
 
   render() {
-    const { loading, isModalOpen, avatars, chosenAvatar, userId } = this.state;
+    const {
+      loading,
+      isModalOpen,
+      avatars,
+      chosenAvatar,
+      userId,
+      userName
+    } = this.state;
 
     const self = auth.user.userid === userId;
 
-    const ProfileHeader = () => {
-      const { userName } = this.state;
-      let headerText =
-        userName === auth.user.username ? `Hey, ${userName}!` : userName;
-      return <h1 className="profileH1">{headerText}</h1>;
+    const UserInfo = () => {
+      return (
+        <UserInfoText>
+          <Username>{userName}</Username>
+          <UserRecord id={userId} />
+        </UserInfoText>
+      );
+    };
+
+    const ProfileHeaderContent = () => {
+      return (
+        <>
+          <AvatarContainer
+            onClick={() => {
+              if (self) this.openModal();
+            }}
+            chosenAvatar={chosenAvatar}
+            userId={userId}
+            width="150px"
+            height="150px"
+          />
+          <UserInfo />
+        </>
+      );
     };
 
     const modalStyles = {
@@ -162,18 +220,12 @@ class Profile extends Component {
         {loading === true ? (
           <Loading />
         ) : (
-          <div>
-            <UserRecord id={userId} />
-            <ProfileHeader />
-            <AvatarContainer
-              onClick={() => {
-                if (self) this.openModal();
-              }}
-              chosenAvatar={chosenAvatar}
-              userId={userId}
-            />
+          <>
+            <ProfileHeader>
+              <ProfileHeaderContent />
+            </ProfileHeader>
             {self && <MyHatchets />}
-          </div>
+          </>
         )}
         <Modal
           isOpen={isModalOpen}

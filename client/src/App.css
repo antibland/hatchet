@@ -148,18 +148,6 @@ main > * {
   font-size: large;
 }
 
-@keyframes simpleFadeIn {
-  from {
-    opacity: 0;
-    visibility: hidden;
-  }
-
-  to {
-    opacity: 1;
-    visibility: visible;
-  }
-}
-
 @keyframes upAndDown {
   from {
     transform: translateY(0);

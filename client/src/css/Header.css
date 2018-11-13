@@ -1,4 +1,4 @@
-header {
+.App > header {
   display: flex;
   background-color: var(--teal);
   padding: 0;
@@ -7,14 +7,10 @@ header {
   flex-direction: column;
 }
 
-header h1 a {
+.App > header h1 a {
   font-size: 1em;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   text-decoration: none;
-}
-
-header a {
-  color: white;
 }
 
 .headerTop {
