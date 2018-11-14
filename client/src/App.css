@@ -491,7 +491,9 @@ button {
 @media screen and (max-width: 800px) {
   .fightList {
     max-width: calc(100% - 80px);
+    width: auto;
   }
+
   .paginationContainer .fightList thead th:nth-child(2),
   .paginationContainer .fightList thead th:nth-child(3),
   .paginationContainer .fightList tbody td:nth-child(2),
