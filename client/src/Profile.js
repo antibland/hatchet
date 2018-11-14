@@ -14,10 +14,12 @@ import "./css/ImagePreview.css";
 
 const UserInfoText = styled.div`
   padding-left: 1em;
+  text-align: left;
 
   ${utilities.media.phone`
     padding: .5rem 0.5rem 0 0;
     font-size: 1.25rem;
+    text-align: center;
   `}
 `;
 
@@ -151,7 +153,9 @@ class Profile extends Component {
     const UserInfo = () => {
       return (
         <UserInfoText>
-          <Username className="ellipsize">{userName}</Username>
+          <Username title={userName} className="ellipsize">
+            {userName}
+          </Username>
           <UserRecord id={userId} />
         </UserInfoText>
       );
