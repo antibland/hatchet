@@ -297,8 +297,8 @@ button {
 .fightList {
   margin: 0 auto;
   padding: 0;
-  max-width: calc(100% - 200px);
-  width: 100%;
+  max-width: 1070px;
+  width: calc(100% - 200px);
   flex-grow: 1;
   border-collapse: collapse;
   table-layout: auto;
