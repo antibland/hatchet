@@ -303,7 +303,7 @@ class MyHatchets extends Component {
     const _waitingOnYou = waitingOnYou.length ? (
       waitingOnYou.map(fight => {
         let imgpath = fight.antagonist.avatar
-          ? `svg/avatars/${fight.antagonist.avatar.path}`
+          ? `/svg/avatars/${fight.antagonist.avatar.path}`
           : "/svg/unknown-user.svg";
         let antagonistId = fight.antagonist._id;
         return (
@@ -353,7 +353,7 @@ class MyHatchets extends Component {
     const _waitingOnThem = waitingOnThem.length ? (
       waitingOnThem.map(fight => {
         let imgpath = fight.defender.avatar
-          ? `svg/avatars/${fight.defender.avatar.path}`
+          ? `/svg/avatars/${fight.defender.avatar.path}`
           : "/svg/unknown-user.svg";
         let defenderId = fight.defender._id;
         return (
