@@ -298,9 +298,10 @@ button {
   margin: 0 auto;
   padding: 0;
   max-width: calc(100% - 200px);
-  width: 1070px;
+  width: 100%;
   flex-grow: 1;
   border-collapse: collapse;
+  table-layout: auto;
   text-align: left;
 }
 
@@ -318,9 +319,7 @@ button {
 }
 
 .fightList tbody .challengerRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  position: relative;
   padding-right: 20px;
 }
 
@@ -365,6 +364,13 @@ button {
   padding-right: 20px;
 }
 
+.challengerRow .part:last-child {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
 .fightList tbody .avatar {
   margin-right: 10px;
 }
@@ -395,6 +401,7 @@ button {
   color: var(--dark-blue);
   font-weight: 600;
   line-height: 1.5;
+  min-width: 150px;
 }
 
 .fightList .created {
@@ -468,6 +475,19 @@ button {
   width: 1px;
 }
 
+.ellipsize {
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+  text-overflow: ellipsis;
+}
+
+@media screen and (max-width: 900px) {
+  .fightList .categoriesImg {
+    display: none;
+  }
+}
+
 @media screen and (max-width: 800px) {
   .fightList {
     max-width: calc(100% - 80px);
@@ -476,10 +496,6 @@ button {
   .paginationContainer .fightList thead th:nth-child(3),
   .paginationContainer .fightList tbody td:nth-child(2),
   .paginationContainer .fightList tbody td:nth-child(3) {
-    display: none;
-  }
-
-  .fightList .categoriesImg {
     display: none;
   }
 }

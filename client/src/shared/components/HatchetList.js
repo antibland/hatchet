@@ -5,6 +5,11 @@ import utilities from "../../shared/utilities";
 import Avatar from "../../shared/components/Avatar";
 import VersusImg from "../../shared/components/VersusImg";
 import TimeRemaining from "../../shared/components/TimeRemaining";
+import styled from "styled-components";
+
+const Username = styled.span`
+  max-width: 125px;
+`;
 
 const TitleRow = props => {
   let firstWord = props.type.split(" ")[0].replace("'", "");
@@ -22,13 +27,16 @@ const TitleRow = props => {
 
 const ChallengerRow = props => {
   let imgpath = props.avatar ? props.avatar : "/svg/unknown-user.svg";
+  const username = props.username;
 
   return (
     <td className="challengerRow">
       <div className="part">
         <Link to={`/profile/${props.id}`}>
           <Avatar width={60} height={60} imgpath={imgpath} />
-          <span className="username">{props.username}</span>
+          <Username title={username} className="username ellipsize">
+            {username}
+          </Username>
         </Link>
       </div>
       <div className="part">
@@ -40,12 +48,16 @@ const ChallengerRow = props => {
 
 const DefenderRow = props => {
   let imgpath = props.avatar ? props.avatar : "/svg/unknown-user.svg";
+  const username = props.username;
+
   return (
     <td className="defenderRow">
       <div className="part">
         <Link to={`/profile/${props.id}`}>
           <Avatar width={60} height={60} imgpath={imgpath} />
-          <span className="username">{props.username}</span>
+          <Username title={username} className="username ellipsize">
+            {username}
+          </Username>
         </Link>
       </div>
     </td>

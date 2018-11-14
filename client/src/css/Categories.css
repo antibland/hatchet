@@ -21,7 +21,7 @@
 
 .categories.listPage {
   grid-template-columns: repeat(5, [col] auto);
-  padding: 3.5em 6.5em 0;
+  padding: 3.5em 4.5em 0;
 }
 
 .categories.listPage img {
