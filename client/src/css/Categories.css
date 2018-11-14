@@ -81,8 +81,9 @@
 
 @media screen and (max-width: 768px) {
   .categoriesImg {
-    height: calc(33vh - 85px);
-    min-height: 120px;
+    height: calc(39vh - 100px);
+    min-height: 114px;
+    max-height: 200px;
   }
 
   .categories.listPage:not(.mobile),
