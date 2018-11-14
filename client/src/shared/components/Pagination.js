@@ -78,7 +78,7 @@ class Pagination extends React.Component {
       <li className="pageNumberNav buttonPrevious">
         <button onClick={this.previousPage} disabled={currentPage === 1}>
           <Symbol name="chevron-left" />
-          Prev
+          <span className="buttonLabel">Prev</span>
         </button>
       </li>
     );
@@ -86,7 +86,7 @@ class Pagination extends React.Component {
     const Next = () => (
       <li className="pageNumberNav buttonNext">
         <button onClick={this.nextPage} disabled={currentPage === lastPage}>
-          Next
+          <span className="buttonLabel">Next</span>
           <Symbol name="chevron-right" />
         </button>
       </li>

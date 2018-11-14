@@ -81,7 +81,8 @@
 
 @media screen and (max-width: 768px) {
   .categoriesImg {
-    height: 24vh;
+    height: calc(33vh - 85px);
+    min-height: 120px;
   }
 
   .categories.listPage:not(.mobile),
@@ -94,6 +95,7 @@
     grid-template-columns: repeat(2, [col] auto);
     grid-template-rows: repeat(3, [row] auto);
     padding: 0;
+    margin-bottom: auto;
   }
 
   .categories.listPage.mobile li:nth-last-child(3) {

@@ -16,7 +16,8 @@ const UserInfoText = styled.div`
   padding-left: 1em;
 
   ${utilities.media.phone`
-    padding-left: 0;
+    padding: .5rem 0.5rem 0 0;
+    font-size: 1.25rem;
   `}
 `;
 
@@ -27,10 +28,6 @@ const ProfileHeader = styled.header`
 
   ${utilities.media.phone`
     flex-direction: column;
-
-    h2 {
-      text-align: center;
-    }
   `}
 `;
 
@@ -40,6 +37,13 @@ const Username = styled.h2`
   font-size: 2rem;
   margin: 0;
   line-height: 1;
+  padding: 4px 0;
+
+  ${utilities.media.phone`
+    text-align: center;
+    margin: 0 auto;
+    max-width: calc(100vw - 40px);
+  `}
 `;
 
 class Profile extends Component {
@@ -147,7 +151,7 @@ class Profile extends Component {
     const UserInfo = () => {
       return (
         <UserInfoText>
-          <Username>{userName}</Username>
+          <Username className="ellipsize">{userName}</Username>
           <UserRecord id={userId} />
         </UserInfoText>
       );

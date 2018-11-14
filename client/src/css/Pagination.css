@@ -69,11 +69,7 @@
 }
 
 @media screen and (max-width: 500px) {
-  .pageNumbers {
-    font-size: 1em;
-  }
-
-  .pageNumberNav button {
-    font-size: 11px;
+  .pageNumberNav .buttonLabel {
+    display: none;
   }
 }
