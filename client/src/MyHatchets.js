@@ -18,6 +18,10 @@ const sharedButtonStyles = css`
   font-weight: bold;
 `;
 
+const LastCell = styled.td`
+  padding-left: 10px !important;
+`;
+
 const HatchetListWrapper = styled.div`
   padding-bottom: 3em;
   padding-top: 3em;
@@ -335,14 +339,14 @@ class MyHatchets extends Component {
                 Surrender
               </SurrenderButton>
             </td>
-            <td>
+            <LastCell>
               <HatchetListLink
                 className="button primary"
                 to={`/defend/${fight._id}`}
               >
                 Respond
               </HatchetListLink>
-            </td>
+            </LastCell>
           </tr>
         );
       })
@@ -378,7 +382,7 @@ class MyHatchets extends Component {
             <td>
               <CancelFight fightId={fight._id} classes="button primary alt" />
             </td>
-            <td>
+            <LastCell>
               <RemindThem
                 fightId={fight._id}
                 isDisabled={fight.remindedUsed}
@@ -388,7 +392,7 @@ class MyHatchets extends Component {
                     : "button primary"
                 }
               />
-            </td>
+            </LastCell>
           </tr>
         );
       })
