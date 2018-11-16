@@ -150,34 +150,6 @@ class Profile extends Component {
 
     const self = auth.user.userid === userId;
 
-    const UserInfo = () => {
-      return (
-        <UserInfoText>
-          <Username title={userName} className="ellipsize">
-            {userName}
-          </Username>
-          <UserRecord id={userId} />
-        </UserInfoText>
-      );
-    };
-
-    const ProfileHeaderContent = () => {
-      return (
-        <>
-          <AvatarContainer
-            onClick={() => {
-              if (self) this.openModal();
-            }}
-            chosenAvatar={chosenAvatar}
-            userId={userId}
-            width="150px"
-            height="150px"
-          />
-          <UserInfo />
-        </>
-      );
-    };
-
     const modalStyles = {
       content: {
         width: "23em",
@@ -230,7 +202,21 @@ class Profile extends Component {
         ) : (
           <>
             <ProfileHeader>
-              <ProfileHeaderContent />
+              <AvatarContainer
+                onClick={() => {
+                  if (self) this.openModal();
+                }}
+                chosenAvatar={chosenAvatar}
+                userId={userId}
+                width="150px"
+                height="150px"
+              />
+              <UserInfoText>
+                <Username title={userName} className="ellipsize">
+                  {userName}
+                </Username>
+                <UserRecord id={userId} />
+              </UserInfoText>
             </ProfileHeader>
             {self && <MyHatchets />}
           </>
